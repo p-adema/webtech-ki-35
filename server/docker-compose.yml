@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: .
+      dockerfile: "Dockerfile-PHP"
+    image: web-tech-php
+    volumes:
+      - ../pages:/var/www/html
+    ports:
+      - "80:80"
+    links:
+      - sql
+
+  sql:
+    build:
+      context: .
+      dockerfile: "Dockerfile-SQL"
+    image: web-tech-sql
+    ports:
+      - "3306:3306"

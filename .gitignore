@@ -1,5 +1,6 @@
-*
-!/pages
-!/idea
+./*
+!/pages/*
+!/idea/*
+!/server/*
 !.gitignore
 !README.md

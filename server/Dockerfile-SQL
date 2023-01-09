@@ -1,0 +1,6 @@
+FROM mysql
+
+ENV MYSQL_ROOT_PASSWORD=root_pwd
+
+COPY schema.sql /home/init.sql
+CMD ["mysqld", "--init-file=/home/init.sql"]
