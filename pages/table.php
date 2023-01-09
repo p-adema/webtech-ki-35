@@ -8,7 +8,7 @@
 
 <body>
 <h1>DB example</h1>
-<div class=".db-table">
+<div>
     <table>
         <tr>
             <th>Id</th>
@@ -16,7 +16,7 @@
         </tr>
         <?php
             $user = 'root';
-            $pass = 'root_pwd';
+            $pass = '4S&qx6tbCH&HS5RT';
             $dsn = 'mysql:dbname=app;host=0.0.0.0;port=3306';
 
             try {

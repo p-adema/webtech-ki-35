@@ -1,6 +1,6 @@
-./*
-!/pages/*
-!/idea/*
-!/server/*
+/*
+!/pages/
+!/server/
+!.github/
 !.gitignore
 !README.md
