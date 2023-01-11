@@ -14,28 +14,23 @@
             <th>Id</th>
             <th>Message</th>
         </tr>
-        <?php
-            $user = 'root';
-            $pass = '4S&qx6tbCH&HS5RT';
-            $dsn = 'mysql:dbname=app;host=0.0.0.0;port=3306';
 
-            try {
-                $dbh = new PDO($dsn, $user, $pass);
-                foreach ($dbh->query('SELECT * from message') as $row) {
-        $html = "
+        <?php
+        require_once "../components/pdo_read.php";
+        $pdo_read = new_pdo_read();
+
+        foreach ($pdo_read->query('SELECT * from message') as $row) {
+            $html = "
         <tr>
             <td>{$row['id']}</td>
             <td>{$row['message']}</td>
         </tr>
         ";
-        echo $html;
+            echo $html;
         }
-        $dbh = null;
-        } catch (PDOException $e) {
-        print "Error!: " . $e->getMessage() . "<br/>";
-        die();
-        }
+        $pdo_read = null;
         ?>
+
     </table>
 </div>
 </body>

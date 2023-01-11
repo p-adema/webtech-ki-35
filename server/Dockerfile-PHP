@@ -1,9 +1,8 @@
-FROM php:8.1.2-apache AS base
+FROM php:8.1.2-apache
 EXPOSE 80
 RUN mkdir /app/
 RUN docker-php-ext-install pdo_mysql
 
-FROM base as debug
 RUN pecl install xdebug
 RUN docker-php-ext-enable xdebug \
     && echo "xdebug.mode = debug" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
@@ -13,3 +12,8 @@ RUN docker-php-ext-enable xdebug \
     && echo "xdebug.discover_client_host = true" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 ENV PHP_IDE_CONFIG="serverName=localhost"
+
+COPY tokens /var/www/tokens
+RUN echo -n 'sql' > /var/www/tokens/hostname
+
+COPY server/php.ini /usr/local/etc/php/conf.d/webtech-project-php.ini

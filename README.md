@@ -2,7 +2,6 @@
 By: Peter, Ruben, Gilles, Jesse
 
 ### Build the docker image with:
-`cd server` and
 `docker-compose up --build`
     (might need `sudo docker-compose up --build`)
 
