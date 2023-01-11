@@ -19,7 +19,7 @@
         </tr>
 
         <?php
-        require_once "../components/pdo_read.php";
+        require_once "pdo_read.php";
         $pdo_read = new_pdo_read();
 
         foreach ($pdo_read->query('SELECT * from users') as $row) {
