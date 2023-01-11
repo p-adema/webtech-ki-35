@@ -28,7 +28,7 @@
         ";
             echo $html;
         }
-        $dbh = null;
+        $pdo_read = null;
         ?>
 
     </table>
