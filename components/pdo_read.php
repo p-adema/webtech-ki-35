@@ -3,7 +3,7 @@ function new_pdo_read(): PDO
 {
     try {
         $host = file_get_contents('../tokens/hostname');
-        $dsn = "mysql:dbname=app;host=$host;port=3306";
+        $dsn = "mysql:dbname=db;host=$host;port=3306";
         $user = 'web-read';
         $password = file_get_contents('../tokens/web-read');
 
