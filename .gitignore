@@ -1,6 +1,8 @@
 /*
 !/pages/
 !/server/
-!.github/
+/tokens
+!/components/
 !.gitignore
 !README.md
+!docker-compose.yml

@@ -2,5 +2,16 @@ FROM mysql
 
 ENV MYSQL_ROOT_PASSWORD=4S&qx6tbCH&HS5RT
 
-COPY ./schema.sql /home/schema.sql
-CMD ["mysqld", "--init-file=/home/schema.sql"]
+COPY server/schema.sql /home/schema.sql
+COPY tokens /home/tokens
+
+RUN mkdir /home/scripts
+COPY server/users.sh /home/scripts/users.sh
+
+RUN touch init.sql \
+    && cat /home/schema.sql >> /home/init.sql \
+    && cd /home/scripts \
+    && bash /home/scripts/users.sh >> /home/init.sql \
+    && rm /home/schema.sql /home/scripts/users.sh
+
+CMD ["mysqld", "--init-file=/home/init.sql"]
