@@ -7,23 +7,25 @@
 </head>
 
 <body>
-<h1>DB example</h1>
+<h1>Users</h1>
 <div>
     <table>
         <tr>
             <th>Id</th>
-            <th>Message</th>
+            <th>Name</th>
+            <th>Email</th>
         </tr>
 
         <?php
         require_once "../components/pdo_read.php";
         $pdo_read = new_pdo_read();
 
-        foreach ($pdo_read->query('SELECT * from message') as $row) {
+        foreach ($pdo_read->query('SELECT * from users') as $row) {
             $html = "
         <tr>
             <td>{$row['id']}</td>
-            <td>{$row['message']}</td>
+            <td>{$row['name']}</td>
+            <td>{$row['email']}</td>
         </tr>
         ";
             echo $html;
