@@ -1,12 +1,9 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>DB Table</title>
-    <link rel="stylesheet" href="global.css" type="text/css"/>
-    <link rel="stylesheet" href="table.css" type="text/css"/>
-</head>
+<!DOCTYPE html>
+<html lang='en'>
+<?php
+require 'html_header.php';
+html_header('DB Example');
+?>
 
 <body>
 <h1>Users</h1>
@@ -19,7 +16,7 @@
         </tr>
 
         <?php
-        require_once "pdo_read.php";
+        require 'pdo_read.php';
         $pdo_read = new_pdo_read();
 
         foreach ($pdo_read->query('SELECT * from users') as $row) {
