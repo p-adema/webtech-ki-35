@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang='en'>
 
-<body>
 <?php
 require 'html_header.php';
 html_header(title: 'Register', styled: true, scripted: true);
 ?>
+<body>
 <div id="form_container">
     <h1> Register </h1>
     <form action="/api/register.php" method="POST">

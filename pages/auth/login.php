@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang='en'>
 
-<body>
 <?php
 require 'html_header.php';
 html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
 ?>
+<body>
 <div id="form_container">
     <h1> Login </h1>
     <form action="/api/login.php" method="POST">
