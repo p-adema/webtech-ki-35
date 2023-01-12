@@ -1,20 +1,24 @@
 <?php
-function html_header(string $title, string $description = '', bool $jquery = false): void
+function html_header(string $title, string $description = '', bool $styled = false, bool $scripted = false, string $extra = ''): void
 {
-    $style = str_replace('.php', '.css', $_SERVER['SCRIPT_NAME']);
-    if ($jquery) {
-        $jquery_script = '<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>';
+    $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
+    $style = $page . '.css';
+    $script = $page . '.js';
+    if ($scripted) {
+        $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
+                        <script src=\"scripts$script\"></script>";
     } else {
-        $jquery_script = '';
+        $script_tags = '';
     }
     $html = "<!doctype html>            
             <head>
                 <meta charset='utf - 8'>
                 <meta name='description' content=$description/>
                 <title>$title</title>
-                $jquery_script
-                <link rel='stylesheet' href='/global.css' type='text/css'/>
-                <link rel='stylesheet' href='$style' type='text/css'/>
+                $script_tags
+                <link rel='stylesheet' href='styles/global.css' type='text/css'/>
+                <link rel='stylesheet' href='styles$style' type='text/css'/>
+                $extra
             </head>";
     echo $html;
 }

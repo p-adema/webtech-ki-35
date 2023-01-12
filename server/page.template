@@ -4,7 +4,7 @@
 <body>
 <?php
 require 'html_header.php';
-html_header('');
+html_header(title: '${Page_title}', styled: true, scripted: false);
 
 
 
