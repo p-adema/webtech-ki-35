@@ -1,5 +1,11 @@
 :root {
     --color: black /* Override in PHP */
 }
-h1 {color: aqua}
-td {color: var(--color)}
+
+h1 {
+    color: aqua
+}
+
+td {
+    color: var(--color)
+}
