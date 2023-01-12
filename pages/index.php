@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <title>Page Title</title>
 </head>
@@ -15,6 +15,7 @@ echo 5 * 3;
 
 <h1>My First Heading</h1>
 <p>My first paragraph.</p>
+
 
 </body>
 </html>
