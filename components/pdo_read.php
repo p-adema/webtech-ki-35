@@ -2,7 +2,7 @@
 function new_pdo_read(bool $err_fatal = true): PDO
 {
     try {
-        $tokens = $_ENV['PWD'] . '/../tokens/';
+        $tokens = $_SERVER['DOCUMENT_ROOT'] . '/../tokens/';
         $host = file_get_contents($tokens . 'hostname');
         $dsn = "mysql:dbname=db;host=$host;port=3306";
         $user = 'web-read';
