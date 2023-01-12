@@ -11,7 +11,7 @@
 <p>My first paragraph. <br></p>
     <img src='pictures/icon1.png' alt='Foto icon' style='width:100px;height:100px;'>
     <img src='pictures/icon2.png' alt='Foto icon' style='width:100px;height:100px;'>
-<a href='../~gillesj/home.php'>blabal</a>
+<a href='home.php'>blabal</a>
 
 
 
