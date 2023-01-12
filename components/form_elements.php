@@ -11,6 +11,7 @@ function form_input(string $id, string $label, string $placeholder, string $type
             name=\"$id\"
             placeholder=\"$placeholder\"
           />
+          <span></span>
         </div>
     ";
     echo $html;

@@ -14,9 +14,6 @@ if (empty($_POST['password'])) {
     $errors['password'] = 'Password is required.';
 }
 
-if (empty($_POST['full name'])) {
-    $errors['full name'] = 'Full name is required.';
-}
 
 if (!empty($errors)) {
     $data['success'] = false;
