@@ -1,13 +1,15 @@
+<!DOCTYPE html>
+<html lang='en'>
 
-
-<html>
-<head>
-    <link rel="stylesheet" href="global.css" type="text/css">
-    <title>Gilles' testpagina</title>
-</head>
 <body>
+<?php
+require 'html_header.php';
+html_header('DB Example');
 
-<h1>hahaha gepranked</h1>
-<a href="home.php"> bieb boob</a>
+echo 'Base page';
+echo '</br> See <a href="info.php">info</a> for install info';
+echo '</br> See <a href="table.php">table</a> for an SQL table';
+
+?>
 </body>
 </html>
