@@ -3,6 +3,7 @@ version: "3"
 services:
   php:
     build:
+      context: .
       dockerfile: "server/Dockerfile-PHP"
     image: web-tech-php
     volumes:
@@ -15,6 +16,7 @@ services:
 
   sql:
     build:
+      context: .
       dockerfile: "server/Dockerfile-SQL"
     image: web-tech-sql
     ports:

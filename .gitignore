@@ -1,7 +1,7 @@
 /*
 !/pages/
 !/server/
-/tokens
+/server/local.ini
 !/components/
 !.gitignore
 !README.md

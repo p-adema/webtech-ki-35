@@ -1,19 +1,15 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-<title>Page Title</title>
-</head>
+<html lang='en'>
+
 <body>
 <?php
-echo 'Base page hello jesse';
+require 'html_header.php';
+html_header('DB Example');
+
+echo 'Base page';
 echo '</br> See <a href="info.php">info</a> for install info';
 echo '</br> See <a href="table.php">table</a> for an SQL table';
-echo 5 * 3;
+
 ?>
-
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-
 </body>
 </html>
