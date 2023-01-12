@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<body>
+<?php
+require 'html_header.php';
+html_header(title: '${Page_title}', styled: true, scripted: false);
+
+
+
+?>
+</body>
+</html>

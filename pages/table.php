@@ -1,29 +1,31 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <meta charset="utf-8">
-    <title>DB Table</title>
-</head>
+<!DOCTYPE html>
+<html lang='en'>
+<?php
+require 'html_header.php';
+html_header('DB Example');
+?>
 
 <body>
-<h1>DB example</h1>
+<h1>Users</h1>
 <div>
     <table>
         <tr>
             <th>Id</th>
-            <th>Message</th>
+            <th>Name</th>
+            <th>Email</th>
         </tr>
 
         <?php
-        require_once "../components/pdo_read.php";
+        require 'pdo_read.php';
         $pdo_read = new_pdo_read();
 
-        foreach ($pdo_read->query('SELECT * from message') as $row) {
+        foreach ($pdo_read->query('SELECT * from users') as $row) {
+            $width = 3;
             $html = "
         <tr>
-            <td>{$row['id']}</td>
-            <td>{$row['message']}</td>
+            <td style='--color: navy'>{$row['id']}</td>
+            <td style='--color: red'>{$row['name']}</td>
+            <td style='--color: navy'>{$row['email']}</td>
         </tr>
         ";
             echo $html;
