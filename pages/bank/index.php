@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang='en'>
-
 <?php
-require 'html_header.php';
+require 'html_page.php';
 html_header(title: 'balance', styled: true, scripted: false);
 ?>
-<body>
 <div id="main-container">
     <div id="big-balance-box">
         <div id="balance">
@@ -18,5 +14,4 @@ html_header(title: 'balance', styled: true, scripted: false);
         </div>
     </div>
 </div>
-</body>
-</html>
+<?php html_footer();

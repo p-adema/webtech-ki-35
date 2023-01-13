@@ -1,9 +1,6 @@
-<!DOCTYPE html>
-<html lang='en'>
-
-
 <?php
-require 'html_header.php';
+require 'html_page.php';
+
 html_header(title: 'Forgot password', styled: 'auth/register.css', scripted: true);
 ?>
 <body>
@@ -22,6 +19,4 @@ html_header(title: 'Forgot password', styled: 'auth/register.css', scripted: tru
 <?php
 
 
-?>
-</body>
-</html>
+html_footer();

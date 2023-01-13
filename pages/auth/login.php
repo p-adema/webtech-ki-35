@@ -1,11 +1,7 @@
-<!DOCTYPE html>
-<html lang='en'>
-
 <?php
-require 'html_header.php';
+require 'html_page.php';
 html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
 ?>
-<body>
 <div id="form_container">
     <h1> Login </h1>
     <div id="helper-box">
@@ -22,5 +18,4 @@ html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
     </form>
     </div>
 </div>
-</body>
-</html>
+<?php html_footer();

@@ -1,27 +1,15 @@
-<!doctype html>
-<html lang="en">
+<?php
+require "html_page.php";
+html_header(title: 'Voorbeeld', styled: true, scripted: false);
 
-<head>
-    <meta charset="utf-8">
-    <title>Voorbeeld</title>
-    <link rel="stylesheet" href="styles/global.css"/>
-</head>
+echo '<h1> Dit is een voorbeeld </h1>';
+echo '<p> Dit is de subtext </p>';
+require 'dropdown_function.php';
+require 'sidebar_function.php';
 
-<body>
-
-    <?php
-
-    echo '<h1> Dit is een voorbeeld </h1>';
-    echo '<p> Dit is de subtext </p>';
-    require 'dropdown_function.php';
-    require 'sidebar_function.php';
-
-    $links = array("Test 1"=>"test_1.php", "Test 2"=>"test_2.php", "Test 3"=>"test_3.php");
+$links = array("Test 1" => "test_1.php", "Test 2" => "test_2.php", "Test 3" => "test_3.php");
 
     /*dropDown($links);*/
     sidebar($links);
 
-    ?>
-
-</body>
-</html>
+html_footer();
