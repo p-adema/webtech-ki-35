@@ -5,7 +5,7 @@ $(document).ready(function () {
             password : $("#password").val(),
         };
 
-        $.post("/api/login_form.php", userData, function(data) {
+        $.post("/api/login.php", userData, function(data) {
             const server_data =  JSON.parse(data);
             console.log(server_data);
 

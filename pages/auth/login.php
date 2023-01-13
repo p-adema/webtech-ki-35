@@ -13,7 +13,9 @@ html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
         require "form_elements.php";
         form_input('name', 'Username');
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
-        form_submit()
+        form_submit();
+        require "link.php";
+        text_link('Register', '/auth/register.php');
 
         ?>
     </form>
