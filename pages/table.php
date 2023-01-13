@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang='en'>
 <?php
-require 'html_header.php';
+require 'html_page.php';
 html_header('DB Example');
 ?>
 
-<body>
 <h1>Users</h1>
 <div>
     <table>
@@ -35,6 +32,5 @@ html_header('DB Example');
 
     </table>
 </div>
-</body>
 
-</html>
+<?php html_footer();
