@@ -1,38 +1,25 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         let userData = {
-            name : $("#name").val(),
-            password : $("#password").val(),
+            name: $("#name").val(), password: $("#password").val(),
         };
 
-        $.post("/api/login.php", userData, function(data) {
-            const server_data =  JSON.parse(data);
+        $.post("/api/login.php", userData, function (data) {
+            const server_data = JSON.parse(data);
             console.log(server_data);
 
             if (!server_data.success) {
-                if (server_data.errors.name) {
-                    $("#name-group").children("span").addClass("has-error").html(
-                        '<div class="help-block">' + server_data.errors.name + "</div>"
-                    );
-                }
-                else {
-                    $("#name-group").children("span").addClass("has-error").text("")
-                }
-
-                if (server_data.errors.password) {
-                    $("#password-group").children("span").addClass("has-error").html(
-                        '<div class="help-block">' + server_data.errors.password + "</div>"
-                    );
-                }
-                else {
-                    $("#password-group").children("span").addClass("has-error").text("")
+                for (let elem in server_data.errors) {
+                    if (server_data.errors.name) {
+                        $(`#${elem}-group`).addClass("has-error").children("span").html(
+                            '<div class="help-block">' + server_data.errors[elem] + "</div>");
+                    } else {
+                        $(`#${elem}-group`).removeClass("has-error").children("span").text("")
+                    }
                 }
 
-            }
-            else {
-                $("form").html(
-                    '<div class="alert alert-success">' + server_data.message + "</div>"
-                );
+            } else {
+                $("form").html('<div class="alert alert-success">' + server_data.message + "</div>");
             }
 
         });

@@ -1,12 +1,13 @@
 <?php
+require_once "link.php";
 
-function dropDown($list): Void
+function dropDown($links): Void
 {
     echo "<div class='dropdown'> 
           <button class='dropbtn'>Dropdown</button>
           <div class='dropdown-content'>";
-    foreach($list as $subject => $link) {
-        echo "<a href='$link'>$subject</a>";
+    foreach($links as $text => $address) {
+        text_link($text, $address);
     }
     echo "</div>
           </div>";
