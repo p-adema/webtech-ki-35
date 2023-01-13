@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Logout', styled: '/auth/register.css', scripted: true);
+html_header(title: 'Logout', styled: 'form.css', scripted: true);
 ?>
     <div id="form_container">
         <h1> Logout </h1>
@@ -10,8 +10,8 @@ html_header(title: 'Logout', styled: '/auth/register.css', scripted: true);
                 require "form_elements.php";
                 require "link.php";
 
-                form_submit();
-                text_link('Go back', '/');
+                form_submit(text: 'Confirm logout');
+                text_link('Go back to home', '/');
                 ?>
             </form>
         </div>

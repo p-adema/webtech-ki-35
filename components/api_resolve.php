@@ -4,6 +4,12 @@
 # as these functions end script execution
 use JetBrains\PhpStorm\NoReturn;
 
+/**
+ * Send JSON data, then stop execution
+ * @param string $message Message to be returned
+ * @param array $errors Errors encountered during data processing
+ * @param array $data Additional data to be sent
+ */
 #[NoReturn] function api_fail(string $message, array $errors, array $data = []): void
 {
     $response['success'] = false;
@@ -14,6 +20,12 @@ use JetBrains\PhpStorm\NoReturn;
     die();
 }
 
+/**
+ * Send JSON data, then stop execution
+ * @param string $message Message to be returned
+ * @param array $errors Errors encountered during data processing
+ * @param array $data Additional data to be sent
+ */
 #[NoReturn] function api_succeed(string $message, array $errors = [], array $data = []): void
 {
     $response['success'] = true;
@@ -24,10 +36,25 @@ use JetBrains\PhpStorm\NoReturn;
     die();
 }
 
-function session_login(string $username): void
+/**
+ * Creates a session if one did not exist yet
+ */
+function ensure_session(): void
+{
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+}
+
+/**
+ * Set session cookies to be logged in for a user
+ * @param string $username Name of user to be logged in as
+ * @throws InvalidArgumentException if username is not present in database
+ */
+function api_login(string $username): void
 {
     require_once "pdo_read.php";
-
+    ensure_session();
     $sql = 'select (id) from db.users where (name = :name)';
     $data = ['name' => $username];
     $pdo_read = new_pdo_read();
@@ -42,8 +69,17 @@ function session_login(string $username): void
     $_SESSION['auth'] = true;
 }
 
-function session_logout(): void
+/**
+ * Reset session cookies to be logged out
+ * @throws InvalidArgumentException if not logged in
+ */
+function api_logout(): void
 {
-    unset($_SESSION['uid']);
-    $_SESSION['auth'] = false;
+    ensure_session();
+    if ($_SESSION['uid']) {
+        unset($_SESSION['uid']);
+        $_SESSION['auth'] = false;
+    } else {
+        throw new InvalidArgumentException("Session is not logged in");
+    }
 }

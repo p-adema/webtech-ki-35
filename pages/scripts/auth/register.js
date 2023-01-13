@@ -12,25 +12,27 @@ $(document).ready(function () {
                console.log(server_data);
 
                if (!server_data.success) {
-                   for (let group_type in server_data.errors) {
-                       if (server_data.errors[group_type].length !== 0) {
-                           $(`#${group_type}-group`).addClass("has-error").children("span").html(
-                               '<div class="help-block">' + server_data.errors[group_type].join("<br>") + "</div>"
+                   for (let form_elem in server_data.errors) {
+                       if (server_data.errors[form_elem].length !== 0) {
+                           $(`#${form_elem}-group`).addClass("has-error").children("span").html(
+                               '<div class="help-block">' + server_data.errors[form_elem].join("<br/>") + "</div>"
                            );
                        } else {
-                           $(`#${group_type}-group`).removeClass("has-error").children("span").text("")
+                           $(`#${form_elem}-group`).removeClass("has-error").children("span").text("")
                        }
                    }
                }
                else {
                    $("form").html(
                        '<div class="alert alert-success">' + server_data.message + "</div>"
-                   );
+                   )
+                   setTimeout(function () {
+                       $(location).attr('href', '/')
+                   }, 1500)
                }
 
             });
-        
+
         event.preventDefault();
     });
 });
-

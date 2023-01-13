@@ -1,4 +1,12 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      name        :   < username >
+ *      email       :   < email >
+ *      password    :   < password >
+ *      full_name   :   < full name >
+ */
+
 require "api_resolve.php";
 
 $errors = [

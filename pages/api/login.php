@@ -1,4 +1,9 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      name        :   < username >
+ *      password    :   < password >
+ */
 require "api_resolve.php";
 
 $errors = [
@@ -49,6 +54,5 @@ if (empty($hash) or !password_verify($password, $hash[0])) {
     $errors['submit'][] = 'Incorrect username or password';
     api_fail('Username or password invalid', $errors);
 }
-session_start();
-session_login($name);
+api_login($name);
 api_succeed('Login successful!', $errors);

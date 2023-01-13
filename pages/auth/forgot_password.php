@@ -1,9 +1,7 @@
 <?php
 require 'html_page.php';
-
-html_header(title: 'Forgot password', styled: 'auth/register.css', scripted: true);
+html_header(title: 'Forgot password', styled: 'form.css', scripted: true);
 ?>
-<body>
 <div id="form_container">
     <h1> Forgot password </h1>
     <div id="helper-box">

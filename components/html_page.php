@@ -1,4 +1,17 @@
 <?php
+/**
+ * Start a page by initialising the session, creating a header and opening the body
+ * @param string $title Tab title
+ * @param string $description Meta-tag for page description
+ * @param bool|string $styled Stylesheet links. On false: loads only global.css
+ *                                              On true: loads global.css and {page}.css
+ *                                              On string: loads global.css and {string}
+ * @param bool|string $scripted Script links. On false: loads no scripts
+ *                                            On true: loads global.css and {page}.css
+ *                                            On string: loads global.css and {string}
+ * @param string $extra Extra header elements put after all other tags
+ * @return void Echoes to the page
+ */
 function html_header(string $title, string $description = '', bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
     $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
@@ -50,6 +63,10 @@ function html_header(string $title, string $description = '', bool|string $style
 }
 
 
+/**
+ * Ends the HTML body and page
+ * @return void Echoes to the page
+ */
 function html_footer(): void
 {
     echo '  </body>

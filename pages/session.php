@@ -7,13 +7,13 @@ if (!isset($_SESSION['visits'])) {
 }
 $_SESSION['visits'] += 1;
 
-echo '<p> You have visited this site ', $_SESSION['visits'], ' times! </br> </p>';
+echo '<p> You have visited this site ', $_SESSION['visits'], ' times! <br/> </p>';
 
 
 if ($_SESSION['auth']) {
-    echo '<p> Your id is: "', $_SESSION['uid'], '" </br></p>';
+    echo '<p> Your id is: "', $_SESSION['uid'], '" <br/></p>';
 } else {
-    echo '<p>You are not logged in </br></p>';
+    echo '<p>You are not logged in <br/></p>';
 }
 
 require "link.php";

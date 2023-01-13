@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
+html_header(title: 'Login', styled: 'form.css', scripted: true);
 ?>
 <div id="form_container">
     <h1> Login </h1>

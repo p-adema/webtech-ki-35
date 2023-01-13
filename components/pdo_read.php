@@ -1,4 +1,9 @@
 <?php
+/**
+ * Create a new read-only connection to the database
+ * @param bool $err_fatal Whether to terminate script on error, or to reraise errors
+ * @return PDO Database connection object
+ */
 function new_pdo_read(bool $err_fatal = true): PDO
 {
     try {

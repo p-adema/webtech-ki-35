@@ -1,4 +1,13 @@
 <?php
+/**
+ * Create a form input group with label and error span
+ * @param string $id
+ * @param string $label
+ * @param string $placeholder
+ * @param string $type
+ * @param string $input_attrs
+ * @return void Echoes to page
+ */
 function form_input(string $id, string $label, string $placeholder = '', string $type = 'text', string $input_attrs = ''): void
 {
     $html = "
@@ -28,6 +37,3 @@ function form_submit(string $text = 'Submit'): void
     ";
     echo $html;
 }
-
-
-
