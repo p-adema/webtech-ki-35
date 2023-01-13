@@ -12,37 +12,14 @@ $(document).ready(function () {
                console.log(server_data);
 
                if (!server_data.success) {
-                   if (server_data.errors.name) {
-                       $("#name-group").children("span").html(
-                           '<div class="help-block">' + server_data.errors.name + "</div>"
-                       );
-                   }
-                   else {
-                       $("#name-group").children("span").addClass("has-error").text("")
-                   }
-                   if (server_data.errors.email) {
-                       $("#email-group").children("span").addClass("has-error").html(
-                           '<div class="help-block">' + server_data.errors.email + "</div>"
-                       );
-                   }
-                   else {
-                       $("#email-group").children("span").addClass("has-error").text("")
-                   }
-                   if (server_data.errors.password) {
-                       $("#password-group").children("span").addClass("has-error").html(
-                           '<div class="help-block">' + server_data.errors.password.join("<br>") + "</div>"
-                       );
-                   }
-                   else {
-                       $("#password-group").children("span").addClass("has-error").text("")
-                   }
-                   if (server_data.errors.full_name) {
-                       $("#full_name-group").children("span").addClass("has-error").html(
-                           '<div class="help-block">' + server_data.errors.full_name + "</div>"
-                       );
-                   }
-                   else {
-                       $("#full_name-group").children("span").addClass("has-error").text("")
+                   for (let group_type in server_data.errors) {
+                       if (server_data.errors[group_type].length !== 0) {
+                           $(`#${group_type}-group`).addClass("has-error").children("span").html(
+                               '<div class="help-block">' + server_data.errors[group_type].join("<br>") + "</div>"
+                           );
+                       } else {
+                           $(`#${group_type}-group`).removeClass("has-error").children("span").text("")
+                       }
                    }
                }
                else {
@@ -56,3 +33,4 @@ $(document).ready(function () {
         event.preventDefault();
     });
 });
+
