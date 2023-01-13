@@ -4,10 +4,24 @@ div.help-block {
     margin: 2px;
 }
 
+.form-group {
+    display: flex;
+    flex-flow: column;
+}
+
 form {
     display: flex;
     flex-flow: column;
     align-items: baseline;
+}
+
+input {
+    border: solid slategrey 2px;
+    border-radius: 8px
+}
+
+.has-error > input {
+    border-color: #b54d58;
 }
 
 #login-box {
@@ -28,7 +42,7 @@ form {
 }
 
 #helper-box {
-    max-width: 30vw;
+    max-width: 60vw;
     border: solid white 2px;
     border-radius: 5px;
     padding: 50px 75px;
@@ -36,22 +50,12 @@ form {
 }
 
 label {
-    margin: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 3px;
 }
 
-#name-group {
-    margin: 5px;
-}
-
-#email-group {
-    margin: 5px;
-}
-
-#password-group {
-    margin: 5px;
-}
-
-#full_name-group {
+#form-group {
     margin: 5px;
 }
 
@@ -60,30 +64,54 @@ label {
 }
 
 button {
+    border: solid black 2px;
+    border-radius: 8px;
     margin-top: 50px;
 }
 
 h1 {
+    font-family: sans-serif;
     padding: 70px 0;
     color: lightslategrey;
     font-size: xxx-large;
     text-align: center;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 1200px) {
+    div.help-block {
+        font-size: 26px;
+    }
     #login-box {
-        margin-right: 0;
+        align-self: end;
+        margin-right: 20px;
+    }
+    #login-box > a {
+        transform: translateY(-35px);
+        font-size: 25px;
+    }
+    #form_container {
+        margin-top: 100px;
+    }
+    input{
+        max-width: 80%;
+        font-size: 40px;
+    }
+    #helper-box {
+        max-width: 80vw ;
     }
     button {
-        margin-top: 0;
+        font-size: 40px;
+        margin-top: 10px;
     }
     label {
+        font-size: 40px;
         margin: 0;
     }
     form {
         align-items: center;
     }
     h1 {
-        padding: 8px;
+        font-size: 100px;
+        padding: 20px;
     }
 }
