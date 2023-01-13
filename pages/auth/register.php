@@ -18,7 +18,7 @@ html_header(title: 'Register', styled: true, scripted: true);
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
         form_input('full_name', 'Full name (optional)', 'User Name');
         form_submit();
-        echo '<div id="login-box"><a href="/auth/login_form.php">Login</a></div>';
+        echo '<div id="login-box"><a href="/auth/login.php">Login</a></div>';
         ?>
     </form>
     </div>
