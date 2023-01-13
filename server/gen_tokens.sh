@@ -12,16 +12,12 @@ function random_token() {
 
 rm -rf tokens
 mkdir tokens
-cd tokens || exit
+cd tokens || exit 1
 
-touch hostname
-echo -n '0.0.0.0' >> hostname
+echo -n '0.0.0.0' > hostname
 
-touch web-read
-random_token 64 >> web-read
+random_token 64 > web-read
 
-touch web-write
-random_token 64 >> web-write
+random_token 64 > web-write
 
-touch web-deploy
-random_token 64 >> web-deploy
+random_token 64 > web-deploy
