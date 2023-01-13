@@ -4,10 +4,10 @@ USE db;
 CREATE TABLE `users`
 (
     `id`         BIGINT UNSIGNED     NOT NULL AUTO_INCREMENT,
-    `name`       VARCHAR(24) UNIQUE  NOT NULL,
-    `email`      VARCHAR(100) UNIQUE NOT NULL,
+    `name`       VARCHAR(128) UNIQUE NOT NULL,
+    `email`      VARCHAR(128) UNIQUE NOT NULL,
     `password`   VARCHAR(256)        NOT NULL,
-    `full_name`  VARCHAR(100)        NOT NULL,
+    `full_name`  VARCHAR(128)        NOT NULL,
     `membership` VARCHAR(10)         NOT NULL,
     PRIMARY KEY (id)
 );
