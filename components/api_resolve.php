@@ -49,12 +49,15 @@ function ensure_session(): void
 /**
  * Set session cookies to be logged in for a user
  * @param string $username Name of user to be logged in as
- * @throws InvalidArgumentException if username is not present in database
+ * @return bool Success of login
  */
-function api_login(string $username): void
+function api_login(string $username): bool
 {
     require_once "pdo_read.php";
     ensure_session();
+    if ($_SESSION['auth']) { # Can't log in if already logged in
+        return false;
+    }
     $sql = 'select (id) from db.users where (name = :name)';
     $data = ['name' => $username];
     $pdo_read = new_pdo_read();
@@ -62,24 +65,25 @@ function api_login(string $username): void
     $sql_prep->execute($data);
     $uid = $sql_prep->fetch();
     if ($uid === false) {
-        throw new InvalidArgumentException("Username not present in database");
+        return false;
     }
 
     $_SESSION['uid'] = $uid[0];
     $_SESSION['auth'] = true;
+    return true;
 }
 
 /**
  * Reset session cookies to be logged out
  * @throws InvalidArgumentException if not logged in
  */
-function api_logout(): void
+function api_logout(): bool
 {
     ensure_session();
-    if ($_SESSION['uid']) {
-        unset($_SESSION['uid']);
-        $_SESSION['auth'] = false;
-    } else {
-        throw new InvalidArgumentException("Session is not logged in");
+    if (!$_SESSION['auth']) {
+        return false;
     }
+    unset($_SESSION['uid']);
+    $_SESSION['auth'] = false;
+    return true;
 }

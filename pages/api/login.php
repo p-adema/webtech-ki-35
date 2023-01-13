@@ -54,5 +54,9 @@ if (empty($hash) or !password_verify($password, $hash[0])) {
     $errors['submit'][] = 'Incorrect username or password';
     api_fail('Username or password invalid', $errors);
 }
-api_login($name);
+if (!api_login($name)) {
+    $errors['submit'][] = 'Unexpected server error';
+    api_fail('Unexpected server error', $errors);
+}
+
 api_succeed('Login successful!', $errors);
