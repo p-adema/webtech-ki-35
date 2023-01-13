@@ -9,7 +9,7 @@ html_header(title: 'Register', styled: true, scripted: true);
 <body>
 <div id="form_container">
     <h1> Register </h1>
-    <div id="helper-box"></div>
+    <div id="helper-box">
     <form action="/api/register.php" method="POST">
         <?php
         require "form_elements.php";
@@ -18,9 +18,10 @@ html_header(title: 'Register', styled: true, scripted: true);
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
         form_input('full_name', 'Full name (optional)', 'User Name');
         form_submit();
-        echo '<br> <a href="../pages/auth/login_form.php">Login</a>';
+        echo '<div id="login-box"><a href="/auth/login_form.php">Login</a></div>';
         ?>
     </form>
+    </div>
 </div>
 </body>
 </html>

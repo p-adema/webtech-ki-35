@@ -1,53 +1,66 @@
 div.help-block {
     color : red;
     font-size: xx-small;
+    margin: 2px;
 }
 
-div {
-    text-align: center;
+form {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
 }
 
-a {
+#login-box {
     font-size: 12px;
-    position: fixed;
-    bottom: 554px;
-    left: 1075px;
+    align-self: end;
+    margin-right: 20px;
+}
+
+#login-box > a {
+    transform: translateY(-19px);
+    position: absolute;
+}
+
+#form_container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
 }
 
 #helper-box {
-    position: fixed;
-    left: 715px;
-    bottom: 545px;
+    max-width: 30vw;
     border: solid white 2px;
     border-radius: 5px;
-    padding: 82px 210px;
+    padding: 50px 75px;
     box-shadow: 2px 2px 8px 8px slategrey;
 }
 
 label {
-    padding: 70px 10px;
+    margin: 10px;
 }
 
 #name-group {
-    padding: 5px;
+    margin: 5px;
 }
 
 #email-group {
-    padding: 5px;
+    margin: 5px;
 }
 
 #password-group {
-    padding: 5px;
+    margin: 5px;
 }
 
 #full_name-group {
-    padding: 5px;
+    margin: 5px;
+}
+
+#submit-group {
+    align-self: center;
 }
 
 button {
-    position: fixed;
-    left: 900px;
-    bottom: 550px;
+    margin-top: 50px;
 }
 
 h1 {
@@ -55,4 +68,22 @@ h1 {
     color: lightslategrey;
     font-size: xxx-large;
     text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    #login-box {
+        margin-right: 0;
+    }
+    button {
+        margin-top: 0;
+    }
+    label {
+        margin: 0;
+    }
+    form {
+        align-items: center;
+    }
+    h1 {
+        padding: 8px;
+    }
 }

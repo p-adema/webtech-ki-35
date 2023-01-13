@@ -13,7 +13,7 @@ $(document).ready(function () {
 
                if (!server_data.success) {
                    if (server_data.errors.name) {
-                       $("#name-group").children("span").addClass("has-error").html(
+                       $("#name-group").children("span").html(
                            '<div class="help-block">' + server_data.errors.name + "</div>"
                        );
                    }
@@ -30,7 +30,7 @@ $(document).ready(function () {
                    }
                    if (server_data.errors.password) {
                        $("#password-group").children("span").addClass("has-error").html(
-                           '<div class="help-block">' + server_data.errors.password + "</div>"
+                           '<div class="help-block">' + server_data.errors.password.join("<br>") + "</div>"
                        );
                    }
                    else {

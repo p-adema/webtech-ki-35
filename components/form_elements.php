@@ -13,7 +13,6 @@ function form_input(string $id, string $label, string $placeholder = '', string 
             $input_attrs
           />
           <span class=\"form_error\"></span>
-          <span></span>
         </div>
     ";
     echo $html;
