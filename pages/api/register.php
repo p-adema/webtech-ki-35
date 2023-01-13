@@ -57,7 +57,7 @@ if (empty($email)) {
 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors['email'][] = "Invalid email format.";
     $valid = false;
-} else if (strlen(htmlspecialchars($name)) > 128) {
+} else if (strlen(htmlspecialchars($email)) > 128) {
     $errors['email'][] = "Email must be shorter (max 128 standard characters).";
     $valid = false;
 }
