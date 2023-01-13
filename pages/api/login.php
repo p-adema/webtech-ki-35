@@ -22,7 +22,7 @@ if (empty($password)) {
 
 
 if (!$valid) {
-    api_fail($errors, 'Please fill in all fields');
+    api_fail('Please fill in all fields', $errors);
 }
 
 $data = [
@@ -36,18 +36,18 @@ try {
     $pdo_read = new_pdo_read(err_fatal: false);
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    api_fail($errors, 'Internal server error (unable to connect to database)');
+    api_fail('Internal server error (unable to connect to database)', $errors);
 }
 $sql_prep = $pdo_read->prepare($sql);
 
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';
-    api_fail($errors, 'Internal server error, try again later');
+    api_fail('Internal server error, try again later', $errors);
 }
 $hash = $sql_prep->fetch();
 if (empty($hash) or !password_verify($password, $hash[0])) {
     $errors['submit'][] = 'Incorrect username or password';
-    api_fail($errors, 'Username or password invalid');
+    api_fail('Username or password invalid', $errors);
 }
 
-api_succeed('Login successful!');
+api_succeed('Login successful!', $errors);
