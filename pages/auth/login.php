@@ -8,6 +8,7 @@ html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
 <body>
 <div id="form_container">
     <h1> Login </h1>
+    <div id="helper-box">
     <form action="/api/login.php" method="POST">
         <?php
         require "form_elements.php";
@@ -19,6 +20,7 @@ html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
 
         ?>
     </form>
+    </div>
 </div>
 </body>
 </html>
