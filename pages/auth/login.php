@@ -14,6 +14,7 @@ html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
         form_input('name', 'Username');
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
         form_submit()
+
         ?>
     </form>
 </div>
