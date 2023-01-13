@@ -1,0 +1,89 @@
+div.help-block {
+    color : red;
+    font-size: xx-small;
+    margin: 2px;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+}
+
+#login-box {
+    font-size: 12px;
+    align-self: end;
+    margin-right: 20px;
+}
+
+#login-box > a {
+    transform: translateY(-19px);
+    position: absolute;
+}
+
+#form_container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+#helper-box {
+    max-width: 30vw;
+    border: solid white 2px;
+    border-radius: 5px;
+    padding: 50px 75px;
+    box-shadow: 2px 2px 8px 8px slategrey;
+}
+
+label {
+    margin: 10px;
+}
+
+#name-group {
+    margin: 5px;
+}
+
+#email-group {
+    margin: 5px;
+}
+
+#password-group {
+    margin: 5px;
+}
+
+#full_name-group {
+    margin: 5px;
+}
+
+#submit-group {
+    align-self: center;
+}
+
+button {
+    margin-top: 50px;
+}
+
+h1 {
+    padding: 70px 0;
+    color: lightslategrey;
+    font-size: xxx-large;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px) {
+    #login-box {
+        margin-right: 0;
+    }
+    button {
+        margin-top: 0;
+    }
+    label {
+        margin: 0;
+    }
+    form {
+        align-items: center;
+    }
+    h1 {
+        padding: 8px;
+    }
+}
