@@ -9,9 +9,6 @@ $_SESSION['visits'] += 1;
 
 echo '<p> You have visited this site ', $_SESSION['visits'], ' times! </br> </p>';
 
-if (!isset($_SESSION['auth'])) {
-    $_SESSION['auth'] = false;
-}
 
 if ($_SESSION['auth']) {
     echo '<p> Your id is: "', $_SESSION['uid'], '" </br></p>';

@@ -42,6 +42,9 @@ function html_header(string $title, string $description = '', bool|string $style
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+    if (!isset($_SESSION['auth'])) {
+        $_SESSION['auth'] = false;
+    }
 
     echo $html;
 }
