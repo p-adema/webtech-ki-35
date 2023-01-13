@@ -26,6 +26,8 @@ function html_header(string $title, string $description = '', bool|string $style
                 <title>$title</title>
                 $script_tags
                 <link rel='stylesheet' href='/styles/global.css' type='text/css'/>
+                <link rel='stylesheet' href='/styles$style' type='text/css'/>
+                <link rel='stylesheet' href='/styles/global.css' type='text/css'/>
                 $style_tag
                 $extra
             </head>";

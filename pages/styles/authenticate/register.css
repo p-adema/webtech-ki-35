@@ -1,0 +1,39 @@
+div.help-block {
+    color : red;
+    font-size: xx-small;
+}
+
+div {
+    text-align: center;
+}
+
+label {
+    padding: 70px 10px;
+}
+
+#name-group {
+    padding: 5px;
+}
+
+#email-group {
+    padding: 5px;
+}
+
+#password-group {
+    padding: 5px;
+}
+
+#full_name-group {
+    padding: 5px;
+}
+
+button {
+    bottom: 50px;
+}
+
+h1 {
+    padding: 70px 0;
+    color: lightslategrey;
+    font-size: xxx-large;
+    text-align: center;
+}

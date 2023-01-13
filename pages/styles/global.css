@@ -20,7 +20,7 @@ html {
     position: absolute;
     background-color: darkcyan;
     min-width: 350px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -36,3 +36,52 @@ html {
 .dropdown:hover .dropdown-content {display: block;}
 
 .dropdown:hover .dropbtn {background-color: darkcyan;}
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    padding-top: 60px;
+    transition: 0.5s;
+    background-color: maroon;
+    overflow-x: hidden;
+}
+
+.sidebar a {
+    text-decoration: none;
+    font-size: 25px;
+    padding: 8px 8px 8px 32px;
+    color: white;
+    display: flow;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: black;
+}
+
+.sidebar .closebtn{
+    color: black;
+    position: absolute;
+    font-size: 67px;
+    right: 200px;
+    margin-left: 150px;
+    top: 0;
+}
+
+.openbtn:hover {
+    background-color: darkmagenta;
+}
+
+#main {
+    transition: margin-left 0.5s;
+    padding: 16px;
+}
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
