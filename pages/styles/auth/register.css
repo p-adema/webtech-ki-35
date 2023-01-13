@@ -7,6 +7,13 @@ div {
     text-align: center;
 }
 
+a {
+    font-size: 12px;
+    position: fixed;
+    bottom: 554px;
+    left: 1075px;
+}
+
 #helper-box {
     position: fixed;
     left: 715px;
@@ -38,7 +45,9 @@ label {
 }
 
 button {
-    bottom: 50px;
+    position: fixed;
+    left: 900px;
+    bottom: 550px;
 }
 
 h1 {
