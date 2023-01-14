@@ -8,7 +8,8 @@ $(document).ready(function () {
                 $(location).attr('href', '/');
             }
             $('#submit-group').addClass('has-error').children('span').html(
-                '<div class="help-block">' + response.errors.submit.join("<br/>") + "</div>")
+                response.errors.submit.join("<br/>")
+            );
         })
     })
 })

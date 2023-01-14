@@ -5,6 +5,6 @@
  */
 require "api_resolve.php";
 if (!api_logout()) {
-    api_fail('Unexpected server error', ['submit' => ['Unexpected server error']]);
+    api_fail('You must be logged in to log out', ['submit' => ['You must be logged in to log out']]);
 }
-api_succeed('Logout successful!');
+api_succeed('Successfully logged out!');

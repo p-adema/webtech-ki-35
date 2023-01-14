@@ -74,6 +74,7 @@ if (empty($email)) {
 }
 
 if (isset($pdo_write)) {
+    /** @noinspection DuplicatedCode */
     $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
     $data = ['email' => htmlspecialchars($email)];
 

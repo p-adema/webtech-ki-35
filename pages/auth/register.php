@@ -2,9 +2,9 @@
 require 'html_page.php';
 html_header(title: 'Register', styled: 'form.css', scripted: true);
 ?>
-    <div id="form_container">
+    <div class="form-content">
         <h1> Register </h1>
-        <div id="helper-box">
+        <div class="form-outline">
             <form action="/api/register.php" method="POST">
                 <?php
                 require "form_elements.php";

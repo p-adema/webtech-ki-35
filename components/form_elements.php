@@ -21,18 +21,23 @@ function form_input(string $id, string $label, string $placeholder = '', string 
             placeholder=\"$placeholder\"
             $input_attrs
           />
-          <span class=\"form_error\"></span>
+          <span class=\"form-error\"></span>
         </div>
     ";
     echo $html;
 }
 
+/**
+ * Create a form submission button with error span
+ * @param string $text Text to be put in the button
+ * @return void Echoes to page
+ */
 function form_submit(string $text = 'Submit'): void
 {
     $html = "
     <div id=\"submit-group\">
         <button type=\"submit\" class=\"form-submit\"> $text </button>
-        <span class=\"form_error\"></span>
+        <span class=\"form-error\"></span>
     </div>
     ";
     echo $html;

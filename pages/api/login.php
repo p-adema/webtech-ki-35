@@ -63,4 +63,4 @@ if (!api_login($name)) {
     api_fail('Unexpected server error', $errors);
 }
 
-api_succeed('Login successful!', $errors);
+api_succeed('Successfully logged in!', $errors);

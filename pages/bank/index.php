@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'balance', styled: true, scripted: false);
+html_header(title: 'balance', styled: true);
 ?>
 <div id="main-container">
     <div id="big-balance-box">

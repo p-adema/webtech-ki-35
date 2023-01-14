@@ -5,4 +5,3 @@ html_header(title: '${Page_title}', styled: true, scripted: false);
 #[[$END$]]#
 
 html_footer();
-?>

@@ -1,6 +1,6 @@
 <?php
 require "html_page.php";
-html_header(title: 'Voorbeeld', styled: true, scripted: false);
+html_header(title: 'Voorbeeld', styled: true);
 
 echo '<h1> Dit is een voorbeeld </h1>';
 echo '<p> Dit is de subtext </p>';

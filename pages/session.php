@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Session test', styled: false, scripted: false);
+html_header(title: 'Session test');
 
 if (!isset($_SESSION['visits'])) {
     $_SESSION['visits'] = 0;
