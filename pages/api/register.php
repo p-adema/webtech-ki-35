@@ -32,6 +32,9 @@ if (empty($name)) {
 } else if (strlen(htmlspecialchars($name)) > 128) {
     $errors['name'][] = "Username must be shorter (max 128 standard characters).";
     $valid = false;
+} else if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+    $errors['name'][] = "Username should not be an email.";
+    $valid = false;
 }
 # Use a read/write, because we might need to insert a user later
 require "pdo_write.php";

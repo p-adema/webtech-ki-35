@@ -8,7 +8,7 @@ html_header(title: 'Login', styled: 'form.css', scripted: true);
     <form action="/api/login.php" method="POST">
         <?php
         require "form_elements.php";
-        form_input('name', 'Username');
+        form_input('name', 'Username or email');
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
         form_submit();
         require "link.php";

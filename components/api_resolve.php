@@ -47,24 +47,29 @@ function ensure_session(): void
 }
 
 /**
- * Set session cookies to be logged in for a user
- * @param string $username Name of user to be logged in as
+ * Set session cookies to be logged in for this request
+ * @param string $username_or_email Name/email of user to be logged in as
  * @return bool Success of login
  */
-function api_login(string $username): bool
+function api_login(string $username_or_email): bool
 {
     require_once "pdo_read.php";
     ensure_session();
     if ($_SESSION['auth']) { # Can't log in if already logged in
         return false;
     }
-    $sql = 'select (id) from db.users where (name = :name)';
-    $data = ['name' => $username];
+    if (filter_var($username_or_email, FILTER_VALIDATE_EMAIL)) {
+        $sql = 'SELECT (id) FROM db.users WHERE (email = :name);';
+    } else {
+        $sql = 'SELECT (id) FROM db.users WHERE (name = :name);';
+    }
+    $data = ['name' => $username_or_email];
     $pdo_read = new_pdo_read();
     $sql_prep = $pdo_read->prepare($sql);
     $sql_prep->execute($data);
     $uid = $sql_prep->fetch();
-    if ($uid === false) {
+
+    if ($uid === false) { # No such user
         return false;
     }
 
@@ -74,8 +79,8 @@ function api_login(string $username): bool
 }
 
 /**
- * Reset session cookies to be logged out
- * @throws InvalidArgumentException if not logged in
+ * Reset session cookies to be logged out for this request
+ * @return bool Success of logout (fails if request wasn't logged in)
  */
 function api_logout(): bool
 {
