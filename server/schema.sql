@@ -10,7 +10,7 @@ CREATE TABLE `users`
     `full_name`  VARCHAR(128)                           NULL,
     `membership` ENUM ('none', 'member') DEFAULT 'none' NOT NULL,
     `join_date`  DATETIME                DEFAULT NOW()  NOT NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`) # TODO: Add email verified
 );
 
 CREATE TABLE `billing_information`
@@ -71,7 +71,7 @@ CREATE TABLE `balances`
     `balance` DECIMAL(10, 2)  NOT NULL,
     PRIMARY KEY (`user_id`)
 );
-
+# localhost/verify?tag=fweuifg374ugf37egf3uyfgeuyferuyfg
 CREATE TABLE `emails_pending`
 (
     `id`           BIGINT UNSIGNED AUTO_INCREMENT,

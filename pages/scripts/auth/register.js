@@ -27,6 +27,7 @@ $(document).ready(function () {
                        '<span class="form-success">' + server_data.message + "</span>"
                    )
                    setTimeout(function () {
+                       // Example redirect, TODO: make auto redirect on already logged in user (to home)
                        $(location).attr('href', '/')
                    }, 1500)
                }

@@ -40,7 +40,7 @@ if (isset($pdo_write)) {
     }
     $duplicate = $sql_prep->fetch();
     if (empty($duplicate)) {
-        $errors['email'][] = 'This email is not in use';
+        $errors['email'][] = 'This email is not in use'; #TODO hmm
         $valid = false;
     }
 }

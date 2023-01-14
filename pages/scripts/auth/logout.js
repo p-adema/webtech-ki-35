@@ -10,6 +10,7 @@ $(document).ready(function () {
             $('#submit-group').addClass('has-error').children('span').html(
                 response.errors.submit.join("<br/>")
             );
+            // TODO: not logged in users go to login page
         })
     })
 })

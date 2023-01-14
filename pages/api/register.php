@@ -152,3 +152,6 @@ if (!$sql_prep->execute($data)) {
 }
 
 api_succeed('Registration successful!', $errors);
+
+# TODO: add email verification
+# TODO: add verification status to user table

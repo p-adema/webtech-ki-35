@@ -15,3 +15,11 @@ html_header(title: 'balance', styled: true);
     </div>
 </div>
 <?php html_footer();
+
+/*
+ * Taak 1:
+ * TODO:
+ *      Mooi geformateerde balans (miss .00 kleiner)
+ *      Pending transactions als die er zijn (anders hide)
+ *      Transaction log
+ */
