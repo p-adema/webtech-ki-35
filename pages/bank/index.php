@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'balance', styled: true, scripted: false);
+html_header(title: 'balance', styled: true);
 ?>
 <div id="main-container">
     <div id="big-balance-box">
@@ -15,3 +15,11 @@ html_header(title: 'balance', styled: true, scripted: false);
     </div>
 </div>
 <?php html_footer();
+
+/*
+ * Taak 1:
+ * TODO:
+ *      Mooi geformateerde balans (miss .00 kleiner)
+ *      Pending transactions als die er zijn (anders hide)
+ *      Transaction log
+ */

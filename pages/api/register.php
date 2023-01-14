@@ -1,4 +1,12 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      name        :   < username >
+ *      email       :   < email >
+ *      password    :   < password >
+ *      full_name   :   < full name >
+ */
+
 require "api_resolve.php";
 
 $errors = [
@@ -23,6 +31,9 @@ if (empty($name)) {
     $valid = false;
 } else if (strlen(htmlspecialchars($name)) > 128) {
     $errors['name'][] = "Username must be shorter (max 128 standard characters).";
+    $valid = false;
+} else if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
+    $errors['name'][] = "Username should not be an email.";
     $valid = false;
 }
 # Use a read/write, because we might need to insert a user later
@@ -63,6 +74,7 @@ if (empty($email)) {
 }
 
 if (isset($pdo_write)) {
+    /** @noinspection DuplicatedCode */
     $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
     $data = ['email' => htmlspecialchars($email)];
 
@@ -140,3 +152,6 @@ if (!$sql_prep->execute($data)) {
 }
 
 api_succeed('Registration successful!', $errors);
+
+# TODO: add email verification
+# TODO: add verification status to user table

@@ -1,14 +1,14 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Login', styled: 'auth/register.css', scripted: true);
+html_header(title: 'Log in', styled: 'form.css', scripted: true);
 ?>
-<div id="form_container">
-    <h1> Login </h1>
-    <div id="helper-box">
-    <form action="/api/login.php" method="POST">
-        <?php
+    <div class="form-content">
+        <h1> Log in </h1>
+        <div class="form-outline">
+            <form action="/api/login.php" method="POST">
+                <?php
         require "form_elements.php";
-        form_input('name', 'Username');
+        form_input('name', 'Username or email');
         form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
         form_submit();
         require "link.php";

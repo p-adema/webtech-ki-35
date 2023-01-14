@@ -1,25 +1,34 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
-        let userData = {
+        let user_data = {
             name: $("#name").val(), password: $("#password").val(),
         };
 
-        $.post("/api/login.php", userData, function (data) {
-            const server_data = JSON.parse(data);
+        $.post("/api/login.php", user_data, function (server_data_raw) {
+            const server_data = JSON.parse(server_data_raw);
             console.log(server_data);
 
             if (!server_data.success) {
-                for (let elem in server_data.errors) {
-                    if (server_data.errors.name) {
-                        $(`#${elem}-group`).addClass("has-error").children("span").html(
-                            '<div class="help-block">' + server_data.errors[elem] + "</div>");
+                for (let form_elem in server_data.errors) {
+                    if (server_data.errors[form_elem].length !== 0) {
+                        $(`#${form_elem}-group`).addClass("has-error").children("span").html(
+                            server_data.errors[form_elem].join('<br/>')
+                        );
                     } else {
-                        $(`#${elem}-group`).removeClass("has-error").children("span").text("")
+                        $(`#${form_elem}-group`).removeClass("has-error").children("span").text("")
                     }
                 }
 
             } else {
-                $("form").html('<div class="alert alert-success">' + server_data.message + "</div>");
+                $("form").html(
+                    '<span class="form-success">' + server_data.message + "</span>"
+                )
+                setTimeout(function () {
+                    // Example redirect, TODO: make auto redirect on already logged in user
+                    $(location).attr('href', '/')
+                }, 1500)
+
+
             }
 
         });

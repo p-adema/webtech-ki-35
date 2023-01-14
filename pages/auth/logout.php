@@ -1,17 +1,17 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Logout', styled: '/auth/register.css', scripted: true);
+html_header(title: 'Log out', styled: 'form.css', scripted: true);
 ?>
-    <div id="form_container">
-        <h1> Logout </h1>
-        <div id="helper-box">
+    <div class="form-content">
+        <h1> Log out </h1>
+        <div class="form-outline">
             <form action="/api/logout.php" method="POST">
                 <?php
                 require "form_elements.php";
                 require "link.php";
 
-                form_submit();
-                text_link('Go back', '/');
+                form_submit(text: 'Confirm log out');
+                text_link('Go back to home', '/');
                 ?>
             </form>
         </div>
