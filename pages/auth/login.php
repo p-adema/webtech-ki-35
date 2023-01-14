@@ -13,6 +13,7 @@ html_header(title: 'Log in', styled: 'form.css', scripted: true);
         form_submit();
         require "link.php";
         text_link('Register', '/auth/register.php');
+        text_link('Forgot password', '/auth/forgot_password.php');
 
         ?>
     </form>

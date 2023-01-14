@@ -19,31 +19,12 @@ if (empty($email)) {
     $valid = false;
 }
 
-require "pdo_write.php";
-try {
-    $pdo_write = new_pdo_write(err_fatal: false);
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    $valid = false;
-}
 
-if (isset($pdo_write)) {
-    /** @noinspection DuplicatedCode */
-    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-    $data = ['email' => htmlspecialchars($email)];
 
-    $sql_prep = $pdo_write->prepare($sql);
 
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error, try again later';
-        $valid = false;
-    }
-    $duplicate = $sql_prep->fetch();
-    if (empty($duplicate)) {
-        $errors['email'][] = 'This email is not in use'; #TODO hmm
-        $valid = false;
-    }
-}
+
+
+
 
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
