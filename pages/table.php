@@ -33,4 +33,8 @@ html_header('DB Example');
     </table>
 </div>
 
-<?php html_footer();
+<?php
+require "link.php";
+text_link('Go back to home', '/');
+
+html_footer();

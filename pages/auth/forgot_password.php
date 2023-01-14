@@ -1,15 +1,13 @@
 <?php
 require 'html_page.php';
-
-html_header(title: 'Forgot password', styled: 'auth/register.css', scripted: true);
+html_header(title: 'Forgot password', styled: 'form.css', scripted: true);
 ?>
-<body>
-<div id="form_container">
+    <div class="form-content">
     <h1> Forgot password </h1>
-    <div id="helper-box">
+    <div class="form-outline">
         <form action="/api/forgot_password.php" method="POST">
             <p> Fill in your email to reset password.</p>
-        <?php
+            <?php
         require "form_elements.php";
         form_input('email', 'Email', 'username@example.com', 'email');
         form_submit('reset password');

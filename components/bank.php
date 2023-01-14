@@ -2,7 +2,7 @@
 
 require "pdo_read.php";
 
-function get_balance($user_id) :float
+function get_balance($user_id): float
 {
     $pdo_read = new_pdo_read();
 

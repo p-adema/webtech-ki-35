@@ -1,7 +1,8 @@
 
 <?php
 
-function navbar() {
+function navbar(): void
+{
     $html =
         "<ul>
   <li><a href= '../~jesseo/index.php'> 
