@@ -10,7 +10,8 @@ CREATE TABLE `users`
     `full_name`  VARCHAR(128)                           NULL,
     `membership` ENUM ('none', 'member') DEFAULT 'none' NOT NULL,
     `join_date`  DATETIME                DEFAULT NOW()  NOT NULL,
-    PRIMARY KEY (`id`) # TODO: Add email verified
+    `verified`   BOOLEAN                 DEFAULT FALSE  NOT NULL,
+    PRIMARY KEY (`id`)
 );
 
 CREATE TABLE `billing_information`
