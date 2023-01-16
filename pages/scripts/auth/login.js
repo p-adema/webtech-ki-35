@@ -12,28 +12,20 @@ $(document).ready(function () {
                 for (let form_elem in response.errors) {
                     if (response.errors[form_elem].length !== 0) {
                         $(`div#${form_elem}-group`).addClass("has-error")
-                        $(`span#${form_elem}-error`).html(
-                            response.errors[form_elem].join('<br/>')
-                        );
+                        $(`span#${form_elem}-error`).css('visibility', 'visible').html(response.errors[form_elem].join('<br/>'));
                     } else {
-                        $(`#${form_elem}-group`).removeClass("has-error").children("span").text("")
+                        $(`div#${form_elem}-group`).removeClass("has-error")
+                        $(`span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
                     }
                 }
-
             } else {
-                $("form").html(
-                    '<div  class="form-success"><span>' + response.message + "</span></div>"
-                )
+                $("form").html('<div class="form-success"><span>' + response.message + "</span></div>")
                 setTimeout(function () {
                     // Example redirect, TODO: make auto redirect on already logged in user
                     $(location).attr('href', '/')
                 }, 1500)
-
-
             }
-
         });
-
         event.preventDefault();
     });
 });

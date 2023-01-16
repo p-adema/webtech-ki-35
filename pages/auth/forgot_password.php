@@ -8,10 +8,11 @@ html_header(title: 'Forgot password', styled: 'form.css', scripted: true);
         <form action="/api/forgot_password.php" method="POST">
             <p> Fill in your email to reset password.</p>
             <?php
-        require "form_elements.php";
-        form_input('email', 'Email', 'username@example.com', 'email');
-        form_submit('reset password');
-        ?>
+            require "form_elements.php";
+            form_input('email', 'Email', 'username@example.com', 'email');
+            form_error();
+            form_submit('Reset password', 'long-btn');
+            ?>
         </form>
     </div>
 <?php

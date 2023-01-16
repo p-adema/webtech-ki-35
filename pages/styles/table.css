@@ -1,11 +1,3 @@
-:root {
-    --color: black /* Override in PHP */
-}
-
-h1 {
-    color: aqua
-}
-
-td {
-    color: var(--color)
+a {
+    margin-top: 10px;
 }

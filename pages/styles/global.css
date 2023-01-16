@@ -1,3 +1,7 @@
+:root {
+    --bg_color: #e1f0ff
+}
+
 html {
     font-family: 'Roboto', sans-serif;
 }

@@ -1,6 +1,8 @@
-.form-group {
+div.form-group {
     display: flex;
     flex-flow: column;
+    margin-top: 10px;
+    align-self: center;
 }
 
 form {
@@ -8,23 +10,38 @@ form {
     flex-flow: column;
     align-items: baseline;
     margin: 2px;
+    width: 30vw;
+    min-width: min-content;
+    max-width: 300px;
+}
+
+body {
+    background: var(--bg_color);
+    transition-duration: 0.3s;
+}
+
+div.link-box-text {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+form > p {
+    align-self: center;
+    max-width: 190px;
 }
 
 input {
     border: solid lightslategrey 2px;
     border-radius: 8px;
     min-width: min-content;
-    max-width: 75%;
+    max-width: 100%;
     height: 2em;
 }
 
 .has-error > input {
     border-color: #b54d58;
-}
-
-div.form-group {
-    display: flex;
-    flex-flow: column;
 }
 
 div.form-success {
@@ -46,9 +63,14 @@ div.form_success > span {
 }
 
 span.form-error {
+    visibility: hidden;
     color: red;
     font-size: xx-small;
     margin: 2px;
+}
+
+span#submit-error {
+    margin-top: 10px;
 }
 
 div.form-btns {
@@ -67,8 +89,27 @@ div.form-btns > div {
 .link-box {
 }
 
+div#forgot-password-box {
+    margin-top: 20px;
+}
+
 div#submit-group {
+    margin: 0;
     flex: 1;
+}
+
+div.submit-with-long-btn {
+    display: flex;
+    width: 100%;
+}
+
+a {
+    color: cornflowerblue;
+    transition-duration: 0.3s;
+}
+
+a:hover {
+    color: #80a8f1;
 }
 
 .form-content {
@@ -78,26 +119,42 @@ div#submit-group {
 }
 
 .form-outline {
+    background: whitesmoke;
     max-width: 60vw;
-    border: solid white 2px;
+    /*border: solid white 2px;*/
     border-radius: 5px;
-    padding: 50px 75px;
-    box-shadow: 2px 2px 8px 8px slategrey;
+    padding: 50px 30px;
+    box-shadow: 0 15px 35px hsl(0, 0%, 0.2%);
 }
 
 label {
-    font-weight: bold;
+    font-weight: normal;
     margin-top: 10px;
     margin-bottom: 3px;
 }
 
 button.form-submit {
     height: 2em;
+    font-size: medium;
     width: 5em;
     background: #52a452;
     color: whitesmoke;
+    transition-duration: 0.3s;
     border-radius: 5px;
     border-color: darkgreen;
+}
+
+button.form-submit:hover {
+    background: #63b963;
+    cursor: pointer;
+}
+
+button.form-submit.pressed {
+    background: #386838;
+}
+
+button.form-submit.pressed:hover {
+    background: #447c44;
 }
 
 h1 {
@@ -106,20 +163,42 @@ h1 {
     color: lightslategrey;
     font-size: xxx-large;
     text-align: center;
+    cursor: default;
+}
+
+button.long-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 11em;
+    align-self: center;
 }
 
 @media only screen and (max-width: 1200px) {
     .link-box > a {
-        transform: translateY(-35px);
         font-size: 25px;
     }
 
+    div.form-outline {
+        padding: 10px 10px;
+    }
+
     .form-content {
-        margin-top: 100px;
+        max-width: 90vw;
+    }
+
+    span.form-error {
+        font-size: 30px;
+    }
+
+    div.form-group {
+        margin-top: 20px;
+        margin-left: 10px;
     }
 
     input {
-        max-width: 80%;
+        transition-duration: 100ms;
+        min-width: 50vw;
+        max-width: 70vw;
         font-size: 40px;
     }
 
@@ -127,12 +206,16 @@ h1 {
         max-width: 80vw;
     }
 
-    button {
-        font-size: 40px;
+    div#submit-group {
+        margin-top: 0;
+    }
+
+    button.form-submit {
+        font-size: x-large;
     }
 
     label {
-        font-size: 40px;
+        font-size: 30px;
         margin: 0;
     }
 
@@ -142,8 +225,8 @@ h1 {
     }
 
     h1 {
-        font-size: 100px;
-        padding: 20px;
+        font-size: 70px;
+        margin: 20px;
     }
 }
 

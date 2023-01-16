@@ -10,12 +10,13 @@ html_header(title: 'Log in', styled: 'form.css', scripted: true);
                 require "form_elements.php";
                 form_input('name', 'Username or email');
                 form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
+                form_error();
                 echo '<div class="form-btns">';
                 require "link.php";
                 text_link('Register', '/auth/register.php');
                 form_submit('Log in');
                 echo '</div>';
-
+                text_link('Forgot password?', '/auth/forgot_password.php', 'forgot-password-box');
                 ?>
             </form>
         </div>

@@ -21,7 +21,7 @@ function form_input(string $id, string $label, string $placeholder = '', string 
             placeholder=\"$placeholder\"
             $input_attrs
           />
-          <span id=\"$id-error\" class=\"form-error\"></span>
+          <span id=\"$id-error\" class=\"form-error\"> No error </span>
         </div>
     ";
     echo $html;
@@ -32,11 +32,11 @@ function form_input(string $id, string $label, string $placeholder = '', string 
  * @param string $text Text to be put in the button
  * @return void Echoes to page
  */
-function form_submit(string $text = 'Submit'): void
+function form_submit(string $text = 'Submit', string $extra_cls = ''): void
 {
     $html = "
-    <div id=\"submit-group\" class=\"form-group\">
-        <button type=\"submit\" class=\"form-submit\"> $text </button>
+    <div id=\"submit-group\" class=\"form-group submit-with-$extra_cls\">
+        <button type=\"submit\" class=\"form-submit $extra_cls\"> $text </button>
     </div>
     ";
     echo $html;
@@ -44,5 +44,5 @@ function form_submit(string $text = 'Submit'): void
 
 function form_error(string $err_id = 'submit'): void
 {
-    echo "<span id = \"$err_id-error\" class=\"form-error\"></span>";
+    echo "<span id = \"$err_id-error\" class=\"form-error\"> No error </span>";
 }

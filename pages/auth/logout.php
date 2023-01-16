@@ -10,7 +10,7 @@ html_header(title: 'Log out', styled: 'form.css', scripted: true);
                 require "form_elements.php";
                 require "link.php";
 
-                form_submit(text: 'Confirm log out');
+                form_submit(text: 'Confirm log out', extra_cls: 'long-btn');
                 text_link('Go back to home', '/');
                 ?>
             </form>
