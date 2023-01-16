@@ -2,7 +2,8 @@ $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault();
         $('button.form-submit').addClass('pressed')
-        let user_data = {
+
+        const user_data = {
             name: $("#name").val(),
             email: $("#email").val(),
             password: $("#password").val(),

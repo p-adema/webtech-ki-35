@@ -92,3 +92,30 @@ function api_logout(): bool
     $_SESSION['auth'] = false;
     return true;
 }
+
+function check_password(string $password): array
+{
+    $errors = [];
+
+    if (empty($password)) {
+        $errors[] = 'Password is required.';
+    } else {
+        if (strlen($password) < 8) {
+            $errors[] = "Passwords must be at least 8 characters long.";
+        }
+        if (!preg_match('/[a-z]/', $password)) {
+            $errors[] = "Passwords must contain a lowercase character.";
+        }
+        if (!preg_match('/[A-Z]/', $password)) {
+            $errors[] = "Passwords must contain an uppercase character.";
+        }
+        if (!preg_match('/\d/', $password)) {
+            $errors[] = "Passwords must contain a number.";
+        }
+        if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
+            $errors['password'][] = "Passwords must contain a special character.";
+        }
+    }
+
+    return $errors;
+}

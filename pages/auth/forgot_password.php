@@ -15,7 +15,5 @@ html_header(title: 'Forgot password', styled: 'form.css', scripted: true);
             ?>
         </form>
     </div>
-<?php
 
-
-html_footer();
+<?php html_footer();

@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
-        let user_data = {
+        event.preventDefault();
+
+        const user_data = {
             name: $("#name").val(), password: $("#password").val(),
         };
 
@@ -26,6 +28,5 @@ $(document).ready(function () {
                 }, 1500)
             }
         });
-        event.preventDefault();
     });
 });

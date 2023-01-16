@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault()
+
         $.post("/api/logout.php", {}, function (response_raw) {
             const response = JSON.parse(response_raw);
             console.log(response)
