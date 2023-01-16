@@ -151,7 +151,30 @@ if (!$sql_prep->execute($data)) {
     api_fail('Internal server error, try again later', $errors);
 }
 
-api_succeed('Registration successful!', $errors);
+if(isset($pdo_write)) {
+    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
+    $data = ['email' => htmlspecialchars($email)];
+    $sql_prep = $pdo_write->prepare($sql);
+    if (!$sql_prep->execute($data)) {
+        $errors['submit'][] = 'Internal server error';
+        $valid = false;
+    }
+    $user_id = $sql_prep->fetch();
+    $user_id = $user_id['id'];
+    require 'tag_actions.php';
+    $random_tag = tag_create();
+    $sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
+    VALUES (:type, :tag, :user_id, DEFAULT);';
+    $data = ['type' => htmlspecialchars('verify'),
+        'tag' => htmlspecialchars("$random_tag"),
+        'user_id' => htmlspecialchars("$user_id")];
+    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep->execute($data);
+    $link = '/auth/verify.php?tag=' . $random_tag;
+    api_succeed("An E-mail to activate your account has been sent to $email <br>  <a href='$link'>link</a>", $errors);
+
+}
+
 
 # TODO: add email verification
 # TODO: add verification status to user table
