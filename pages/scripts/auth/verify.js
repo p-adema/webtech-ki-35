@@ -1,7 +1,9 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
-        parameter_list = new URLSearchParams(window.location.search)
-        let user_data = {
+        event.preventDefault();
+
+        const parameter_list = new URLSearchParams(window.location.search)
+        const user_data = {
             tag: parameter_list.get('tag')
         };
 
@@ -21,9 +23,5 @@ $(document).ready(function () {
 
 
         });
-        event.preventDefault();
     });
-
-
 });
-

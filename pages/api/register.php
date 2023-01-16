@@ -8,6 +8,7 @@
  */
 
 require "api_resolve.php";
+require 'tag_actions.php';
 
 $errors = [
     'name' => [],
@@ -100,30 +101,9 @@ Password constraints:
      *  Contains special character
  */
 
-if (empty($password)) {
-    $errors['password'][] = 'Password is required.';
+$errors['password'] = check_password($password);
+if (!empty($errors['password'])) {
     $valid = false;
-} else {
-    if (strlen($password) < 8) {
-        $errors['password'][] = "Passwords must be at least 8 characters long.";
-        $valid = false;
-    }
-    if (!preg_match('/[a-z]/', $password)) {
-        $errors['password'][] = "Passwords must contain a lowercase character.";
-        $valid = false;
-    }
-    if (!preg_match('/[A-Z]/', $password)) {
-        $errors['password'][] = "Passwords must contain an uppercase character.";
-        $valid = false;
-    }
-    if (!preg_match('/\d/', $password)) {
-        $errors['password'][] = "Passwords must contain a number.";
-        $valid = false;
-    }
-    if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors['password'][] = "Passwords must contain a special character.";
-        $valid = false;
-    }
 }
 
 if (strlen(htmlspecialchars($full_name)) > 128) {
@@ -144,37 +124,33 @@ $data = [
 $sql = 'INSERT INTO db.users (name, email, password, full_name, membership)
 VALUES (:name, :email, :password, :full_name, \'none\');';
 
-/** @noinspection PhpUndefinedVariableInspection */
+/** @noinspection PhpUndefinedVariableInspection : If the connection failed, we'd already have exited */
 $sql_prep = $pdo_write->prepare($sql);
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';
     api_fail('Internal server error, try again later', $errors);
 }
 
-if(isset($pdo_write)) {
-    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-    $data = ['email' => htmlspecialchars($email)];
-    $sql_prep = $pdo_write->prepare($sql);
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error';
-        $valid = false;
-    }
-    $user_id = $sql_prep->fetch();
-    $user_id = $user_id['id'];
-    require 'tag_actions.php';
-    $random_tag = tag_create();
-    $sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
-    VALUES (:type, :tag, :user_id, DEFAULT);';
-    $data = ['type' => htmlspecialchars('verify'),
-        'tag' => htmlspecialchars("$random_tag"),
-        'user_id' => htmlspecialchars("$user_id")];
-    $sql_prep = $pdo_write->prepare($sql);
-    $sql_prep->execute($data);
-    $link = '/auth/verify.php?tag=' . $random_tag;
-    api_succeed("An E-mail to activate your account has been sent to $email <br>  <a href='$link'>link</a>", $errors);
-
+$sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
+$data = ['email' => htmlspecialchars($email)];
+$sql_prep = $pdo_write->prepare($sql);
+if (!$sql_prep->execute($data)) {
+    $errors['submit'][] = 'Internal server error';
+    $valid = false;
 }
+$user_id = $sql_prep->fetch()['id'];
+$url_tag = tag_create();
 
+$sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
+        VALUES (\'verify\', :tag, :user_id, DEFAULT);';
 
-# TODO: add email verification
-# TODO: add verification status to user table
+$data = [
+    'tag' => htmlspecialchars("$url_tag"),
+    'user_id' => htmlspecialchars("$user_id")
+];
+
+$sql_prep = $pdo_write->prepare($sql);
+$sql_prep->execute($data);
+
+$link = '/auth/verify.php?tag=' . $url_tag;
+api_succeed("An E-mail to activate your account has been sent to $email <br>  <a href='$link'>link</a>", $errors);

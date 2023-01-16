@@ -1,6 +1,8 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
-        let user_data = {
+        event.preventDefault();
+
+        const user_data = {
             name: $("#name").val(),
             email: $("#email").val(),
             password: $("#password").val(),
@@ -33,7 +35,5 @@ $(document).ready(function () {
                }
 
             });
-
-        event.preventDefault();
     });
 });

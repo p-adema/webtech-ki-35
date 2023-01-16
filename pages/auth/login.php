@@ -19,4 +19,5 @@ html_header(title: 'Log in', styled: 'form.css', scripted: true);
     </form>
     </div>
 </div>
+
 <?php html_footer();

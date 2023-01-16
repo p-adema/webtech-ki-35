@@ -1,5 +1,7 @@
 <?php
 require "api_resolve.php";
+require "pdo_write.php";
+
 $errors = [
     'password' => [],
     'password_repeat' => [],
@@ -7,9 +9,8 @@ $errors = [
 ];
 $valid = true;
 
-$tag = $_POST['tag'];
+$tag = $_POST['tag']; # TODO: check that password and tag are both actually POSTed
 
-require "pdo_write.php";
 try {
     $pdo_write = new_pdo_write(err_fatal: false);
 } catch (PDOException $e) {
@@ -41,45 +42,19 @@ if (isset($pdo_write)) {
 $password = $_POST['password'];
 $repeated_password = $_POST['password_repeated'];
 
-if (empty($password)) {
-    $errors['password'][] = 'Password is required.';
+$errors['password'] = check_password($password);
+if (!empty($errors['password'])) {
     $valid = false;
-} else {
-    if (strlen($password) < 8) {
-        $errors['password'][] = "Passwords must be at least 8 characters long.";
-        $valid = false;
-    }
-    if (!preg_match('/[a-z]/', $password)) {
-        $errors['password'][] = "Passwords must contain a lowercase character.";
-        $valid = false;
-    }
-    if (!preg_match('/[A-Z]/', $password)) {
-        $errors['password'][] = "Passwords must contain an uppercase character.";
-        $valid = false;
-    }
-    if (!preg_match('/\d/', $password)) {
-        $errors['password'][] = "Passwords must contain a number.";
-        $valid = false;
-    }
-    if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
-        $errors['password'][] = "Passwords must contain a special character.";
-        $valid = false;
-    }
-}
-
-
-if ($password != $repeated_password) {
+} else if ($password != $repeated_password) {
     $errors['password'][] = "Passwords do not match.";
     $valid = false;
 }
 
 
-
-
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
-if(isset($pdo_write)) {
+if (isset($pdo_write)) {
     $sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
 
     $data = ['new_password' => password_hash($password, PASSWORD_DEFAULT),
@@ -89,5 +64,3 @@ if(isset($pdo_write)) {
 }
 
 api_succeed('Password has been changed!', $errors);
-
-

@@ -12,6 +12,7 @@ function sidebar($list): void
     echo "<div id='main'>";
     echo "<button class='openbtn' onclick='openNav()'>☰ Open Sidebar</button>";
 
+    # TODO: you can convert this to jquery code
     echo '<script>
 function openNav() {
   document.getElementById("mySidebar").style.width = "250px";

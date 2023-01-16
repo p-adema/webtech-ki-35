@@ -15,11 +15,9 @@ if (isset($_GET['tag']) and tag_check($_GET['tag'], 'verify')): ?>
             </form>
         </div>
     </div>
-<?php
-else: ?>
-    <p> this link doesn't seem quite right</p>
 
-<?php
-endif;
+<?php else: ?>
+    <p> this link doesn't seem quite right</p>
+<?php endif;
+
 html_footer();
-?>
