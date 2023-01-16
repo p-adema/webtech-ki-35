@@ -5,7 +5,6 @@
 }
 
 #main-container {
-    font-family: Lato, sans-serif;
     display: flex;
     flex-flow: column;
     align-items: center;
