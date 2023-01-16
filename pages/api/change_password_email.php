@@ -30,6 +30,8 @@ if (isset($pdo_write)) {
     $user_id = $sql_prep->fetch();
 
     if (empty($user_id)) {
+        $errors['submit'][] = 'Invalid tag';
+        $valid = false;
         # return user a error message
     } else {
         $user_id = $user_id['user_id'];
