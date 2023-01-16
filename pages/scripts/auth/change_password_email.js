@@ -1,11 +1,14 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
+        parameter_list = new URLSearchParams(window.location.search)
         let user_data = {
             password: $("#password").val(),
-            repeated_password: $("#repeated_password").val(),
+            password_repeated: $("#password_repeated").val(),
+            tag: parameter_list.get('tag')
         };
 
-        $.post("/api/forgot_password_email.php", user_data, function (server_data_raw) {
+        $.post("/api/change_password_email.php", user_data, function (server_data_raw) {
+
             const server_data = JSON.parse(server_data_raw);
             console.log(server_data);
 
@@ -27,7 +30,7 @@ $(document).ready(function () {
                 setTimeout(function () {
                     // Example redirect, TODO: make auto redirect on already logged in user
                     $(location).attr('href', '/')
-                }, 1500)
+                }, 15000)
 
 
             }

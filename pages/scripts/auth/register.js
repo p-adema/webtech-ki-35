@@ -29,7 +29,7 @@ $(document).ready(function () {
                    setTimeout(function () {
                        // Example redirect, TODO: make auto redirect on already logged in user (to home)
                        $(location).attr('href', '/')
-                   }, 1500)
+                   }, 5500)
                }
 
             });

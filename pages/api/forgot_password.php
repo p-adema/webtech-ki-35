@@ -38,15 +38,27 @@ if (isset($pdo_write)) {
         $errors['submit'][] = 'Internal server error, try again later';
         $valid = false;
     }
-    $duplicate = $sql_prep->fetch();
-    if (empty($duplicate)) {
-        $errors['email'][] = 'This email is not in use'; #TODO hmm
-        $valid = false;
-    }
+    $user_id = $sql_prep->fetch();
+    $user_id = $user_id['id'];
 }
 
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
 
-api_succeed("An E-mail has been sent to $email", $errors);
+
+if(isset($pdo_write)) {
+    if (!empty($user_id)) {
+    require 'tag_actions.php';
+    $random_tag = tag_create();
+    $sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
+    VALUES (:type, :tag, :user_id, DEFAULT);';
+    $data = ['type' => htmlspecialchars('password-reset'),
+            'tag' => htmlspecialchars("$random_tag"),
+            'user_id' => htmlspecialchars("$user_id")];
+    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep->execute($data);
+    $link = '/auth/change_password_email.php?tag=' . $random_tag;
+     api_succeed("If you entered a valid E-mail adress, an E-mail has been sent to $email <br>  <a href='$link'>link</a>", $errors);
+    }
+}

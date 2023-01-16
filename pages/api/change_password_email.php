@@ -7,7 +7,7 @@ $errors = [
 ];
 $valid = true;
 
-$tag = $_GET['tag'];
+$tag = $_POST['tag'];
 
 require "pdo_write.php";
 try {
@@ -19,8 +19,8 @@ try {
 
 
 if (isset($pdo_write)) {
-    $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag);';
-    $data = ['tag' => htmlspecialchars($tag)];
+    $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'password-reset\');';
+    $data = ['tag' => htmlspecialchars("$tag")];
     $sql_prep = $pdo_write->prepare($sql);
 
     if (!$sql_prep->execute($data)) {
@@ -30,12 +30,14 @@ if (isset($pdo_write)) {
     $user_id = $sql_prep->fetch();
 
     if (empty($user_id)) {
-
+        # return user a error message
+    } else {
+        $user_id = $user_id['user_id'];
     }
 
 }
 $password = $_POST['password'];
-$repeated_password = $_POST['repeated_password'];
+$repeated_password = $_POST['password_repeated'];
 
 if (empty($password)) {
     $errors['password'][] = 'Password is required.';
@@ -64,7 +66,7 @@ if (empty($password)) {
 }
 
 
-if (!$password == $repeated_password) {
+if ($password != $repeated_password) {
     $errors['password'][] = "Passwords do not match.";
     $valid = false;
 }
@@ -75,7 +77,15 @@ if (!$password == $repeated_password) {
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
+if(isset($pdo_write)) {
+    $sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
+
+    $data = ['new_password' => password_hash($password, PASSWORD_DEFAULT),
+            'user_id' => htmlspecialchars("$user_id")];
+    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep->execute($data);
+}
 
 api_succeed('Password has been changed!', $errors);
 
-# $sql = "UPDATE MyGuests SET lastname='Doe' WHERE id=2";
+

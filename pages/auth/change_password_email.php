@@ -1,8 +1,9 @@
 <?php
+require 'tag_actions.php';
 require 'html_page.php';
-html_header(title: 'Change password', styled: 'form.css', scripted: false);
-?>
-<body>
+html_header(title: 'Change password', styled: 'form.css', scripted: true);
+
+if (isset($_GET['tag']) and tag_check($_GET['tag'], 'password-reset')): ?>
 <div class="form-content">
     <h1> Change password </h1>
     <div class="form-outline">
@@ -17,8 +18,11 @@ html_header(title: 'Change password', styled: 'form.css', scripted: false);
             </form>
         </div>
     </div>
-    </body>
 <?php
+else: ?>
+<p> this link doesnt seem quite right</p>
 
+<?php
+endif;
 html_footer();
 ?>

@@ -3,14 +3,17 @@ $(document).ready(function (){
         let userData = {
             email : $("#email").val(),
     };
-        $.post("/api/forgot_password.php", userData, function(data) {
-            const server_data = JSON.parse(data);
-            console.log(server_data);
+        $.post("/api/forgot_password.php", userData, function(response_raw) {
 
-            if (!server_data.success){
-                if (server_data.errors.email) {
+            const response = JSON.parse(response_raw);
+            console.log(response);
+
+
+
+            if (!response.success){
+                if (response.errors.email) {
                     $("#email-group").children("span").addClass("has-error").html(
-                        '<div class="help-block">' + server_data.errors.email + "</div>"
+                        '<div class="help-block">' + response.errors.email + "</div>"
                     );
                 }
                 else {
@@ -19,7 +22,7 @@ $(document).ready(function (){
             }
             else {
                 $("form").html(
-                    '<div class="alert alert-success">' + server_data.message + "</div>"
+                    '<div class="alert alert-success">' + response.message + "</div>"
                 );
             }
 
