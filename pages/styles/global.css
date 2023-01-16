@@ -1,5 +1,5 @@
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto', sans-serif;
 }
 
 .dropbtn {
@@ -80,8 +80,3 @@ html {
     transition: margin-left 0.5s;
     padding: 16px;
 }
-
-body {
-    font-family: "Lato", sans-serif;
-}
-
