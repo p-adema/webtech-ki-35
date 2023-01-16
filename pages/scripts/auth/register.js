@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault();
-        $('button.form-submit').addClass('pressed')
+        $('button.form-submit').addClass('pressed').removeClass('error')
 
         const user_data = {
             name: $("#name").val(),
@@ -11,31 +11,28 @@ $(document).ready(function () {
         };
 
         $.post("/api/register.php", user_data, function (response_raw) {
-            const response = JSON.parse(response_raw);
-            console.log(response);
+            try {
+                const response = JSON.parse(response_raw);
+                console.log(response);
 
-            if (!response.success) {
-                for (let form_elem in response.errors) {
-                    if (response.errors[form_elem].length !== 0) {
-                        $(`div#${form_elem}-group`).addClass("has-error")
-                        $(`span#${form_elem}-error`).css('visibility', 'visible').html(
-                            response.errors[form_elem].join('<br/>')
-                        );
-                    } else {
-                        $(`div#${form_elem}-group`).removeClass("has-error")
-                        $(`span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
-                    }
+                if (!response.success) {
+                    form_handle_errors(response.errors);
+                } else {
+                    $("form").html(
+                        '<div class="form-success"><span>' + response.message + "</span></div>"
+                    )
+                    setTimeout(function () {
+                        // Example redirect, TODO: make auto redirect on already logged in user (to home)
+                        $(location).attr('href', '/')
+                    }, 5500)
                 }
-            } else {
-                $("form").html(
-                    '<div class="form-success"><span>' + response.message + "</span></div>"
-                )
-                setTimeout(function () {
-                    // Example redirect, TODO: make auto redirect on already logged in user (to home)
-                    $(location).attr('href', '/')
-                }, 1500)
+            } catch (e) {
+                console.log(response_raw);
+                console.log(e);
+                $('button.form-submit').addClass('error')
+            } finally {
+                $('button.form-submit').removeClass('pressed')
             }
-            $('button.form-submit').removeClass('pressed')
         });
     });
 });

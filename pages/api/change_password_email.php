@@ -1,10 +1,14 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      TODO
+ */
 require "api_resolve.php";
 require "pdo_write.php";
 
 $errors = [
     'password' => [],
-    'password_repeat' => [],
+    'password-repeated' => [],
     'submit' => []
 ];
 $valid = true;
@@ -25,7 +29,7 @@ if (isset($pdo_write)) {
     $sql_prep = $pdo_write->prepare($sql);
 
     if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal ser error, try again later';
+        $errors['submit'][] = 'Internal server error, try again later';
         $valid = false;
     }
     $user_id = $sql_prep->fetch();
@@ -40,13 +44,15 @@ if (isset($pdo_write)) {
 
 }
 $password = $_POST['password'];
-$repeated_password = $_POST['password_repeated'];
+$repeated_password = $_POST['password-repeated'];
 
 $errors['password'] = check_password($password);
 if (!empty($errors['password'])) {
     $valid = false;
-} else if ($password != $repeated_password) {
-    $errors['password'][] = "Passwords do not match.";
+}
+
+if ($password != $repeated_password) {
+    $errors['password-repeated'][] = "Passwords do not match.";
     $valid = false;
 }
 
@@ -57,8 +63,10 @@ if (!$valid) {
 if (isset($pdo_write)) {
     $sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
 
-    $data = ['new_password' => password_hash($password, PASSWORD_DEFAULT),
-            'user_id' => htmlspecialchars("$user_id")];
+    $data = [
+        'new_password' => password_hash($password, PASSWORD_DEFAULT),
+        'user_id' => htmlspecialchars("$user_id")
+    ];
     $sql_prep = $pdo_write->prepare($sql);
     $sql_prep->execute($data);
 }

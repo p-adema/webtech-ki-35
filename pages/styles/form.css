@@ -157,6 +157,16 @@ button.form-submit.pressed:hover {
     background: #447c44;
 }
 
+button.form-submit.error {
+    background: #683838;
+    border-color: black;
+}
+
+button.form-submit.error:hover {
+    background: #7c4444;
+    border-color: black;
+}
+
 h1 {
     font-family: sans-serif;
     margin-top: 70px;

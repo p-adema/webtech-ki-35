@@ -7,8 +7,8 @@
  *                                              On true: loads global.css and {page}.css
  *                                              On string: loads global.css and {string}
  * @param bool|string $scripted Script links. On false: loads no scripts
- *                                            On true: loads global.css and {page}.css
- *                                            On string: loads global.css and {string}
+ *                                            On true: loads global.js and {page}.js
+ *                                            On string: loads global.js and {string}
  * @param string $extra Extra header elements put after all other tags
  * @return void Echoes to the page
  */
@@ -16,15 +16,18 @@ function html_header(string $title, string $description = '', bool|string $style
 {
     $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
     if ($scripted) {
-        if ($scripted === true) {
-            $script = $page . '.js';
+        if ($scripted === 'ajax') {
             $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
-                            <script src=\"/scripts$script\"></script>";
-        } else if ($scripted == 'ajax') {
-            $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>";
+                            <script src=\"/scripts/global.js\"></script>";
         } else {
+            if ($scripted === true) {
+                $script = $page . '.js';
+            } else {
+                $script = $scripted;
+            }
             $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
-                            <script src=\"/scripts$scripted\"></script>";
+                            <script src=\"/scripts/global.js\"></script>
+                            <script src=\"/scripts$script\"></script>";
         }
     } else {
         $script_tags = '';

@@ -28,7 +28,7 @@ function form_input(string $id, string $label, string $placeholder = '', string 
 }
 
 /**
- * Create a form submission button with error span
+ * Create a form submission button
  * @param string $text Text to be put in the button
  * @return void Echoes to page
  */
@@ -42,7 +42,12 @@ function form_submit(string $text = 'Submit', string $extra_cls = ''): void
     echo $html;
 }
 
+/**
+ * Create a form group with error span for a specific error type
+ * @param string $err_id Type of error to display (commonly submission)
+ * @return void Echoes to page
+ */
 function form_error(string $err_id = 'submit'): void
 {
-    echo "<span id = \"$err_id-error\" class=\"form-error\"> No error </span>";
+    echo "<div class='form-group'><span id = \"$err_id-error\" class=\"form-error\"> No error </span></div>";
 }

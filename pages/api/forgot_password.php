@@ -1,4 +1,8 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      TODO
+ */
 require "api_resolve.php";
 require 'tag_actions.php';
 
@@ -14,7 +18,7 @@ if (empty($email)) {
     $errors['email'][] = 'Email is required.';
     $valid = false;
 } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'][] = 'Invalid email formta.';
+    $errors['email'][] = 'Invalid email format.';
     $valid = false;
 } else if (strlen(htmlspecialchars($email)) > 128) {
     $errors['email'][] = 'Email must be shorter (max 128 standard characters).';

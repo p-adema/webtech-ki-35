@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault();
+        $('button.form-submit').addClass('pressed').removeClass('error')
 
         const form_data = {
             email: $("#email").val(),
@@ -11,21 +12,17 @@ $(document).ready(function () {
                 console.log(response);
 
                 if (!response.success) {
-                    for (let form_elem in response.errors) {
-                        if (response.errors[form_elem].length !== 0) {
-                            $(`div#${form_elem}-group`).addClass("has-error")
-                            $(`span#${form_elem}-error`).css('visibility', 'visible').html(response.errors[form_elem].join('<br/>'));
-                        } else {
-                            $(`div#${form_elem}-group`).removeClass("has-error")
-                            $(`span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
-                        }
-                    }
+                    form_handle_errors(response.errors);
                 } else {
                     $("form").html('<div class="alert alert-success">' + response.message + "</div>");
                 }
 
             } catch (e) {
                 console.log(response_raw)
+                console.log(e)
+                $('button.form-submit').addClass('error')
+            } finally {
+                $('button.form-submit').removeClass('pressed')
             }
         });
     });

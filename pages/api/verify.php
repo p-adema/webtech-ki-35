@@ -1,4 +1,8 @@
 <?php
+/*
+ * Expects a POST request with:
+ *      TODO
+ */
 require "pdo_write.php";
 require "api_resolve.php";
 

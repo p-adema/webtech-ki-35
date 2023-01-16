@@ -1,6 +1,7 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault();
+        $('button.form-submit').addClass('pressed').removeClass('error')
 
         const parameter_list = new URLSearchParams(window.location.search)
         const user_data = {
@@ -9,28 +10,26 @@ $(document).ready(function () {
             tag: parameter_list.get('tag')
         };
 
-        $.post("/api/change_password_email.php", user_data, function (server_data_raw) {
+        $.post("/api/change_password_email.php", user_data, function (response_raw) {
+            try {
+                const response = JSON.parse(response_raw);
+                console.log(response);
 
-            const server_data = JSON.parse(server_data_raw);
-            console.log(server_data);
-
-            if (!server_data.success) {
-                for (let form_elem in server_data.errors) {
-                    if (server_data.errors[form_elem].length !== 0) {
-                        $(`#${form_elem}-group`).addClass("has-error").children("span").html(server_data.errors[form_elem].join('<br/>'));
-                    } else {
-                        $(`#${form_elem}-group`).removeClass("has-error").children("span").text("")
-                    }
+                if (!response.success) {
+                    form_handle_errors(response.errors);
+                } else {
+                    $("form").html('<span class="form-success">' + response.message + "</span>")
+                    setTimeout(function () {
+                        // Example redirect, TODO: make auto redirect on already logged in user
+                        $(location).attr('href', '/')
+                    }, 5000)
                 }
-
-            } else {
-                $("form").html('<span class="form-success">' + server_data.message + "</span>")
-                setTimeout(function () {
-                    // Example redirect, TODO: make auto redirect on already logged in user
-                    $(location).attr('href', '/')
-                }, 15000)
-
-
+            } catch (e) {
+                console.log(response_raw);
+                console.log(e);
+                $('button.form-submit').addClass('error')
+            } finally {
+                $('button.form-submit').removeClass('pressed')
             }
         });
     });

@@ -93,6 +93,11 @@ function api_logout(): bool
     return true;
 }
 
+/**
+ * Checks whether the given password is valid
+ * @param string $password Password to be checked
+ * @return array Array of errors. When empty, the password is valid
+ */
 function check_password(string $password): array
 {
     $errors = [];
@@ -113,7 +118,7 @@ function check_password(string $password): array
             $errors[] = "Passwords must contain a number.";
         }
         if (!preg_match('/[^a-zA-Z0-9]/', $password)) {
-            $errors['password'][] = "Passwords must contain a special character.";
+            $errors[] = "Passwords must contain a special character.";
         }
     }
 
