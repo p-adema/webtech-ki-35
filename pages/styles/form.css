@@ -11,16 +11,38 @@ form {
 }
 
 input {
-    border: solid slategrey 2px;
-    border-radius: 8px
+    border: solid lightslategrey 2px;
+    border-radius: 8px;
+    min-width: min-content;
+    max-width: 75%;
+    height: 2em;
 }
 
 .has-error > input {
     border-color: #b54d58;
 }
 
-span.form-success {
-    color: green;
+div.form-group {
+    display: flex;
+    flex-flow: column;
+}
+
+div.form-success {
+    background: #52a452;
+    border-radius: 5px;
+    border-color: darkgreen;
+    width: 50%;
+    align-self: center;
+    height: 20%;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+}
+
+div.form_success > span {
+    color: whitesmoke;
+    font-size: 17px;
+    font-weight: bold;
 }
 
 span.form-error {
@@ -29,14 +51,24 @@ span.form-error {
     margin: 2px;
 }
 
-
-.link-box {
-    align-self: end;
+div.form-btns {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+    margin-top: 30px;
 }
 
-.link-box > a {
-    transform: translateY(-19px);
-    position: absolute;
+div.form-btns > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.link-box {
+}
+
+div#submit-group {
+    flex: 1;
 }
 
 .form-content {
@@ -59,15 +91,18 @@ label {
     margin-bottom: 3px;
 }
 
-button {
-    border: solid black 2px;
-    border-radius: 8px;
-    margin-top: 50px;
+button.form-submit {
+    height: 2em;
+    width: 5em;
+    background: #52a452;
+    color: whitesmoke;
+    border-radius: 5px;
+    border-color: darkgreen;
 }
 
 h1 {
     font-family: sans-serif;
-    padding: 70px 0;
+    margin-top: 70px;
     color: lightslategrey;
     font-size: xxx-large;
     text-align: center;
@@ -94,7 +129,6 @@ h1 {
 
     button {
         font-size: 40px;
-        margin-top: 10px;
     }
 
     label {
@@ -112,3 +146,64 @@ h1 {
         padding: 20px;
     }
 }
+
+/*
+
+
+#submit-group {
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+}
+
+#submit-group > span.form_error {
+    margin: 20px 10px 35px 10px;
+}
+
+#form_container {
+    transform: translate(40vw, 10vh);
+    display: flex;
+    width: 30vw;
+    min-width: min-content;
+    background: #dbe4ee;
+    align-items: center;
+    flex-flow: column;
+}
+
+form {
+    width: 30vw;
+    display: flex;
+    flex-flow: column;
+    align-items: flex-start;
+}
+
+
+div.form-group {
+    margin: 10px;
+    display: flex;
+    flex-flow: column;
+    width: calc(100% - 10px);
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+input {
+    border-radius: 5px;
+    min-width: min-content;
+    max-width: 75%;
+    height: 2em;
+    padding-left: 10px;
+    margin-left: 5px;
+}
+
+button.form-submit {
+    margin: 15px 10px 30px calc(10px + 10%);
+    width: 18%;
+    height: 2em;
+    background: #52a452;
+    color: whitesmoke;
+    border-radius: 5px;
+    border-color: darkgreen;
+}
+
+ */
