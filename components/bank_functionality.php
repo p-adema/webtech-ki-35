@@ -90,7 +90,7 @@ function obtain_user_information($tag): string
     return $sth->fetch()['user_id'];
 }
 
-function confirm_payment($user_id): void
+function confirm_payment($tag): void
 {
 
 }
