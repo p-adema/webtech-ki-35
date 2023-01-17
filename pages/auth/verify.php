@@ -20,6 +20,7 @@ if (isset($_GET['tag']) and tag_check($_GET['tag'], 'verify')): ?>
 
 <?php else: ?>
     <p> This link doesn't seem quite right. </p>
+    <a href="/index.php"> Go back to home </a>
 <?php endif;
 
 html_footer();

@@ -3,8 +3,9 @@
  * Expects a POST request with:
  *      TODO
  */
-require "api_resolve.php";
+require 'api_resolve.php';
 require 'tag_actions.php';
+require 'mail.php';
 
 $errors = [
     'email' => [],
@@ -69,5 +70,11 @@ if (isset($pdo_write)) {
         $sql_prep->execute($data);
     }
     $link = '/auth/change_password_email.php?tag=' . $url_tag;
-    api_succeed("If you entered a valid E-mail adress, an E-mail has been sent to $email <br>  <a href='$link'>link</a>", $errors);
+
+    if (mail_forgot_password($link, $email)) { #TODO PRODUCTION: remove dev link
+        api_succeed("An email has been sent to the account linked to $email <br>  <a href='$link'>dev</a>", $errors);
+    } else {
+        $errors['submit'][] = 'Reset email couldn\'t be sent  <br />  <a href=\'$link\'>dev</a>';
+        api_fail("The email to reset your password couldn't be sent", $errors);
+    }
 }

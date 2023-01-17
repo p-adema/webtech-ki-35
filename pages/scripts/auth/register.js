@@ -7,6 +7,7 @@ $(document).ready(function () {
             name: $("#name").val(),
             email: $("#email").val(),
             password: $("#password").val(),
+            re_pwd: $("#re_pwd").val(),
             full_name: $("#full_name").val(),
         };
 

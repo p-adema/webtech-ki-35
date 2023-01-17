@@ -8,7 +8,7 @@ require "pdo_write.php";
 
 $errors = [
     'password' => [],
-    'password-repeated' => [],
+    'password_repeated' => [],
     'submit' => []
 ];
 $valid = true;
@@ -44,7 +44,7 @@ if (isset($pdo_write)) {
 
 }
 $password = $_POST['password'];
-$repeated_password = $_POST['password-repeated'];
+$repeated_password = $_POST['password_repeated'];
 
 $errors['password'] = check_password($password);
 if (!empty($errors['password'])) {
@@ -52,7 +52,7 @@ if (!empty($errors['password'])) {
 }
 
 if ($password != $repeated_password) {
-    $errors['password-repeated'][] = "Passwords do not match.";
+    $errors['password_repeated'][] = "Passwords do not match.";
     $valid = false;
 }
 
