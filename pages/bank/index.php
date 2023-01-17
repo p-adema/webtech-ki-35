@@ -18,7 +18,7 @@ html_header(title: 'balance', styled: true);
             $user_id = 1;
             echo "<span class='balance-text'>€</span>";
             echo '<div class="balance-amount">';
-                echo get_balance($user_id);
+            echo get_balance($user_id);
             echo '</div>'
             ?>
         </div>

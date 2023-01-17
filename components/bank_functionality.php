@@ -14,6 +14,22 @@ function get_balance($user_id): string
     return $sth->fetch()['balance'];
 }
 
+function enough_balance($user_id, $tag): bool
+{
+    $user_bal = get_balance($user_id);
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT (amount) FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['url_tag' => $tag]);
+
+    $required = $sth->fetch()['amount'];
+
+    return $user_bal > $required;
+}
+
 function get_pending_transaction($user_id): array
 {
     $pdo_read = new_pdo_read();
@@ -71,7 +87,7 @@ function obtain_user_information($tag): string
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['url_tag' => $tag]);
 
-    return $sth->fetch();
+    return $sth->fetch()['user_id'];
 }
 
 function confirm_payment($user_id): void
@@ -79,7 +95,13 @@ function confirm_payment($user_id): void
 
 }
 
-function deny_payment($user_id): void
+function deny_payment($tag): void
 {
+    require_once 'pdo_write.php';
 
+    $pdo_write = new_pdo_write();
+
+    $sql = 'DELETE FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+    $sth = $pdo_write->prepare($sql);
+    $sth->execute(['url_tag' => $tag]);
 }
