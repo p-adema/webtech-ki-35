@@ -13,7 +13,14 @@ $errors = [
 ];
 $valid = true;
 
-$tag = $_POST['tag']; # TODO: check that password and tag are both actually POSTed
+ensure_session();
+if (!isset($_SESSION['url_tag'])) {
+    $errors['submit'][] = "You don't seem to have come from a valid reset link";
+    api_fail('Invalid origin link', $errors);
+} else {
+    $tag = $_POST['tag'];
+}
+# TODO: check that password and tag are both actually POSTed
 
 try {
     $pdo_write = new_pdo_write(err_fatal: false);

@@ -1,26 +1,30 @@
 <?php
 require 'tag_actions.php';
-require 'html_page.php';
-html_header(title: 'Verify acoount', styled: 'form.css', scripted: true);
 
-if (isset($_GET['tag']) and tag_check($_GET['tag'], 'verify')): ?>
-    <div class="form-content">
-        <h1> Verify account </h1>
-        <div class="form-outline">
-            <form action="/api/verify.php" method="POST">
-                <?php
-                require "form_elements.php";
+$tag = $_GET['tag'];
+if (isset($tag)) {
+    require 'api_resolve.php';
 
-                form_submit('Activate account', extra_cls: 'long-btn');
-                form_error();
-                ?>
-            </form>
-        </div>
-    </div>
+    # TODO: make more efficient (one query to get tag)
 
-<?php else: ?>
-    <p> This link doesn't seem quite right. </p>
-    <a href="/index.php"> Go back to home </a>
-<?php endif;
+    if (tag_check($tag, 'verify')) {
+        ensure_session();
+        $_SESSION['url_tag'] = $tag;
+        $_SESSION['url_tag_type'] = 'verify';
+        header('Location: /auth/account/verify.php');
+        die();
 
-html_footer();
+    } elseif (tag_check($tag, 'password-reset')) {
+        ensure_session();
+        $_SESSION['url_tag'] = $tag;
+        $_SESSION['url_tag_type'] = 'password-reset';
+        header('Location: /auth/reset_password.php');
+        die();
+    }
+} else {
+    require "html_page.php";
+    html_header('Invalid link');
+    echo "<p> This link doesn't seem quite right. </p>
+    <a href=\"/index.php\"> Go back to home </a>";
+    html_footer();
+}

@@ -3,14 +3,12 @@ $(document).ready(function () {
         event.preventDefault();
         $('button.form-submit').addClass('pressed').removeClass('error')
 
-        const parameter_list = new URLSearchParams(window.location.search)
         const user_data = {
             password: $("#password").val(),
             password_repeated: $("#password_repeated").val(),
-            tag: parameter_list.get('tag')
         };
 
-        $.post("/api/change_password_email.php", user_data, function (response_raw) {
+        $.post("/api/reset_password.php", user_data, function (response_raw) {
             try {
                 const response = JSON.parse(response_raw);
                 console.log(response);
