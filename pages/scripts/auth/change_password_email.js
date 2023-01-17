@@ -3,14 +3,14 @@ $(document).ready(function () {
         event.preventDefault();
         $('button.form-submit').addClass('pressed').removeClass('error')
 
+        const parameter_list = new URLSearchParams(window.location.search)
         const user_data = {
-            name: $("#name").val(),
-            email: $("#email").val(),
             password: $("#password").val(),
-            full_name: $("#full_name").val(),
+            password_repeated: $("#password_repeated").val(),
+            tag: parameter_list.get('tag')
         };
 
-        $.post("/api/register.php", user_data, function (response_raw) {
+        $.post("/api/change_password_email.php", user_data, function (response_raw) {
             try {
                 const response = JSON.parse(response_raw);
                 console.log(response);
@@ -18,13 +18,11 @@ $(document).ready(function () {
                 if (!response.success) {
                     form_handle_errors(response.errors);
                 } else {
-                    $("form").html(
-                        '<div class="form-success"><span>' + response.message + "</span></div>"
-                    )
+                    $("form").html('<span class="form-success">' + response.message + "</span>")
                     setTimeout(function () {
-                        // Example redirect, TODO: make auto redirect on already logged in user (to home)
+                        // Example redirect, TODO: make auto redirect on already logged in user
                         $(location).attr('href', '/')
-                    }, 5500)
+                    }, 5000)
                 }
             } catch (e) {
                 console.log(response_raw);
