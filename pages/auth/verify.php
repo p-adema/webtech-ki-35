@@ -10,16 +10,16 @@ if (isset($_GET['tag']) and tag_check($_GET['tag'], 'verify')): ?>
             <form action="/api/verify.php" method="POST">
                 <?php
                 require "form_elements.php";
-                form_submit('Activate');
+
+                form_submit('Activate account', extra_cls: 'long-btn');
+                form_error();
                 ?>
             </form>
         </div>
     </div>
-<?php
-else: ?>
-    <p> this link doesn't seem quite right</p>
 
-<?php
-endif;
+<?php else: ?>
+    <p> This link doesn't seem quite right. </p>
+<?php endif;
+
 html_footer();
-?>
