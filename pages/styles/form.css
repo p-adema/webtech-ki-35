@@ -153,6 +153,15 @@ button.form-submit.pressed {
     background: #386838;
 }
 
+button.form-submit.disabled:hover {
+    background: darkslategray;
+    cursor: default;
+}
+
+button.form-submit.disabled {
+    background: darkslategray;
+}
+
 button.form-submit.pressed:hover {
     background: #447c44;
 }
