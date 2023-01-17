@@ -2,7 +2,14 @@
 require 'html_page.php';
 html_header(title: 'balance', styled: true);
 ?>
-<div id="main-container">
+<div class="main-container">
+    <div class="background-box">
+        <div class="title-box">
+            <span class="title">
+                NietNG
+            </span>
+        </div>
+    </div>
     <div class="big-balance-box">
         <div class="balance">
             <?php

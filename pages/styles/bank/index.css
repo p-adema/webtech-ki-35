@@ -1,25 +1,79 @@
-#balance {
-    display: flex;
-    flex-flow: column;
-    align-items: center;
+body {
+    margin: 0;
 }
 
-#main-container {
+.title-box {
+    display: flex;
+    padding-left: 3px;
+    padding-right: 3px;
+    align-self: center;
+    max-width: max-content;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.background-box {
+    display: flex;
+    align-items: center;
+    background-color: #ff713c;
+    max-height: 100px;
+}
+
+.title {
+    display: flex;
+    font-size: 50px;
+    color: #ff6428;
+    font-weight: bold;
+    align-self: center;
+}
+
+.balance {
     display: flex;
     flex-flow: column;
-    align-items: center;
-    font-size: 50px;
-    margin-top: 200px;
+    align-self: start;
 }
-#big-balance-box {
+
+.main-container {
+    display: flex;
+    flex-flow: column;
+    font-size: 50px;
+}
+.big-balance-box {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.transaction-box {
+    align-self: center;
+    margin: 10px;
     background-color: white;
     display: flex;
-    box-shadow: lightslategrey 2px 2px 8px 8px;
     align-items: center;
     text-align: center;
-    max-width: 400px;
+    max-width: 1200px;
     flex-flow: column;
     border: white 5px;
-    border-radius: 10px;
     padding: 30px;
 }
+
+
+.transaction-text {
+    display: flex;
+    font-size: 40px;
+
+}
+
+.all-transactions {
+}
+
+.transactions {
+    margin-bottom: 500px;
+    margin-left: 400px;
+    font-size: 30px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+ }
