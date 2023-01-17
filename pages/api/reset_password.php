@@ -14,11 +14,11 @@ $errors = [
 $valid = true;
 
 ensure_session();
-if (!isset($_SESSION['url_tag'])) {
+if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-reset') {
     $errors['submit'][] = "You don't seem to have come from a valid reset link";
     api_fail('Invalid origin link', $errors);
 } else {
-    $tag = $_POST['tag'];
+    $tag = $_SESSION['url_tag'];
 }
 # TODO: check that password and tag are both actually POSTed
 

@@ -1,5 +1,5 @@
 <?php
-const MAIL_ENABLED = true;
+const MAIL_ENABLED = false;
 
 function mail_acc_verify(string $link, string $to): bool
 {

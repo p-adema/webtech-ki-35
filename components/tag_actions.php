@@ -15,7 +15,7 @@ function tag_create(int $length = 64): string
 function tag_check(string $tag, string $type): bool
 {
     $valid = false;
-    require "pdo_write.php";
+    require_once "pdo_write.php";
     try {
         $pdo_write = new_pdo_write(err_fatal: false);
     } catch (PDOException) {

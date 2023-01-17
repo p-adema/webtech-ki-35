@@ -2,6 +2,7 @@
 require 'tag_actions.php';
 
 $tag = $_GET['tag'];
+$valid = true;
 if (isset($tag)) {
     require 'api_resolve.php';
 
@@ -21,10 +22,10 @@ if (isset($tag)) {
         header('Location: /auth/reset_password.php');
         die();
     }
-} else {
-    require "html_page.php";
-    html_header('Invalid link');
-    echo "<p> This link doesn't seem quite right. </p>
-    <a href=\"/index.php\"> Go back to home </a>";
-    html_footer();
 }
+
+require "html_page.php";
+html_header('Invalid link');
+echo "<p> This link doesn't seem quite right. </p>
+<a href=\"/index.php\"> Go back to home </a>";
+html_footer();
