@@ -16,4 +16,4 @@ ENV PHP_IDE_CONFIG="serverName=localhost"
 COPY tokens /var/www/tokens
 RUN echo -n '172.17.0.1' > /var/www/tokens/hostname
 
-COPY server/php.ini /usr/local/etc/php/conf.d/webtech-project-php.ini
+COPY server/docker.ini /usr/local/etc/php/conf.d/webtech-project-php.ini
