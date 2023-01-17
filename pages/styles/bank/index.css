@@ -1,22 +1,28 @@
+html {
+    background-color: #ffd6b8;
+}
+
 body {
+    font-size: 40px;
     margin: 0;
 }
 
 .title-box {
-    display: flex;
+    margin-top: 7px;
     padding-left: 3px;
     padding-right: 3px;
-    align-self: center;
     max-width: max-content;
     background-color: black;
     border-radius: 10px;
 }
 
 .background-box {
+    padding-bottom: 10px;
     display: flex;
+    flex-flow: column;
     align-items: center;
     background-color: #ff713c;
-    max-height: 100px;
+    max-height: 200px;
 }
 
 .title {
@@ -27,18 +33,14 @@ body {
     align-self: center;
 }
 
-.balance {
+.big-transaction-box {
     display: flex;
-    flex-flow: column;
-    align-self: start;
+    align-items: center;
 }
 
-.main-container {
-    display: flex;
-    flex-flow: column;
-    font-size: 50px;
-}
 .big-balance-box {
+    margin-top: 50px;
+    align-self: center;
     padding-top: 10px;
     padding-bottom: 10px;
     display: flex;
@@ -46,27 +48,96 @@ body {
     flex-flow: column;
 }
 
-.transaction-box {
-    align-self: center;
-    margin: 10px;
-    background-color: white;
+.balance-header {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.balance {
+    border-bottom: solid #d54f1a 8px;
+    border-radius: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 50px;
     display: flex;
-    align-items: center;
+    align-items: baseline;
+}
+
+.balance-text {
+    display: flex;
+}
+
+.balance-amount {
+    display: flex;
+}
+
+.main-container {
+    display: flex;
+    flex-flow: column;
+    font-size: 30px;
+}
+
+.main-pending-box {
+    margin-left: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    margin-top: 60px;
+}
+
+.pending_box {
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    max-width: max-content;
+    font-size: 30px;
+    margin-left: 10px;
+
+}
+
+.pending-header {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 30px;
+    border-bottom: solid #d54f1a 5px;
+}
+
+.all-transactions {
+    align-self: end;
+    margin-top: 50px;
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+    margin-left: 900px;
+}
+
+.transaction-title {
+    margin-left: 15px;
+    margin-bottom: 30px;
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: solid #d54f1a 5px;
+}
+
+.transaction-box {
+    align-self: end;
+    margin: 10px;
+    display: flex;
+    align-items: end;
     text-align: center;
     max-width: 1200px;
     flex-flow: column;
     border: white 5px;
-    padding: 30px;
+    padding-left: 30px;
+    font-size: 30px;
 }
-
 
 .transaction-text {
     display: flex;
-    font-size: 40px;
+    font-size: 30px;
 
-}
-
-.all-transactions {
 }
 
 .transactions {
@@ -75,5 +146,38 @@ body {
     font-size: 30px;
     display: flex;
     flex-flow: column;
-    align-items: center;
+    align-items: start;
  }
+
+.transaction-boxy {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: solid #ff6428 3px;
+    box-shadow: 0 5px 15px hsl(0, 0%, 0.2%);
+}
+
+.amount-text {
+    display: flex;
+}
+
+.payment-when {
+    display: flex;
+    margin-left: 50px;
+}
+
+.pay-button {
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 18px;
+    margin-left: 50px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    background-color: #ff6428;
+}

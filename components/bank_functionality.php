@@ -36,21 +36,50 @@ function get_transaction_log($user_id): array
     return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
-
 function print_transaction($transaction): void
 {
-    echo '-€';
-    echo $transaction['amount'];
-    echo ' Aangevraagd op: ';
-    echo $transaction['request_time'];
-    echo '<br> En betaald op: ';
-    echo $transaction['payment_time'];
+    echo  '<div class="transaction-boxy">';
+        echo '<div class="amount-text"> -€';
+            echo $transaction['amount'];
+        echo '</div>';
+        echo '<div class="payment-when">';
+            echo substr($transaction['payment_time'], 0, 10);
+        echo "</div>";
+    echo '</div>';
 }
 
 function print_pending($pending): void
 {
-    echo '€';
-    echo $pending['amount'];
-    echo ' Aangevraagd op: ';
-    echo $pending['request_time'];
+    $tag = $pending['url_tag'];
+
+    echo  '<div class="transaction-boxy">';
+        echo '<div class="amount-text"> -€';
+            echo $pending['amount'];
+        echo '</div>';
+        echo '<div class="payment-when">';
+            echo substr($pending['request_time'], 0, 10);
+        echo "</div>";
+        echo "<form action='/bank/verify.php?tag=$tag' method='get' target='_blank'><button class='pay-button' type='submit'>Pay now</button>";
+    echo '</div>';
+}
+
+function obtain_user_information($tag): string
+{
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT (user_id) FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['url_tag' => $tag]);
+
+    return $sth->fetch();
+}
+
+function confirm_payment($user_id): void
+{
+
+}
+
+function deny_payment($user_id): void
+{
+
 }
