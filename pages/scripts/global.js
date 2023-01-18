@@ -54,3 +54,13 @@ function form_handle_success(message, options) {
         )
     }
 }
+
+function close_sidebar() {
+    document.getElementById("sidebar").style.width = "250px";
+    document.getElementById('sidebar-button').style.width = "250px";
+}
+
+function open_sidebar() {
+    document.getElementById("sidebar").style.width = "0";
+    document.getElementById('sidebar-button').style.width = "0";
+}
