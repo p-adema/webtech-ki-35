@@ -6,10 +6,16 @@ require_once "pdo_read.php";
 class Cart
 {
     private PDO $PDO;
+
+    private string $sql_tag;
+    private string $sql_price;
     private string $sql_video_long;
     private string $sql_type;
+    private PDOStatement|false $p_tag;
+    private PDOStatement|false $p_price;
     private PDOStatement|false $p_type;
     private PDOStatement|false $p_video_long;
+
 
     public function __construct()
     {
@@ -24,6 +30,13 @@ class Cart
         }
 
         $this->PDO = new_pdo_read();
+
+        $this->sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
+        $this->p_tag = $this->PDO->prepare($this->sql_tag);
+
+        $this->sql_price = 'SELECT price FROM db.items WHERE (id = :id)';
+        $this->p_price = $this->PDO->prepare($this->sql_price);
+
         $this->sql_type = 'SELECT type FROM items WHERE (id = :id)';
         $this->p_type = $this->PDO->prepare($this->sql_type);
 
@@ -39,41 +52,41 @@ class Cart
                                   INNER JOIN videos v on i.tag = v.tag
                                   INNER JOIN users u on v.uploader = u.id
                                   WHERE i.id = :id';
-        $this->p_video_long =$this->PDO->prepare($this->sql_video_long);
+        $this->p_video_long = $this->PDO->prepare($this->sql_video_long);
     }
 
-    private function get_type($id): string
+    public function get_id($tag): int|false
     {
-        $this->p_type->execute(['id' => $id]);
-        return $this->p_type->fetch(PDO::FETCH_ASSOC)['type'];
+        $this->p_tag->execute(['tag' => $tag]);
+        return $this->p_tag->fetch(PDO::FETCH_ASSOC)['id'];
     }
 
     /**
      * Add an item to the session cart
      * @param int $id db.items.id to add to cart
-     * @param int|null $price Price of item
-     * @param bool $price_in_cents whether prices is in cents
      * @return bool success of addition
      */
-    public function add_item(int $id, int $price = null, bool $price_in_cents = false): bool
+    public function add_item(int $id): bool
     {
         if (!in_array($id, $_SESSION['cart']['ids'])) {
-            if ($price !== null) {
+            $price = $this->get_price($id);
+
+            if ($price) {
                 $_SESSION['cart']['ids'][] = $id;
                 $_SESSION['cart']['count'] += 1;
 
-                if ($price_in_cents) {
-                    $_SESSION['cart']['total'] += $price;
-                    $_SESSION['cart']['prices'][$id] = $price;
-                } else {
-                    $_SESSION['cart']['total'] += $price * 100;
-                    $_SESSION['cart']['prices'][$id] = $price * 100;
-                }
-
+                $_SESSION['cart']['total'] += $price;
+                $_SESSION['cart']['prices'][$id] = $price;
+                return true;
             }
-            return true;
         }
         return false;
+    }
+
+    private function get_price($id): int|false
+    {
+        $this->p_price->execute(['id' => $id]);
+        return $this->p_price->fetch(PDO::FETCH_ASSOC)['price'];
     }
 
     /**
@@ -117,7 +130,7 @@ class Cart
         return $items;
     }
 
-    public function item_short(int $id) : array
+    public function item_short(int $id): array
     {
         return ['id' => $id, 'price' => $_SESSION['cart']['prices'][$id]];
     }
@@ -133,21 +146,11 @@ class Cart
 
     /**
      * Get the total price of the cart
-     * @param bool $in_cents whether price should be in euro's or cents
      * @return int|float total price of cart
      */
-    public function total(bool $in_cents = false): int|float
+    public function total(): int|float
     {
-        if ($in_cents) {
-            return $_SESSION['cart']['total'];
-        }
-        return $_SESSION['cart']['total'] / 100;
-    }
-
-    public function video_long($id)
-    {
-        $this->p_video_long->execute(['id' => $id]);
-        return $this->p_video_long->fetch(PDO::FETCH_ASSOC);
+        return $_SESSION['cart']['total'];
     }
 
     public function items_long(): array
@@ -163,6 +166,18 @@ class Cart
         }
 
         return $items;
+    }
+
+    private function get_type($id): string
+    {
+        $this->p_type->execute(['id' => $id]);
+        return $this->p_type->fetch(PDO::FETCH_ASSOC)['type'];
+    }
+
+    public function video_long($id)
+    {
+        $this->p_video_long->execute(['id' => $id]);
+        return $this->p_video_long->fetch(PDO::FETCH_ASSOC);
     }
 
 }

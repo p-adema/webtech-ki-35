@@ -16,6 +16,7 @@ CREATE TABLE `users`
 
 CREATE TABLE `billing_information`
 (
+    `id`            BIGINT UNSIGNED   NOT NULL AUTO_INCREMENT,
     `user_id`       BIGINT UNSIGNED   NOT NULL,
     `legal_name`    VARCHAR(256)      NOT NULL,
     `country`       VARCHAR(100)      NOT NULL,
@@ -23,6 +24,7 @@ CREATE TABLE `billing_information`
     `zipcode`       VARCHAR(100)      NOT NULL,
     `street_number` SMALLINT UNSIGNED NOT NULL,
     `address`       VARCHAR(100)      NULL,
+    PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
@@ -31,7 +33,7 @@ CREATE TABLE `items`
     `id`    BIGINT UNSIGNED          NOT NULL AUTO_INCREMENT,
     `tag`   CHAR(64) UNIQUE          NOT NULL,
     `type`  ENUM ('video', 'course') NOT NULL,
-    `price` DECIMAL(5, 2)            NOT NULL,
+    `price` DECIMAL(5, 2) DEFAULT 0  NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -40,13 +42,15 @@ CREATE TABLE `videos`
     `id`          BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
     `tag`         CHAR(64) UNIQUE        NOT NULL,
     `name`        VARCHAR(100)           NOT NULL,
+    `free`        BOOLEAN  DEFAULT TRUE  NOT NULL,
     `description` VARCHAR(256)           NOT NULL,
     `subject`     VARCHAR(100)           NOT NULL,
     `uploader`    BIGINT UNSIGNED        NOT NULL,
     `upload_date` DATETIME DEFAULT NOW() NOT NULL,
     `views`       BIGINT UNSIGNED        NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`uploader`) REFERENCES `users` (`id`)
+    FOREIGN KEY (`uploader`) REFERENCES `users` (`id`),
+    FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)
 );
 
 CREATE TABLE `courses`
@@ -71,7 +75,7 @@ CREATE TABLE `comments`
     `item_id`      BIGINT UNSIGNED        NOT NULL,
     `text`         VARCHAR(1000)          NOT NULL,
     `date`         DATETIME DEFAULT NOW() NOT NULL,
-    `reply_id`     BIGINT UNSIGNED        NOT NULL,
+    `reply_id`     BIGINT UNSIGNED        NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`commenter_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
@@ -80,21 +84,24 @@ CREATE TABLE `comments`
 
 CREATE TABLE `ratings`
 (
-    `id`       BIGINT UNSIGNED  NOT NULL AUTO_INCREMENT,
-    `rater_id` BIGINT UNSIGNED  NOT NULL,
-    `item_id`  BIGINT UNSIGNED  NOT NULL,
-    `rating`   TINYINT UNSIGNED NOT NULL,
-    `text`     VARCHAR(1000)    NULL,
+    `id`       BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
+    `rater_id` BIGINT UNSIGNED        NOT NULL,
+    `item_id`  BIGINT UNSIGNED        NOT NULL,
+    `rating`   TINYINT UNSIGNED       NOT NULL,
+    `text`     VARCHAR(1000)          NULL,
+    `date`     DATETIME DEFAULT NOW() NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (`rater_id`) REFERENCES `users` (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES `videos` (`id`)
+    FOREIGN KEY (`item_id`) REFERENCES `items` (`id`)
 );
 
 CREATE TABLE `balances`
 (
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     `user_id` BIGINT UNSIGNED NOT NULL,
     `balance` DECIMAL(10, 2)  NOT NULL,
-    PRIMARY KEY (`user_id`)
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users (`id`)
 );
 
 CREATE TABLE `emails_pending`
@@ -107,6 +114,52 @@ CREATE TABLE `emails_pending`
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
+);
+
+CREATE TABLE `purchases_pending`
+(
+    `id`           BIGINT UNSIGNED AUTO_INCREMENT,
+    `url_tag`      CHAR(64)               NOT NULL,
+    `amount`       DECIMAL(5, 2)          NOT NULL,
+    `item_id`      BIGINT UNSIGNED        NOT NULL,
+    `user_id`      BIGINT UNSIGNED        NOT NULL,
+    `info_id`      BIGINT UNSIGNED        NOT NULL,
+    `request_time` DATETIME DEFAULT NOW() NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`url_tag`),
+    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
+    FOREIGN KEY (`info_id`) REFERENCES db.billing_information (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
+);
+
+CREATE TABLE `purchases_log`
+(
+    `id`                BIGINT UNSIGNED AUTO_INCREMENT,
+    `url_tag`           CHAR(64)               NOT NULL,
+    `amount`            DECIMAL(5, 2)          NOT NULL,
+    `item_id`           BIGINT UNSIGNED        NOT NULL,
+    `user_id`           BIGINT UNSIGNED        NOT NULL,
+    `info_id`           BIGINT UNSIGNED        NOT NULL,
+    `request_time`      DATETIME               NOT NULL,
+    `confirmation_time` DATETIME DEFAULT NOW() NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`url_tag`),
+    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
+    FOREIGN KEY (`info_id`) REFERENCES db.billing_information (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
+);
+
+CREATE TABLE `ownership`
+(
+    `id`          BIGINT UNSIGNED           NOT NULL AUTO_INCREMENT,
+    `item_tag`    CHAR(64)                  NOT NULL,
+    `user_id`     BIGINT UNSIGNED           NOT NULL,
+    `origin`      ENUM ('purchase', 'gift') NOT NULL,
+    `purchase_id` BIGINT UNSIGNED           NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases_log (`id`)
 );
 
 CREATE TABLE `transactions_pending`
@@ -132,9 +185,11 @@ CREATE TABLE `transaction_log`
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
-CREATE TABLE `video_tags`
+CREATE TABLE `item_tags`
 (
-    `video_id` BIGINT UNSIGNED NOT NULL,
-    `tag`      VARCHAR(16),
-    FOREIGN KEY (`video_id`) REFERENCES db.videos (`id`)
+    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `item_id` BIGINT UNSIGNED NOT NULL,
+    `tag`     VARCHAR(16),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`)
 );

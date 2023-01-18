@@ -1,4 +1,6 @@
 <?php
+
+require_once "api_resolve.php";
 /**
  * Start a page by initialising the session, creating a header and opening the body
  * @param string $title Tab title
@@ -58,12 +60,7 @@ function html_header(string $title, string $description = '', bool|string $style
             </head>
             <body>";
 
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
-    if (!isset($_SESSION['auth'])) {
-        $_SESSION['auth'] = false;
-    }
+    ensure_session();
 
     echo $html;
 }
