@@ -64,7 +64,7 @@ if (!$user['verified']) {
 }
 
 if (!api_login($name)) {
-    $errors['submit'][] = 'Unexpected server error';
+    $errors['submit'][] = 'Unexpected server error (are you logged in?)';
     api_fail('Unexpected server error', $errors);
 }
 

@@ -8,12 +8,19 @@ require "pdo_write.php";
 
 $errors = [
     'password' => [],
-    'password-repeated' => [],
+    'password_repeated' => [],
     'submit' => []
 ];
 $valid = true;
 
-$tag = $_POST['tag']; # TODO: check that password and tag are both actually POSTed
+ensure_session();
+if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-reset') {
+    $errors['submit'][] = "You don't seem to have come from a valid reset link";
+    api_fail('Invalid origin link', $errors);
+} else {
+    $tag = $_SESSION['url_tag'];
+}
+# TODO: check that password and tag are both actually POSTed
 
 try {
     $pdo_write = new_pdo_write(err_fatal: false);
@@ -44,7 +51,7 @@ if (isset($pdo_write)) {
 
 }
 $password = $_POST['password'];
-$repeated_password = $_POST['password-repeated'];
+$repeated_password = $_POST['password_repeated'];
 
 $errors['password'] = check_password($password);
 if (!empty($errors['password'])) {
@@ -52,7 +59,7 @@ if (!empty($errors['password'])) {
 }
 
 if ($password != $repeated_password) {
-    $errors['password-repeated'][] = "Passwords do not match.";
+    $errors['password_repeated'][] = "Passwords do not match.";
     $valid = false;
 }
 

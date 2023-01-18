@@ -9,11 +9,13 @@
 
 require "api_resolve.php";
 require 'tag_actions.php';
+require "mail.php";
 
 $errors = [
     'name' => [],
     'email' => [],
     'password' => [],
+    're_pwd' => [],
     'full_name' => [],
     'submit' => []
 ];
@@ -22,6 +24,7 @@ $valid = true;
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
+$re_pwd = $_POST['re_pwd'];
 $full_name = $_POST['full_name'];
 
 if (empty($name)) {
@@ -104,6 +107,9 @@ Password constraints:
 $errors['password'] = check_password($password);
 if (!empty($errors['password'])) {
     $valid = false;
+} elseif ($password !== $re_pwd) {
+    $errors['re_pwd'][] = 'Passwords do not match';
+    $valid = false;
 }
 
 if (strlen(htmlspecialchars($full_name)) > 128) {
@@ -153,4 +159,9 @@ $sql_prep = $pdo_write->prepare($sql);
 $sql_prep->execute($data);
 
 $link = '/auth/verify.php?tag=' . $url_tag;
-api_succeed("An E-mail to activate your account has been sent to $email <br>  <a href='$link'>link</a>", $errors);
+if (mail_acc_verify($link, $email)) { #TODO PRODUCTION: remove link
+    api_succeed("An E-mail to activate your account has been sent to $email <br />  <a href='$link'>dev</a>", $errors);
+} else {
+    $errors['submit'][] = "Verification email couldn't be sent  <br />  <a href='$link'>dev</a>";
+    api_fail("The email to verify your account couldn't be sent", $errors);
+}

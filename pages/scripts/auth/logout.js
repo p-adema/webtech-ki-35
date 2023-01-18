@@ -3,23 +3,16 @@ $(document).ready(function () {
         event.preventDefault()
         $('button.form-submit').addClass('pressed').removeClass('error')
 
-        $.post("/api/logout.php", {}, function (response_raw) {
-            try {
-                const response = JSON.parse(response_raw);
-                console.log(response);
-                if (!response.success) {
-                    form_handle_errors(response.errors);
-                } else {
-                    $(location).attr('href', '/');
-                }
-            } catch (e) {
-                console.log(response_raw);
-                console.log(e);
-                $('button.form-submit').addClass('error')
-            } finally {
-                $('button.form-submit').removeClass('pressed')
+        const user_data = {}
+
+        const handler_options = {
+            redirect: {
+                link: '/',
+                delay: 5000
             }
-            // TODO: not logged in users go to login page
-        })
+        }
+
+        $.post("/api/logout.php", user_data, form_handle_respone(handler_options))
+        // TODO: not logged in users go to login page
     })
 })

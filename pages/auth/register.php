@@ -13,6 +13,7 @@ html_header(title: 'Register', styled: 'form.css', scripted: true);
                 form_input('name', 'Username');
                 form_input('email', 'Email', type: 'email');
                 form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
+                form_input('re_pwd', 'Repeat password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
                 form_input('full_name', 'Full name (optional)');
                 form_error();
 

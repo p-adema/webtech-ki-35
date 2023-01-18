@@ -4,7 +4,8 @@ $(document).ready(function () {
         $('button.form-submit').addClass('pressed').removeClass('error')
 
         const user_data = {
-            name: $("#name").val(), password: $("#password").val(),
+            password: $("#password").val(),
+            password_repeated: $("#password_repeated").val(),
         };
 
         const handler_options = {
@@ -14,6 +15,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/login.php", user_data, form_handle_respone(handler_options));
+        $.post("/api/reset_password.php", user_data, form_handle_respone(handler_options));
     });
 });
