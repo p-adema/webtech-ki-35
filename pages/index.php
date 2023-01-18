@@ -13,6 +13,8 @@ echo '<br/> See <a href="auth/logout.php">auth/logout</a> for a logout form';
 echo '<br/> See <a href="voorbeeld.php">voorbeeld</a> for an example';
 echo '<br/> See <a href="session.php">session</a> for a session test';
 echo '<br/> See <a href="auth/forgot_password.php">forgot password</a> in case you forgot your password';
+echo '<br/> See <a href="add_cart.php">add cart</a> to add example to cart';
+echo '<br/> See <a href="show_cart.php">show cart</a> to view cart';
 echo '</p>';
 
 html_footer();
