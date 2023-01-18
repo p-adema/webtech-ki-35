@@ -7,7 +7,7 @@ html_header(title: 'Change password', styled: 'form.css', scripted: true);
     <div class="form-content">
         <h1> Change password </h1>
         <div class="form-outline">
-            <form action="/api/change_password_email.php" method="POST">
+            <form action="/api/reset_password.php" method="POST">
                 <?php if (isset($_SESSION['url_tag']) and $_SESSION['url_tag_type'] === 'password-reset'): ?>
                     <p> Fill in your new password below.</p>
                     <?php

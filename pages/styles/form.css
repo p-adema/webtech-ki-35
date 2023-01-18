@@ -159,12 +159,12 @@ button.form-submit.pressed {
 }
 
 button.form-submit.disabled:hover {
-    background: darkslategray;
+    background: slategray;
     cursor: default;
 }
 
 button.form-submit.disabled {
-    background: darkslategray;
+    background: slategray;
 }
 
 button.form-submit.pressed:hover {
