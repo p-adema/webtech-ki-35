@@ -1,5 +1,7 @@
 /*
 !/pages/
+/pages/videos
+!/pages/videos/example.mp4
 !/server/
 /server/local.ini
 !/components/
