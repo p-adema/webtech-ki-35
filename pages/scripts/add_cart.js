@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         const user_data = {
             type: 'add',
-            item: 'example'
+            item: 'example_paid'
         };
 
         const handler_options = {

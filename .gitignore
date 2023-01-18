@@ -1,7 +1,8 @@
 /*
 !/pages/
 /pages/videos
-!/pages/videos/example.mp4
+!/pages/videos/example_free.mp4
+!/pages/videos/example_paid.mp4
 !/server/
 /server/local.ini
 !/components/
