@@ -48,12 +48,17 @@ div.form-success {
     background: #52a452;
     border-radius: 5px;
     border-color: darkgreen;
-    width: 50%;
+    width: 70%;
     align-self: center;
     height: 20%;
     margin: 20px;
     padding: 10px;
     text-align: center;
+    transition-duration: 0.3s;
+}
+
+div.form-success.clickable:hover {
+    background: #6dc76d;
 }
 
 div.form_success > span {
