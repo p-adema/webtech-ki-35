@@ -77,13 +77,22 @@ if (isset($pdo_write)) {
 
 
     if(!empty($current_password)) {
-        if (!password_verify($current_password, $user_password_hashed)){
+        if (!password_verify($current_password, $user_password_hashed)) {
             $errors['password'][] = 'Incorrect password';
             $valid = false;
+        } else {
+            if (!empty($new_password)) {
+                $errors['new_password'] = check_password($new_password);
+                if (!empty($errors['new_password'])) {
+                    $valid = false;
+                }
             }
+        }
+
 
         if (empty($new_password) or empty($repeated_password)) {
-            $errors['new_password'][] = '';
+            $errors['new_password'][] = 'Please fill in your new passwords';
+            $valid = false;
         }
 
     } else {
@@ -92,12 +101,7 @@ if (isset($pdo_write)) {
             $valid = false;
         }
     }
-    if (!empty($new_password)) {
-        $errors['new_password'][] = check_password($new_password);
-        if (!empty($errors['new_password'])) {
-            $valid = false;
-        }
-    }
+
 
     if ($new_password != $repeated_password) {
         $errors['repeated_password'][] = 'Passwords do not match';
