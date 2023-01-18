@@ -19,5 +19,3 @@ function check_tag($tag): bool
 
     return !empty($user_id_fetch);
 }
-
-html_footer();
