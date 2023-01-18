@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('input').click(function (event) {
+    $('button.form-submit').click(function (_) {
         $(this).attr('clicked', true)
     })
     $("form").submit(function (event) {
@@ -9,7 +9,7 @@ $(document).ready(function () {
         const parameter_list = new URLSearchParams(window.location.search)
 
         const user_data = {
-            type : $('input[clicked=true]').val(),
+            type : $('button.form-submit[clicked=true]').val(),
             tag: parameter_list.get('tag')
             }
 
@@ -19,8 +19,12 @@ $(document).ready(function () {
                 console.log(response);
                 if (!response.success) {
                     form_handle_errors(response.errors);
+                    $("form").html('<div class="form-succes"><span>' + response.message + "</span></div>")
                 } else {
-                    // $(location).attr('href', '/');
+                    $("form").html('<div class="form-success"><span>' + response.message + "</span></div>")
+                    setTimeout(function () {
+                        $(location).attr('href', '/bank')
+                    }, 3000)
                 }
             } catch (e) {
                 console.log(response_raw);

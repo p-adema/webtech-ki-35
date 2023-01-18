@@ -75,7 +75,7 @@ function print_pending($pending): void
         echo '<div class="payment-when">';
             echo substr($pending['request_time'], 0, 10);
         echo "</div>";
-        echo "<form action='/bank/verify.php?tag=$tag' method='get' target='_blank'><button class='pay-button' type='submit'>Pay now</button>";
+        echo "<a href='/bank/verify.php?tag=$tag'><button class='pay-button' type='submit'>Pay now</button></a>";
     echo '</div>';
 }
 
@@ -92,7 +92,33 @@ function obtain_user_information($tag): string
 
 function confirm_payment($tag): void
 {
+    require_once 'pdo_write.php';
 
+    $pdo_write = new_pdo_write();
+
+    $pdo_read = new_pdo_read();
+
+    $sql_read = 'SELECT amount, request_time, user_id FROM db.transactions_pending where (url_tag = :url_tag)';
+    $sth_read = $pdo_read->prepare($sql_read);
+    $sth_read->execute(['url_tag' => $tag]);
+
+    $data = $sth_read->fetch(PDO::FETCH_ASSOC);
+
+    $sql_add = 'INSERT INTO db.transaction_log(user_id, amount, request_time) 
+        VALUES(:identity, :money, :date)';
+    $sql_add = $pdo_write->prepare($sql_add);
+    $data = ['identity' => $data['user_id'], 'money' => $data['amount'], 'date' => $data['request_time']];
+    $sql_add->execute($data);
+
+    $sql_remove = 'DELETE FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+    $sth_remove = $pdo_write->prepare($sql_remove);
+    $sth_remove->execute(['url_tag' => $tag]);
+
+    $user_bal = get_balance($data['identity']);
+
+    $sql_bal_change = 'UPDATE db.balances SET balance = :new_bal WHERE (user_id = :user)';
+    $sth_bal = $pdo_write->prepare($sql_bal_change);
+    $sth_bal->execute(['user' => $data['identity'], 'new_bal' => $user_bal - $data['money']]);
 }
 
 function deny_payment($tag): void

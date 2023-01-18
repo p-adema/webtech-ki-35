@@ -35,7 +35,7 @@ body {
 
 .big-transaction-box {
     display: flex;
-    align-items: center;
+    align-items: baseline;
 }
 
 .big-balance-box {
