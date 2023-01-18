@@ -29,6 +29,7 @@ CREATE TABLE `billing_information`
 CREATE TABLE `videos`
 (
     `id`          BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
+    `tag`         CHAR(64) UNIQUE        NOT NULL,
     `name`        VARCHAR(100)           NOT NULL,
     `description` VARCHAR(256)           NOT NULL,
     `subject`     VARCHAR(100)           NOT NULL,
