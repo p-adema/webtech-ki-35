@@ -2,6 +2,8 @@
 require 'html_page.php';
 require 'link.php';
 html_header('DB Example', scripted: 'ajax');
+require 'navbar.php';
+navbar();
 
 echo '<p>';
 echo 'Base page';

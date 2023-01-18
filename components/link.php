@@ -27,3 +27,10 @@ function button_link(string $text, string $adress, $id = ''): void
     </div> ";
     echo $html;
 }
+
+
+function text_link_return(string $text, string $address): string {
+    return "<div class='link-box link-box-text'>
+        <a href='$address'> $text </a>
+    </div> ";
+}
