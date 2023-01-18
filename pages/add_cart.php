@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Add Bunny to cart', styled: true, scripted: true);
+html_header(title: 'Add Bunny to cart', styled: 'form.css', scripted: true);
 ?>
 
     <div class="form-content">
@@ -12,6 +12,7 @@ html_header(title: 'Add Bunny to cart', styled: true, scripted: true);
                 require "link.php";
 
                 form_submit(text: 'Add to cart', extra_cls: 'long-btn');
+                form_error('item');
                 form_error();
                 text_link('Go back to home', '/');
                 ?>

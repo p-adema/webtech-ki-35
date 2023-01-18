@@ -14,6 +14,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/login.php", user_data, form_handle_respone(handler_options));
+        $.post("/api/cart/add.php", user_data, form_handle_respone(handler_options));
     });
 });
