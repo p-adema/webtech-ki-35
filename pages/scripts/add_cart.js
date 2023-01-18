@@ -4,7 +4,8 @@ $(document).ready(function () {
         $('button.form-submit').addClass('pressed').removeClass('error')
 
         const user_data = {
-            item: 'example',
+            type: 'add',
+            item: 'example'
         };
 
         const handler_options = {
@@ -14,6 +15,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/cart/add.php", user_data, form_handle_respone(handler_options));
+        $.post("/api/cart/modify.php", user_data, form_handle_respone(handler_options));
     });
 });

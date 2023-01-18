@@ -17,7 +17,7 @@ use JetBrains\PhpStorm\NoReturn;
     $response['errors'] = $errors;
     $response['data'] = $data;
     echo json_encode($response);
-    die();
+    exit();
 }
 
 /**
@@ -33,7 +33,7 @@ use JetBrains\PhpStorm\NoReturn;
     $response['errors'] = $errors;
     $response['data'] = $data;
     echo json_encode($response);
-    die();
+    exit();
 }
 
 /**
@@ -43,6 +43,9 @@ function ensure_session(): void
 {
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
+    }
+    if (!isset($_SESSION['auth'])) {
+        $_SESSION['auth'] = false;
     }
 }
 

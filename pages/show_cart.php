@@ -17,7 +17,6 @@ html_header(title: 'Shopping cart', styled: false, scripted: false);
 
             <?php
             $cart = new Cart;
-            $pdo_read = new_pdo_read();
 
             foreach ($cart->items_long() as $item) {
                 $html = "
