@@ -34,7 +34,7 @@ html_header('DB Example');
 </div>
 
 <?php
-require "link.php";
+require_once "link.php";
 text_link('Go back to home', '/');
 
 html_footer();

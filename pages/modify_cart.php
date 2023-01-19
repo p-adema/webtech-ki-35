@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 require "form_elements.php";
-require "link.php";
+require_once "link.php";
 html_header(title: 'Cart modify', styled: 'form.css', scripted: true);
 ?>
 

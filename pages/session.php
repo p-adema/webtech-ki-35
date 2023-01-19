@@ -16,7 +16,7 @@ if ($_SESSION['auth']) {
     echo '<p>You are not logged in <br/></p>';
 }
 
-require "link.php";
+require_once "link.php";
 text_link('Go back to home', '/');
 
 html_footer();

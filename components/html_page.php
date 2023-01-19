@@ -1,6 +1,8 @@
 <?php
 
 require_once "api_resolve.php";
+require_once 'navbar.php';
+
 /**
  * Start a page by initialising the session, creating a header and opening the body
  * @param string $title Tab title
@@ -16,6 +18,7 @@ require_once "api_resolve.php";
  */
 function html_header(string $title, string $description = '', bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
+
     $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
     if ($scripted) {
         if ($scripted === 'ajax') {
@@ -63,6 +66,8 @@ function html_header(string $title, string $description = '', bool|string $style
     ensure_session();
 
     echo $html;
+
+    navbar();
 }
 
 

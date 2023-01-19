@@ -1,9 +1,7 @@
 <?php
 require 'html_page.php';
-require 'link.php';
 html_header('DB Example', scripted: 'ajax');
-require 'navbar.php';
-navbar();
+require_once 'link.php';
 
 echo '<p>';
 echo 'Base page';
@@ -21,7 +19,3 @@ echo '<br/> See <a href="courses/video.php?tag=example_free">example free</a> to
 echo '</p>';
 
 html_footer();
-
-
-
-

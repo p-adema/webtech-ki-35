@@ -8,7 +8,7 @@ html_header(title: 'Register', styled: 'form.css', scripted: true);
             <form action="/api/register.php" method="POST">
                 <?php
                 require "form_elements.php";
-                require "link.php";
+                require_once "link.php";
 
                 form_input('name', 'Username');
                 form_input('email', 'Email', type: 'email');
