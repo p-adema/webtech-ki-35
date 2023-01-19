@@ -1,53 +1,59 @@
-function form_handle_respone(options) {
+function form_default_response(options) {
+    options.form = options.hasOwnProperty('multi_form') ? 'form#' + options.multi_form.target : 'form';
+
     return function (response_raw) {
         try {
             const response = JSON.parse(response_raw);
             console.log(response);
 
             if (!response.success) {
-                form_handle_errors(response.errors);
+                (options.hasOwnProperty('error_handler') ? options.error_handler : form_default_errors)(response.errors, options)
             } else {
-                form_handle_success(response.message, options)
+                (options.hasOwnProperty('success_handler') ? options.success_handler : form_default_success)(response.message, options)
             }
         } catch (e) {
             console.log(response_raw);
             console.log(e);
-            $('button.form-submit').addClass('error')
+            $(`${options.form} button.form-submit`).addClass('error')
         } finally {
-            $('button.form-submit').removeClass('pressed')
+            $(`${options.form} button.form-submit`).removeClass('pressed')
         }
     }
 }
 
-function form_handle_errors(errors) {
+function form_default_errors(errors, options) {
     for (let form_elem in errors) {
         if (errors[form_elem].length !== 0) {
-            $(`div#${form_elem}-group`).addClass("has-error")
-            $(`span#${form_elem}-error`).css('visibility', 'visible').html(errors[form_elem].join('<br/>'));
+            $(`${options.form} div#${form_elem}-group`).addClass("has-error")
+            $(`${options.form} span#${form_elem}-error`).css('visibility', 'visible').html(errors[form_elem].join('<br/>'));
         } else {
-            $(`div#${form_elem}-group`).removeClass("has-error")
-            $(`span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
+            $(`${options.form} div#${form_elem}-group`).removeClass("has-error")
+            $(`${options.form} span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
         }
     }
 }
 
-function form_handle_success(message, options) {
+function form_default_success(message, options) {
     if ('redirect' in options) {
-        $("form").html(
+        if ('multi_form' in options && 'clear_other' in options.multi_form && options.multi_form.clear_other) {
+            $('form').html('');
+        }
+        $(options.form).html(
             '<div class="form-success clickable"> ' +
             '       <span>' + message + "</span> " +
             "       <span> <br /> You will be redirected shortly <br /> (or: click here) </span>" +
             "     </div>"
         )
 
+
         function redirect() {
             $(location).attr('href', options.redirect.link)
         }
 
         $("div.form-success").click(redirect)
-        setTimeout(redirect, options.redirect.delay)
+        setTimeout(redirect, options.redirect.hasOwnProperty('delay') ? options.redirect.delay : 0)
     } else {
-        $("form").html(
+        $(options.form).html(
             '<div class="form-success"> ' +
             '       <span>' + message + "</span> " +
             "     </div>"
@@ -56,6 +62,7 @@ function form_handle_success(message, options) {
 }
 
 function close_sidebar() {
+    // $(#sidebar).css('width', '250px');
     document.getElementById("sidebar").style.width = "250px";
     document.getElementById('sidebar-button').style.width = "250px";
 }

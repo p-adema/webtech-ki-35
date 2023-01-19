@@ -15,6 +15,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/reset_password.php", user_data, form_handle_respone(handler_options));
+        $.post("/api/reset_password.php", user_data, form_default_response(handler_options));
     });
 });

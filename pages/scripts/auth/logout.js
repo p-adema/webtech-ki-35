@@ -12,7 +12,7 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/logout.php", user_data, form_handle_respone(handler_options))
+        $.post("/api/logout.php", user_data, form_default_response(handler_options))
         // TODO: not logged in users go to login page
     })
 })
