@@ -24,10 +24,10 @@ if (empty($tag)) {
 }
 
 if (empty($type)) {
-    $errors['$VAR'][] = 'Please provide an operation';
+    $errors['type'][] = 'Please provide an operation';
     $valid = false;
 } elseif ($type !== 'add' and $type !== 'remove') {
-    $errors['$VAR'][] = 'Please provide a valid operation';
+    $errors['type'][] = 'Please provide a valid operation';
     $valid = false;
 }
 
