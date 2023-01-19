@@ -3,6 +3,8 @@ VALUES (1, 'site_admin', 'admin@edugrove.com', '$2y$10$kyL3zckjCYSMSfDtwW.1o.KcL
         'Edu Grove',
         'member', DEFAULT, 1, true);
 
+-- password = W%pC&X&F5nVBPX6!
+
 INSERT INTO db.balances (user_id, balance)
 SELECT 1, 1000.00;
 
@@ -19,12 +21,12 @@ INSERT db.items (tag, type, price)
 VALUES ('example_free', 'video', 0);
 
 INSERT INTO db.videos (tag, name, description, subject, uploader, views, free)
-SELECT 'example_paid', 'Bunny', 'Look at this bunny!', 'biology', id, 0, false
+SELECT 'example_paid', 'Giant Bunny', 'Look at this bunny!', 'biology', id, 0, false
 FROM db.users
 WHERE name = 'bunnyfan';
 
 INSERT INTO db.videos (tag, name, description, subject, uploader, views)
-SELECT 'example_free', 'Bunny', 'What a chonker!', 'biology', id, 0
+SELECT 'example_free', 'Big Bunny', 'What a chonker!', 'biology', id, 0
 FROM db.users
 WHERE name = 'bunnyfan';
 
@@ -41,4 +43,19 @@ WHERE name = 'bunnyfan';
 INSERT INTO db.transaction_log (user_id, amount, request_time)
 SELECT id, 30.00, '2023-01-18 13:09:15'
 FROM db.users
-WHERE name = 'bunnyfan'
+WHERE name = 'bunnyfan';
+
+INSERT INTO db.comments (tag, commenter_id, item_id, text)
+SELECT 'com1', id, 1, 'Insane rabbit!'
+FROM db.users
+WHERE `name` = 'bunnyfan';
+
+INSERT INTO db.comments (tag, commenter_id, item_id, text)
+SELECT 'com2', id, 1, 'Superb specimen...'
+FROM db.users
+WHERE `name` = 'bunnyfan';
+
+INSERT INTO db.comments (tag, commenter_id, item_id, text, reply_tag)
+SELECT 'com3', id, 1, 'I know right!', 'com1'
+FROM db.users
+WHERE `name` = 'bunnyfan';

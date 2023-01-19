@@ -8,19 +8,17 @@ $tag = $_GET['tag'];
 $video_info = get_video_data($tag);
 
 if (isset($_GET['tag']) and $video_info !== false): ?>
-    <body xmlns="http://www.w3.org/1999/html">
     <div class="video-and-description-big-box">
         <span class="logo">TempLogo</span>
         <div class="video-and-description">
             <div class="video-outline">
                 <div class="video">
                     <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
-                    <video width="600" controls>
-                        <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
-                        Your browser does not support HTML video.
-                    </video>
-                    <?php }
-                    else { ?>
+                        <video width="600" controls>
+                            <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
+                            Your browser does not support HTML video.
+                        </video>
+                    <?php } else { ?>
                         <div class="paid-video">
                             <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
                             <form id="add">
@@ -38,7 +36,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 ?>
                             </form>
                         </div>
-                    <?php }?>
+                    <?php } ?>
                     <span class="video-name"><?php echo $video_info['name'] ?></span>
                 </div>
             </div>
@@ -53,10 +51,15 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             </div>
         </div>
     </div>
-    </body>
-<?php
 
-else:?> <span>This link doesn't seem quite right.</span>
+    <div class="comments-wrapper">
+        <span class="comments-title"> Comments </span>
+        <div class="comments"></div>
+    </div>
+
+
+<?php else: ?>
+    <span>This link doesn't seem quite right.</span>
 <?php endif;
 
 html_footer();
