@@ -138,6 +138,8 @@ body {
 }
 
 .sidebar_right{
+    display: block;
+    right: -300px;
     height:100%;
     width:300px;
     background-color:#fff;
@@ -157,11 +159,6 @@ body {
     float:none;
     outline:0
 }
-
-.sidebar_animate_right{
-    position:relative;
-    animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
-
 
 .sidebar_item:hover{
     color:#000;
@@ -184,4 +181,54 @@ body {
     text-align:left;
     border:none;
 
+}
+
+.sidebar_block .sidebar_checkout {
+    background-color: green;
+    height: 60px;
+    font-size: 17px;
+    color: black;
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+
+}
+
+.sidebar_block .checkout_sidebar {
+    padding: 14px 16px;
+}
+
+#checkout_sidebar {
+    height: 2em;
+    font-size: medium;
+    width: 5em;
+    background: #52a452;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: darkgreen;
+}
+
+#checkout_sidebar:hover {
+    background: #63b963;
+    cursor: pointer;
+}
+
+#checkout_sidebar.pressed {
+    background: #386838;
+}
+
+#checkout_sidebar.disabled:hover {
+    background: slategray;
+    cursor: default;
+}
+
+#checkout_sidebar.disabled {
+    background: slategray;
+}
+
+#checkout_sidebar.pressed:hover {
+    background: #447c44;
 }

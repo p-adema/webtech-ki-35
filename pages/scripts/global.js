@@ -76,9 +76,15 @@ function open_sidebar() {
 
 
 function openRightMenu() {
-    document.getElementById("rightMenu").style.display = "block";
+    $('.sidebar_right').animate({right: '-0'}, 400);
+    $sidebar_open = true
 }
 
 function closeRightMenu() {
-    document.getElementById("rightMenu").style.display = "none";
+    $('.sidebar_right').animate({right: '-300px'}, 400);
+    $sidebar_open = false
+}
+
+function go_to_checkout() {
+    $(location).attr('href', '/show_cart.php')
 }
