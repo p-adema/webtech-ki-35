@@ -20,3 +20,7 @@ echo '<br/> See <a href="show_cart.php">show cart</a> to view cart';
 echo '</p>';
 
 html_footer();
+
+
+
+
