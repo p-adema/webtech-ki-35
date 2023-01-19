@@ -19,10 +19,30 @@ $(document).ready(function () {
         $(this).toggleClass('active');
         if ($(this).hasClass('active')) {
             $('div.content').css('max-height', $('div.content').prop('scrollHeight'));
-        }
-        else {
+        } else {
             $('div.content').css('max-height', '0');
         }
     })
+    $("form").submit(function (event) {
+        event.preventDefault();
+        $('button.form-submit').addClass('pressed').removeClass('error')
+
+        let parameterList = new URLSearchParams(window.location.search)
+
+        const user_data = {
+            type: 'add',
+            item: parameterList.get('tag')
+        };
+
+        const handler_options = {
+            success_handler : form_custom_success
+        }
+
+        $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
+    });
+
+    function form_custom_success(_, __) {
+        $('form#cart').hide()
+    }
 
 })
