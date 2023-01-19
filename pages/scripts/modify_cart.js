@@ -1,10 +1,10 @@
 $(document).ready(function () {
     $("form").submit(function (event) {
         event.preventDefault();
-        $('button.form-submit').addClass('pressed').removeClass('error')
+        $(`#${this.id} button.form-submit`).addClass('pressed').removeClass('error')
 
         const user_data = {
-            type: 'add',
+            type: this.id,
             item: 'example_paid'
         };
 
@@ -12,9 +12,13 @@ $(document).ready(function () {
             redirect: {
                 link: '/',
                 delay: 2000
+            },
+            multi_form: {
+                target: this.id,
+                clear_other: true
             }
         }
 
-        $.post("/api/cart/modify.php", user_data, form_handle_respone(handler_options));
+        $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
     });
 });
