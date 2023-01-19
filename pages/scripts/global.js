@@ -82,3 +82,7 @@ function openRightMenu() {
 function closeRightMenu() {
     document.getElementById("rightMenu").style.display = "none";
 }
+
+function go_to_checkout() {
+    $(location).attr('href', '/show_cart.php')
+}

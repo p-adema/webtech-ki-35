@@ -1,6 +1,8 @@
 
 <?php
 require 'dropdown_function.php';
+require 'sidebar_right.php';
+require 'Cart.php';
 function navbar(): void
 {
     if ($_SESSION['auth']){
@@ -13,16 +15,9 @@ function navbar(): void
             . "
             <div id='mandje' onclick='openRightMenu()'>
             <img src='images/winkelandje.png'   width='32px' height='32px'>
-            </div>
-            <div class='sidebar_right sidebar_block sidebar_animate_right' style='display:none;right:0;' id='rightMenu'>
-                <button onclick='closeRightMenu()' class='sidebar_close'>Close</button>
-                <p class='sidebar_text'> This is in your shopping cart:</p>
-                <hr>
-                <a href='#' class='sidebar_item'>Link 1</a>
-                <a href='#' class='sidebar_item'>Link 2</a>
-                <a href='#' class='sidebar_item'>Link 3</a>
-            </div>
-            </div>
+            </div>" .
+            sidebarRight()
+            ."</div>
         ";
     } else {
         $html = "
@@ -32,8 +27,11 @@ function navbar(): void
             ".
             dropDown("<img src='images/account2.png' width='32px' height='32px' >", ['auth/register.php', 'auth/login.php'],['Register', 'Log in'])
             . "
-            
-            </div>
+             <div id='mandje' onclick='openRightMenu()'>
+            <img src='images/winkelandje.png'   width='32px' height='32px'>
+            </div>" .
+            sidebarRight()
+            ."</div>
         ";
     }
     echo $html;
