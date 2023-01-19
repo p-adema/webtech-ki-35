@@ -17,7 +17,6 @@ html {
 
 .dropdown {
     float: right;
-    overflow: hidden;
 }
 
 .dropdown-content {
@@ -57,7 +56,6 @@ html {
     padding-top: 60px;
     transition: 0.5s;
     background-color: maroon;
-    overflow-x: hidden;
 }
 
 .sidebar a {
@@ -96,7 +94,6 @@ body {
 }
 
 .topnav {
-    overflow: hidden;
     background-color: #343;
     height: 60px;
     position: fixed;
@@ -118,7 +115,6 @@ body {
 .topnav #mandje {
     float: right;
     padding: 14px;
-
 }
 
 
@@ -138,13 +134,15 @@ body {
 }
 
 .sidebar_right{
-    display: block;
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
     right: -300px;
-    height:100%;
-    width:300px;
-    background-color:#fff;
-    position:fixed!important;
-    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+    height: 100%;
+    width: 300px;
+    background-color: #fff;
+    position: fixed;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
 }
 
 .sidebar_block .sidebar_item{
@@ -203,7 +201,7 @@ body {
 #checkout_sidebar {
     height: 2em;
     font-size: medium;
-    width: 5em;
+    width: 7em;
     background: #52a452;
     color: whitesmoke;
     transition-duration: 0.3s;

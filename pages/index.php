@@ -1,7 +1,6 @@
 <?php
 require 'html_page.php';
 html_header('DB Example', scripted: 'ajax');
-require_once 'link.php';
 
 echo '<p>';
 echo 'Base page';

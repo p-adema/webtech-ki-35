@@ -7,9 +7,6 @@ html_header(title: 'Log out', styled: 'form.css', scripted: true);
         <div class="form-outline">
             <form action="/api/logout.php" method="POST">
                 <?php
-                require "form_elements.php";
-                require_once "link.php";
-
                 form_submit(text: 'Confirm log out', extra_cls: 'long-btn');
                 form_error();
                 text_link('Go back to home', '/');

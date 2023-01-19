@@ -21,7 +21,6 @@ if ($_SESSION['auth']):
         <div class="form-outline">
             <form action="/api/account/index.php" method="POST">
                 <?php
-                require 'form_elements.php';
                 form_input('name', 'Username', input_attrs: "value=\"$user_data[name]\"");
                 form_input('email', 'E-mail', input_attrs: "value=\"$user_data[email]\"");
                 form_input('full_name', 'Full name', input_attrs: "value=\"$user_data[full_name]\"");

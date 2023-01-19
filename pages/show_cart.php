@@ -1,6 +1,5 @@
 <?php
 require 'html_page.php';
-require "Cart.php";
 
 html_header(title: 'Shopping cart', styled: false, scripted: false);
 
