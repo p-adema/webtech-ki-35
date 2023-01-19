@@ -3,6 +3,8 @@ VALUES (1, 'site_admin', 'admin@edugrove.com', '$2y$10$kyL3zckjCYSMSfDtwW.1o.KcL
         'Edu Grove',
         'member', DEFAULT, 1, true);
 
+-- password = W%pC&X&F5nVBPX6!
+
 INSERT INTO db.balances (user_id, balance)
 SELECT 1, 1000.00;
 
