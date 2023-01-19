@@ -7,7 +7,6 @@ $tag = $_GET['tag'];
 $video_info = get_video_data($tag);
 
 if (isset($_GET['tag']) and $video_info !== false): ?>
-    <body xmlns="http://www.w3.org/1999/html">
     <div class="video-and-description-big-box">
         <span class="logo">TempLogo</span>
         <div class="video-and-description">
@@ -29,7 +28,10 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             </div>
         </div>
     </div>
-    </body>
+
+    <div class="comments">
+
+    </div>
 <?php
 
 else:?> <span>This link doesn't seem quite right.</span>
