@@ -11,6 +11,7 @@ CREATE TABLE `users`
     `membership` ENUM ('none', 'member') DEFAULT 'none' NOT NULL,
     `join_date`  DATETIME                DEFAULT NOW()  NOT NULL,
     `verified`   BOOLEAN                 DEFAULT FALSE  NOT NULL,
+    `admin`      BOOLEAN                 DEFAULT FALSE  NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -71,15 +72,17 @@ CREATE TABLE `courses`
 CREATE TABLE `comments`
 (
     `id`           BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
+    `tag`          CHAR(64) UNIQUE        NOT NULL,
     `commenter_id` BIGINT UNSIGNED        NOT NULL,
     `item_id`      BIGINT UNSIGNED        NOT NULL,
     `text`         VARCHAR(1000)          NOT NULL,
     `date`         DATETIME DEFAULT NOW() NOT NULL,
-    `reply_id`     BIGINT UNSIGNED        NULL,
+    `reply_tag`    CHAR(64)               NULL,
+    `score`        BIGINT   DEFAULT 0     NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`commenter_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
-    FOREIGN KEY (`reply_id`) REFERENCES `comments` (`id`)
+    FOREIGN KEY (`reply_tag`) REFERENCES `comments` (`tag`)
 );
 
 CREATE TABLE `ratings`
@@ -90,6 +93,7 @@ CREATE TABLE `ratings`
     `rating`   TINYINT UNSIGNED       NOT NULL,
     `text`     VARCHAR(1000)          NULL,
     `date`     DATETIME DEFAULT NOW() NOT NULL,
+    `score`    BIGINT   DEFAULT 0     NOT NULL,
     PRIMARY KEY (id),
     FOREIGN KEY (`rater_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`item_id`) REFERENCES `items` (`id`)
@@ -149,6 +153,21 @@ CREATE TABLE `purchases_log`
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
+CREATE TABLE `gifts_log`
+(
+    `id`                BIGINT UNSIGNED AUTO_INCREMENT,
+    `url_tag`           CHAR(64)               NOT NULL,
+    `item_id`           BIGINT UNSIGNED        NOT NULL,
+    `user_id`           BIGINT UNSIGNED        NOT NULL,
+    `admin_id`          BIGINT UNSIGNED        NOT NULL,
+    `confirmation_time` DATETIME DEFAULT NOW() NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`url_tag`),
+    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
+    FOREIGN KEY (`admin_id`) REFERENCES db.users (`id`)
+);
+
 CREATE TABLE `ownership`
 (
     `id`          BIGINT UNSIGNED           NOT NULL AUTO_INCREMENT,
@@ -156,19 +175,22 @@ CREATE TABLE `ownership`
     `user_id`     BIGINT UNSIGNED           NOT NULL,
     `origin`      ENUM ('purchase', 'gift') NOT NULL,
     `purchase_id` BIGINT UNSIGNED           NULL,
+    `gift_id`     BIGINT UNSIGNED           NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
-    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases_log (`id`)
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases_log (`id`),
+    FOREIGN KEY (`gift_id`) REFERENCES db.gifts_log (`id`)
 );
 
 CREATE TABLE `transactions_pending`
 (
     `id`           BIGINT UNSIGNED AUTO_INCREMENT,
-    `amount`       DECIMAL(5, 2)          NOT NULL,
-    `url_tag`      CHAR(64)               NOT NULL,
-    `user_id`      BIGINT UNSIGNED        NOT NULL,
-    `request_time` DATETIME DEFAULT NOW() NOT NULL,
+    `amount`       DECIMAL(5, 2)                 NOT NULL,
+    `url_tag`      CHAR(64)                      NOT NULL,
+    `user_id`      BIGINT UNSIGNED               NOT NULL,
+    `request_time` DATETIME        DEFAULT NOW() NOT NULL,
+    `to_id`        BIGINT UNSIGNED DEFAULT 0     NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
@@ -177,10 +199,11 @@ CREATE TABLE `transactions_pending`
 CREATE TABLE `transaction_log`
 (
     `id`           BIGINT UNSIGNED AUTO_INCREMENT,
-    `user_id`      BIGINT UNSIGNED        NOT NULL,
-    `amount`       DECIMAL(5, 2)          NOT NULL,
-    `request_time` DATETIME               NOT NULL,
-    `payment_time` DATETIME DEFAULT NOW() NOT NULL,
+    `user_id`      BIGINT UNSIGNED               NOT NULL,
+    `amount`       DECIMAL(5, 2)                 NOT NULL,
+    `request_time` DATETIME                      NOT NULL,
+    `payment_time` DATETIME        DEFAULT NOW() NOT NULL,
+    `to_id`        BIGINT UNSIGNED DEFAULT 0     NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
