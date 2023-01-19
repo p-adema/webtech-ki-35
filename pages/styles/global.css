@@ -111,18 +111,71 @@ html {
 
 .topnav #mandje {
     float: right;
-    background-color: #343;
+    padding: 14px;
+
 }
+
+
 .topnav #mandje:hover {
+    cursor: pointer;
     background-color: #676;
 }
 
 .topnav a:hover {
-    background-color: #ddd;
     color: black;
+    cursor: pointer;
 }
 
 .topnav a.active {
     background-color: #04AA6D;
     color: white;
+}
+
+.sidebar_right{
+    height:100%;
+    width:300px;
+    background-color:#fff;
+    position:fixed!important;
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+}
+
+.sidebar_block .sidebar_item{
+    font-size: 17px;
+    color: #111111;
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+    white-space:normal;
+    float:none;
+    outline:0
+}
+
+.sidebar_animate_right{
+    position:relative;
+    animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+
+
+.sidebar_item:hover{
+    color:#000;
+    background-color:#ccc
+}
+
+.sidebar_text {
+    font-size: 17px;
+    padding:8px 16px;
+    text-align:left;
+}
+
+.sidebar_close {
+    height: 60px;
+    font-size: 17px;
+    color: #111111;
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+
 }

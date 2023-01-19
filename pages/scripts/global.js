@@ -71,3 +71,14 @@ function open_sidebar() {
     document.getElementById("sidebar").style.width = "0";
     document.getElementById('sidebar-button').style.width = "0";
 }
+
+
+
+
+function openRightMenu() {
+    document.getElementById("rightMenu").style.display = "block";
+}
+
+function closeRightMenu() {
+    document.getElementById("rightMenu").style.display = "none";
+}

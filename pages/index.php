@@ -21,3 +21,7 @@ echo '<br/> See <a href="courses/video.php?tag=example_free">example free</a> to
 echo '</p>';
 
 html_footer();
+
+
+
+
