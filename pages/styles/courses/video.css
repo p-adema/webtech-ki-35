@@ -59,3 +59,28 @@ html {
 .video-info {
     font-weight: lighter;
 }
+
+.collapsible {
+    color: white;
+    background-color: #2A2929FF;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+    max-width: max-content;
+    border-radius: 15px;
+}
+
+.collapsible:hover {
+    background-color: #1c1b1b;
+}
+
+.content {
+    max-height: 0;
+    padding: 0 18px;
+    overflow: hidden;
+    transition: max-height 0.4s ease-in-out;
+}

@@ -30,8 +30,6 @@ SELECT 40.00, 'Hallo', id, '2023-01-18 13:09:15'
 FROM db.users
 WHERE name = 'bunnyfan';
 
-
-
 INSERT INTO db.transaction_log (user_id, amount, request_time)
 SELECT id, 30.00, '2023-01-18 13:09:15'
 FROM db.users
