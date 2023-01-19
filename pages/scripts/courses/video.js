@@ -2,10 +2,11 @@
 $(document).ready(function () {
     $('button.collapsible').click(function (_) {
         $(this).toggleClass('active');
+        const $content = $('div.content');
         if ($(this).hasClass('active')) {
-            $('div.content').css('max-height', $('div.content').prop('scrollHeight'));
+            $content.css('max-height', $content.prop('scrollHeight'));
         } else {
-            $('div.content').css('max-height', '0');
+            $content.css('max-height', '0');
         }
     })
     $("form").submit(function (event) {
@@ -49,10 +50,7 @@ $(document).ready(function () {
 })
 
 function load_replies(_) {
-    $(this).text("Hide replies")
-    $(this).unbind('click').click(hide_replies)
-
-    const tag = $(this).attr('query')
+    const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
 
     const replies_data = {
         type: 'replies',
@@ -72,5 +70,11 @@ function load_replies(_) {
 }
 
 function hide_replies(_) {
-    alert('Not implemented')
+    const tag = $(this).text(`Show ${$(this).attr('count')}`).unbind('click').click(show_replies).attr('query')
+    $(`#replies-${tag}`).hide()
+}
+
+function show_replies(_) {
+    const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
+    $(`#replies-${tag}`).show()
 }
