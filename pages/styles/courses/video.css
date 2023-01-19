@@ -48,6 +48,25 @@ html {
     margin-top: 3px;
 }
 
+.paid-video {
+    display: flex;
+    flex-flow: column;
+    min-height: 330px;
+    background-color: black;
+    color: white;
+    align-items: center;
+    max-width: 600px;
+}
+
+.paid-video-text {
+    margin-top: 90px;
+    margin-left: 10px;
+    margin-right: 10px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
 .views-and-when {
     margin-bottom: 10px;
 }
@@ -83,4 +102,35 @@ html {
     padding: 0 18px;
     overflow: hidden;
     transition: max-height 0.4s ease-in-out;
+}
+
+.form-error {
+    visibility: hidden;
+}
+
+button.form-submit {
+    height: 2em;
+    font-size: medium;
+    background: #52a452;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: darkgreen;
+}
+
+button.form-submit:hover {
+    background: #63b963;
+    cursor: pointer;
+}
+
+button.form-submit.pressed {
+    background: #386838;
+}
+
+button.form-submit.go-to-cart {
+    visibility: hidden;
+}
+
+form#cart {
+    display: none;
 }

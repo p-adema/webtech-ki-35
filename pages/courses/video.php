@@ -1,6 +1,7 @@
 <?php
 require 'html_page.php';
 require 'video_functionality.php';
+require 'form_elements.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'];
@@ -13,10 +14,31 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
         <div class="video-and-description">
             <div class="video-outline">
                 <div class="video">
+                    <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
                     <video width="600" controls>
                         <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
                         Your browser does not support HTML video.
                     </video>
+                    <?php }
+                    else { ?>
+                        <div class="paid-video">
+                            <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
+                            <form id="add">
+                                <?php
+                                form_submit(text: 'Add to cart', extra_cls: 'long-btn');
+                                form_error('item');
+                                form_error();
+                                ?>
+                            </form>
+                            <form id="cart">
+                                <?php
+                                form_submit(text: 'Go to cart', extra_cls: 'long-btn go-to-cart');
+                                form_error('item');
+                                form_error();
+                                ?>
+                            </form>
+                        </div>
+                    <?php }?>
                     <span class="video-name"><?php echo $video_info['name'] ?></span>
                 </div>
             </div>
