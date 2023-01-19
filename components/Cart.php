@@ -51,7 +51,7 @@ class Cart
         $this->p_type = $this->PDO->prepare($this->sql_type);
 
         $this->sql_video_long = 'SELECT i.tag,
-                                        u.name,
+                                        u.name AS uploader,
                                         v.name,
                                         price,
                                         description,
