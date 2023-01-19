@@ -8,7 +8,6 @@ function load_account_data(int $user_id): array {
 
     }
     if (isset($pdo_write)) {
-        /** @noinspection DuplicatedCode */
         $sql = 'SELECT name, email, full_name FROM db.users WHERE (id = :id);';
         $data = ['id' => htmlspecialchars($user_id)];
         $sql_prep = $pdo_write->prepare($sql);

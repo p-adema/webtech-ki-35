@@ -17,6 +17,10 @@ class Cart
     private PDOStatement|false $p_video_long;
 
 
+    /**
+     * Ensure a cart exists in session,
+     * create a database connection and prepare all queries
+     */
     public function __construct()
     {
         ensure_session();
@@ -28,8 +32,14 @@ class Cart
                 'total' => 0
             ];
         }
-
-        $this->PDO = new_pdo_read();
+        try {
+            $this->PDO = new_pdo_read(err_fatal: false);
+        } catch (PDOException $e) {
+            api_fail('Internal cart error', ['submit' => 'Connecting cart failed']);
+        }
+        if (!isset($this->PDO)) {
+            api_fail('Internal cart error', ['submit' => 'Unknown cart error']);
+        }
 
         $this->sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
         $this->p_tag = $this->PDO->prepare($this->sql_tag);
@@ -41,7 +51,7 @@ class Cart
         $this->p_type = $this->PDO->prepare($this->sql_type);
 
         $this->sql_video_long = 'SELECT i.tag,
-                                        u.name,
+                                        u.name AS uploader,
                                         v.name,
                                         price,
                                         description,
@@ -53,6 +63,11 @@ class Cart
                                   INNER JOIN users u on v.uploader = u.id
                                   WHERE i.id = :id';
         $this->p_video_long = $this->PDO->prepare($this->sql_video_long);
+
+        if ($this->p_price === false or $this->p_type === false or
+            $this->p_tag === false or $this->p_video_long === false) {
+            api_fail('Internal cart error', ['submit' => 'Loading cart failed']);
+        }
     }
 
     public function get_id($tag): int|false
