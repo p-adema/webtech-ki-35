@@ -73,7 +73,7 @@ function render_show_replies($count, $tag): string
     $word = $count > 1 ? 'replies' : 'reply';
     return $count > 0 ? "
 <div class='toggle-replies-wrapper'>
-    <button class='show-replies' query='$tag'> Show $count $word </button>
+    <button class='show-replies' query='$tag' count='$count $word'> Show $count $word </button>
 </div>
     " : '';
 }
