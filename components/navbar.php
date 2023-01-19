@@ -2,7 +2,6 @@
 <?php
 require 'dropdown_function.php';
 require 'sidebar_right.php';
-require 'Cart.php';
 function navbar(): void
 {
     if ($_SESSION['auth']){

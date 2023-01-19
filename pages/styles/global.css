@@ -131,7 +131,11 @@ html {
     color: white;
 }
 
+
+
 .sidebar_right{
+    display: block;
+    right: -300px;
     height:100%;
     width:300px;
     background-color:#fff;
@@ -152,9 +156,7 @@ html {
     outline:0
 }
 
-.sidebar_animate_right{
-    position:relative;
-    animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
+
 
 
 .sidebar_item:hover{
