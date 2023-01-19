@@ -31,6 +31,7 @@ use JetBrains\PhpStorm\NoReturn;
     $response['success'] = true;
     $response['message'] = $message;
     $response['errors'] = $errors;
+    $data['message'] = $message;
     $response['data'] = $data;
     echo json_encode($response);
     exit();

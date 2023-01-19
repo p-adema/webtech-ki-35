@@ -8,7 +8,7 @@
 
 require "api_resolve.php";
 require "pdo_read.php";
-require "comments.php";
+require "comments_components.php";
 
 $errors = [
     'type' => [],
@@ -36,9 +36,7 @@ if (!$valid) {
 }
 
 $pdo_read = new_pdo_read();
-$response = [
-    'html' => []
-];
+$response = [];
 
 if ($type === 'item') {
     $id = get_id($on, $pdo_read);
@@ -48,10 +46,24 @@ if ($type === 'item') {
         api_fail('Invalid item tag', $errors);
     }
     $comments = get_comments_item($id, $pdo_read);
+    $rendered = [];
 
     foreach ($comments as $comment) {
-        $response['html'][] = render_comment($comment);
+        $rendered[] = render_comment($comment);
     }
+
+    $response['html'] = join(PHP_EOL, $rendered);
 
     api_succeed('Comments retrieved', $errors, $response);
 }
+
+$comments = get_replies_comment($on, $pdo_read);
+$rendered = [];
+
+foreach ($comments as $comment) {
+    $rendered[] = render_comment($comment);
+}
+
+$response['html'] = join(PHP_EOL, $rendered);
+
+api_succeed('Comments retrieved', $errors, $response);

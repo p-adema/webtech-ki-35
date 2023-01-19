@@ -1,20 +1,5 @@
 // Description load more function
 $(document).ready(function () {
-//     let coll = document.getElementsByClassName("collapsible");
-//     let i;
-//
-//     for (i = 0; i < coll.length; i++) {
-//         coll[i].addEventListener("click", function() {
-//             this.classList.toggle("active");
-//             let content = this.nextElementSibling;
-//             if (content.style.maxHeight) {
-//                 content.style.maxHeight = null;
-//             }
-//             else {
-//                 $("div.content").css('max-height', '1000px')
-//             }
-//         });
-//     }
     $('button.collapsible').click(function (_) {
         $(this).toggleClass('active');
         if ($(this).hasClass('active')) {
@@ -35,7 +20,7 @@ $(document).ready(function () {
         };
 
         const handler_options = {
-            success_handler : form_custom_success
+            success_handler: form_custom_success
         }
 
         $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
@@ -45,4 +30,47 @@ $(document).ready(function () {
         $('form#cart').hide()
     }
 
+    const video_data = {
+        type: 'item',
+        on: (new URLSearchParams(window.location.search)).get('tag')
+    }
+
+    const handler_options = {
+        error_handler: function (_, __) {
+            $('div.comments').html("<span class='comments-error'> Comments couldn't be loaded </span>")
+        },
+        success_handler: function (data, __) {
+            $('div.comments').html(data.html)
+            $('button.show-replies').click(load_replies)
+        }
+    }
+
+    $.post("/api/load/comments.php", video_data, form_default_response(handler_options));
 })
+
+function load_replies(_) {
+    $(this).text("Hide replies")
+    $(this).unbind('click').click(hide_replies)
+
+    const tag = $(this).attr('query')
+
+    const replies_data = {
+        type: 'replies',
+        on: tag
+    }
+    const handler_options = {
+        error_handler: function (_, __) {
+            $(`#replies-${tag}`).html("<span class='replies-error'> Replies couldn't be loaded </span>")
+        },
+        success_handler: function (data, __) {
+            $(`#replies-${tag}`).html(data.html).children('button.show-replies').click(load_replies)
+        }
+    }
+
+    $.post("/api/load/comments.php", replies_data, form_default_response(handler_options));
+
+}
+
+function hide_replies(_) {
+    alert('Not implemented')
+}

@@ -9,7 +9,7 @@ function form_default_response(options) {
             if (!response.success) {
                 (options.hasOwnProperty('error_handler') ? options.error_handler : form_default_errors)(response.errors, options)
             } else {
-                (options.hasOwnProperty('success_handler') ? options.success_handler : form_default_success)(response.message, options)
+                (options.hasOwnProperty('success_handler') ? options.success_handler : form_default_success)(response.data, options)
             }
         } catch (e) {
             console.log(response_raw);
@@ -33,14 +33,14 @@ function form_default_errors(errors, options) {
     }
 }
 
-function form_default_success(message, options) {
+function form_default_success(data, options) {
     if ('redirect' in options) {
         if ('multi_form' in options && 'clear_other' in options.multi_form && options.multi_form.clear_other) {
             $('form').html('');
         }
         $(options.form).html(
             '<div class="form-success clickable"> ' +
-            '       <span>' + message + "</span> " +
+            '       <span>' + data.message + "</span> " +
             "       <span> <br /> You will be redirected shortly <br /> (or: click here) </span>" +
             "     </div>"
         )
@@ -55,7 +55,7 @@ function form_default_success(message, options) {
     } else {
         $(options.form).html(
             '<div class="form-success"> ' +
-            '       <span>' + message + "</span> " +
+            '       <span>' + data.message + "</span> " +
             "     </div>"
         )
     }

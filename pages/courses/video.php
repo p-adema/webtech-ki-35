@@ -14,12 +14,11 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             <div class="video-outline">
                 <div class="video">
                     <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
-                    <video width="600" controls>
-                        <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
-                        Your browser does not support HTML video.
-                    </video>
-                    <?php }
-                    else { ?>
+                        <video width="600" controls>
+                            <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
+                            Your browser does not support HTML video.
+                        </video>
+                    <?php } else { ?>
                         <div class="paid-video">
                             <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
                             <form id="add">
@@ -37,7 +36,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 ?>
                             </form>
                         </div>
-                    <?php }?>
+                    <?php } ?>
                     <span class="video-name"><?php echo $video_info['name'] ?></span>
                 </div>
             </div>
@@ -53,12 +52,14 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
         </div>
     </div>
 
-    <div class="comments">
-
+    <div class="comments-wrapper">
+        <span class="comments-title"> Comments </span>
+        <div class="comments"></div>
     </div>
-<?php
 
-else:?> <span>This link doesn't seem quite right.</span>
+
+<?php else: ?>
+    <span>This link doesn't seem quite right.</span>
 <?php endif;
 
 html_footer();
