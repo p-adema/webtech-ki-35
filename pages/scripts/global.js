@@ -86,12 +86,20 @@ function close_right_menu() {
 
 }
 
-function go_to_checkout() {
-    $(location).attr('href', '/show_cart.php')
+function redirect(link = '/show_cart.php') {
+    $(location).attr('href', link)
 }
 
-$(document).ready(function (){
-    $('.sidebar-active-cover').click(function (_){
+function symbol_default_enter(_) {
+    $(this).css('font-variation-settings', "'wght' 600")
+}
+
+function symbol_default_leave(_) {
+    $(this).css('font-variation-settings', "'wght' 400")
+}
+
+$(document).ready(function () {
+    $('.sidebar-active-cover').click(function (_) {
         close_right_menu()
     })
 })
