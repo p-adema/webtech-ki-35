@@ -99,7 +99,6 @@ html {
 
 .content {
     max-height: 0;
-    padding: 0 18px;
     overflow: hidden;
     transition: max-height 0.4s ease-in-out;
 }
@@ -221,4 +220,51 @@ button.show-replies {
 
 div.comment-replies-wrapper {
     padding-left: 25px;
+}
+
+.stars-empty:after {
+    content: '☆☆☆☆☆';
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+}
+
+.star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.star-2:after {
+    content: '★★☆☆☆';
+}
+
+.star-3:after {
+    content: "★★★☆☆";
+}
+
+.star-4:after {
+    content: "★★★★☆"
+}
+
+.star-5:after {
+    content: '★★★★★';
+}
+
+.perm-star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.perm-star-2:after {
+    content: '★★☆☆☆';
+}
+
+.perm-star-3:after {
+    content: "★★★☆☆";
+}
+
+.perm-star-4:after {
+    content: "★★★★☆"
+}
+
+.perm-star-5:after {
+    content: '★★★★★';
 }

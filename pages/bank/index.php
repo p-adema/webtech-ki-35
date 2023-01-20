@@ -2,10 +2,14 @@
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login.php');
 html_header(title: 'balance', styled: true);
-?>
-<div class="main-container">
-    <div class="background-box">
-        <div class="title-box">
+
+if ($_SESSION['auth']) :
+    $user_id = $_SESSION['uid']
+    ?>
+
+    <div class="main-container">
+        <div class="background-box">
+            <div class="title-box">
             <span class="title">
                 NietNG
             </span>

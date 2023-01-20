@@ -1,6 +1,8 @@
 <?php
 require 'html_page.php';
 require 'video_functionality.php';
+require 'form_elements.php';
+require 'video.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'];
@@ -28,7 +30,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                             </form>
                             <form id="cart">
                                 <?php
-                                form_submit(text: 'Go to cart', extra_cls: 'long-btn go-to-cart');
+                                form_submit(text: 'Go to cart', extra_cls: 'long-btn');
                                 form_error('item');
                                 form_error();
                                 ?>
@@ -36,6 +38,8 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                         </div>
                     <?php } ?>
                     <span class="video-name"><?php echo $video_info['name'] ?></span>
+                    <div class="stars stars-empty"></div>
+                    <div id="log"></div>
                 </div>
             </div>
             <div class="description">
@@ -44,7 +48,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                     <span class="upload-date">Posted <?php since_upload($video_info['upload_date']) ?> ago </span>
                 </button>
                 <div class="content hide">
-                    <span class="video-info"><?php echo $video_info['description'] ?></span>
+                    <span class="video-info"><br><?php echo $video_info['description'] ?></span>
                 </div>
             </div>
         </div>
