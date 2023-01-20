@@ -1,9 +1,8 @@
 // Description load more function
 $(document).ready(function () {
-    $('button.collapsible').click(function (_) {
-        $(this).toggleClass('active');
-        const $content = $('div.content');
-        if ($(this).hasClass('active')) {
+    $('div.description').click(function (_) {
+        const $content = $(this).children('div.content');
+        if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
             $content.css('max-height', $content.prop('scrollHeight'));
         } else {
             $content.css('max-height', '0');
