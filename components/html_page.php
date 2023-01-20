@@ -57,6 +57,7 @@ function html_header(string $title, string $description = '', bool|string $style
                 <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
                 <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
                 <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap\" rel=\"stylesheet\">
+                <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/icon?family=Material+Icons\">
                 <link rel='stylesheet' href='/styles/global.css' type='text/css'/>
                 $style_tag
                 $extra
