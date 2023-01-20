@@ -102,4 +102,10 @@ $(document).ready(function () {
     $('.sidebar-active-cover').click(function (_) {
         close_right_menu()
     })
+    $('.dropdown').mouseenter(function (_){
+        $('.dropdown-content').show().animate({opacity: 1, right: 0}, 400)
+    })
+    $('.dropdown').mouseleave(function (_){
+        $('.dropdown-content').animate({opacity: 0, right: -300}, 400)
+    })
 })

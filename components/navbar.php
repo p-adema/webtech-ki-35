@@ -9,10 +9,12 @@ function navbar(): void
             <a href='/'><img src='/images/logo-no-background.png' width='110px' height='32px' ></a>
              " .
 
-            dropDown("<img src='/images/account2.png' width='32px' height='32px' >", ['/auth/account/index.php', '/auth/logout.php'],['Account management', 'Log out'])
+            dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/index.php', '/auth/logout.php'],['Account management', 'Log out'])
             . "
             <div id='mandje' onclick='open_right_menu()'>
-            <img src='/images/winkelandje.png' width='32px' height='32px'>
+            <span id='shopping-cart' class='material-symbols-outlined'>
+            shopping_cart
+            </span>
             </div>" .
             sidebarRight()
             ."</div>
@@ -22,7 +24,7 @@ function navbar(): void
         <div class='topnav'>
             <a href='/'> <img src='/images/logo-no-background.png' width='110px' height='32px' > </a>
             ".
-            dropDown("<img src='/images/account2.png' width='32px' height='32px' >", ['/auth/register.php', '/auth/login.php'],['Register', 'Log in'])
+            dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register.php', '/auth/login.php'],['Register', 'Log in'])
             . "
              <div id='mandje' onclick='open_right_menu()'>
             <img src='/images/winkelandje.png' width='32px' height='32px'>
