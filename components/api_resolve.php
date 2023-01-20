@@ -31,6 +31,7 @@ use JetBrains\PhpStorm\NoReturn;
     $response['success'] = true;
     $response['message'] = $message;
     $response['errors'] = $errors;
+    $data['message'] = $message;
     $response['data'] = $data;
     echo json_encode($response);
     exit();
@@ -75,7 +76,7 @@ function api_login(string $username_or_email): bool
     if ($uid === false) { # No such user
         return false;
     }
-
+    session_regenerate_id();
     $_SESSION['uid'] = $uid[0];
     $_SESSION['auth'] = true;
     return true;
@@ -91,6 +92,7 @@ function api_logout(): bool
     if (!$_SESSION['auth']) {
         return false;
     }
+    session_regenerate_id();
     unset($_SESSION['uid']);
     $_SESSION['auth'] = false;
     return true;

@@ -1,6 +1,5 @@
 <?php
 require 'html_page.php';
-require "Cart.php";
 
 html_header(title: 'Shopping cart', styled: false, scripted: false);
 
@@ -34,7 +33,7 @@ html_header(title: 'Shopping cart', styled: false, scripted: false);
         </table>
     </div>
 <?php
-require "link.php";
+require_once "link.php";
 text_link('Go back to home', '/');
 echo '</div>';
 

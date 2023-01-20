@@ -1,6 +1,8 @@
 <?php
 
 require_once "api_resolve.php";
+require_once 'navbar.php';
+
 /**
  * Start a page by initialising the session, creating a header and opening the body
  * @param string $title Tab title
@@ -16,6 +18,7 @@ require_once "api_resolve.php";
  */
 function html_header(string $title, string $description = '', bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
+
     $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
     if ($scripted) {
         if ($scripted === 'ajax') {
@@ -54,6 +57,7 @@ function html_header(string $title, string $description = '', bool|string $style
                 <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">
                 <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>
                 <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap\" rel=\"stylesheet\">
+                <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/icon?family=Material+Icons\">
                 <link rel='stylesheet' href='/styles/global.css' type='text/css'/>
                 $style_tag
                 $extra
@@ -63,6 +67,8 @@ function html_header(string $title, string $description = '', bool|string $style
     ensure_session();
 
     echo $html;
+
+    navbar();
 }
 
 
@@ -74,4 +80,17 @@ function html_footer(): void
 {
     echo '  </body>
             </html>';
+}
+
+function auth_redirect(?string $if_auth = null, ?string $if_not_auth = null): void
+{
+    ensure_session();
+    if ($if_auth !== null and $_SESSION['auth']) {
+        header('Location: ' . $if_auth);
+        exit;
+    }
+    if ($if_not_auth !== null and !$_SESSION['auth']) {
+        header('Location: ' . $if_not_auth);
+        exit;
+    }
 }

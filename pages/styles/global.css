@@ -17,7 +17,6 @@ html {
 
 .dropdown {
     float: right;
-    overflow: hidden;
 }
 
 .dropdown-content {
@@ -57,7 +56,6 @@ html {
     padding-top: 60px;
     transition: 0.5s;
     background-color: maroon;
-    overflow-x: hidden;
 }
 
 .sidebar a {
@@ -91,12 +89,17 @@ html {
     padding: 16px;
 }
 
+body {
+    margin-top: 60px;
+}
 
 .topnav {
-    overflow: hidden;
     background-color: #343;
     height: 60px;
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
 
 }
 
@@ -112,7 +115,6 @@ html {
 .topnav #mandje {
     float: right;
     padding: 14px;
-
 }
 
 
@@ -132,11 +134,15 @@ html {
 }
 
 .sidebar_right{
-    height:100%;
-    width:300px;
-    background-color:#fff;
-    position:fixed!important;
-    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12)
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    right: -300px;
+    height: 100%;
+    width: 300px;
+    background-color: #fff;
+    position: fixed;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
 }
 
 .sidebar_block .sidebar_item{
@@ -151,11 +157,6 @@ html {
     float:none;
     outline:0
 }
-
-.sidebar_animate_right{
-    position:relative;
-    animation:animateright 0.4s}@keyframes animateright{from{right:-300px;opacity:0} to{right:0;opacity:1}}
-
 
 .sidebar_item:hover{
     color:#000;
@@ -178,4 +179,54 @@ html {
     text-align:left;
     border:none;
 
+}
+
+.sidebar_block .sidebar_checkout {
+    background-color: green;
+    height: 60px;
+    font-size: 17px;
+    color: black;
+    width:100%;
+    display:block;
+    padding:8px 16px;
+    text-align:left;
+    border:none;
+
+}
+
+.sidebar_block .checkout_sidebar {
+    padding: 14px 16px;
+}
+
+#checkout_sidebar {
+    height: 2em;
+    font-size: medium;
+    width: 7em;
+    background: #52a452;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: darkgreen;
+}
+
+#checkout_sidebar:hover {
+    background: #63b963;
+    cursor: pointer;
+}
+
+#checkout_sidebar.pressed {
+    background: #386838;
+}
+
+#checkout_sidebar.disabled:hover {
+    background: slategray;
+    cursor: default;
+}
+
+#checkout_sidebar.disabled {
+    background: slategray;
+}
+
+#checkout_sidebar.pressed:hover {
+    background: #447c44;
 }

@@ -11,6 +11,7 @@
  *      View payments & invoices
  */
 require 'html_page.php';
+auth_redirect(if_not_auth: '/auth/login.php');
 html_header(title: 'Account', styled: 'form.css', scripted: true);
 require 'account_elements.php';
 if ($_SESSION['auth']):
@@ -21,7 +22,6 @@ if ($_SESSION['auth']):
         <div class="form-outline">
             <form action="/api/account/index.php" method="POST">
                 <?php
-                require 'form_elements.php';
                 form_input('name', 'Username', input_attrs: "value=\"$user_data[name]\"");
                 form_input('email', 'E-mail', input_attrs: "value=\"$user_data[email]\"");
                 form_input('full_name', 'Full name', input_attrs: "value=\"$user_data[full_name]\"");

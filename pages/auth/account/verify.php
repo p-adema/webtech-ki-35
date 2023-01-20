@@ -8,8 +8,6 @@ html_header(title: 'Verify account', styled: 'form.css', scripted: true);
         <div class="form-outline">
             <form action="/api/verify.php" method="POST">
                 <?php if (isset($_SESSION['url_tag']) and $_SESSION['url_tag_type'] === 'verify'):
-                    require "form_elements.php";
-
                     form_submit('Activate account', extra_cls: 'long-btn');
                     form_error();
                 else: ?>

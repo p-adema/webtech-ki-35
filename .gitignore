@@ -6,6 +6,7 @@
 !/server/
 /server/local.ini
 !/components/
+!/scraping/
 !.gitignore
 !README.md
 !docker-compose.yml

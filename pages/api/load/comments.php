@@ -3,11 +3,12 @@
 /*
  * Expects a POST request with:
  *      type : < 'item' or 'replies' >
- *      on : < item tag > or < comment id >
+ *      on : < item tag > or < comment tag >
  */
 
 require "api_resolve.php";
 require "pdo_read.php";
+require "comments_components.php";
 
 $errors = [
     'type' => [],
@@ -33,3 +34,36 @@ if (empty($on)) {
 if (!$valid) {
     api_fail('Please fill in all fields', $errors);
 }
+
+$pdo_read = new_pdo_read();
+$response = [];
+
+if ($type === 'item') {
+    $id = get_id($on, $pdo_read);
+
+    if ($id === false) {
+        $errors['on'][] = 'Invalid item tag';
+        api_fail('Invalid item tag', $errors);
+    }
+    $comments = get_comments_item($id, $pdo_read);
+    $rendered = [];
+
+    foreach ($comments as $comment) {
+        $rendered[] = render_comment($comment);
+    }
+
+    $response['html'] = join(PHP_EOL, $rendered);
+
+    api_succeed('Comments retrieved', $errors, $response);
+}
+
+$comments = get_replies_comment($on, $pdo_read);
+$rendered = [];
+
+foreach ($comments as $comment) {
+    $rendered[] = render_comment($comment);
+}
+
+$response['html'] = join(PHP_EOL, $rendered);
+
+api_succeed('Comments retrieved', $errors, $response);

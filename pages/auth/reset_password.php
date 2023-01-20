@@ -11,8 +11,6 @@ html_header(title: 'Change password', styled: 'form.css', scripted: true);
                 <?php if (isset($_SESSION['url_tag']) and $_SESSION['url_tag_type'] === 'password-reset'): ?>
                     <p> Fill in your new password below.</p>
                     <?php
-                    require "form_elements.php";
-
                     form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
                     form_input('password_repeated', 'Repeat password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
                     form_error();
