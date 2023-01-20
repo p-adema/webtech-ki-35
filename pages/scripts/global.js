@@ -61,28 +61,12 @@ function form_default_success(data, options) {
     }
 }
 
-function close_sidebar() {
-    // $(#sidebar).css('width', '250px');
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById('sidebar-button').style.width = "250px";
-}
-
-function open_sidebar() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById('sidebar-button').style.width = "0";
-}
-
-
-
-
 function openRightMenu() {
     $('.sidebar_right').animate({right: '-0'}, 400);
-    $sidebar_open = true
 }
 
 function closeRightMenu() {
     $('.sidebar_right').animate({right: '-300px'}, 400);
-    $sidebar_open = false
 }
 
 function go_to_checkout() {

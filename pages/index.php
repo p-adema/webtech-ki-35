@@ -5,7 +5,6 @@ html_header('DB Example', scripted: 'ajax');
 echo '<p>';
 echo 'Base page';
 echo '<br/> See <a href="info.php">info</a> for install info';
-echo '<br/> See <a href="table.php">table</a> for an SQL table';
 echo '<br/> See <a href="auth/register.php">auth/register</a> for a registration form';
 echo '<br/> See <a href="auth/login.php">auth/login</a> for a login form';
 echo '<br/> See <a href="auth/logout.php">auth/logout</a> for a logout form';
@@ -16,6 +15,7 @@ echo '<br/> See <a href="modify_cart.php">modify cart</a> to add/remove example 
 echo '<br/> See <a href="show_cart.php">show cart</a> to view cart';
 echo '<br/> See <a href="courses/video.php?tag=example_free">example free</a> to view a free example video';
 echo '<br/> See <a href="courses/video.php?tag=example_paid">example paid</a> to view a paid example video';
+echo '<br/> See <a href="bank/index.php"> bank</a> to see your balance (if you have one)';
 echo '</p>';
 
 html_footer();

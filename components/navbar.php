@@ -13,8 +13,8 @@ function navbar(): void
             . "
             <div id='mandje' onclick='openRightMenu()'>
             <img src='/images/winkelandje.png' width='32px' height='32px'>
-            </div>" .
-            sidebarRight()
+            </div>"
+            //sidebarRight()
             ."</div>
         ";
     } else {
@@ -26,8 +26,8 @@ function navbar(): void
             . "
              <div id='mandje' onclick='openRightMenu()'>
             <img src='/images/winkelandje.png' width='32px' height='32px'>
-            </div>" .
-            sidebarRight()
+            </div>"
+            //sidebarRight()
             ."</div>
         ";
     }
