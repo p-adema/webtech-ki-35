@@ -77,14 +77,21 @@ function open_sidebar() {
 
 function openRightMenu() {
     $('.sidebar_right').animate({right: '-0'}, 400);
-    $sidebar_open = true
+    $('.leave-on-click').toggleClass('hidden').animate({opacity: 0.5}, 400)
 }
 
 function closeRightMenu() {
     $('.sidebar_right').animate({right: '-300px'}, 400);
-    $sidebar_open = false
+    $('.leave-on-click').toggleClass('hidden').animate({opacity: 0}, 400)
+
 }
 
 function go_to_checkout() {
     $(location).attr('href', '/show_cart.php')
 }
+
+$(document).ready(function (){
+    $('.leave-on-click').click(function (_){
+        closeRightMenu()
+    })
+})

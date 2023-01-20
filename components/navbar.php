@@ -28,8 +28,7 @@ function navbar(): void
             <img src='/images/winkelandje.png' width='32px' height='32px'>
             </div>" .
             sidebarRight()
-            ."</div>
-        ";
+            ."</div>" . sidebar_cover();
     }
     echo $html;
 

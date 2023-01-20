@@ -20,4 +20,9 @@ function sidebarRight(): string{
             </div>";
 }
 // animation dropdown
-// click next to sidebar leave
+
+
+function sidebar_cover(): string
+{
+    return "<span class='leave-on-click hidden'></span>";
+}
