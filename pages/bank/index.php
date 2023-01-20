@@ -68,4 +68,3 @@ html_footer();
  *      Pending transactions als die er zijn (anders hide)
  *      Transaction log
  */
-endif;
