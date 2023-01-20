@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_auth: '/auth/logout.php');
 html_header(title: 'Log in', styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">

@@ -80,3 +80,16 @@ function html_footer(): void
     echo '  </body>
             </html>';
 }
+
+function auth_redirect(?string $if_auth = null, ?string $if_not_auth = null): void
+{
+    ensure_session();
+    if ($if_auth !== null and $_SESSION['auth']) {
+        header('Location: ' . $if_auth);
+        exit;
+    }
+    if ($if_not_auth !== null and !$_SESSION['auth']) {
+        header('Location: ' . $if_not_auth);
+        exit;
+    }
+}

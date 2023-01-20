@@ -15,6 +15,7 @@ echo '<br/> See <a href="auth/forgot_password.php">forgot password</a> in case y
 echo '<br/> See <a href="modify_cart.php">modify cart</a> to add/remove example to/from cart';
 echo '<br/> See <a href="show_cart.php">show cart</a> to view cart';
 echo '<br/> See <a href="courses/video.php?tag=example_free">example free</a> to view a free example video';
+echo '<br/> See <a href="courses/video.php?tag=example_paid">example paid</a> to view a paid example video';
 echo '</p>';
 
 html_footer();

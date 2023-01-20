@@ -8,7 +8,6 @@ $video_info = get_video_data($tag);
 
 if (isset($_GET['tag']) and $video_info !== false): ?>
     <div class="video-and-description-big-box">
-        <span class="logo">TempLogo</span>
         <div class="video-and-description">
             <div class="video-outline">
                 <div class="video">

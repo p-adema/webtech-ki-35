@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_not_auth: '/auth/login.php');
 html_header(title: 'balance', styled: true);
 ?>
 <div class="main-container">
@@ -15,7 +16,7 @@ html_header(title: 'balance', styled: true);
         <div class="balance">
             <?php
             require "bank_functionality.php";
-            $user_id = 1;
+            $user_id = $_SESSION['uid'];
             echo "<span class='balance-text'>€</span>";
             echo '<div class="balance-amount">';
             echo get_balance($user_id);
