@@ -73,6 +73,7 @@ function closeRightMenu() {
 function open_right_menu() {
     $('.sidebar-right').animate({right: '-0'}, 400);
     $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
+}
 function go_to_checkout() {
     $(location).attr('href', '/show_cart.php')
 }
