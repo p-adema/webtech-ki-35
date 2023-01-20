@@ -112,3 +112,8 @@ function video_cost($video_id): bool
 
     return $sth->fetch()['free'];
 }
+
+function update_rating(): void
+{
+
+}

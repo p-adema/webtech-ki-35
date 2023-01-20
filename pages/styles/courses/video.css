@@ -19,9 +19,9 @@ html {
     display: flex;
     flex-flow: column;
     align-items: baseline;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 15px;
+    /*padding-top: 5px;*/
+    /*padding-bottom: 5px;*/
+    /*padding-left: 15px;*/
     color: white;
     margin-top: 20px;
     background-color: #2A2929FF;
@@ -89,17 +89,18 @@ html {
     text-align: left;
     outline: none;
     font-size: 15px;
-    max-width: max-content;
+    max-width: available;
     border-radius: 15px;
 }
 
 .collapsible:hover {
-    background-color: #1c1b1b;
+    background-color: #262626;
 }
 
 .content {
+    margin-left: 20px;
+    margin-bottom: 10px;
     max-height: 0;
-    padding: 0 18px;
     overflow: hidden;
     transition: max-height 0.4s ease-in-out;
 }
@@ -133,4 +134,51 @@ button.form-submit.go-to-cart {
 
 form#cart {
     display: none;
+}
+
+.stars-empty:after {
+    content: '☆☆☆☆☆';
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+}
+
+.star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.star-2:after {
+    content: '★★☆☆☆';
+}
+
+.star-3:after {
+    content: "★★★☆☆";
+}
+
+.star-4:after {
+    content: "★★★★☆"
+}
+
+.star-5:after {
+    content: '★★★★★';
+}
+
+.perm-star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.perm-star-2:after {
+    content: '★★☆☆☆';
+}
+
+.perm-star-3:after {
+    content: "★★★☆☆";
+}
+
+.perm-star-4:after {
+    content: "★★★★☆"
+}
+
+.perm-star-5:after {
+    content: '★★★★★';
 }
