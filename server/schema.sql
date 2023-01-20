@@ -85,6 +85,17 @@ CREATE TABLE `comments`
     FOREIGN KEY (`reply_tag`) REFERENCES `comments` (`tag`)
 );
 
+CREATE TABLE `scores`
+(
+    `id`          BIGINT UNSIGNED   NOT NULL AUTO_INCREMENT,
+    `user_id`     BIGINT UNSIGNED   NOT NULL,
+    `comment_tag` CHAR(64)          NOT NULL,
+    `score`       TINYINT DEFAULT 0 NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`user_id`) REFERENCES users (`id`),
+    FOREIGN KEY (`comment_tag`) REFERENCES comments (`tag`)
+);
+
 CREATE TABLE `ratings`
 (
     `id`       BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
