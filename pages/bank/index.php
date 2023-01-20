@@ -63,3 +63,4 @@ if ($_SESSION['auth']) :
  *      Pending transactions als die er zijn (anders hide)
  *      Transaction log
  */
+endif;
