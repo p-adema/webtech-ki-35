@@ -21,11 +21,12 @@ html {
 
 .dropdown-content {
     display: none;
+    opacity: 0;
     position: absolute;
     background-color: #676;
-    right: 0;
+    right: -150px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 0;
     min-width: 150px;
     text-align: left;
 }
@@ -42,7 +43,7 @@ html {
 
 .dropdown-content a:hover {background-color: darkcyan;}
 
-.dropdown:hover .dropdown-content {display: block;}
+
 
 .dropdown:hover .dropbtn {background-color: #676;}
 
@@ -115,7 +116,7 @@ body {
 
 .topnav #mandje {
     float: right;
-    padding: 14px;
+    padding: 14px 14px 10px;
 }
 
 
@@ -195,7 +196,7 @@ body {
 
 }
 
-.sidebar-block .checkout_sidebar {
+.checkout-sidebar {
     padding: 14px 16px;
 }
 
@@ -245,4 +246,15 @@ body {
 
 .sidebar-active-cover.hidden {
     pointer-events: none;
+}
+
+#account-picture {
+    color: white;
+    font-size: 32px;
+}
+
+#shopping-cart{
+    color: white;
+    font-size: 32px;
+
 }

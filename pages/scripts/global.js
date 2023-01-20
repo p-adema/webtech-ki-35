@@ -69,6 +69,42 @@ function closeRightMenu() {
     $('.sidebar_right').animate({right: '-300px'}, 400);
 }
 
+
+function open_right_menu() {
+    $('.sidebar-right').animate({right: '-0'}, 400);
+    $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
 function go_to_checkout() {
     $(location).attr('href', '/show_cart.php')
 }
+
+function close_right_menu() {
+    $('.sidebar-right').animate({right: '-300px'}, 400);
+    $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0}, 400)
+
+}
+
+function redirect(link = '/show_cart.php') {
+    $(location).attr('href', link)
+}
+
+function symbol_default_enter(_) {
+    $(this).css('font-variation-settings', "'wght' 600")
+}
+
+function symbol_default_leave(_) {
+    $(this).css('font-variation-settings', "'wght' 400")
+}
+
+$(document).ready(function () {
+    $('.sidebar-active-cover').click(function (_) {
+        close_right_menu()
+    })
+    let $dropdown = $('.dropdown');
+    $dropdown.mouseenter(function (_) {
+        $('.dropdown-content').stop().show().animate({opacity: 1, right: 0}, 400)
+    })
+    $dropdown.mouseleave(function (_) {
+        $('.dropdown-content').stop().animate({opacity: 0, right: -300}, 400)
+    })
+
+})
