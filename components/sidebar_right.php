@@ -10,13 +10,13 @@ function sidebarRight(): string{
         $html .= "<a href='/'> {$item['name']} </a>";
 
     }
-    return "<div class='sidebar_right sidebar_block sidebar_animate_right'>
-                <button onclick='closeRightMenu()' class='sidebar_close'>Close</button>
-                <p class='sidebar_text'> Shopping cart: </p>
-                <hr>".
+    return "<div class='sidebar-right sidebar-block sidebar_animate_right'>
+                <button onclick='close_right_menu()' class='sidebar-close'>Close</button>
+                <p class='sidebar-text'> Shopping cart: </p>
+                <hr>" .
                 $html . " <hr> 
-                <div class='checkout_sidebar'>
-                <button onclick='go_to_checkout()' id='checkout_sidebar' type='button'>Checkout</button> </div>
+                <div class='checkout-sidebar'>
+                <button onclick='go_to_checkout()' id='checkout-sidebar' type='button'>Checkout</button> </div>
             </div>";
 }
 // animation dropdown
@@ -24,5 +24,5 @@ function sidebarRight(): string{
 
 function sidebar_cover(): string
 {
-    return "<span class='leave-on-click hidden'></span>";
+    return "<span class='sidebar-active-cover hidden'></span>";
 }

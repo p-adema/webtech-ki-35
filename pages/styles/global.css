@@ -134,7 +134,7 @@ body {
     color: white;
 }
 
-.sidebar_right{
+.sidebar-right{
     display: flex;
     flex-flow: column;
     align-items: baseline;
@@ -146,7 +146,7 @@ body {
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12)
 }
 
-.sidebar_block .sidebar_item{
+.sidebar-block .sidebar-item{
     font-size: 17px;
     color: #111111;
     width:100%;
@@ -159,18 +159,18 @@ body {
     outline:0
 }
 
-.sidebar_item:hover{
+.sidebar-item:hover{
     color:#000;
     background-color:#ccc
 }
 
-.sidebar_text {
+.sidebar-text {
     font-size: 17px;
     padding:8px 16px;
     text-align:left;
 }
 
-.sidebar_close {
+.sidebar-close {
     height: 60px;
     font-size: 17px;
     color: #111111;
@@ -182,7 +182,7 @@ body {
 
 }
 
-.sidebar_block .sidebar_checkout {
+.sidebar-block .sidebar_checkout {
     background-color: green;
     height: 60px;
     font-size: 17px;
@@ -195,11 +195,11 @@ body {
 
 }
 
-.sidebar_block .checkout_sidebar {
+.sidebar-block .checkout_sidebar {
     padding: 14px 16px;
 }
 
-#checkout_sidebar {
+#checkout-sidebar {
     height: 2em;
     font-size: medium;
     width: 7em;
@@ -210,29 +210,29 @@ body {
     border-color: darkgreen;
 }
 
-#checkout_sidebar:hover {
+#checkout-sidebar:hover {
     background: #63b963;
     cursor: pointer;
 }
 
-#checkout_sidebar.pressed {
+#checkout-sidebar.pressed {
     background: #386838;
 }
 
-#checkout_sidebar.disabled:hover {
+#checkout-sidebar.disabled:hover {
     background: slategray;
     cursor: default;
 }
 
-#checkout_sidebar.disabled {
+#checkout-sidebar.disabled {
     background: slategray;
 }
 
-#checkout_sidebar.pressed:hover {
+#checkout-sidebar.pressed:hover {
     background: #447c44;
 }
 
-.leave-on-click {
+.sidebar-active-cover {
     background-color: black;
     width: 100vw;
     top: 0;
@@ -243,6 +243,6 @@ body {
     opacity: 0;
 }
 
-.leave-on-click.hidden {
+.sidebar-active-cover.hidden {
     pointer-events: none;
 }

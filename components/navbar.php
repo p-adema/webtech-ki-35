@@ -11,7 +11,7 @@ function navbar(): void
 
             dropDown("<img src='/images/account2.png' width='32px' height='32px' >", ['/auth/account/index.php', '/auth/logout.php'],['Account management', 'Log out'])
             . "
-            <div id='mandje' onclick='openRightMenu()'>
+            <div id='mandje' onclick='open_right_menu()'>
             <img src='/images/winkelandje.png' width='32px' height='32px'>
             </div>" .
             sidebarRight()
@@ -24,7 +24,7 @@ function navbar(): void
             ".
             dropDown("<img src='/images/account2.png' width='32px' height='32px' >", ['/auth/register.php', '/auth/login.php'],['Register', 'Log in'])
             . "
-             <div id='mandje' onclick='openRightMenu()'>
+             <div id='mandje' onclick='open_right_menu()'>
             <img src='/images/winkelandje.png' width='32px' height='32px'>
             </div>" .
             sidebarRight()
