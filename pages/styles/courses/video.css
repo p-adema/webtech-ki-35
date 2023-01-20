@@ -222,3 +222,22 @@ button.show-replies {
 div.comment-replies-wrapper {
     padding-left: 25px;
 }
+
+div.comment-reactions-wrapper {
+    padding-top: 10px;
+    display: flex;
+    flex-flow: row;
+    width: 100%;
+}
+
+div.comment-replies-wrapper > span:hover {
+    cursor: pointer;
+}
+
+div.comment-reactions-gap-l {
+    flex: 3 1 auto;
+}
+
+div.comment-reactions-gap-s {
+    width: 10px;
+}

@@ -61,6 +61,9 @@ function render_comment(array $comment, bool $is_reply = false): string
         <div class='comment-text-wrapper'>
             <span class='comment-text'> {$comment['text']} </span>
         </div>
+        <div class='comment-reactions-wrapper'>
+            <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined'>thumb_down</span><div class='comment-reactions-gap-l'></div><span class='comment-reactions-reply material-symbols-outlined'>reply</span>
+        </div>
     </div>
     $replies
 </div>
