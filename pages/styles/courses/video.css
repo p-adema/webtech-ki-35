@@ -222,6 +222,10 @@ div.comment-replies-wrapper {
     padding-left: 25px;
 }
 
+.stars {
+    font-size: 20px;
+}
+
 .stars-empty:after {
     content: '☆☆☆☆☆';
     font-size: 20px;

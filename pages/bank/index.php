@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login.php');
-html_header(title: 'balance', styled: true);
+html_header(title: 'balance', styled: true, scripted: false);
 
 if ($_SESSION['auth']) :
     $user_id = $_SESSION['uid']
@@ -54,7 +54,12 @@ if ($_SESSION['auth']) :
         </div>
     </div>
 </div>
-<?php html_footer();
+
+<?php
+else: echo "<span>This page does not seem quite right</span>";
+endif;
+
+html_footer();
 
 /*
  * Taak 1:

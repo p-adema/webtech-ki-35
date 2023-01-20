@@ -2,12 +2,15 @@
 
 require 'video_functionality.php';
 
-$star = $_POST['star'];
-$uid = $_GET['uid'];
-$video_tag = $_GET['tag'];
+require_once 'api_resolve.php';
 
-require_once 'dropdown_function.php';
+ensure_session();
 
-$pdo_write = new_pdo_write();
+if ($_SESSION['auth']) {
 
-$sql = 'hallo';
+    $tag = $_POST['tag']['on'];
+    $uid = $_SESSION['uid'];
+    $star = $_POST['star'];
+
+    update_rating($star, $uid, $tag);
+}

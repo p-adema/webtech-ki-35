@@ -64,7 +64,40 @@ function video_cost($video_id): bool
     return $sth->fetch()['free'];
 }
 
-function update_rating(): void
+function update_rating($rating, $uid, $tag): void
 {
+    require_once 'pdo_read.php';
+    require_once 'pdo_write.php';
+
+    $message = " ";
+
+    $pdo_read = new_pdo_read();
+    $pdo_write = new_pdo_write();
+
+    $sql_get_id = 'SELECT id FROM db.videos WHERE (tag = :name)';
+    $sth_get_id = $pdo_read->prepare($sql_get_id);
+    $sth_get_id->execute(['name' => $tag]);
+
+    $video_id = $sth_get_id->fetch()['id'];
+
+    $sql_read = 'SELECT rating FROM db.ratings WHERE item_id = :id AND rater_id = :uid';
+
+    $sth_read = $pdo_read->prepare($sql_read);
+    $sth_read->execute(['id' => $video_id, 'uid' => $uid]);
+
+    $data = $sth_read->fetch()['rating'];
+
+    if (empty($data)) {
+        $sql_new = 'INSERT INTO db.ratings (rater_id, item_id, rating, text)
+                    VALUES (:rater, :item, :stars, :message)';
+        $sth = $pdo_write->prepare($sql_new);
+        $sth->execute(['rater' => $uid, 'item' => $video_id, 'stars' => intval($rating), 'message' => $message]);
+    }
+    else {
+        $sql_update = 'UPDATE db.ratings SET rating = :new_rating WHERE rater_id = :rater and item_id = :video';
+        $sth = $pdo_write->prepare($sql_update);
+        $sth->execute(['new_rating' => $rating, 'rater' => $uid, 'video' => $video_id]);
+    }
+
 
 }

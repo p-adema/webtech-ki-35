@@ -61,45 +61,14 @@ function form_default_success(data, options) {
     }
 }
 
-function close_sidebar() {
-    // $(#sidebar).css('width', '250px');
-    document.getElementById("sidebar").style.width = "250px";
-    document.getElementById('sidebar-button').style.width = "250px";
+function openRightMenu() {
+    $('.sidebar_right').animate({right: '-0'}, 400);
 }
 
-function open_sidebar() {
-    document.getElementById("sidebar").style.width = "0";
-    document.getElementById('sidebar-button').style.width = "0";
+function closeRightMenu() {
+    $('.sidebar_right').animate({right: '-300px'}, 400);
 }
 
-
-
-
-function open_right_menu() {
-    $('.sidebar-right').animate({right: '-0'}, 400);
-    $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
+function go_to_checkout() {
+    $(location).attr('href', '/show_cart.php')
 }
-
-function close_right_menu() {
-    $('.sidebar-right').animate({right: '-300px'}, 400);
-    $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0}, 400)
-
-}
-
-function redirect(link = '/show_cart.php') {
-    $(location).attr('href', link)
-}
-
-function symbol_default_enter(_) {
-    $(this).css('font-variation-settings', "'wght' 600")
-}
-
-function symbol_default_leave(_) {
-    $(this).css('font-variation-settings', "'wght' 400")
-}
-
-$(document).ready(function () {
-    $('.sidebar-active-cover').click(function (_) {
-        close_right_menu()
-    })
-})
