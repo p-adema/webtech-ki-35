@@ -60,8 +60,8 @@ SELECT 'com3', id, 1, 'I know right!', 'com1'
 FROM db.users
 WHERE `name` = 'bunnyfan';
 
-INSERT INTO db.comments (tag, commenter_id, item_id, text, reply_tag, score)
-SELECT 'com4', id, 1, 'Amazing', 'com3', 1
+INSERT INTO db.comments (tag, commenter_id, item_id, text, reply_tag)
+SELECT 'com4', id, 1, 'Amazing', 'com3'
 FROM db.users
 WHERE `name` = 'bunnyfan';
 
@@ -70,8 +70,8 @@ SELECT 'com5', id, 1, 'Wonderful!', 'com3'
 FROM db.users
 WHERE `name` = 'bunnyfan';
 
-INSERT INTO db.comments (tag, commenter_id, item_id, text, score)
-SELECT 'com6', 1, 1, 'Har Har Har', -2;
+INSERT INTO db.comments (tag, commenter_id, item_id, text)
+SELECT 'com6', 1, 1, 'Har Har Har';
 
 INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (1, 1, 'com6', -1);

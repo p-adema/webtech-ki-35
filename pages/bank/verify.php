@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Verify transaction', styled: 'form.css', scripted: true);
+html_header(title: 'Verify transaction', navbar: false, styled: 'form.css', scripted: true);
 
 require 'bank_functionality.php';
 require 'bank_tags.php';
