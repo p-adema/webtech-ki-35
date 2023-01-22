@@ -16,7 +16,8 @@ require_once 'navbar.php';
  * @param string $extra Extra header elements put after all other tags
  * @return void Echoes to the page
  */
-function html_header(string $title, string $description = '', bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
+function html_header(string $title, string $description = '', bool $navbar = true,
+                     bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
 
     $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
@@ -68,7 +69,9 @@ function html_header(string $title, string $description = '', bool|string $style
 
     echo $html;
 
-    navbar();
+    if ($navbar) {
+        navbar();
+    }
 }
 
 
