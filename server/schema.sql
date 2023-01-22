@@ -227,3 +227,22 @@ CREATE TABLE `item_tags`
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_id`) REFERENCES db.items (`id`)
 );
+
+CREATE USER 'triggers';
+GRANT ALL PRIVILEGES ON db.* TO 'triggers';
+
+CREATE DEFINER = 'triggers' TRIGGER comments_new_score
+    AFTER INSERT
+    ON scores
+    FOR EACH ROW
+    UPDATE comments
+    SET score = score + NEW.score
+    WHERE comments.tag = NEW.comment_tag;
+
+CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
+    AFTER UPDATE
+    ON scores
+    FOR EACH ROW
+    UPDATE comments
+    SET score = score + NEW.score - OLD.score
+    WHERE comments.tag = NEW.comment_tag;
