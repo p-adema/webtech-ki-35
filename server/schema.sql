@@ -40,15 +40,15 @@ CREATE TABLE `items`
 
 CREATE TABLE `videos`
 (
-    `id`          BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
-    `tag`         CHAR(64) UNIQUE        NOT NULL,
-    `name`        VARCHAR(100)           NOT NULL,
-    `free`        BOOLEAN  DEFAULT TRUE  NOT NULL,
-    `description` VARCHAR(256)           NOT NULL,
-    `subject`     VARCHAR(100)           NOT NULL,
-    `uploader`    BIGINT UNSIGNED        NOT NULL,
-    `upload_date` DATETIME DEFAULT NOW() NOT NULL,
-    `views`       BIGINT UNSIGNED        NOT NULL,
+    `id`          BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
+    `tag`         CHAR(64) UNIQUE               NOT NULL,
+    `name`        VARCHAR(100)                  NOT NULL,
+    `free`        BOOLEAN         DEFAULT TRUE  NOT NULL,
+    `description` VARCHAR(256)                  NOT NULL,
+    `subject`     VARCHAR(100)                  NOT NULL,
+    `uploader`    BIGINT UNSIGNED               NOT NULL,
+    `upload_date` DATETIME        DEFAULT NOW() NOT NULL,
+    `views`       BIGINT UNSIGNED DEFAULT 0     NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`uploader`) REFERENCES `users` (`id`),
     FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)
