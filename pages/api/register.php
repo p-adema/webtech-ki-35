@@ -50,10 +50,10 @@ try {
 }
 
 if (isset($pdo_write)) {
-    $sql = 'SELECT (id) FROM db.users WHERE (name = :name);';
+    $sql_duplicate_username = 'SELECT (id) FROM db.users WHERE (name = :name);';
     $data = ['name' => htmlspecialchars($name)];
 
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = $pdo_write->prepare($sql_duplicate_username);
 
     if (!$sql_prep->execute($data)) {
         $errors['submit'][] = 'Internal server error, try again later';
@@ -79,10 +79,10 @@ if (empty($email)) {
 
 if (isset($pdo_write)) {
     /** @noinspection DuplicatedCode */
-    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
+    $sql_duplicate_email = 'SELECT (id) FROM db.users WHERE (email = :email);';
     $data = ['email' => htmlspecialchars($email)];
 
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = $pdo_write->prepare($sql_duplicate_email);
 
     if (!$sql_prep->execute($data)) {
         $errors['submit'][] = 'Internal server error, try again later';
@@ -127,35 +127,27 @@ $data = [
     'full_name' => htmlspecialchars($_POST['full_name'])
 ];
 
-$sql = 'INSERT INTO db.users (name, email, password, full_name, membership)
+$sql_user = 'INSERT INTO db.users (name, email, password, full_name, membership)
 VALUES (:name, :email, :password, :full_name, \'none\');';
 
 /** @noinspection PhpUndefinedVariableInspection : If the connection failed, we'd already have exited */
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = $pdo_write->prepare($sql_user);
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';
     api_fail('Internal server error, try again later', $errors);
 }
 
-$sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-$data = ['email' => htmlspecialchars($email)];
-$sql_prep = $pdo_write->prepare($sql);
-if (!$sql_prep->execute($data)) {
-    $errors['submit'][] = 'Internal server error';
-    $valid = false;
-}
-$user_id = $sql_prep->fetch()['id'];
 $url_tag = tag_create();
 
-$sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
-        VALUES (\'verify\', :tag, :user_id, DEFAULT);';
+$sql_email = 'INSERT INTO db.emails_pending (type, url_tag, user_id)
+        SELECT \'verify\', :tag, id FROM db.users WHERE name = :name';
 
 $data = [
-    'tag' => htmlspecialchars("$url_tag"),
-    'user_id' => htmlspecialchars("$user_id")
+    'tag' => htmlspecialchars($url_tag),
+    'name' => htmlspecialchars($name)
 ];
 
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = $pdo_write->prepare($sql_email);
 $sql_prep->execute($data);
 
 $link = '/auth/verify.php?tag=' . $url_tag;

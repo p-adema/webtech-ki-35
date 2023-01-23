@@ -7,7 +7,7 @@ $(document).ready(function () {
 
         const handler_options = {
             redirect: {
-                link: '/auth/login',
+                link: '/auth/login.php',
                 delay: 5000
             }
         }

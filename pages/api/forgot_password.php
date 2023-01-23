@@ -34,20 +34,6 @@ try {
     $valid = false;
 }
 
-if (isset($pdo_write)) {
-    /** @noinspection DuplicatedCode */
-    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-    $data = ['email' => htmlspecialchars($email)];
-
-    $sql_prep = $pdo_write->prepare($sql);
-
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error, try again later';
-        $valid = false;
-    }
-    $user_id_fetch = $sql_prep->fetch();
-}
-
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
@@ -55,20 +41,18 @@ if (!$valid) {
 
 if (isset($pdo_write)) {
     $url_tag = tag_create();
-    if (!empty($user_id_fetch)) {
-        $user_id = $user_id_fetch['id'];
 
-        $sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
-                VALUES (:type, :tag, :user_id, DEFAULT);';
+    $sql_email = 'INSERT INTO db.emails_pending (type, url_tag, user_id)
+        SELECT \'password-reset\', :tag, id FROM db.users WHERE email = :email';
 
-        $data = [
-            'type' => htmlspecialchars('password-reset'),
-            'tag' => $url_tag,
-            'user_id' => htmlspecialchars("$user_id")
-        ];
-        $sql_prep = $pdo_write->prepare($sql);
-        $sql_prep->execute($data);
-    }
+    $data = [
+        'tag' => htmlspecialchars($url_tag),
+        'email' => htmlspecialchars($email)
+    ];
+
+    $sql_prep = $pdo_write->prepare($sql_email);
+    $sql_prep->execute($data);
+
     $link = '/auth/verify.php?tag=' . $url_tag;
 
     if (mail_forgot_password($link, $email)) { #TODO PRODUCTION: remove dev link
