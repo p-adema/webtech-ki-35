@@ -5,6 +5,7 @@
  */
 require "api_resolve.php";
 require "pdo_write.php";
+require "check_acc_fields.php";
 
 $errors = [
     'password' => [],
