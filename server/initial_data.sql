@@ -14,6 +14,13 @@ VALUES ('bunnyfan', 'bugs@bunny.com', '$2y$10$G3.BzVO9rX/S6hotrWDhmeZCOttaZFDxb9
 
 -- password = ILoveBunni3s!
 
+INSERT INTO db.users (name, email, password, full_name, membership, join_date, verified)
+VALUES ('crash_course', 'crash@course.com', '$2y$10$QAS04l8k94JPYbkUc1CfE.qmy0RHf2tJt6m2PrF5ZU26KhDwjmgOK',
+        'Crash Course',
+        DEFAULT, DEFAULT, 1);
+
+-- password = 2CfL$tNa9EU2$fAk
+
 INSERT db.items (tag, type, price)
 VALUES ('example_paid', 'video', 10.00);
 

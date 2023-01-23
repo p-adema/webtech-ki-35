@@ -56,17 +56,28 @@ CREATE TABLE `videos`
 
 CREATE TABLE `courses`
 (
-    `id`            BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
-    `tag`           CHAR(64) UNIQUE        NOT NULL,
-    `name`          VARCHAR(100)           NOT NULL,
-    `description`   VARCHAR(256)           NOT NULL,
-    `subject`       VARCHAR(100)           NOT NULL,
-    `creator`       BIGINT UNSIGNED        NOT NULL,
-    `creation_date` DATETIME DEFAULT NOW() NOT NULL,
-    `views`         BIGINT UNSIGNED        NOT NULL,
+    `id`            BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
+    `tag`           CHAR(64) UNIQUE               NOT NULL,
+    `name`          VARCHAR(100)                  NOT NULL,
+    `description`   VARCHAR(256)                  NOT NULL,
+    `subject`       VARCHAR(100)                  NOT NULL,
+    `creator`       BIGINT UNSIGNED               NOT NULL,
+    `creation_date` DATETIME        DEFAULT NOW() NOT NULL,
+    `views`         BIGINT UNSIGNED DEFAULT 0     NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`creator`) REFERENCES `users` (`id`),
     FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)
+);
+
+CREATE TABLE `course_videos`
+(
+    `id`         BIGINT UNSIGNED   NOT NULL AUTO_INCREMENT,
+    `video_tag`  CHAR(64)          NOT NULL,
+    `course_tag` CHAR(64)          NOT NULL,
+    `order`      SMALLINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`video_tag`) REFERENCES `videos` (`tag`),
+    FOREIGN KEY (`course_tag`) REFERENCES `courses` (`tag`)
 );
 
 CREATE TABLE `comments`
