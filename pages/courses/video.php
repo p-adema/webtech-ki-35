@@ -58,7 +58,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             <span class="comments-title"> Comments </span>
             <div class="comments" tag="<?php echo $_GET['tag'] ?>"></div>
         </div>
-        <?php video_sidebar($tag) ?>
+        <?php #video_sidebar($tag) ?>
     </div>
 
 
