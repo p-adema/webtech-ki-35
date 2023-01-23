@@ -13,6 +13,6 @@ if argv[1] not in course_ids:
 course = argv[1]
 course_id = course_ids[course]
 
-downloader.download_course(course_id)
+# downloader.download_course(course_id)
 reformatter.format_course(course)
 inserter.generate_sql(course)
