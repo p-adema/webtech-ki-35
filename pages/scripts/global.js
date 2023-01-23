@@ -75,7 +75,7 @@ function open_right_menu() {
     $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
 }
 function go_to_checkout() {
-    $(location).attr('href', '/show_cart.php')
+    $(location).attr('href', '/checkout/review.php')
 }
 
 function close_right_menu() {

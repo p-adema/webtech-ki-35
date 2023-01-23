@@ -1,6 +1,5 @@
 <?php
 
-require 'video_functionality.php';
 require 'comments_components.php';
 
 require_once 'api_resolve.php';
@@ -9,9 +8,9 @@ ensure_session();
 
 if ($_SESSION['auth']) {
 
-    $tag = $_POST['tag']['on'];
     $uid = $_SESSION['uid'];
-    $star = $_POST['star'];
+    $score = $_POST['rating'];
+    $comment_id = $_POST['comment'];
 
-    update_rating($star, $uid, $tag);
+    change_comment_score($score, $comment_id, $uid);
 }

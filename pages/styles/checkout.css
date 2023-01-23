@@ -1,0 +1,50 @@
+.content-wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.items-wrapper {
+    width: 30vw;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.review-item-wrapper {
+    background: #fff5de;
+    padding: 6px 14px 6px 14px;
+    width: 100%;
+    border-radius: 20px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%)
+}
+
+.review-item-name {
+    flex: auto;
+    font-size: large;
+    text-align: center;
+}
+
+.review-item-price {
+    flex: auto;
+    font-size: medium;
+    color: gray;
+}
+
+.review-item-price:before {
+    content: '€';
+}
+
+.review-item-delete {
+    color: darkred;
+    transition: color 100ms ease-in-out;
+    font-variation-settings: 'FILL' 1;
+    cursor: pointer;
+}
+
+.review-item-delete:hover {
+    color: red;
+}

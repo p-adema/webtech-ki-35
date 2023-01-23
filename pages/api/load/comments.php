@@ -47,9 +47,10 @@ if ($type === 'item') {
     }
     $comments = get_comments_item($id, $pdo_read);
     $rendered = [];
+    $score_array = get_main_votes($id);
 
     foreach ($comments as $comment) {
-        $rendered[] = render_comment($comment);
+        $rendered[] = render_comment($comment, $score_array[$comment['tag']]);
     }
 
     $response['html'] = join(PHP_EOL, $rendered);
@@ -61,7 +62,8 @@ $comments = get_replies_comment($on, $pdo_read);
 $rendered = [];
 
 foreach ($comments as $comment) {
-    $rendered[] = render_comment($comment);
+    $score_array = get_reaction_votes($on);
+    $rendered[] = render_comment($comment, $score_array[$comment['tag']]);
 }
 
 $response['html'] = join(PHP_EOL, $rendered);

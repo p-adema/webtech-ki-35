@@ -173,7 +173,9 @@ class Cart
         $items = [];
         foreach ($_SESSION['cart']['ids'] as $id) {
             if ($this->get_type($id) === 'video') {
-                $items[] = $this->video_long($id);
+                $video = $this->video_long($id);
+                $video['type'] = 'video';
+                $items[] = $video;
             } else {
                 throw new InvalidArgumentException("Courses aren't implemented yet");
                 # TODO
