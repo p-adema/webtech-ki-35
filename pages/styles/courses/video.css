@@ -292,3 +292,19 @@ div.comment-reactions-gap-l {
 div.comment-reactions-gap-s {
     width: 10px;
 }
+
+.comment-reactions-up:hover {
+    cursor: grab;
+}
+
+.comment-reactions-down:hover {
+    cursor: grab;
+}
+
+.comment-reactions-up.pressed {
+    color: blue;
+}
+
+.comment-reactions-down.pressed {
+    color: red;
+}
