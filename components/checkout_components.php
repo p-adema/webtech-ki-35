@@ -8,7 +8,7 @@ function render_review_item(array $item): void
     <span class='review-item-icon material-symbols-outlined'> $type </span>
     <span class='review-item-name'> {$item['name']} </span>
     <span class='review-item-price'> {$item['price']} </span>
-    <span class='review-item-delete material-symbols-outlined'> cancel </span>
+    <span class='review-item-delete material-symbols-outlined' tag='{$item['tag']}> cancel </span>
 </div>
 ";
 }

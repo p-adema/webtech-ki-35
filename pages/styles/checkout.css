@@ -40,5 +40,11 @@
 
 .review-item-delete {
     color: darkred;
+    transition: color 100ms ease-in-out;
     font-variation-settings: 'FILL' 1;
+    cursor: pointer;
+}
+
+.review-item-delete:hover {
+    color: red;
 }
