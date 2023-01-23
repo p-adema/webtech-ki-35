@@ -1,5 +1,6 @@
 // Description load more function
 $(document).ready(function () {
+    $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
@@ -138,3 +139,4 @@ function bind_score() {
         $(`#${comment_id}`).find('.comment-reactions-up').removeClass('pressed')
     })
 }
+

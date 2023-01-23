@@ -371,3 +371,6 @@ div.comment-reactions-gap-s {
 .course-block-around {
     padding: 0 28px 0 0;
 }
+#current-video-playing {
+    background-color: greenyellow;!important;
+}

@@ -61,7 +61,7 @@ if (isset($_GET['tag']) and $video_info !== false):
         </div>
     </div>
         <?php
-        video_sidebar($tag)
+        video_sidebar($tag);
         ?>
     </div>
 

@@ -1,6 +1,6 @@
 <?php
 
-function video_scroll($course_tag): string
+function video_scroll($course_tag, $video_number): string
 {
     require_once "pdo_write.php";
     try {
@@ -35,11 +35,19 @@ function video_scroll($course_tag): string
             }
             $video_name = $sql_prep->fetch();
             $video_name = $video_name['name'];
-            $html .= "<div class='video-block' id='$x'> 
+            if ($x == $video_number) {
+                $html .= "<div class='video-block' id='current-video-playing'> 
     
                         <div class='course-thumbnail'></div> 
                         <p>$video_name</p>
                        </div>"; #Hier moet de thumbnail komen
+            } else {
+                $html .= "<div class='video-block' id='video_scroll_$x'> 
+    
+                        <div class='course-thumbnail'></div> 
+                        <p>$video_name</p>
+                       </div>";
+            }
 
         }
         return $html;
@@ -63,49 +71,15 @@ function video_sidebar($video_id): void
         $data = ['video_tag' => htmlspecialchars($video_id)];
 
         $sql_prep = $pdo_write->prepare($sql);
-
         if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
+            echo "Server error ID=39504427";
+            die();
         }
         $video_info = $sql_prep->fetch();
-        $sql = 'SELECT (video_tag)  FROM db.course_videos WHERE (course_tag = :course_tag) and (`order` = :video_number);';
-        $data = ['course_tag' => htmlspecialchars($video_info['course_tag']),
-            'video_number' => htmlspecialchars($video_info['order'] - 1)];
-        $sql_prep = $pdo_write->prepare($sql);
-
-        if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
+        if (empty($video_info)){
+            echo '';
+            die() ;
         }
-        $previous_video = $sql_prep->fetch();
-        $previous_video = $previous_video['video_tag'];
-        $data = ['course_tag' => htmlspecialchars($video_info['course_tag']),
-            'video_number' => htmlspecialchars($video_info['order'] + 1)];
-        $sql_prep = $pdo_write->prepare($sql);
-
-        if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
-        }
-        $next_video = $sql_prep->fetch();
-        $next_video = $next_video['video_tag'];
-
-        $sql = 'SELECT (name)  FROM db.videos WHERE (tag = :video_tag);';
-        $data = ['video_tag' => htmlspecialchars($previous_video)];
-        $sql_prep = $pdo_write->prepare($sql);
-
-        if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
-        }
-        $previous_name = $sql_prep->fetch();
-        $previous_name = $previous_name['name'];
-
-        $data = ['video_tag' => htmlspecialchars($next_video)];
-        $sql_prep = $pdo_write->prepare($sql);
-
-        if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
-        }
-        $next_name = $sql_prep->fetch();
-        $next_name = $next_name['name'];
 
         $sql = 'SELECT (name)  FROM db.courses WHERE (tag = :course_tag);';
         $data = ['course_tag' => htmlspecialchars($video_info['course_tag'])];
@@ -125,7 +99,7 @@ function video_sidebar($video_id): void
     </div>
     </div>
     <div class='big-video-block'>" .
-            video_scroll($video_info['course_tag']) . "
+            video_scroll($video_info['course_tag'], $video_info['order']) . "
     
     </div>
     </div>
@@ -133,7 +107,7 @@ function video_sidebar($video_id): void
     
     
     </div>";
-        video_scroll($video_info['course_tag']);
+        video_scroll($video_info['course_tag'], $video_info['1']);
         echo $html;
     }
 }
