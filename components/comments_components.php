@@ -46,15 +46,14 @@ function get_replies_comment(string $tag, PDO $PDO): array
     return $comments;
 }
 
-function render_comment(array $comment, int|null $score,  bool $is_reply = false): string
+function render_comment(array $comment, int|null $score, bool $is_reply = false): string
 {
     $rating_class_down = '';
     $rating_class_up = '';
 
     if ($score === 1) {
         $rating_class_up = 'pressed';
-    }
-    else if ($score === -1) {
+    } else if ($score === -1) {
         $rating_class_down = 'pressed';
     }
 
@@ -129,9 +128,7 @@ function change_comment_score($rating, $comment_id, $user_id): void
         $sql_new = 'INSERT INTO db.scores (user_id, comment_tag, score) VALUES (:user, :comment, :rating)';
         $sth_new = $pdo_write->prepare($sql_new);
         $sth_new->execute(['user' => $user_id, 'comment' => $comment_id, 'rating' => $rating]);
-    }
-
-    else {
+    } else {
 
         $sql_update = 'UPDATE db.scores SET score = :new_rating WHERE (user_id = :user) AND (comment_tag = :comment)';
         $sth_update = $pdo_write->prepare($sql_update);
@@ -142,33 +139,37 @@ function change_comment_score($rating, $comment_id, $user_id): void
 function get_main_votes($item_id): array
 {
     require_once 'pdo_read.php';
-
-    ensure_session();
-
-    $uid = $_SESSION['uid'];
     $pdo_read = new_pdo_read();
 
     $video_comments_sql = 'SELECT tag FROM db.comments WHERE item_id = :item_id AND reply_tag IS NULL';
     $video_comments_sth = $pdo_read->prepare($video_comments_sql);
     $video_comments_sth->execute(['item_id' => $item_id]);
-
     $data = $video_comments_sth->fetchAll(PDO::FETCH_DEFAULT);
 
-    $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
-    $user_votes_sth = $pdo_read->prepare($user_votes_sql);
+    ensure_session();
+    $votes_array = [];
 
-    $votes_array = array();
+    if ($_SESSION['auth']) {
+        $uid = $_SESSION['uid'];
+        $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
+        $user_votes_sth = $pdo_read->prepare($user_votes_sql);
 
-    foreach ($data as $item) {
-        $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
-        $comment_score = $user_votes_sth->fetch();
-        if ($comment_score !== false) {
-            $votes_array[$item['tag']] = $comment_score['score'];
+
+        foreach ($data as $item) {
+            $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
+            $comment_score = $user_votes_sth->fetch();
+            if ($comment_score !== false) {
+                $votes_array[$item['tag']] = $comment_score['score'];
+            } else {
+                $votes_array[$item['tag']] = 0;
+            }
         }
-        else {
+    } else {
+        foreach ($data as $item) {
             $votes_array[$item['tag']] = 0;
         }
     }
+
 
     return $votes_array;
 }
@@ -176,10 +177,6 @@ function get_main_votes($item_id): array
 function get_reaction_votes($comment_id): array
 {
     require_once 'pdo_read.php';
-
-    ensure_session();
-
-    $uid = $_SESSION['uid'];
     $pdo_read = new_pdo_read();
 
     $comment_comments_sql = 'SELECT tag FROM db.comments WHERE reply_tag = :comment_id';
@@ -188,21 +185,29 @@ function get_reaction_votes($comment_id): array
 
     $data = $comment_comments_sth->fetchAll(PDO::FETCH_DEFAULT);
 
-    $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
-    $user_votes_sth = $pdo_read->prepare($user_votes_sql);
+    ensure_session();
+    $votes_array = [];
 
-    $votes_array = array();
+    if ($_SESSION['auth']) {
+        $uid = $_SESSION['uid'];
+        $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
+        $user_votes_sth = $pdo_read->prepare($user_votes_sql);
 
-    foreach ($data as $item) {
-        $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
-        $comment_score = $user_votes_sth->fetch();
-        if ($comment_score !== false) {
-            $votes_array[$item['tag']] = $comment_score['score'];
+        foreach ($data as $item) {
+            $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
+            $comment_score = $user_votes_sth->fetch();
+            if ($comment_score !== false) {
+                $votes_array[$item['tag']] = $comment_score['score'];
+            } else {
+                $votes_array[$item['tag']] = 0;
+            }
         }
-        else {
+    } else {
+        foreach ($data as $item) {
             $votes_array[$item['tag']] = 0;
         }
     }
+
 
     return $votes_array;
 }

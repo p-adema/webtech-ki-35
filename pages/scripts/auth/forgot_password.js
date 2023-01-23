@@ -9,6 +9,6 @@ $(document).ready(function () {
 
         const handler_options = {}
 
-        $.post("/api/forgot_password.php", user_data, form_default_response(handler_options));
+        $.post("/api/forgot_password", user_data, form_default_response(handler_options));
     });
 });

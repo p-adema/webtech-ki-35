@@ -10,6 +10,8 @@
 require "api_resolve.php";
 require 'tag_actions.php';
 require "mail.php";
+require "pdo_write.php";
+require "check_acc_fields.php";
 
 $errors = [
     'name' => [],
@@ -27,72 +29,25 @@ $password = $_POST['password'];
 $re_pwd = $_POST['re_pwd'];
 $full_name = $_POST['full_name'];
 
-if (empty($name)) {
-    $errors['name'][] = 'Username is required.';
-    $valid = false;
-} else if (strlen($name) < 5) {
-    $errors['name'][] = "Username must be at least 5 characters.";
-    $valid = false;
-} else if (strlen(htmlspecialchars($name)) > 128) {
-    $errors['name'][] = "Username must be shorter (max 128 standard characters).";
-    $valid = false;
-} else if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
-    $errors['name'][] = "Username should not be an email.";
-    $valid = false;
-}
-# Use a read/write, because we might need to insert a user later
-require "pdo_write.php";
+/** @noinspection DuplicatedCode */
 try {
+//      Use a read/write, because we might need to insert a user later
     $pdo_write = new_pdo_write(err_fatal: false);
+
+//      Checks if name is valid
+    $errors['name'] = check_name($name, $pdo_write);
+    if (!empty($errors['name'])) {
+        $valid = false;
+    }
+
+//      Checks if email is valid
+    $errors['email'] = check_email($email, $pdo_write);
+    if (!empty($errors['email'])) {
+        $valid = false;
+    }
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
     $valid = false;
-}
-
-if (isset($pdo_write)) {
-    $sql = 'SELECT (id) FROM db.users WHERE (name = :name);';
-    $data = ['name' => htmlspecialchars($name)];
-
-    $sql_prep = $pdo_write->prepare($sql);
-
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error, try again later';
-        $valid = false;
-    }
-    $duplicate = $sql_prep->fetch();
-    if (!empty($duplicate)) {
-        $errors['name'][] = 'This username is already in use';
-        $valid = false;
-    }
-}
-
-if (empty($email)) {
-    $errors['email'][] = 'Email is required.';
-    $valid = false;
-} else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    $errors['email'][] = "Invalid email format.";
-    $valid = false;
-} else if (strlen(htmlspecialchars($email)) > 128) {
-    $errors['email'][] = "Email must be shorter (max 128 standard characters).";
-    $valid = false;
-}
-
-if (isset($pdo_write)) {
-    /** @noinspection DuplicatedCode */
-    $sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-    $data = ['email' => htmlspecialchars($email)];
-
-    $sql_prep = $pdo_write->prepare($sql);
-
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error, try again later';
-        $valid = false;
-    }
-    $duplicate = $sql_prep->fetch();
-    if (!empty($duplicate)) {
-        $errors['email'][] = 'This email is already in use';
-        $valid = false;
-    }
 }
 
 /*
@@ -127,38 +82,30 @@ $data = [
     'full_name' => htmlspecialchars($_POST['full_name'])
 ];
 
-$sql = 'INSERT INTO db.users (name, email, password, full_name, membership)
+$sql_user = 'INSERT INTO db.users (name, email, password, full_name, membership)
 VALUES (:name, :email, :password, :full_name, \'none\');';
 
 /** @noinspection PhpUndefinedVariableInspection : If the connection failed, we'd already have exited */
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = $pdo_write->prepare($sql_user);
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';
     api_fail('Internal server error, try again later', $errors);
 }
 
-$sql = 'SELECT (id) FROM db.users WHERE (email = :email);';
-$data = ['email' => htmlspecialchars($email)];
-$sql_prep = $pdo_write->prepare($sql);
-if (!$sql_prep->execute($data)) {
-    $errors['submit'][] = 'Internal server error';
-    $valid = false;
-}
-$user_id = $sql_prep->fetch()['id'];
 $url_tag = tag_create();
 
-$sql = 'INSERT INTO db.emails_pending (type, url_tag, user_id, request_time)
-        VALUES (\'verify\', :tag, :user_id, DEFAULT);';
+$sql_email = 'INSERT INTO db.emails_pending (type, url_tag, user_id)
+        SELECT \'verify\', :tag, id FROM db.users WHERE name = :name';
 
 $data = [
-    'tag' => htmlspecialchars("$url_tag"),
-    'user_id' => htmlspecialchars("$user_id")
+    'tag' => htmlspecialchars($url_tag),
+    'name' => htmlspecialchars($name)
 ];
 
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = $pdo_write->prepare($sql_email);
 $sql_prep->execute($data);
 
-$link = '/auth/verify.php?tag=' . $url_tag;
+$link = '/auth/verify/' . $url_tag;
 if (mail_acc_verify($link, $email)) { #TODO PRODUCTION: remove link
     api_succeed("An E-mail to activate your account has been sent to $email <br />  <a href='$link'>dev</a>", $errors);
 } else {
