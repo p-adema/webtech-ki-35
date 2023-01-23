@@ -9,9 +9,9 @@ function navbar(): void
      <a href='/'><img src='/images/logo-no-background.png' width='110px' height='32px' ></a>
       ";
      if ($_SESSION['auth']) {
-         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/index.php', '/auth/logout.php'], ['Account management', 'Log out']);
+         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/index', '/auth/logout'], ['Account management', 'Log out']);
      } else{
-         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register.php', '/auth/login.php'],['Register', 'Log in']);
+         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
      }
      $html .= "
      <div id='mandje' onclick='open_right_menu()'>

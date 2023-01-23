@@ -66,7 +66,7 @@ ensure_session();
 $user_id = $_SESSION['uid'];
 if (isset($pdo_write)) {
     $sql = 'SELECT (password) FROM db.users WHERE (id = :id);';
-    $data = ['id' => htmlspecialchars("$user_id")];
+    $data = ['id' => $user_id];
     $sql_prep = $pdo_write->prepare($sql);
     if (!$sql_prep->execute($data)) {
         $errors['submit'][] = 'Internal server error, try again later';
@@ -119,19 +119,19 @@ if (isset($pdo_write)) {
     if(empty($current_password)) {
         $sql = 'UPDATE db.users t SET t.name = :name, t.email = :email, t.full_name = :full_name  WHERE t.id = :id;';
         $data = [
-            'name' => htmlspecialchars("$name"),
-            'email' => htmlspecialchars("$email"),
-            'full_name' => htmlspecialchars("$full_name"),
-            'id' => htmlspecialchars("$user_id"),
+            'name' => htmlspecialchars($name),
+            'email' => htmlspecialchars($email),
+            'full_name' => htmlspecialchars($full_name),
+            'id' => htmlspecialchars($user_id),
         ];
     } else {
         $sql = 'UPDATE db.users t SET t.name = :name, t.email = :email, t.full_name = :full_name, t.password = :new_password WHERE t.id = :id;';
         $data = [
-            'name' => htmlspecialchars("$name"),
-            'email' => htmlspecialchars("$email"),
-            'full_name' => htmlspecialchars("$full_name"),
+            'name' => htmlspecialchars($name),
+            'email' => htmlspecialchars($email),
+            'full_name' => htmlspecialchars($full_name),
             'new_password' => password_hash($new_password, PASSWORD_DEFAULT),
-            'id' => htmlspecialchars("$user_id"),
+            'id' => htmlspecialchars($user_id),
         ];
     }
     $sql_prep = $pdo_write->prepare($sql);
@@ -139,5 +139,3 @@ if (isset($pdo_write)) {
 }
 
 api_succeed('Data has been changed', $errors);
-
-

@@ -26,12 +26,12 @@ $(document).ready(function () {
                 success_handler: form_custom_success
             }
 
-            $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
+            $.post("/api/cart/modify", user_data, form_default_response(handler_options));
         } else {
 
             $('button.form-submit').addClass('pressed').removeClass('error')
 
-            window.location.href = "/show_cart.php"
+            window.location.href = "/show_cart"
 
         }
     });
@@ -63,7 +63,7 @@ $(document).ready(function () {
             on: (new URLSearchParams(window.location.search)).get('tag')
         }
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/video.php', {star: star_count, tag: video_data})
+        jQuery.post('/api/courses/video', {star: star_count, tag: video_data})
     })
 
     function form_custom_success(_, __) {
@@ -86,7 +86,7 @@ $(document).ready(function () {
         }
     }
 
-    $.post("/api/load/comments.php", video_data, form_default_response(handler_options));
+    $.post("/api/load/comments", video_data, form_default_response(handler_options));
 })
 
 function load_replies(_) {
@@ -106,7 +106,7 @@ function load_replies(_) {
         }
     }
 
-    $.post("/api/load/comments.php", replies_data, form_default_response(handler_options));
+    $.post("/api/load/comments", replies_data, form_default_response(handler_options));
 
 }
 
