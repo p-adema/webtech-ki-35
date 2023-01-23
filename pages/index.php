@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header('DB Example', scripted: 'ajax');
+html_header('EduGrove', scripted: 'ajax');
 
 echo '<p>';
 echo 'Base page';
