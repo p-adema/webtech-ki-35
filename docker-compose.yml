@@ -9,6 +9,7 @@ services:
     volumes:
       - ./pages:/var/www/html
       - ./components:/var/www/components
+      - ./server/docker.htaccess:/var/www/html/.htaccess
     ports:
       - "80:80"
     links:

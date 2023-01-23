@@ -18,6 +18,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/register.php", user_data, form_default_response(handler_options));
+        $.post("/api/register", user_data, form_default_response(handler_options));
     });
 });

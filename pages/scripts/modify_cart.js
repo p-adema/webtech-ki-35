@@ -19,6 +19,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
+        $.post("/api/cart/modify", user_data, form_default_response(handler_options));
     });
 });

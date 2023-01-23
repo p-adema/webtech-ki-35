@@ -5,11 +5,11 @@
 !/pages/videos/example_paid.mp4
 !/server/
 /server/local.ini
-/server/cert.txt
 !/components/
 !/scraping/
 /scraping/courses/
 !.gitignore
 !README.md
 !docker-compose.yml
+/server/cert.txt
 *.DS_Store

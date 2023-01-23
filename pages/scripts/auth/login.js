@@ -14,6 +14,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/login.php", user_data, form_default_response(handler_options));
+        $.post("/api/login", user_data, form_default_response(handler_options));
     });
 });
