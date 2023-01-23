@@ -7,7 +7,11 @@ html_header(title: 'Video', styled: true, scripted: true);
 $tag = $_GET['tag'];
 $video_info = get_video_data($tag);
 
-if (isset($_GET['tag']) and $video_info !== false):?>
+if (isset($_GET['tag']) and $video_info !== false):
+
+    ?>
+
+    <div class="video-page-flexbox">
     <div class="video-and-description-big-box">
         <div class="video-and-description">
             <div class="video-outline">
@@ -51,11 +55,14 @@ if (isset($_GET['tag']) and $video_info !== false):?>
                 </div>
             </div>
         </div>
+        <div class="comments-wrapper">
+            <span class="comments-title"> Comments </span>
+            <div class="comments"></div>
+        </div>
     </div>
-
-    <div class="comments-wrapper">
-        <span class="comments-title"> Comments </span>
-        <div class="comments"></div>
+        <?php
+        video_sidebar($tag)
+        ?>
     </div>
 
 

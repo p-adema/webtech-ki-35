@@ -2,7 +2,15 @@ html {
     background-color: #e1f0ff;
 }
 
+.video-page-flexbox {
+    display: flex;
+    flex-flow: row;
+}
+
+
+
 .video-and-description-big-box {
+    flex: 2;
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -291,4 +299,60 @@ div.comment-reactions-gap-l {
 
 div.comment-reactions-gap-s {
     width: 10px;
+}
+
+
+
+.video-sidebar {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    border-left-style: solid;
+    border-bottom-style: solid;
+
+
+
+}
+
+
+.course-thumbnail {
+    background-color: black;
+    height: 60px;
+    width: 60px;
+    margin: 14px;
+}
+
+.course-block {
+    display: flex;
+    flex-flow: row;
+    margin: 14px;
+    background-color: #52a452;
+
+    width: 100%;
+    height: 90px;
+}
+
+.video-block {
+    display: flex;
+    flex-flow: row;
+    border-color: #c1c0cf;
+    border-style: solid;
+    width: 100%;
+    height: 90px;
+}
+
+.video-block:hover {
+    background-color: #c1c0cf;
+}
+
+.big-video-block {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 600px;
+    background-color: #e1e0ef;
+    margin: 14px;
+    padding: 0 14px 14px 14px;
+}
+.course-block-around {
+    padding: 0 28px 0 0;
 }
