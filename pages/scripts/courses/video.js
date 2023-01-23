@@ -101,7 +101,8 @@ function load_replies(_) {
             $(`#replies-${tag}`).html("<span class='replies-error'> Replies couldn't be loaded </span>")
         },
         success_handler: function (data, __) {
-            $(`#replies-${tag}`).html(data.html).children('button.show-replies').click(load_replies)
+            $(`#replies-${tag}`).html(data.html);
+            $(`#replies-${tag} button.show-replies`).click(load_replies);
         }
     }
 
