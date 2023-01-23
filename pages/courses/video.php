@@ -1,12 +1,13 @@
 <?php
 require 'html_page.php';
 require 'video_functionality.php';
+require 'video_sidebar.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'];
 $video_info = get_video_data($tag);
 
-if (isset($_GET['tag']) and $video_info !== false): ?>
+if (isset($_GET['tag']) and $video_info !== false):?>
     <div class="video-and-description-big-box">
         <div class="video-and-description">
             <div class="video-outline">

@@ -19,7 +19,7 @@ function sidebarRight(): string{
                 <button onclick='go_to_checkout()' id='checkout-sidebar' type='button'>Checkout</button> </div>
             </div>";
 }
-// animation dropdown
+
 
 
 function sidebar_cover(): string
