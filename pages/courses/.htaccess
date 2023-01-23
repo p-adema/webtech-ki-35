@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteOptions Inherit
+RewriteRule ^video/(\w+) video.php\?tag=$1 [END]
+RewriteRule ^course/(\w+) course.php\?tag=$1 [END]

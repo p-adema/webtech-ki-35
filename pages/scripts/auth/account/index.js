@@ -51,11 +51,11 @@ $(document).ready(function () {
              success_handler: form_custom_success
          }
 
-         $.post("/api/account/index", user_data, form_default_response(handler_options));
+         $.post("/api/account/modify.php", user_data, form_default_response(handler_options));
      });
 });
 
 function form_custom_success(_, __) {
     $(window).unbind();
-    $(location).attr('href', '/auth/account/index')
+    $(location).attr('href', '/auth/account/')
 }

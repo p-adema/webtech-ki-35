@@ -1,5 +1,6 @@
 // Description load more function
 $(document).ready(function () {
+    const video_tag = $('.comments').attr('tag')
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
@@ -15,11 +16,10 @@ $(document).ready(function () {
 
             $('button.form-submit').addClass('pressed').removeClass('error')
 
-            let parameterList = new URLSearchParams(window.location.search)
 
             const user_data = {
                 type: 'add',
-                item: parameterList.get('tag')
+                item: video_tag
             };
 
             const handler_options = {
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         const video_data = {
             type: 'item',
-            on: (new URLSearchParams(window.location.search)).get('tag')
+            on: video_tag
         }
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
         jQuery.post('/api/courses/video', {star: star_count, tag: video_data})
@@ -73,7 +73,7 @@ $(document).ready(function () {
 
     const video_data = {
         type: 'item',
-        on: (new URLSearchParams(window.location.search)).get('tag')
+        on: video_tag
     }
 
     const handler_options = {

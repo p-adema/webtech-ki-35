@@ -105,7 +105,7 @@ $data = [
 $sql_prep = $pdo_write->prepare($sql_email);
 $sql_prep->execute($data);
 
-$link = '/auth/verify?tag=' . $url_tag;
+$link = '/auth/verify/' . $url_tag;
 if (mail_acc_verify($link, $email)) { #TODO PRODUCTION: remove link
     api_succeed("An E-mail to activate your account has been sent to $email <br />  <a href='$link'>dev</a>", $errors);
 } else {

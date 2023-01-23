@@ -53,7 +53,7 @@ if (isset($pdo_write)) {
     $sql_prep = $pdo_write->prepare($sql_email);
     $sql_prep->execute($data);
 
-    $link = '/auth/verify?tag=' . $url_tag;
+    $link = '/auth/verify/' . $url_tag;
 
     if (mail_forgot_password($link, $email)) { #TODO PRODUCTION: remove dev link
         api_succeed("An email has been sent to the account linked to $email <br>  <a href='$link'>dev</a>", $errors);

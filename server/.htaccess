@@ -6,4 +6,4 @@ php_value session.cookie_samesite "Strict"
 php_value session.sid_length "48"
 
 RewriteEngine On
-RewriteRule (^[^.?]+)(\?.+)?$ $1\.php$2
+RewriteRule (^[^.?]+[^/])(\?.+)?$ $1\.php$2

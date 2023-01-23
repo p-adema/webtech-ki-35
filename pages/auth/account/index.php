@@ -20,7 +20,7 @@ if ($_SESSION['auth']):
     <div class="form-content">
         <h1> Account </h1>
         <div class="form-outline">
-            <form action="/api/account/index" method="POST">
+            <form action="/api/account/modify" method="POST">
                 <?php
                 form_input('name', 'Username', input_attrs: "value=\"$user_data[name]\"");
                 form_input('email', 'E-mail', input_attrs: "value=\"$user_data[email]\"");
