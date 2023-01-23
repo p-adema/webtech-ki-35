@@ -83,6 +83,7 @@ $(document).ready(function () {
         success_handler: function (data, __) {
             $('div.comments').html(data.html)
             $('button.show-replies').click(load_replies)
+            bind_score()
         }
     }
 
@@ -102,6 +103,7 @@ function load_replies(_) {
         },
         success_handler: function (data, __) {
             $(`#replies-${tag}`).html(data.html).children('button.show-replies').click(load_replies)
+            bind_score()
         }
     }
 
@@ -117,4 +119,21 @@ function hide_replies(_) {
 function show_replies(_) {
     const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
     $(`#replies-${tag}`).show()
+}
+
+function bind_score() {
+    $('.comment-reactions-up').click(function (event) {
+        event.preventDefault();
+        let comment_id = $(this).parent().attr('tag')
+        $.post("/api/courses/comments.php", {rating: 1, comment: comment_id})
+        $(this).addClass('pressed')
+        $(`#${comment_id}`).find('.comment-reactions-down').removeClass('pressed')
+    })
+    $('.comment-reactions-down').click(function (event) {
+        event.preventDefault()
+        let comment_id = $(this).parent().attr('tag')
+        $.post("/api/courses/comments.php", {rating: -1, comment: comment_id})
+        $(this).addClass('pressed')
+        $(`#${comment_id}`).find('.comment-reactions-up').removeClass('pressed')
+    })
 }

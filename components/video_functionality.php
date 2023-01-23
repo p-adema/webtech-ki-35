@@ -98,6 +98,4 @@ function update_rating($rating, $uid, $tag): void
         $sth = $pdo_write->prepare($sql_update);
         $sth->execute(['new_rating' => $rating, 'rater' => $uid, 'video' => $video_id]);
     }
-
-
 }
