@@ -1,5 +1,6 @@
 // Description load more function
 $(document).ready(function () {
+    $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
@@ -118,3 +119,5 @@ function show_replies(_) {
     const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
     $(`#replies-${tag}`).show()
 }
+
+
