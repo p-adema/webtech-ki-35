@@ -49,6 +49,7 @@ CREATE TABLE `videos`
     `uploader`    BIGINT UNSIGNED               NOT NULL,
     `upload_date` DATETIME        DEFAULT NOW() NOT NULL,
     `views`       BIGINT UNSIGNED DEFAULT 0     NOT NULL,
+#     `thumbnail`   CHAR(64) UNIQUE               NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`uploader`) REFERENCES `users` (`id`),
     FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)
@@ -237,6 +238,17 @@ CREATE TABLE `item_tags`
     `tag`     VARCHAR(16),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_id`) REFERENCES db.items (`id`)
+);
+
+CREATE TABLE `watches`
+(
+  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `video_tag` CHAR(64),
+  `user_id` BIGINT UNSIGNED NOT NULL,
+  `watch_amount` DECIMAL(5, 2),
+  PRIMARY KEY (`id`),
+  FOREIGN KEY (`video_tag`) REFERENCES db.videos (`tag`),
+  FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
 CREATE USER 'triggers';

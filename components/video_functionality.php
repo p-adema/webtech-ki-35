@@ -99,3 +99,16 @@ function update_rating($rating, $uid, $tag): void
         $sth->execute(['new_rating' => $rating, 'rater' => $uid, 'video' => $video_id]);
     }
 }
+
+//function get_video_watch_amount($uid, $video_tag): float
+//{
+//    require_once 'pdo_read.php';
+//
+//    $pdo_read = new_pdo_read();
+//
+//    $sql = 'SELECT watch_amount FROM db.watches WHERE user_id = :uid AND video_tag = :video_tag';
+//    $sth = $pdo_read->prepare($sql);
+//    $sth->execute(['uid' => $uid, 'video_tag' => $video_tag]);
+//
+//    return $sth->fetch()['watch_amount'];
+//}

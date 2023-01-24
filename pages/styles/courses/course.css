@@ -1,0 +1,103 @@
+.main-video-box {
+    max-width: 100%;
+}
+
+.course-header {
+    display: flex;
+    flex-flow: column;
+    margin-bottom: 30px;
+}
+
+.title-and-subject {
+    display: flex;
+    flex-flow: row;
+    align-items: end;
+}
+
+.space-between-title-and-subject {
+    min-width: 70%;
+}
+
+.title {
+    font-weight: bolder;
+    font-size: 70px;
+    border-bottom: solid 4px black;
+    margin-bottom: 15px;
+    min-width: fit-content;
+}
+
+.creation {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: solid 3px black;
+    max-width: fit-content;
+}
+
+.created-by {
+    margin-bottom: 4px;
+}
+
+.subject {
+    align-self: center;
+    max-width: fit-content;
+    float: right;
+}
+
+.subject-name {
+    display: flex;
+    align-self: end;
+    text-align: end;
+}
+
+.view-box {
+    max-width: fit-content;
+}
+
+.thumbnail-image {
+    width: 320px;
+    height: 180px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.thumbnail-box {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.thumbnail-outline {
+    display: flex;
+    flex-flow: row;
+    margin-top: 20px;
+    align-self: center;
+    max-width: 800px;
+    border: solid slategrey 5px;
+    border-radius: 30px;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.description {
+    display: flex;
+    flex-flow: column;
+    margin-top: 20px;
+    align-self: center;
+    align-items: center;
+}
+
+.thumbnail {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.video-name {
+    font-weight: bold;
+    font-size: 20px;
+}
