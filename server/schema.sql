@@ -49,7 +49,7 @@ CREATE TABLE `videos`
     `uploader`    BIGINT UNSIGNED               NOT NULL,
     `upload_date` DATETIME        DEFAULT NOW() NOT NULL,
     `views`       BIGINT UNSIGNED DEFAULT 0     NOT NULL,
-    `thumbnail`   CHAR(64) UNIQUE               NOT NULL,
+#     `thumbnail`   CHAR(64) UNIQUE               NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`uploader`) REFERENCES `users` (`id`),
     FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)

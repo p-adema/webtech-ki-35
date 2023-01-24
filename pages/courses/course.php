@@ -5,36 +5,50 @@ require 'course_components.php';
 require 'video_functionality.php';
 html_header(title: 'Course', styled: true, scripted: false);
 
-$course_tag = 'course_paid';
+$course_tag = $_GET['tag'];
 
 $course_info = get_course_info($course_tag);
 $course_creator = course_creator($course_info['creator']);
 $time_since = time_since($course_info['creation_date']);
 $videos = get_videos($course_tag);
-
-$html = "
-<body>
-    <h1 class='title'>{$course_info['name']}</h1>
-    <span class='creator'>Created by: {$course_creator['full_name']} also known as {$course_creator['name']}<br></span>
-    <span class='subject'>Subject: {$course_info['subject']}<br></span>
-    <span class='description'>{$course_info['description']}<br></span>
-    <span class='creation'>Created: $time_since ago<br></span>
-    <span class='views'>Views: {$course_info['views']}</span>
-</body>
-";
-
-echo $html; ?>
-
-    <div class="thumbnail-outline">
-        <div class='thumbnail-box'>
-            <?php render_thumbnails($videos); ?>
+$video_names = get_video_names($videos);
+?>
+    <body>
+    <div class="main-video-box">
+        <div class='course-header'>
+            <div class="title-and-subject">
+                <span class='title'><?php echo $course_info['name'] ?></span>
+                <div class="subject">
+                    <span class="subject-name"> <?php echo $course_info['subject'] ?><br></span>
+                </div>
+            </div>
+            <div class="information">
+                <div class="creation">
+                    <span class='created-by'>Created by: </span>
+                    <span class="creator"><?php echo $course_creator['name'] ?></span>
+                </div>
+            </div>
+            <div class="description">
+                <span class='description'><?php echo $course_info['description'] ?><br></span>
+                <span class='creation-date'>Created: <?php echo $time_since ?> ago<br></span>
+            </div>
+        </div>
+        <div class="thumbnail-outline">
+            <div class='thumbnail-box'>
+                <?php foreach ($video_names as $name) {
+                    echo $name;
+                } ?>
+            </div>
         </div>
     </div>
+    <div class="view-box">
+        <span class='views'>Views: <?php echo $course_info['views'] ?></span>
+    </div>
+    </body>
 
 <?php
 
-echo get_video_watch_amount(2, 'example_paid');
-echo "%";
+//echo get_video_watch_amount(2, 'example_paid');
 
 //To do: Allow users to save their courses.
 

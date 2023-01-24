@@ -1,8 +1,59 @@
-body {
+.main-video-box {
+    max-width: 100%;
+}
+
+.course-header {
     display: flex;
     flex-flow: column;
-    align-items: center;
-    text-align: center;
+    margin-bottom: 30px;
+}
+
+.title-and-subject {
+    display: flex;
+    flex-flow: row;
+    align-items: end;
+}
+
+.space-between-title-and-subject {
+    min-width: 70%;
+}
+
+.title {
+    font-weight: bolder;
+    font-size: 70px;
+    border-bottom: solid 4px black;
+    margin-bottom: 15px;
+    min-width: fit-content;
+}
+
+.creation {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    font-weight: bold;
+    padding-bottom: 5px;
+    border-bottom: solid 3px black;
+    max-width: fit-content;
+}
+
+.created-by {
+    margin-bottom: 4px;
+}
+
+.subject {
+    align-self: center;
+    max-width: fit-content;
+    float: right;
+}
+
+.subject-name {
+    display: flex;
+    align-self: end;
+    text-align: end;
+}
+
+.view-box {
+    max-width: fit-content;
 }
 
 .thumbnail-image {
@@ -30,6 +81,14 @@ body {
     border-radius: 30px;
     white-space: nowrap;
     overflow: auto;
+}
+
+.description {
+    display: flex;
+    flex-flow: column;
+    margin-top: 20px;
+    align-self: center;
+    align-items: center;
 }
 
 .thumbnail {

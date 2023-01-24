@@ -1,6 +1,6 @@
 <?php
 
-function get_course_info($tag): array
+function get_course_info($tag): array|false
 {
     require_once 'pdo_read.php';
 
@@ -37,6 +37,25 @@ function get_videos($course): array
     $sth->execute(['course' => $course]);
 
     return $sth->fetchAll();
+}
+
+function get_video_names($videos): array
+{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT name FROM db.videos WHERE tag = :video_tag';
+    $sth = $pdo_read->prepare($sql);
+
+    $array = array();
+
+    foreach ($videos as $video) {
+        $sth->execute(['video_tag' => $video['video_tag']]);
+        $array[$video['video_tag']] = $sth->fetch()['name'];
+    }
+
+    return $array;
 }
 
 function render_thumbnails($videos): void
