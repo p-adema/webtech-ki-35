@@ -55,7 +55,7 @@ function video_scroll($course_tag, $video_number): string
     return '';
 }
 
-function video_sidebar($video_id): void
+function video_sidebar($video_id): bool
 {
     require_once "pdo_write.php";
     try {
@@ -72,13 +72,11 @@ function video_sidebar($video_id): void
 
         $sql_prep = $pdo_write->prepare($sql);
         if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427";
-            die();
+            return false;
         }
         $video_info = $sql_prep->fetch();
         if (empty($video_info)){
-            echo '';
-            die() ;
+            return false;
         }
 
         $sql = 'SELECT (name)  FROM db.courses WHERE (tag = :course_tag);';
@@ -86,7 +84,7 @@ function video_sidebar($video_id): void
         $sql_prep = $pdo_write->prepare($sql);
 
         if (!$sql_prep->execute($data)) {
-            echo "Server error ID=39504427 die()";
+            return false;
         }
         $course_name = $sql_prep->fetch();
         $course_name = $course_name['name'];
@@ -110,6 +108,7 @@ function video_sidebar($video_id): void
         video_scroll($video_info['course_tag'], $video_info['1']);
         echo $html;
     }
+    return true;
 }
 
 

@@ -1,7 +1,9 @@
 // Description load more function
 $(document).ready(function () {
     const video_tag = $('.comments').attr('tag')
-    $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
+    if ($('#sidebar-load-success').attr('tag') === '1') {
+        $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
+    }
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {

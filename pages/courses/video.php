@@ -10,6 +10,7 @@ $video_info = get_video_data($tag);
 if (isset($_GET['tag']) and $video_info !== false): ?>
 
     <div class="video-page-flexbox">
+        <div class="test">
         <div class="video-and-description-big-box">
             <div class="video-and-description">
                 <div class="video-outline">
@@ -58,8 +59,11 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             <span class="comments-title"> Comments </span>
             <div class="comments" tag="<?php echo $_GET['tag'] ?>"></div>
         </div>
+        </div>
         <?php
-        video_sidebar($tag) ?>
+        $success = video_sidebar($tag) ;
+        echo "<span id='sidebar-load-success' tag='$success' style='display: none'></span>"?>
+
     </div>
 
 

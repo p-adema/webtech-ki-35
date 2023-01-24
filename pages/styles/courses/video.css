@@ -7,10 +7,14 @@ html {
     flex-flow: row;
 }
 
-
+.test {
+    display: flex;
+    flex-flow: column;
+    flex: auto;
+}
 
 .video-and-description-big-box {
-    flex: 2;
+
     display: flex;
     flex-flow: column;
     align-items: center;
@@ -319,7 +323,7 @@ div.comment-reactions-gap-s {
 
 
 .video-sidebar {
-    flex: 1;
+    max-width: 300px;
     display: flex;
     flex-flow: column;
     border-left-style: solid;
