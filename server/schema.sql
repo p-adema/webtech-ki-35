@@ -17,14 +17,13 @@ CREATE TABLE `users`
 
 CREATE TABLE `billing_information`
 (
-    `id`            BIGINT UNSIGNED   NOT NULL AUTO_INCREMENT,
-    `user_id`       BIGINT UNSIGNED   NOT NULL,
-    `legal_name`    VARCHAR(256)      NOT NULL,
-    `country`       VARCHAR(100)      NOT NULL,
-    `city`          VARCHAR(100)      NOT NULL,
-    `zipcode`       VARCHAR(100)      NOT NULL,
-    `street_number` SMALLINT UNSIGNED NOT NULL,
-    `address`       VARCHAR(100)      NULL,
+    `id`            BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `user_id`       BIGINT UNSIGNED NOT NULL,
+    `legal_name`    VARCHAR(256)    NOT NULL,
+    `country`       VARCHAR(100)    NOT NULL,
+    `city`          VARCHAR(100)    NOT NULL,
+    `zipcode`       VARCHAR(100)    NOT NULL,
+    `street_number` VARCHAR(100)    NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );

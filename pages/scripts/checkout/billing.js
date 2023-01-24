@@ -7,19 +7,12 @@ $(document).ready(function () {
         };
 
         const handler_options = {
-            error_handler: remove_item_err,
-            success_handler: remove_item_success
+            redirect: {
+                link: '/checkout/payment',
+                delay: 3000
+            }
         }
 
         $.post("/api/cart/modify", user_data, form_default_response(handler_options))
     })
 })
-
-function remove_item_err(errors, _) {
-    $(this).css('color', 'black')
-    console.log(errors)
-}
-
-function remove_item_success(_, __) {
-
-}

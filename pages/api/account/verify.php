@@ -9,8 +9,7 @@ require "api_resolve.php";
 try {
     $pdo_write = new_pdo_write(err_fatal: false);
 } catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    $valid = false;
+    api_fail('Internal server error', ['submit' => 'Internal server error']);
 }
 ensure_session();
 if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'verify') {

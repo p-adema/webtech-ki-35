@@ -5,7 +5,7 @@
 }
 
 .items-wrapper {
-    width: 30vw;
+    min-width: 30vw;
     display: flex;
     align-items: center;
     flex-flow: column;
@@ -34,10 +34,6 @@
     color: gray;
 }
 
-.review-item-price:before {
-    content: '€';
-}
-
 .review-item-delete {
     color: darkred;
     transition: color 100ms ease-in-out;
@@ -47,4 +43,38 @@
 
 .review-item-delete:hover {
     color: red;
+}
+
+.checkout-empty {
+    margin-top: 50px;
+    color: darkslategray;
+}
+
+.checkout-empty ~ a {
+    color: #80a8f1;
+    transition: color 300ms ease-in-out;
+    margin-top: 10px;
+    text-decoration: none;
+}
+
+.checkout-empty ~ a:hover {
+    color: #97b6ee;
+}
+
+.review-payment-wrapper {
+    margin-top: 50px;
+    color: darkslategray;
+    background: #cff1bb;
+    padding: 12px 28px 12px 28px;
+    width: 100%;
+    border-radius: 30px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    box-shadow: 0 2px 5px hsl(0, 0%, 0.2%)
+}
+
+a.payment-link {
+    align-self: start;
+    text-decoration: none;
 }

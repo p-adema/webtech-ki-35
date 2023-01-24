@@ -10,11 +10,17 @@ require "checkout_components.php";
             <?php
             $cart = new Cart;
 
-            foreach ($cart->items_long() as $item) {
-                render_review_item($item);
+            $items = $cart->items_long();
+            if (empty($items)) {
+                echo '<span class="checkout-empty"> You have nothing in your cart </span> <a href="/"> Go home </a>';
+            } else {
+                foreach ($items as $item) {
+                    review_item($item);
+                }
             }
-            $pdo_read = null;
+            review_checkout($cart->total());
             ?>
         </div>
     </div>
+
 <?php html_footer();
