@@ -35,18 +35,19 @@ function video_scroll($course_tag, $video_number): string
             }
             $video_name = $sql_prep->fetch();
             $video_name = $video_name['name'];
+            $video_tag = $all_videos[$x]['video_tag'];
             if ($x == $video_number) {
-                $html .= "<div class='video-block' id='current-video-playing'> 
-    
-                        <div class='course-thumbnail'></div> 
+                $html .= "<div class='video-block' id='current-video-playing' > 
+   
+                        <div class='thumbnail'></div> 
                         <p>$video_name</p>
                        </div>"; #Hier moet de thumbnail komen
             } else {
-                $html .= "<div class='video-block' id='video_scroll_$x'> 
+                $html .= "<a href='/courses/video/$video_tag'><div class='video-block' id='video_scroll_$x'> 
     
-                        <div class='course-thumbnail'></div> 
+                        <div class='thumbnail'></div> 
                         <p>$video_name</p>
-                       </div>";
+                       </div></a>";
             }
 
         }
@@ -88,13 +89,25 @@ function video_sidebar($video_id): bool
         }
         $course_name = $sql_prep->fetch();
         $course_name = $course_name['name'];
+        $course_tag = $video_info['course_tag'];
+
+        $sql = 'SELECT u.name FROM courses as c 
+                INNER join users u on c.creator = u.id
+                WHERE c.tag = :course_tag;';
+        $data = ['course_tag' => $video_info['course_tag']];
+        $sql_prep = $pdo_write->prepare($sql);
+        if (!$sql_prep->execute($data)) {
+            return false;
+        }
+        $creator_name = $sql_prep->fetch();
+        $creator_name = $creator_name['name'];
 
         $html = "<div class='video-sidebar'> 
     <div class='course-block-around'> 
-    <div class='course-block'> 
-    <div class='course-thumbnail'></div>
-    <p>$course_name <br> auteur</p>
-    </div>
+    <a href='/courses/course/$course_tag'> <div class='course-block'> 
+    <div class='thumbnail'></div>
+    <p>$course_name <br> <span class='author' >$creator_name</span></p>
+    </div> </a>
     </div>
     <div class='big-video-block'>" .
             video_scroll($video_info['course_tag'], $video_info['order']) . "

@@ -86,3 +86,9 @@ INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (2, 2, 'com6', -1);
 INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (3, 2, 'com4', 1);
+
+
+
+
+
+

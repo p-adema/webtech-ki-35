@@ -12,6 +12,7 @@ $(document).ready(function () {
             $content.css('max-height', '0');
         }
     })
+
     $("form").submit(function (event) {
         event.preventDefault();
 

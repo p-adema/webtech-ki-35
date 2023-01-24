@@ -1,0 +1,59 @@
+html{
+    background-color: #e1f0ff;
+}
+.course-page {
+    min-height: 93vh;
+    display: flex;
+    flex-flow: row;
+}
+
+.information-block {
+    min-width: 20vw;
+    display: flex;
+    background-color: brown;
+    flex-flow: column;
+}
+
+.video-block {
+
+    flex: auto;
+    display: flex;
+    flex-flow: row;
+}
+#course-title{
+    font-size: 30px;
+}
+
+
+
+.video-border {
+    overflow: scroll;
+    max-height: 92vh;
+    min-width: 100%;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #b1b0bf
+}
+
+
+.thumbnail {
+    background-color: black;
+    height: 60px;
+    aspect-ratio: 16/9;
+    margin: 14px;
+}
+
+
+.single-video-block {
+    display: flex;
+    flex-flow: row;
+    border-color: #b1b0bf;
+    border-top-style: solid;
+    border-width: 1px;
+    width: 100%;
+    height: 90px;
+}
+
+.single-video-block:hover {
+    background-color: #b1b0bf;
+}
