@@ -48,9 +48,6 @@ if (!$success) {
     api_fail('Internal error 2', ['submit' => 'Internal error']);
 }
 
-$p_lid->execute();
-$purchase_id = $p_lid->fetch()[0];
-
 $sql_transaction = 'INSERT INTO transactions_pending (amount, url_tag, user_id, purchase_id) VALUES (:total, :tag, :uid, :pid);';
 $p_transaction = $pdo_write->prepare($sql_transaction);
 
@@ -59,7 +56,7 @@ $data_transaction = [
     'total' => $cart->total(),
     'tag' => $pending_tag,
     'uid' => $_SESSION['uid'],
-    'pid' => $purchase_id
+    'pid' => $cart_id
 ];
 
 if (!$p_transaction->execute($data_transaction)) {
@@ -69,4 +66,7 @@ $link = "/bank/verify/$pending_tag";
 $msg = "Payment successfully requested: please <br /> 
 <a href='$link'> confirm the transaction </a> <br /> 
 with your bank.";
+
+$cart->clear();
+
 api_succeed($msg, data: ['link' => $link]);

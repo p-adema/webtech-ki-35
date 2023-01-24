@@ -98,7 +98,7 @@ class Cart
         return false;
     }
 
-    private function get_price($id): int|false
+    private function get_price($id): float|false
     {
         $this->p_price->execute(['id' => $id]);
         return $this->p_price->fetch(PDO::FETCH_ASSOC)['price'];
@@ -161,9 +161,9 @@ class Cart
 
     /**
      * Get the total price of the cart
-     * @return int|float total price of cart
+     * @return float total price of cart
      */
-    public function total(): int|float
+    public function total(): float
     {
         return $_SESSION['cart']['total'];
     }
@@ -197,4 +197,13 @@ class Cart
         return $this->p_video_long->fetch(PDO::FETCH_ASSOC);
     }
 
+    public function clear(): void
+    {
+        $_SESSION['cart'] = [
+            'ids' => [],
+            'prices' => [],
+            'count' => 0,
+            'total' => 0
+        ];
+    }
 }
