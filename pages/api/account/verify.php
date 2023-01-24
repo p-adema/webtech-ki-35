@@ -19,27 +19,30 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'verify') {
 $tag = $_SESSION['url_tag'];
 
 if (isset($pdo_write)) {
-    $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'verify\');';
-    $data = ['tag' => $tag];
+    $sql_uid = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'verify\');';
+    $d_tag = ['tag' => $tag];
 
-    $sql_prep = $pdo_write->prepare($sql);
-    $sql_prep->execute($data);
-    $user_id_fetch = $sql_prep->fetch();
+    $p_uid = $pdo_write->prepare($sql_uid);
+    $p_uid->execute($d_tag);
+    $user_id_fetch = $p_uid->fetch();
     $user_id = $user_id_fetch['user_id'];
 
-    $sql = 'UPDATE db.users u SET u.verified = 1 WHERE u.id = :user_id;';
-    $data = ['user_id' => $user_id];
+    $sql_verify = 'UPDATE db.users u SET u.verified = 1 WHERE u.id = :user_id;';
+    $d_id = ['user_id' => $user_id];
 
-    $sql_prep = $pdo_write->prepare($sql);
-    if (!$sql_prep->execute($data)) {
-        api_fail("Couldn't change password", ['submit' => 'Couldn\'t change password']);
+    $p_verify = $pdo_write->prepare($sql_verify);
+    if (!$p_verify->execute($d_id)) {
+        api_fail("Couldn't verify account", ['submit' => 'Couldn\'t verify account']);
     }
-    $sql = 'DELETE FROM db.emails_pending p WHERE p.url_tag = :tag;';
-    $data = ['tag' => $tag];
+    $sql_rm_email = 'DELETE FROM db.emails_pending p WHERE p.url_tag = :tag;';
 
-    $sql_prep = $pdo_write->prepare($sql);
+    $p_rm_email = $pdo_write->prepare($sql_rm_email);
 
-    if (!$sql_prep->execute($data)) {
+    $sql_balance = 'INSERT INTO db.balances (user_id, balance) VALUES (:user_id, 100.00);';
+    $p_balance = $pdo_write->prepare($sql_balance);
+    $p_balance->execute($d_id);
+
+    if (!$p_rm_email->execute($d_tag)) {
         api_fail("Couldn't reset link", ['submit' => 'Couldn\'t reset link']);
     }
     api_succeed('Account verified!');
