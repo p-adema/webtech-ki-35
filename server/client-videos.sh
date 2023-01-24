@@ -10,5 +10,5 @@ done
 
 echo 'Step 6/6: Insert gathered data' &&
 mysql < courses.out &&
-#rm ./*.sql courses.out client-videos.sh &&
+rm ./*.sql courses.out client-videos.sh &&
 echo '          Video deployment success!'
