@@ -181,3 +181,7 @@ body {
     text-align: center;
     background-color: #ff6428;
 }
+
+a:link {
+    text-decoration: none;
+}

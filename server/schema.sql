@@ -144,13 +144,13 @@ CREATE TABLE `emails_pending`
 CREATE TABLE `purchases`
 (
     `id`                BIGINT UNSIGNED AUTO_INCREMENT,
-    `url_tag`           CHAR(64)              NOT NULL,
-    `amount`            DECIMAL(5, 2)         NOT NULL,
-    `user_id`           BIGINT UNSIGNED       NOT NULL,
-    `info_id`           BIGINT UNSIGNED       NOT NULL,
-    `request_time`      DATETIME              NOT NULL,
-    `confirmation_time` DATETIME              NULL,
-    `confirmed`         BOOLEAN DEFAULT FALSE NOT NULL,
+    `url_tag`           CHAR(64)               NOT NULL,
+    `amount`            DECIMAL(5, 2)          NOT NULL,
+    `user_id`           BIGINT UNSIGNED        NOT NULL,
+    `info_id`           BIGINT UNSIGNED        NOT NULL,
+    `request_time`      DATETIME DEFAULT NOW() NOT NULL,
+    `confirmation_time` DATETIME               NULL,
+    `confirmed`         BOOLEAN  DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
     FOREIGN KEY (`info_id`) REFERENCES db.billing_information (`id`),
@@ -163,7 +163,8 @@ CREATE TABLE `purchase_items`
     `purchase_id` BIGINT UNSIGNED NOT NULL,
     `item_id`     BIGINT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`)
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),
+    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`)
 );
 
 CREATE TABLE `gifts`
@@ -202,11 +203,13 @@ CREATE TABLE `transactions_pending`
     `amount`       DECIMAL(5, 2)                 NOT NULL,
     `url_tag`      CHAR(64)                      NOT NULL,
     `user_id`      BIGINT UNSIGNED               NOT NULL,
+    `purchase_id`  BIGINT UNSIGNED               NOT NULL,
     `request_time` DATETIME        DEFAULT NOW() NOT NULL,
     `to_id`        BIGINT UNSIGNED DEFAULT 1     NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
-    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`)
 );
 
 CREATE TABLE `transaction_log`

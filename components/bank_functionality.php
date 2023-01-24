@@ -2,6 +2,7 @@
 
 function get_balance($user_id): string
 {
+    require_once "pdo_read.php";
     $pdo_read = new_pdo_read();
 
     $sql = 'SELECT (balance) FROM db.balances WHERE (user_id = :user)';
@@ -14,6 +15,7 @@ function get_balance($user_id): string
 
 function enough_balance($user_id, $tag): bool
 {
+    require_once "pdo_read.php";
     $user_bal = get_balance($user_id);
 
     $pdo_read = new_pdo_read();
@@ -30,6 +32,7 @@ function enough_balance($user_id, $tag): bool
 
 function get_pending_transaction($user_id): array
 {
+    require_once "pdo_read.php";
     $pdo_read = new_pdo_read();
 
     $sql = 'SELECT amount, url_tag, request_time FROM db.transactions_pending WHERE (user_id = :user)';
@@ -41,6 +44,7 @@ function get_pending_transaction($user_id): array
 
 function get_transaction_log($user_id): array
 {
+    require_once "pdo_read.php";
     $pdo_read = new_pdo_read();
 
     $sql = 'SELECT amount, request_time, payment_time FROM db.transaction_log WHERE (user_id = :user)';
@@ -79,6 +83,7 @@ function print_pending($pending): void
 
 function obtain_user_information($tag): string
 {
+    require_once "pdo_read.php";
     $pdo_read = new_pdo_read();
 
     $sql = 'SELECT (user_id) FROM db.transactions_pending WHERE (url_tag = :url_tag)';
@@ -91,38 +96,51 @@ function obtain_user_information($tag): string
 function confirm_payment($tag): void
 {
     require_once 'pdo_write.php';
-
     $pdo_write = new_pdo_write();
 
-    $pdo_read = new_pdo_read();
-
-    $sql_read = 'SELECT amount, request_time, user_id FROM db.transactions_pending where (url_tag = :url_tag)';
-    $sth_read = $pdo_read->prepare($sql_read);
+    $sql_read = 'SELECT amount, request_time, user_id, purchase_id FROM db.transactions_pending where (url_tag = :url_tag)';
+    $sth_read = $pdo_write->prepare($sql_read);
     $sth_read->execute(['url_tag' => $tag]);
 
-    $data = $sth_read->fetch(PDO::FETCH_ASSOC);
+    $data_pending = $sth_read->fetch(PDO::FETCH_ASSOC);
 
     $sql_add = 'INSERT INTO db.transaction_log(user_id, amount, request_time) 
         VALUES(:identity, :money, :date)';
     $sql_add = $pdo_write->prepare($sql_add);
-    $data = ['identity' => $data['user_id'], 'money' => $data['amount'], 'date' => $data['request_time']];
-    $sql_add->execute($data);
+    $data_log = [
+        'identity' => $data_pending['user_id'],
+        'money' => $data_pending['amount'],
+        'date' => $data_pending['request_time']];
+    $sql_add->execute($data_log);
 
     $sql_remove = 'DELETE FROM db.transactions_pending WHERE (url_tag = :url_tag)';
     $sth_remove = $pdo_write->prepare($sql_remove);
     $sth_remove->execute(['url_tag' => $tag]);
 
-    $user_bal = get_balance($data['identity']);
+    $user_bal = get_balance($data_pending['user_id']);
 
     $sql_bal_change = 'UPDATE db.balances SET balance = :new_bal WHERE (user_id = :user)';
     $sth_bal = $pdo_write->prepare($sql_bal_change);
-    $sth_bal->execute(['user' => $data['identity'], 'new_bal' => $user_bal - $data['money']]);
+    $sth_bal->execute(['user' => $data_pending['user_id'], 'new_bal' => $user_bal - $data_pending['amount']]);
+
+    $sql_own = "INSERT INTO ownership (item_tag, user_id, origin, purchase_id) 
+                SELECT i.tag, :uid, 'purchase', :pid
+                FROM purchase_items AS P
+                INNER JOIN items i on P.item_id = i.id
+                WHERE purchase_id = :pid";
+
+    $p_own = $pdo_write->prepare($sql_own);
+    $data_own = [
+        'uid' => $data_pending['user_id'],
+        'pid' => $data_pending['purchase_id']
+    ];
+
+    $p_own->execute($data_own);
 }
 
 function deny_payment($tag): void
 {
     require_once 'pdo_write.php';
-
     $pdo_write = new_pdo_write();
 
     $sql = 'DELETE FROM db.transactions_pending WHERE (url_tag = :url_tag)';
@@ -132,6 +150,7 @@ function deny_payment($tag): void
 
 function add_balance($user_id, $input): void
 {
+    require_once "pdo_write.php";
     $current_balance = get_balance($user_id);
 
     $pdo_write = new_pdo_write();

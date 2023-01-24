@@ -7,11 +7,9 @@ $(document).ready(function () {
         event.preventDefault()
         $('button.form-submit').addClass('pressed').removeClass('error')
 
-        const parameter_list = new URLSearchParams(window.location.search)
-
         const user_data = {
             type: $('button.form-submit[clicked=true]').val(),
-            tag: parameter_list.get('tag')
+            tag: $(this).attr('tag')
         }
 
         const handler_options = {

@@ -9,11 +9,11 @@ if ($_SESSION['auth']) :
 
     <div class="main-container">
         <div class="background-box">
-            <div class="title-box">
-            <span class="title">
-                NietNG
-            </span>
-            </div>
+            <a href="/">
+                <div class="title-box">
+                    <span class="title"> NietNG </span>
+                </div>
+            </a>
         </div>
         <div class="big-balance-box">
             <span class="balance-header">Current balance</span>

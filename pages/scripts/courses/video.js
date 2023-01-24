@@ -34,7 +34,7 @@ $(document).ready(function () {
 
             $('button.form-submit').addClass('pressed').removeClass('error')
 
-            window.location.href = "/show_cart"
+            window.location.href = "/checkout/review"
 
         }
     });

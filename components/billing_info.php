@@ -1,5 +1,5 @@
 <?php
-function last_billing_info($uid): array|false
+function last_billing_info(int $uid): array|false
 {
     require_once "pdo_read.php";
     $sql = 'SELECT * FROM billing_information WHERE user_id = :uid ORDER BY id DESC;';
@@ -42,4 +42,14 @@ function render_billing_info($info, $total): void
     </div>
 </div>
 ";
+}
+
+function has_info_redirect(string $link): void
+{
+    if (!($_SESSION['auth'] and (last_billing_info($_SESSION['uid']) !== false)))
+    {
+        header('Location: ' . $link);
+        exit;
+    }
+
 }
