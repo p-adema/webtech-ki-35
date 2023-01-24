@@ -6,6 +6,13 @@ require 'video_functionality.php';
 html_header(title: 'Course', styled: true, scripted: false);
 
 $course_tag = $_GET['tag'];
+if ($_SESSION['auth']) {
+    $user_id = $_SESSION['uid'];
+    $has_course = has_course($course_tag, $user_id);
+} else {
+    $has_course = false;
+}
+
 
 $course_info = get_course_info($course_tag);
 $course_creator = course_creator($course_info['creator']);
@@ -14,36 +21,61 @@ $videos = get_videos($course_tag);
 $video_names = get_video_names($videos);
 ?>
     <body>
-    <div class="main-video-box">
-        <div class='course-header'>
-            <div class="title-and-subject">
-                <span class='title'><?php echo $course_info['name'] ?></span>
-                <div class="subject">
-                    <span class="subject-name"> <?php echo $course_info['subject'] ?><br></span>
+    <div class="course-page">
+        <div class="information-block">
+            <p id="course-title"> <?php echo $course_info['name'] ?></p>
+
+            <p id="author"> Author: <br> <?php echo $course_creator['name'] ?> </p>
+
+            <p id="rating">
+                Rating: <br> Rating placeholder
+            </p>
+
+            <div class="description-box">
+                <p id="views-and-time"> <?php echo $course_info['views'] ?> views <?php echo $time_since ?> ago</p>
+                <p id="description"><?php echo $course_info['description'] ?> </p>
+            </div>
+            <div class="video-information">
+                <p id="subject"> Subject: <br> <?php echo $course_info['subject'] ?></p>
+                <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
+            </div>
+            <?php
+            if ($has_course):
+                ?>
+                <div class="course-buying">
+                    <p id="course-owned"> You own this course</p>
                 </div>
-            </div>
-            <div class="information">
-                <div class="creation">
-                    <span class='created-by'>Created by: </span>
-                    <span class="creator"><?php echo $course_creator['name'] ?></span>
+            <?php
+            else:
+                ?>
+                <div class="course-buying">
+                    <p id="price"> <?php
+                        if (course_price($course_tag) == 0) {
+                            echo 'This course is free';
+                        } else {
+                            $html = 'The price of this course is ' . course_price($course_tag) . ' euro.';
+                            echo $html;
+                        } ?>
+                    </p>
+                    <div class="add-to-cart-box">
+                        <p id="add-to-cart"> Add to cart <span
+                                    class="material-symbols-outlined">add_shopping_cart</span></p>
+                    </div>
                 </div>
-            </div>
-            <div class="description">
-                <span class='description'><?php echo $course_info['description'] ?><br></span>
-                <span class='creation-date'>Created: <?php echo $time_since ?> ago<br></span>
-            </div>
+            <?php
+            endif;
+            ?>
         </div>
-        <div class="thumbnail-outline">
-            <div class='thumbnail-box'>
-                <?php foreach ($video_names as $name) {
-                    echo $name;
-                } ?>
-            </div>
+        <div class="video-block">
+                <div class="video-border">
+                    <?php display_course_videos($course_tag) ?>
+
+                </div>
+
         </div>
+
     </div>
-    <div class="view-box">
-        <span class='views'>Views: <?php echo $course_info['views'] ?></span>
-    </div>
+
     </body>
 
 <?php

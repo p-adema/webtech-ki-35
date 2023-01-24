@@ -104,7 +104,7 @@ function video_sidebar($video_id): bool
 
         $html = "<div class='video-sidebar'> 
     <div class='course-block-around'> 
-    <a href='/'> <div class='course-block'> 
+    <a href='/courses/course/$course_tag'> <div class='course-block'> 
     <div class='thumbnail'></div>
     <p>$course_name <br> <span class='author' >$creator_name</span></p>
     </div> </a>
