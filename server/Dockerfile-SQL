@@ -7,12 +7,14 @@ COPY server/schema.sql /home/schema.sql
 COPY tokens /home/tokens
 COPY server/users.sh /home/scripts/users.sh
 COPY server/initial_data.sql /home/data.sql
+COPY server/triggers.sql /home/triggers.sql
 
 RUN touch init.sql \
     && cat /home/schema.sql >> /home/init.sql \
     && cd /home/scripts \
     && bash /home/scripts/users.sh >> /home/init.sql \
+    && cat /home/triggers.sql >> /home/init.sql \
     && cat /home/data.sql >> /home/init.sql \
-    && rm /home/schema.sql /home/scripts/users.sh /home/data.sql
+    && rm /home/schema.sql /home/scripts/users.sh /home/data.sql /home/triggers.sql
 
 CMD ["mysqld", "--init-file=/home/init.sql"]
