@@ -11,3 +11,5 @@
 !.gitignore
 !README.md
 !docker-compose.yml
+/server/cert.txt
+*.DS_Store

@@ -6,7 +6,7 @@ echo '<h1> Dit is een voorbeeld </h1>';
 echo '<p> Dit is de subtext </p>';
 require_once 'sidebar_functionality.php';
 
-$links = ["Register" => "/auth/register.php", "Login" => "/auth/login.php", "Logout" => "/auth/logout.php"];
+$links = ["Register" => "/auth/register", "Login" => "/auth/login", "Logout" => "/auth/logout"];
 
 sidebar();
 

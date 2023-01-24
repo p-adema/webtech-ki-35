@@ -1,12 +1,12 @@
 <?php
 require 'html_page.php';
-auth_redirect(if_auth: '/auth/logout.php');
+auth_redirect(if_auth: '/auth/logout');
 html_header(title: 'Register', styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">
         <h1> Register </h1>
         <div class="form-outline">
-            <form action="/api/register.php" method="POST">
+            <form action="/api/register" method="POST">
                 <?php
                 form_input('name', 'Username');
                 form_input('email', 'Email', type: 'email');
@@ -16,7 +16,7 @@ html_header(title: 'Register', styled: 'form.css', scripted: true);
                 form_error();
 
                 echo '<div class="form-btns">';
-                text_link('Login', '/auth/login.php');
+                text_link('Login', '/auth/login');
                 form_submit();
                 echo '</div>';
                 ?>

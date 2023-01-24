@@ -73,7 +73,7 @@ function print_pending($pending): void
         echo '<div class="payment-when">';
             echo substr($pending['request_time'], 0, 10);
         echo "</div>";
-        echo "<a href='/bank/verify.php?tag=$tag'><button class='pay-button' type='submit'>Pay now</button></a>";
+        echo "<a href='/bank/verify?tag=$tag'><button class='pay-button' type='submit'>Pay now</button></a>";
     echo '</div>';
 }
 

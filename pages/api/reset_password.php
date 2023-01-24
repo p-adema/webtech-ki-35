@@ -5,6 +5,7 @@
  */
 require "api_resolve.php";
 require "pdo_write.php";
+require "check_acc_fields.php";
 
 $errors = [
     'password' => [],
@@ -32,7 +33,7 @@ try {
 
 if (isset($pdo_write)) {
     $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'password-reset\');';
-    $data = ['tag' => htmlspecialchars("$tag")];
+    $data = ['tag' => $tag];
     $sql_prep = $pdo_write->prepare($sql);
 
     if (!$sql_prep->execute($data)) {
@@ -72,7 +73,7 @@ if (isset($pdo_write)) {
 
     $data = [
         'new_password' => password_hash($password, PASSWORD_DEFAULT),
-        'user_id' => htmlspecialchars("$user_id")
+        'user_id' => $user_id
     ];
     $sql_prep = $pdo_write->prepare($sql);
     $sql_prep->execute($data);

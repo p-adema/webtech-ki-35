@@ -4,3 +4,6 @@ php_value session.cookie_httponly 1
 php_value session.cookie_secure 1
 php_value session.cookie_samesite "Strict"
 php_value session.sid_length "48"
+
+RewriteEngine On
+RewriteRule (^[^.?]+[^/])(\?.+)?$ $1\.php$2

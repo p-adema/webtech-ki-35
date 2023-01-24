@@ -1,5 +1,9 @@
 // Description load more function
 $(document).ready(function () {
+    const video_tag = $('.comments').attr('tag')
+    if ($('#sidebar-load-success').attr('tag') === '1') {
+        $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
+    }
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
@@ -15,23 +19,22 @@ $(document).ready(function () {
 
             $('button.form-submit').addClass('pressed').removeClass('error')
 
-            let parameterList = new URLSearchParams(window.location.search)
 
             const user_data = {
                 type: 'add',
-                item: parameterList.get('tag')
+                item: video_tag
             };
 
             const handler_options = {
                 success_handler: form_custom_success
             }
 
-            $.post("/api/cart/modify.php", user_data, form_default_response(handler_options));
+            $.post("/api/cart/modify", user_data, form_default_response(handler_options));
         } else {
 
             $('button.form-submit').addClass('pressed').removeClass('error')
 
-            window.location.href = "/show_cart.php"
+            window.location.href = "/show_cart"
 
         }
     });
@@ -60,10 +63,10 @@ $(document).ready(function () {
 
         const video_data = {
             type: 'item',
-            on: (new URLSearchParams(window.location.search)).get('tag')
+            on: video_tag
         }
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/video.php', {star: star_count, tag: video_data})
+        jQuery.post('/api/courses/video', {star: star_count, tag: video_data})
     })
 
     function form_custom_success(_, __) {
@@ -73,7 +76,7 @@ $(document).ready(function () {
 
     const video_data = {
         type: 'item',
-        on: (new URLSearchParams(window.location.search)).get('tag')
+        on: video_tag
     }
 
     const handler_options = {
@@ -87,7 +90,7 @@ $(document).ready(function () {
         }
     }
 
-    $.post("/api/load/comments.php", video_data, form_default_response(handler_options));
+    $.post("/api/load/comments", video_data, form_default_response(handler_options));
 })
 
 function load_replies(_) {
@@ -108,7 +111,7 @@ function load_replies(_) {
         }
     }
 
-    $.post("/api/load/comments.php", replies_data, form_default_response(handler_options));
+    $.post("/api/load/comments", replies_data, form_default_response(handler_options));
 
 }
 
