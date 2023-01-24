@@ -141,40 +141,32 @@ CREATE TABLE `emails_pending`
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
-CREATE TABLE `purchases_pending`
-(
-    `id`           BIGINT UNSIGNED AUTO_INCREMENT,
-    `url_tag`      CHAR(64)               NOT NULL,
-    `amount`       DECIMAL(5, 2)          NOT NULL,
-    `item_id`      BIGINT UNSIGNED        NOT NULL,
-    `user_id`      BIGINT UNSIGNED        NOT NULL,
-    `info_id`      BIGINT UNSIGNED        NOT NULL,
-    `request_time` DATETIME DEFAULT NOW() NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE (`url_tag`),
-    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
-    FOREIGN KEY (`info_id`) REFERENCES db.billing_information (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
-);
-
-CREATE TABLE `purchases_log`
+CREATE TABLE `purchases`
 (
     `id`                BIGINT UNSIGNED AUTO_INCREMENT,
-    `url_tag`           CHAR(64)               NOT NULL,
-    `amount`            DECIMAL(5, 2)          NOT NULL,
-    `item_id`           BIGINT UNSIGNED        NOT NULL,
-    `user_id`           BIGINT UNSIGNED        NOT NULL,
-    `info_id`           BIGINT UNSIGNED        NOT NULL,
-    `request_time`      DATETIME               NOT NULL,
-    `confirmation_time` DATETIME DEFAULT NOW() NOT NULL,
+    `url_tag`           CHAR(64)              NOT NULL,
+    `amount`            DECIMAL(5, 2)         NOT NULL,
+    `user_id`           BIGINT UNSIGNED       NOT NULL,
+    `info_id`           BIGINT UNSIGNED       NOT NULL,
+    `request_time`      DATETIME              NOT NULL,
+    `confirmation_time` DATETIME              NULL,
+    `confirmed`         BOOLEAN DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
-    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
     FOREIGN KEY (`info_id`) REFERENCES db.billing_information (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
-CREATE TABLE `gifts_log`
+CREATE TABLE `purchase_items`
+(
+    `id`          BIGINT UNSIGNED AUTO_INCREMENT,
+    `purchase_id` BIGINT UNSIGNED NOT NULL,
+    `item_id`     BIGINT UNSIGNED NOT NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`)
+);
+
+CREATE TABLE `gifts`
 (
     `id`                BIGINT UNSIGNED AUTO_INCREMENT,
     `url_tag`           CHAR(64)               NOT NULL,
@@ -200,8 +192,8 @@ CREATE TABLE `ownership`
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
-    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases_log (`id`),
-    FOREIGN KEY (`gift_id`) REFERENCES db.gifts_log (`id`)
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),
+    FOREIGN KEY (`gift_id`) REFERENCES db.gifts (`id`)
 );
 
 CREATE TABLE `transactions_pending`
@@ -211,7 +203,7 @@ CREATE TABLE `transactions_pending`
     `url_tag`      CHAR(64)                      NOT NULL,
     `user_id`      BIGINT UNSIGNED               NOT NULL,
     `request_time` DATETIME        DEFAULT NOW() NOT NULL,
-    `to_id`        BIGINT UNSIGNED DEFAULT 0     NOT NULL,
+    `to_id`        BIGINT UNSIGNED DEFAULT 1     NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE (`url_tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
@@ -224,7 +216,7 @@ CREATE TABLE `transaction_log`
     `amount`       DECIMAL(5, 2)                 NOT NULL,
     `request_time` DATETIME                      NOT NULL,
     `payment_time` DATETIME        DEFAULT NOW() NOT NULL,
-    `to_id`        BIGINT UNSIGNED DEFAULT 0     NOT NULL,
+    `to_id`        BIGINT UNSIGNED DEFAULT 1     NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
