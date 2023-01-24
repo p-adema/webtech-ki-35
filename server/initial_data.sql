@@ -27,13 +27,13 @@ VALUES ('example_paid', 'video', 10.00);
 INSERT db.items (tag, type, price)
 VALUES ('example_free', 'video', 0);
 
-INSERT INTO db.videos (tag, name, description, subject, uploader, views, free)
-SELECT 'example_paid', 'Giant Bunny', 'Look at this bunny!', 'biology', id, 0, false
+INSERT INTO db.videos (tag, name, description, subject, uploader, views, free, thumbnail)
+SELECT 'example_paid', 'Giant Bunny', 'Look at this bunny!', 'biology', id, 0, false, 'hoi'
 FROM db.users
 WHERE name = 'bunnyfan';
 
-INSERT INTO db.videos (tag, name, description, subject, uploader, views)
-SELECT 'example_free', 'Big Bunny', 'What a chonker!', 'biology', id, 0
+INSERT INTO db.videos (tag, name, description, subject, uploader, views, thumbnail)
+SELECT 'example_free', 'Big Bunny', 'What a chonker!', 'biology', id, 0, 'cool'
 FROM db.users
 WHERE name = 'bunnyfan';
 
@@ -86,3 +86,16 @@ INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (2, 2, 'com6', -1);
 INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (3, 2, 'com4', 1);
+
+INSERT INTO db.items (id, tag, type, price)
+VALUES (3, 'course_paid', 'course', 10.00);
+
+INSERT INTO db.courses (tag, name, description, subject, creator, creation_date, views)
+VALUES('course_paid', 'Physics for Beginners', 'This is a beginners physics course in which we will discuss topics such as simple mechanics and electric systems.'
+, 'Physics', 2, DEFAULT, 0);
+
+
+
+
+
+

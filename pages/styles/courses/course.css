@@ -1,0 +1,44 @@
+body {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    text-align: center;
+}
+
+.thumbnail-image {
+    width: 320px;
+    height: 180px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.thumbnail-box {
+    display: flex;
+    align-items: center;
+    flex-flow: row;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.thumbnail-outline {
+    display: flex;
+    flex-flow: row;
+    margin-top: 20px;
+    align-self: center;
+    max-width: 800px;
+    border: solid slategrey 5px;
+    border-radius: 30px;
+    white-space: nowrap;
+    overflow: auto;
+}
+
+.thumbnail {
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.video-name {
+    font-weight: bold;
+    font-size: 20px;
+}
