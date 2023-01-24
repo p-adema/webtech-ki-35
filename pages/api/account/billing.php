@@ -1,4 +1,6 @@
 <?php
+require "api_resolve.php";
+
 $errors = [
     'l_name' => [],
     'country' => [],
@@ -64,7 +66,7 @@ $sql = "INSERT INTO db.billing_information (user_id, legal_name, country, city, 
 $data = [
     'uid' => $_SESSION['uid'],
     'l_name' => htmlspecialchars($l_name),
-    'coutry' => htmlspecialchars($country),
+    'country' => htmlspecialchars($country),
     'city' => htmlspecialchars($city),
     'zipcode' => htmlspecialchars($zipcode),
     'streetnum' => htmlspecialchars($streetnum)
@@ -75,7 +77,7 @@ $pdo_write = new_pdo_write();
 $p_sql = $pdo_write->prepare($sql);
 
 if (!$p_sql->execute($data)) {
-    api_fail('Data couldn\t be added', ['submit' => 'Internal error']);
+    api_fail('Data couldn\'t be added', ['submit' => 'Internal error']);
 }
 
 api_succeed('Billing information has been added');

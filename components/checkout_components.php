@@ -13,10 +13,14 @@ function review_item(array $item): void
 ";
 }
 
-function review_checkout(float $total): void
+function review_checkout(float $total, $has_info): void
 {
+    if ($has_info) {
+        echo "<a class='payment-link' href='/checkout/payment'>";
+    } else {
+        echo "<a class='payment-link' href='/checkout/billing'>";
+    }
     echo "
-<a class='payment-link' href='/checkout/billing'>
 <div class='review-payment-wrapper'>
     <span class='review-item-icon material-symbols-outlined'> shopping_cart_checkout </span>
     <span class='review-item-name'> Continue to payment </span>

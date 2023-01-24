@@ -17,7 +17,7 @@ html_header(title: 'Register', styled: 'form.css', scripted: true);
 
                 echo '<div class="form-btns">';
                 text_link('Login', '/auth/login');
-                form_submit();
+                form_submit(text: 'Register');
                 echo '</div>';
                 ?>
             </form>

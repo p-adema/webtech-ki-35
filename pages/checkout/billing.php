@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_not_auth: '/checkout/auth');
 html_header(title: 'Payment', styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">

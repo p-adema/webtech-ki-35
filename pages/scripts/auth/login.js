@@ -4,7 +4,8 @@ $(document).ready(function () {
         $('button.form-submit').addClass('pressed').removeClass('error')
 
         const user_data = {
-            name: $("#name").val(), password: $("#password").val(),
+            name: $("#name").val(),
+            password: $("#password").val(),
         };
 
         const handler_options = {

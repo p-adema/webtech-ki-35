@@ -1,9 +1,13 @@
 $(document).ready(function () {
-    $('review-item-delete').click(function (_) {
+    $('form').submit(function (event) {
+        event.preventDefault();
 
         const user_data = {
-            type: 'remove',
-            item: $(this).attr('tag')
+            l_name: $("#l_name").val(),
+            country: $("#country").val(),
+            city: $("#city").val(),
+            zipcode: $("#zipcode").val(),
+            streetnum: $("#streetnum").val(),
         };
 
         const handler_options = {
@@ -13,6 +17,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/cart/modify", user_data, form_default_response(handler_options))
+        $.post("/api/account/billing", user_data, form_default_response(handler_options))
     })
 })

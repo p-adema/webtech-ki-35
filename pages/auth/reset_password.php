@@ -14,7 +14,7 @@ html_header(title: 'Change password', styled: 'form.css', scripted: true);
                     form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
                     form_input('password_repeated', 'Repeat password', type: 'password', input_attrs: "autocomplete=\"new-password\"");
                     form_error();
-                    form_submit();
+                    form_submit(text: 'Confirm');
                     ?>
                 <?php else: ?>
                     <p> This link doesn't seem quite right. </p>
