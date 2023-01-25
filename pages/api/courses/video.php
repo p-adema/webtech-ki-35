@@ -2,16 +2,38 @@
 
 require 'video_functionality.php';
 require 'comments_components.php';
-
 require_once 'api_resolve.php';
 
-ensure_session();
+$valid = true;
 
-if ($_SESSION['auth']) {
+$errors = [
+    'message' => [],
+    'video_tag' => []
+];
 
-    $tag = $_POST['tag']['on'];
-    $uid = $_SESSION['uid'];
-    $star = $_POST['star'];
 
-    update_rating($star, $uid, $tag);
+$video_tag = $_POST['video_tag'];
+$comment = $_POST['message'];
+
+if (empty($comment)) {
+    $valid = false;
+    $errors['message'][] = 'Please type a message.';
+}
+
+if (empty($video_tag)) {
+    $valid = false;
+    $errors['video_tag'][] = 'Please find a page with a correct video tag.';
+}
+
+if (!$valid) {
+    api_fail('Please use a correct and working link.', $errors);
+}
+
+else {
+    $comment_tag = add_new_comment($comment, $video_tag);
+    require_once 'pdo_read.php';
+    $data = [
+        'html' => render_comment(get_comment_info(get_comment_id($comment_tag), false),0)
+    ];
+    api_succeed('Successfully added comment!', $errors, $data);
 }
