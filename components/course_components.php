@@ -159,3 +159,25 @@ function get_course_id($course_tag): string {
 
     return $sth->fetch()['id'];
 }
+
+function get_rating_info($item_id): array{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT rating FROM db.ratings WHERE item_id = :item_id';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['item_id' => $item_id]);
+    $ratings = $sth->fetchAll();
+    $total_ratings = count($ratings);
+    $score = 0;
+
+
+    for ($x = 0; $x < $total_ratings; $x++) {
+        $score += $ratings[$x]['rating'];
+    }
+    $score = $score/$total_ratings;
+
+
+    return [$total_ratings, $score];
+}

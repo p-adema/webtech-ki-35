@@ -1,6 +1,9 @@
 html{
     background-color: #e1f0ff;
 }
+p {
+    margin: 0;
+}
 .course-page {
     min-height: 93vh;
     display: flex;
@@ -16,15 +19,26 @@ html{
     color: #131413;
 }
 .title-box {
-    flex: 2;
+    flex: 1;
+    align-self: center;
+    text-decoration: underline;
 
 }
 .author-box {
     flex: 1;
 }
+#author{
+    margin: 0;
+}
 
 .ratings-box {
     flex: 2;
+}
+.star-score {
+    font-size: 20px;
+}
+.total-ratings {
+    text-decoration: underline;
 }
 
 .description-box {
@@ -34,8 +48,17 @@ html{
 .video-information {
     flex: 2;
 }
+#subject {
+    text-decoration: underline;
+    font-size: 18px;
+    margin-bottom: 7px;
+}
+#total-videos{
+    margin-top: 7px;
+}
+
 .course-buying {
-    flex: 2;
+    flex: 0;
 }
 .stretch-box {
     align-self: stretch;
@@ -43,7 +66,9 @@ html{
 }
 
 
-
+.form-container{
+    align-self: center;
+}
 
 
 .add-to-cart-box {

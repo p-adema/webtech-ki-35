@@ -24,10 +24,11 @@ $(document).ready(function () {
 
         const video_data = {
             type: 'item',
-            on: course_tag
+            on: course_tag,
+            star: star_count
         }
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/stars', {star: star_count, tag: video_data})
+        jQuery.post('/api/courses/stars', video_data)
     })
     $(".shop").submit(function (event) {
         event.preventDefault();
