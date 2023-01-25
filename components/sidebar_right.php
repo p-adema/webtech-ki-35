@@ -2,8 +2,20 @@
 require_once 'form_elements.php';
 require_once 'Cart.php';
 
+function render_cart_item(array $item): string
+{
+    $link = '/courses/' . ($item['type'] === 'video' ? 'video/' : 'course/') . $item['tag'];
+    return "
+<a class='cart-item-anchor' href='$link' tag='{$item['tag']}'>
+    <div class='cart-item-wrapper'> 
+        <span class='cart-item-name'> {$item['name']} </span> 
+        <span class='cart-item-price'> €{$item['price']} </span> 
+        <span class='cart-item-delete material-symbols-outlined' tag='{$item['tag']}'> cancel </span>
+    </div> 
+</a>";
+}
 
-function sidebarRight(): string
+function sidebar_right(): string
 {
     $cart = new Cart;
     $items_html = '';
@@ -15,16 +27,7 @@ function sidebarRight(): string
 </span>
 ";
     foreach ($items as $item) {
-        $link = '/courses/' . ($item['type'] === 'video' ? 'video/' : 'course/') . $item['tag'];
-        $items_html .= "
-<a class='cart-item-anchor' href='$link' tag='{$item['tag']}'>
-    <div class='cart-item-wrapper'> 
-        <span class='cart-item-name'> {$item['name']} </span> 
-        <span class='cart-item-price'> €{$item['price']} </span> 
-        <span class='cart-item-delete material-symbols-outlined' tag='{$item['tag']}'> cancel </span>
-    </div> 
-</a>";
-
+        $items_html .= render_cart_item($item);
     }
 
     return "

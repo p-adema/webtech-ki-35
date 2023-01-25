@@ -19,7 +19,7 @@ function navbar(): void
      shopping_cart
      </span>
      </div>" .
-     sidebarRight()
+     sidebar_right()
      ."</div> ". sidebar_cover();
 
      echo $html;
