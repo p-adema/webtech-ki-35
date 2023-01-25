@@ -14,3 +14,4 @@ if ($_SESSION['auth']) {
 
     change_comment_score($score, $comment_id, $uid);
 }
+
