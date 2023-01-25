@@ -146,14 +146,14 @@ function show_replies(_) {
 }
 
 function bind_score() {
-    $('.comment-reactions-up').click(function (event) {
+    $('.comment-reactions-up').unbind('click').click(function (event) {
         event.preventDefault();
         let comment_id = $(this).parent().attr('tag')
         $.post("/api/courses/comments.php", {rating: 1, comment: comment_id})
         $(this).addClass('pressed')
         $(`#${comment_id}`).find('.comment-reactions-down').removeClass('pressed')
     })
-    $('.comment-reactions-down').click(function (event) {
+    $('.comment-reactions-down').unbind('click').click(function (event) {
         event.preventDefault()
         let comment_id = $(this).parent().attr('tag')
         $.post("/api/courses/comments.php", {rating: -1, comment: comment_id})
