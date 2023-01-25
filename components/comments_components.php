@@ -10,7 +10,7 @@ function get_id(string $tag, PDO $PDO): int|false
     return $p_tag->fetch(PDO::FETCH_ASSOC)['id'];
 }
 
-function count_replies(string $tag, PDO $PDO): bool
+function count_replies(string $tag, PDO $PDO): int
 {
     $sql = 'SELECT COUNT(*) AS replies FROM comments WHERE reply_tag = :tag';
     $prepared = $PDO->prepare($sql);
@@ -216,7 +216,7 @@ function add_new_comment(string $comment, string $video_tag, $reply): string
 {
     ensure_session();
 
-    if ($_SESSION['auth'] != null) {
+    if ($_SESSION['auth']) {
 
         require_once 'pdo_write.php';
         require_once 'pdo_read.php';
@@ -276,28 +276,30 @@ function get_comment_info($comment_id, bool $replies): array
 
 function create_new_comment_box(): void
 {
-    require_once 'pdo_read.php';
+    if ($_SESSION['auth']) { #TODO: make this work better (eg. you're shown comment box, but prompted to login on click)
+        require_once 'pdo_read.php';
 
-    $uid = $_SESSION['uid'];
+        $uid = $_SESSION['uid'];
 
-    $pdo_read = new_pdo_read();
-    $sql = 'SELECT name FROM db.users WHERE id = :uid';
-    $sth = $pdo_read->prepare($sql);
-    $sth->execute(['uid' => $uid]);
+        $pdo_read = new_pdo_read();
+        $sql = 'SELECT name FROM db.users WHERE id = :uid';
+        $sth = $pdo_read->prepare($sql);
+        $sth->execute(['uid' => $uid]);
 
-    $name = $sth->fetch()['name'];
+        $name = $sth->fetch()['name'];
 
-    echo '<div class="comment-wrapper comment">';
-    echo '<span class="comment-username">';
-    echo $name;
-    echo '</span>';
-    echo '<div class="form-wrapper">';
-    echo '<form class="comment-submit" action="/api/courses/video.php" method="POST">';
-    form_input('message', 'Comment', placeholder: 'Type your comment');
-    form_error();
-    form_submit();
-    echo '</form>';
-    echo "<div class='like-dislike'><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_down</span></div>";
-    echo '</div>';
-    echo '</div>';
+        echo '<div class="comment-wrapper comment">';
+        echo '<span class="comment-username">';
+        echo $name;
+        echo '</span>';
+        echo '<div class="form-wrapper">';
+        echo '<form class="comment-submit" action="/api/courses/video.php" method="POST">';
+        form_input('message', 'Comment', placeholder: 'Type your comment');
+        form_error();
+        form_submit();
+        echo '</form>';
+        echo "<div class='like-dislike'><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_down</span></div>";
+        echo '</div>';
+        echo '</div>';
+    }
 }
