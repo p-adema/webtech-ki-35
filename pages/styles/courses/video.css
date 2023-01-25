@@ -142,6 +142,16 @@ button.form-submit.go-to-cart {
     visibility: hidden;
 }
 
+button.form-submit.form-submit-blue {
+    background: #5276a4;
+    border-color: #003e64;
+}
+
+button.form-submit.form-submit-blue:hover {
+    background: #6586b1;
+    cursor: pointer;
+}
+
 form#cart {
     display: none;
 }

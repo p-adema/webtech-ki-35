@@ -22,7 +22,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                             </video>
                         <?php } else { ?>
                             <div class="paid-video">
-                                <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
+                                <span class="paid-video-text">This is a paid video, purchase it first to watch.</span>
                                 <form id="add">
                                     <?php
                                     form_submit(text: 'Add to cart', extra_cls: 'long-btn');
@@ -32,7 +32,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 </form>
                                 <form id="cart">
                                     <?php
-                                    form_submit(text: 'Go to cart', extra_cls: 'long-btn');
+                                    form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
                                     form_error('item');
                                     form_error();
                                     ?>
