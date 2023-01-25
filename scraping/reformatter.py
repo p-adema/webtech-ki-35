@@ -9,16 +9,18 @@ def gen_tag() -> str:
 
 
 def format_course(course):
-    videos = os.listdir('./' + course)
+    files = os.listdir('./' + course)
     data = []
 
-    for video in videos:
+    for video in (video for video in files if video.endswith('.mp4')):
         *name_l, end = video.split()
+        thumbnail = video.replace('.mp4', '.jpg')
         name = ' '.join(name_l)
         num = end.split('.')[0][1:]
         tag = gen_tag()
         data.append((int(num), tag, name))
         os.rename(f'{course}/{video}', f'{course}/{tag}.mp4')
+        os.rename(f'{course}/{thumbnail}', f'{course}/{tag}.jpg')
 
     data.sort()
 

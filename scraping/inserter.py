@@ -52,6 +52,7 @@ def pricer(vid_num: int) -> tuple[int, float]:
 def generate_sql(course):
     course_tag = gen_tag()
     items = [sql_items_h, sql_item.format(tag=course_tag, type='course', price=50)]
+    print(f'\nRename the course thumbnail to {course_tag}.jpg')
     videos = [sql_videos_h]
     rels = [sql_rels_h]
 
