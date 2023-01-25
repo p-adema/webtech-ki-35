@@ -74,3 +74,59 @@ a {
 .single-video-block p {
     margin: 0 0 14px 0;
 }
+
+.stars {
+    max-width: fit-content;
+    font-size: 20px;
+}
+
+.stars-empty:after {
+    content: '☆☆☆☆☆';
+    font-size: 20px;
+    font-weight: bolder;
+    color: black;
+}
+
+.star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.star-2:after {
+    content: '★★☆☆☆';
+}
+
+.star-3:after {
+    content: "★★★☆☆";
+}
+
+.star-4:after {
+    content: "★★★★☆"
+}
+
+.star-5:after {
+    content: '★★★★★';
+}
+
+.perm-star-1:after {
+    content: "★☆☆☆☆"
+}
+
+.perm-star-2:after {
+    content: '★★☆☆☆';
+}
+
+.perm-star-3:after {
+    content: "★★★☆☆";
+}
+
+.perm-star-4:after {
+    content: "★★★★☆"
+}
+
+.perm-star-5:after {
+    content: '★★★★★';
+}
+
+.ratings-box {
+    /* moet nog wat */
+}

@@ -147,3 +147,4 @@ function display_course_videos($course_tag): void
 
         }
     }
+
