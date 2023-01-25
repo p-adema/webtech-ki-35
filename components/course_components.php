@@ -94,7 +94,7 @@ function has_course($course_tag, $user_id): bool {
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT id FROM db.ownership WHERE item_tag = :course_tag and user_id = :user_id';
+    $sql = 'SELECT id FROM db.course_ownership WHERE item_tag = :course_tag and user_id = :user_id';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['course_tag' => $course_tag, 'user_id' => $user_id]);
     $id = $sth->fetch();

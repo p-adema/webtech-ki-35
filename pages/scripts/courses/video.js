@@ -88,7 +88,9 @@ $(document).ready(function () {
     function form_custom_success(data, __) {
         $('form#add').hide();
         $('form#cart').show();
-        $('.sidebar-close').after(data.html).siblings().first().find('.cart-item-delete').click(cart_item_delete);
+        $('.cart-item-anchor').remove();
+        $('.sidebar-close').after(data.html);
+        $('.cart-item-delete').click(cart_item_delete);
 
     }
 

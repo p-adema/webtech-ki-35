@@ -140,5 +140,6 @@ function remove_item_err(errors, _) {
 function remove_item_success(data, __) {
     $(`a[tag=${data.tag}]`).fadeOut('fast', function () {
         $(this).remove()
+
     })
 }

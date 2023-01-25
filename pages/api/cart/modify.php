@@ -52,7 +52,7 @@ if ($type === 'add') {
     }
 
     require_once "sidebar_right.php";
-    $response = ['html' => render_cart_item($cart->item_long($id))];
+    $response = ['html' => render_cart()];
 
     api_succeed('Item added to cart', $errors, $response);
 }

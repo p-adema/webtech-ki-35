@@ -1,5 +1,5 @@
-INSERT INTO db.users (id, name, email, password, full_name, membership, join_date, verified, admin)
-VALUES (1, 'site_admin', 'admin@edugrove.com', '$2y$10$kyL3zckjCYSMSfDtwW.1o.KcLtSY2rbiGbuWeJLXj2I8GsV.sJe1i',
+INSERT INTO db.users (`name`, `email`, `password`, full_name, `membership`, `join_date`, `verified`, `admin`)
+VALUES ('site_admin', 'admin@edugrove.com', '$2y$10$kyL3zckjCYSMSfDtwW.1o.KcLtSY2rbiGbuWeJLXj2I8GsV.sJe1i',
         'Edu Grove',
         'member', DEFAULT, 1, true);
 
@@ -86,9 +86,3 @@ INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (2, 2, 'com6', -1);
 INSERT INTO db.scores (id, user_id, comment_tag, score)
 VALUES (3, 2, 'com4', 1);
-
-
-
-
-
-
