@@ -37,6 +37,7 @@ html {
     color: white;
     margin-top: 20px;
     background-color: #2A2929FF;
+    transition: background-color 100ms ease-out;
     border-radius: 20px;
     width: 100%;
 }
@@ -93,7 +94,7 @@ html {
 
 .collapsible {
     color: white;
-    background-color: #2A2929FF;
+    background-color: inherit;
     cursor: pointer;
     padding: 18px;
     width: 100%;
@@ -105,14 +106,15 @@ html {
     border-radius: 15px;
 }
 
-.collapsible:hover {
+.description:hover {
+    cursor: pointer;
     background-color: #1c1b1b;
 }
 
 .content {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.4s ease-in-out;
+    transition: all 0.4s ease-in-out;
 }
 
 .form-error {
@@ -120,7 +122,10 @@ html {
 }
 
 button.form-submit {
-    height: 2em;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 2.5em;
     font-size: medium;
     background: #52a452;
     color: whitesmoke;

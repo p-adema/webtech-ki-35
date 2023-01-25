@@ -26,14 +26,16 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 <span class="paid-video-text">This is a paid video, purchase it first to watch.</span>
                                 <form class="shop" id="add">
                                     <?php
-                                    form_submit(text: 'Add to cart', extra_cls: 'long-btn');
+                                    $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
+                                    form_submit(text: "$cart_add Add to cart", extra_cls: 'long-btn');
                                     form_error('item');
                                     form_error();
                                     ?>
                                 </form>
                                 <form class="shop" id="cart">
                                     <?php
-                                    form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
+                                    $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
+                                    form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
                                     form_error('item');
                                     form_error();
                                     ?>

@@ -184,19 +184,24 @@ class Cart
         return $_SESSION['cart']['total'];
     }
 
+    public function item_long(int $id)
+    {
+        if ($this->get_type($id) === 'video') {
+            $video = $this->video_long($id);
+            $video['type'] = 'video';
+            return $video;
+        } else {
+            $course = $this->course_long($id);
+            $course['type'] = 'course';
+            return $course;
+        }
+    }
+
     public function items_long(): array
     {
         $items = [];
         foreach ($_SESSION['cart']['ids'] as $id) {
-            if ($this->get_type($id) === 'video') {
-                $video = $this->video_long($id);
-                $video['type'] = 'video';
-                $items[] = $video;
-            } else {
-                $course = $this->course_long($id);
-                $course['type'] = 'course';
-                $items[] = $course;
-            }
+            $items[] = $this->item_long($id);
         }
 
         return $items;
@@ -229,4 +234,6 @@ class Cart
             'total' => 0
         ];
     }
+
+
 }

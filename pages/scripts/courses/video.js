@@ -7,9 +7,9 @@ $(document).ready(function () {
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
-            $content.css('max-height', $content.prop('scrollHeight'));
+            $content.css('max-height', $content.prop('scrollHeight')).css('padding-bottom', '15px');
         } else {
-            $content.css('max-height', '0');
+            $content.css('max-height', '0').css('padding-bottom', '5px');
         }
     })
     $(".shop").submit(function (event) {
@@ -83,9 +83,11 @@ $(document).ready(function () {
         jQuery.post('/api/courses/stars', {star: star_count, tag: video_data})
     })
 
-    function form_custom_success(_, __) {
-        $('form#add').hide()
-        $('form#cart').show()
+    function form_custom_success(data, __) {
+        $('form#add').hide();
+        $('form#cart').show();
+        $('.sidebar-close').after(data.html).siblings().first().find('.cart-item-delete').click(cart_item_delete);
+
     }
 
     const video_data = {

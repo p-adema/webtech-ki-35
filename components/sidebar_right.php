@@ -30,13 +30,14 @@ function sidebar_right(): string
         $items_html .= render_cart_item($item);
     }
 
+    $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
     return "
 <div class='sidebar-right sidebar-block sidebar_animate_right'>
     <button onclick='close_right_menu()' class='sidebar-close'>Close</button>
     $items_html
     $items_empty
     <div class='checkout-sidebar'>
-        <button onclick='go_to_checkout()' class='checkout-button' type='button'>Continue to cart</button> 
+        <button onclick='go_to_checkout()' class='checkout-button' type='button'>$cart_go Continue to cart</button> 
     </div>
 </div>";
 }

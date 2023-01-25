@@ -109,27 +109,29 @@ $(document).ready(function () {
         $('.dropdown-content').stop().animate({opacity: 0, right: -300}, 400)
     })
 
-    $('.cart-item-delete').click(function (event) {
-        event.preventDefault();
-
-        const user_data = {
-            type: 'remove',
-            item: $(this).attr('tag')
-        };
-
-        const handler_options = {
-            error_handler: remove_item_err,
-            success_handler: remove_item_success
-        };
-
-        $.post("/api/cart/modify", user_data, form_default_response(handler_options));
-    })
+    $('.cart-item-delete').click(cart_item_delete)
 
     $('.link-back').click(function (event) {
         event.preventDefault();
         window.history.back();
     })
 })
+
+function cart_item_delete(event) {
+    event.preventDefault();
+
+    const user_data = {
+        type: 'remove',
+        item: $(this).attr('tag')
+    };
+
+    const handler_options = {
+        error_handler: remove_item_err,
+        success_handler: remove_item_success
+    };
+
+    $.post("/api/cart/modify", user_data, form_default_response(handler_options));
+}
 
 function remove_item_err(errors, _) {
     console.log(errors)
