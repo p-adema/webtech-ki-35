@@ -11,12 +11,7 @@ $(document).ready(function () {
             full_name: $("#full_name").val(),
         };
 
-        const handler_options = {
-            redirect: {
-                link: '/',
-                delay: 5000
-            }
-        }
+        const handler_options = {}
 
         $.post("/api/register", user_data, form_default_response(handler_options));
     });

@@ -13,7 +13,6 @@ $(document).ready(function () {
         const handler_options = {
             redirect: {
                 link: '/checkout/payment',
-                delay: 3000
             }
         }
 
