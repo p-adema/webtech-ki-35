@@ -5,7 +5,7 @@ require 'video_sidebar.php';
 require 'comments_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
-$tag = $_GET['tag'];
+$tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
 if (isset($_GET['tag']) and $video_info !== false): ?>
@@ -23,11 +23,11 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 </video>
                             <?php } else { ?>
                                 <div class="paid-video">
-                                    <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
+                                    <span class="paid-video-text">This is a premium video, please purchase it first before watching </span>
                                     <form class="shop" id="add">
                                         <?php
                                         $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
-                                    form_submit(text: "$cart_add Add to cart", extra_cls: 'long-btn');
+                                        form_submit(text: "$cart_add Add to cart", extra_cls: 'long-btn');
                                         form_error('item');
                                         form_error();
                                         ?>

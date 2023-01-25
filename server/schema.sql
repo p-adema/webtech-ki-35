@@ -190,7 +190,22 @@ CREATE TABLE `ownership`
     `purchase_id` BIGINT UNSIGNED           NULL,
     `gift_id`     BIGINT UNSIGNED           NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
+    FOREIGN KEY (`item_tag`) REFERENCES db.videos (`tag`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
+    FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),
+    FOREIGN KEY (`gift_id`) REFERENCES db.gifts (`id`)
+);
+
+CREATE TABLE `course_ownership`
+(
+    `id`          BIGINT UNSIGNED           NOT NULL AUTO_INCREMENT,
+    `item_tag`    CHAR(64)                  NOT NULL,
+    `user_id`     BIGINT UNSIGNED           NOT NULL,
+    `origin`      ENUM ('purchase', 'gift') NOT NULL,
+    `purchase_id` BIGINT UNSIGNED           NULL,
+    `gift_id`     BIGINT UNSIGNED           NULL,
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`item_tag`) REFERENCES db.courses (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
     FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),
     FOREIGN KEY (`gift_id`) REFERENCES db.gifts (`id`)

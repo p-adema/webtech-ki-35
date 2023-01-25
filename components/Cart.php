@@ -12,11 +12,13 @@ class Cart
     private string $sql_video_long;
     private string $sql_type;
     private string $sql_course_long;
+    private string $sql_course_videos;
     private PDOStatement|false $p_tag;
     private PDOStatement|false $p_price;
     private PDOStatement|false $p_type;
     private PDOStatement|false $p_video_long;
     private PDOStatement|false $p_course_long;
+    private PDOStatement|false $p_course_videos;
 
 
     /**
@@ -80,16 +82,30 @@ class Cart
                                   WHERE i.id = :id';
         $this->p_course_long = $this->PDO->prepare($this->sql_course_long);
 
+        $this->sql_course_videos = 'SELECT v.id 
+                                    FROM course_videos AS c
+                                    INNER JOIN items i ON i.id = :id
+                                    INNER JOIN items v on c.video_tag = v.tag
+                                    WHERE c.course_tag = i.tag';
+        $this->p_course_videos = $this->PDO->prepare($this->sql_course_videos);
+
         if ($this->p_price === false or $this->p_type === false or
             $this->p_tag === false or $this->p_video_long === false) {
             api_fail('Internal cart error', ['submit' => 'Loading cart failed']);
         }
     }
 
-    public function get_id($tag): int|false
+    public function get_id(string $tag): int|false
     {
         $this->p_tag->execute(['tag' => $tag]);
         return $this->p_tag->fetch(PDO::FETCH_ASSOC)['id'];
+    }
+
+    public function course_videos(int $id): array
+    {
+        $this->p_course_videos->execute(['id' => $id]);
+        $videos = $this->p_course_videos->fetchAll(PDO::FETCH_ASSOC);
+        return $videos ?: [];
     }
 
     /**
@@ -108,6 +124,10 @@ class Cart
 
                 $_SESSION['cart']['total'] += $price;
                 $_SESSION['cart']['prices'][$id] = $price;
+
+                foreach ($this->course_videos($id) as $video_id) {
+                    $this->remove_item($video_id['id']);
+                }
                 return true;
             }
         }
