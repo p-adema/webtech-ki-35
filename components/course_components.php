@@ -176,7 +176,7 @@ function get_rating_info($item_id): array{
     for ($x = 0; $x < $total_ratings; $x++) {
         $score += $ratings[$x]['rating'];
     }
-    $score = $score/$total_ratings;
+    $score = $total_ratings === 0 ? 3 : $score/$total_ratings;
 
 
     return [$total_ratings, $score];
