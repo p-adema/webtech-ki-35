@@ -11,10 +11,12 @@ class Cart
     private string $sql_price;
     private string $sql_video_long;
     private string $sql_type;
+    private string $sql_course_long;
     private PDOStatement|false $p_tag;
     private PDOStatement|false $p_price;
     private PDOStatement|false $p_type;
     private PDOStatement|false $p_video_long;
+    private PDOStatement|false $p_course_long;
 
 
     /**
@@ -63,6 +65,20 @@ class Cart
                                   INNER JOIN users u on v.uploader = u.id
                                   WHERE i.id = :id';
         $this->p_video_long = $this->PDO->prepare($this->sql_video_long);
+
+        $this->sql_course_long = 'SELECT i.tag,
+                                        u.name AS uploader,
+                                        c.name,
+                                        price,
+                                        description,
+                                        subject,
+                                        creation_date,
+                                        views
+                                  FROM items as i
+                                  INNER JOIN courses c on i.tag = c.tag
+                                  INNER JOIN users u on c.creator = u.id
+                                  WHERE i.id = :id';
+        $this->p_course_long = $this->PDO->prepare($this->sql_course_long);
 
         if ($this->p_price === false or $this->p_type === false or
             $this->p_tag === false or $this->p_video_long === false) {
@@ -177,8 +193,9 @@ class Cart
                 $video['type'] = 'video';
                 $items[] = $video;
             } else {
-                throw new InvalidArgumentException("Courses aren't implemented yet");
-                # TODO
+                $course = $this->course_long($id);
+                $course['type'] = 'course';
+                $items[] = $course;
             }
         }
 
@@ -195,6 +212,12 @@ class Cart
     {
         $this->p_video_long->execute(['id' => $id]);
         return $this->p_video_long->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function course_long($id)
+    {
+        $this->p_course_long->execute(['id' => $id]);
+        return $this->p_course_long->fetch(PDO::FETCH_ASSOC);
     }
 
     public function clear(): void
