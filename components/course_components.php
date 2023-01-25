@@ -148,3 +148,14 @@ function display_course_videos($course_tag): void
         }
     }
 
+function get_course_id($course_tag): string {
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT id FROM db.items WHERE tag = :course_tag';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['course_tag' => $course_tag]);
+
+    return $sth->fetch()['id'];
+}

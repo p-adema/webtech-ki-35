@@ -10,10 +10,11 @@ if ($_SESSION['auth']) {
     $user_id = $_SESSION['uid'];
     $has_course = has_course($course_tag, $user_id);
 } else {
-    $has_course = false;
+    $has_course = false ;
 }
-
-
+$course_id = get_course_id($course_tag);
+$cart = new Cart;
+$course_in_cart = in_array($course_id, $cart->ids());
 $course_info = get_course_info($course_tag);
 $course_creator = course_creator($course_info['creator']);
 $time_since = time_since($course_info['creation_date']);
@@ -22,9 +23,11 @@ $video_names = get_video_names($videos);
 ?>
     <div class="course-page">
         <div class="information-block">
-            <p id="course-title"> <?php echo $course_info['name'] ?></p>
-
+            <div class="title-box"> <p id="course-title"> <?php echo $course_info['name'] ?></p>
+            </div>
+            <div class="author-box">
             <p id="author"> Author: <br> <?php echo $course_creator['name'] ?> </p>
+            </div>
 
                 <?php if ($has_course) :?>
                 <div class="ratings-box">
@@ -62,11 +65,40 @@ $video_names = get_video_names($videos);
                             echo $html;
                         } ?>
                     </p>
-                    <div class="add-to-cart-box">
-                        <p id="add-to-cart"> Add to cart <span
-                                    class="material-symbols-outlined">add_shopping_cart</span></p>
-                    </div>
                 </div>
+                <div class="stretch-box"> </div>
+                <div class="add-to-cart-box">
+                    <?php if ($course_in_cart):?>
+                <form class="shop" id="cart" style="display: block">
+                    <?php
+                    form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
+                    form_error('item');
+                    form_error();
+                    ?>
+                </form>
+            <?php else: ?>
+
+
+                    <form class="shop" id="add">
+                        <?php
+                        form_submit("Add to cart <span
+                                    class='material-symbols-outlined'>add_shopping_cart</span>", extra_cls: 'long-btn');
+                        form_error('item');
+                        form_error();
+                        ?>
+                    </form>
+                    <form class="shop" id="cart">
+                        <?php
+                        form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
+                        form_error('item');
+                        form_error();
+                        ?>
+                    </form>
+            <?php endif; ?>
+                    <div class="course_tag" tag="<?php echo $_GET['tag'] ?>"></div>
+
+                </div>
+
             <?php
             endif;
             ?>

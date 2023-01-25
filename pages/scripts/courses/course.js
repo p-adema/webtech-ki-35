@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    const course_tag = $('.course_tag').attr('tag')
     const stars = $(".stars");
 
     stars.mousemove(function (event) {
@@ -24,10 +24,40 @@ $(document).ready(function () {
 
         const video_data = {
             type: 'item',
-            on: video_tag
+            on: course_tag
         }
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
         jQuery.post('/api/courses/stars', {star: star_count, tag: video_data})
     })
+    $(".shop").submit(function (event) {
+        event.preventDefault();
+
+        if (this.id === 'add') {
+
+            $('button.form-submit').addClass('pressed').removeClass('error')
+
+            const user_data = {
+                type: 'add',
+                item: course_tag
+            };
+
+            const handler_options = {
+                success_handler: form_custom_success
+            }
+
+            $.post("/api/cart/modify", user_data, form_default_response(handler_options));
+        } else {
+
+            $('button.form-submit').addClass('pressed').removeClass('error')
+
+            window.location.href = "/checkout/review"
+
+        }
+    })
 })
 
+
+function form_custom_success(_, __) {
+    $('form#add').hide()
+    $('form#cart').show()
+}
