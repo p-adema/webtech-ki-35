@@ -11,8 +11,8 @@ $(document).ready(function () {
         };
 
         const handler_options = {
-            redirect: {
-                link: '/checkout/payment',
+            success_handler: function (_, __) {
+                window.location.href = '/checkout/payment'
             }
         }
 
