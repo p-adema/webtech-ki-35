@@ -30,7 +30,7 @@ if (!$valid) {
 }
 
 else {
-    $comment_tag = add_new_comment($comment, $video_tag);
+    $comment_tag = add_new_comment($comment, $video_tag, null);
     require_once 'pdo_read.php';
     $data = [
         'html' => render_comment(get_comment_info(get_comment_id($comment_tag), false),0)
