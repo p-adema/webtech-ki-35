@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 require 'video_sidebar.php';
-html_header(title: 'Video Page', styled: true, scripted: false);
+html_header(title: 'Video Page', styled: true, scripted: 'ajax');
 
 
 # Search bar in de top-navbar verwerkt.

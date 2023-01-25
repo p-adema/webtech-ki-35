@@ -14,8 +14,8 @@ $errors = [
     'submit' => []
 ];
 $valid = true;
-$tag = $_POST['item'];
-$type = $_POST['type'];
+$tag = $_POST['item'] ?? '';
+$type = $_POST['type'] ?? '';
 
 
 if (empty($tag)) {
@@ -58,5 +58,5 @@ if (!$cart->remove_item($id)) {
     $errors['item'][] = "You don't have this item";
     api_fail("This item wasn't in your cart", $errors);
 }
-
-api_succeed('Item removed from cart', $errors);
+$response = ['tag' => $tag];
+api_succeed('Item removed from cart', $errors, $response);

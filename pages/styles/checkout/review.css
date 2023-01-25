@@ -11,15 +11,25 @@
     flex-flow: column;
 }
 
-.review-item-wrapper {
-    background: #fff5de;
-    padding: 6px 14px 6px 14px;
+.review-item-anchor {
     width: 100%;
+}
+
+.review-item-wrapper {
+    width: 100%;
+    background: #fff5de;
+    transition: background-color 100ms ease-out;
+    padding: 6px 14px 6px 14px;
     border-radius: 20px;
     display: flex;
     flex-flow: row;
     align-items: center;
-    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%)
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%);
+    color: #1b1b1c;
+}
+
+.review-item-wrapper:hover {
+    background: #f5e7c9;
 }
 
 .review-item-name {
@@ -34,30 +44,33 @@
     color: gray;
 }
 
-.review-item-delete {
-    color: darkred;
-    transition: color 100ms ease-in-out;
-    font-variation-settings: 'FILL' 1;
-    cursor: pointer;
+.review-item-anchor ~ .checkout-empty-wrapper {
+    display: none;
 }
 
-.review-item-delete:hover {
-    color: red;
+.review-item-anchor ~ .review-payment-anchor {
+    display: block;
 }
 
-.checkout-empty {
+.checkout-empty-wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.checkout-empty-text {
     margin-top: 50px;
     color: darkslategray;
 }
 
-.checkout-empty ~ a {
+.checkout-empty-wrapper > a {
     color: #80a8f1;
     transition: color 300ms ease-in-out;
     margin-top: 10px;
     text-decoration: none;
 }
 
-.checkout-empty ~ a:hover {
+.checkout-empty-wrapper > a:hover {
     color: #97b6ee;
 }
 
@@ -74,7 +87,11 @@
     box-shadow: 0 2px 5px hsl(0, 0%, 0.2%)
 }
 
-a.payment-link {
-    align-self: start;
+a:link {
     text-decoration: none;
+}
+
+.review-payment-anchor {
+    align-self: start;
+    display: none;
 }

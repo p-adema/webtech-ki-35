@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'balance', navbar: false, styled: true, scripted: false);
+html_header(title: 'balance', navbar: false, styled: true, scripted: 'ajax');
 
 if ($_SESSION['auth']) :
     $user_id = $_SESSION['uid']

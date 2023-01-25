@@ -3,7 +3,7 @@ require 'html_page.php';
 require 'relative_time.php';
 require 'course_components.php';
 require 'video_functionality.php';
-html_header(title: 'Course', styled: true, scripted: false);
+html_header(title: 'Course', styled: true, scripted: 'ajax');
 
 $course_tag = $_GET['tag'];
 if ($_SESSION['auth']) {

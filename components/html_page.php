@@ -1,5 +1,5 @@
 <?php
-
+define("PAGE", explode('.php', $_SERVER['SCRIPT_NAME'])[0]);
 require_once "api_resolve.php";
 require_once 'navbar.php';
 
@@ -20,14 +20,13 @@ function html_header(string $title, string $description = '', bool $navbar = tru
                      bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
 
-    $page = explode('.php', $_SERVER['SCRIPT_NAME'])[0];
     if ($scripted) {
         if ($scripted === 'ajax') {
             $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
                             <script src=\"/scripts/global.js\"></script>";
         } else {
             if ($scripted === true) {
-                $script = $page . '.js';
+                $script = PAGE . '.js';
             } else {
                 $script = $scripted;
             }
@@ -40,7 +39,7 @@ function html_header(string $title, string $description = '', bool $navbar = tru
     }
     if ($styled) {
         if ($styled === true) {
-            $style = $page . '.css';
+            $style = PAGE . '.css';
         } else {
             $style = '/' . $styled;
         }
@@ -68,7 +67,7 @@ function html_header(string $title, string $description = '', bool $navbar = tru
     ensure_session();
 
     if (!$authentication) {
-        $_SESSION['auth-target'] = str_replace('index', '', $page);
+        $_SESSION['last-page'] = str_replace('index', '', PAGE);
     }
 
     echo $html;
@@ -97,7 +96,7 @@ function auth_redirect(?string $if_auth = null, ?string $if_not_auth = null): vo
         exit;
     }
     if ($if_not_auth !== null and !$_SESSION['auth']) {
-        $_SESSION['auth-target'] = str_replace('index', '', explode('.php', $_SERVER['SCRIPT_NAME'])[0]);
+        $_SESSION['last-page'] = str_replace('index', '', PAGE);
         header('Location: ' . $if_not_auth);
         exit;
     }

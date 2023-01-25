@@ -74,6 +74,7 @@ function open_right_menu() {
     $('.sidebar-right').animate({right: '-0'}, 400);
     $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
 }
+
 function go_to_checkout() {
     $(location).attr('href', '/checkout/review')
 }
@@ -108,4 +109,34 @@ $(document).ready(function () {
         $('.dropdown-content').stop().animate({opacity: 0, right: -300}, 400)
     })
 
+    $('.cart-item-delete').click(function (event) {
+        event.preventDefault();
+
+        const user_data = {
+            type: 'remove',
+            item: $(this).attr('tag')
+        };
+
+        const handler_options = {
+            error_handler: remove_item_err,
+            success_handler: remove_item_success
+        };
+
+        $.post("/api/cart/modify", user_data, form_default_response(handler_options));
+    })
+
+    $('.link-back').click(function (event) {
+        event.preventDefault();
+        window.history.back();
+    })
 })
+
+function remove_item_err(errors, _) {
+    console.log(errors)
+}
+
+function remove_item_success(data, __) {
+    $(`a[tag=${data.tag}]`).fadeOut('fast', function () {
+        $(this).remove()
+    })
+}

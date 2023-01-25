@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Checkout', styled: 'checkout.css', scripted: 'ajax');
+html_header(title: 'Checkout', styled: true, scripted: 'ajax');
 require "checkout_components.php";
 require "billing_info.php";
 ?>
@@ -12,13 +12,10 @@ require "billing_info.php";
             $cart = new Cart;
 
             $items = $cart->items_long();
-            if (empty($items)) {
-                echo '<span class="checkout-empty"> You have nothing in your cart </span> <a href="/"> Go home </a>';
-            } else {
-                foreach ($items as $item) {
-                    review_item($item);
-                }
+            foreach ($items as $item) {
+                review_item($item);
             }
+            echo "<div class='checkout-empty-wrapper'><span class='checkout-empty-text'> You have nothing in your cart </span> <a href='/' class='link-back'> Go back </a></div>";
             $has_info = ($_SESSION['auth'] and (last_billing_info($_SESSION['uid']) !== false));
             review_checkout($cart->total(), $has_info);
             ?>

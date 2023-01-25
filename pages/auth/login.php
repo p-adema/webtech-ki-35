@@ -6,7 +6,7 @@ html_header(title: 'Log in', authentication: true, styled: 'form.css', scripted:
     <div class="form-content">
         <h1> Log in </h1>
         <div class="form-outline">
-            <form action="/api/login" method="POST" tag="<?php echo $_SESSION['auth-target'] ?>">
+            <form action="/api/login" method="POST" tag="<?php echo $_SESSION['last-page'] ?>">
                 <?php
                 form_input('name', 'Username or email');
                 form_input('password', 'Password', type: 'password', input_attrs: "autocomplete=\"current-password\"");
