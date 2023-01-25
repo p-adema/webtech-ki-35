@@ -3,6 +3,9 @@
 /pages/resources/videos
 !/pages/resources/videos/example_free.mp4
 !/pages/resources/videos/example_paid.mp4
+/pages/resources/thumbnails
+!/pages/resources/thumbnails/example_free.mp4
+!/pages/resources/thumbnails/example_paid.mp4
 !/server/
 /server/local.ini
 !/components/
