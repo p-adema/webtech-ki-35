@@ -3,7 +3,7 @@ import yt_dlp
 
 def download_course(playlist_id: str) -> None:
     options = {
-        'outtmpl': 'courses/%(playlist_title)s/%(title)s.%(ext)s',
+        'outtmpl': '%(playlist_title)s/%(title)s.%(ext)s',
         'format': 'mp4',
     }
     ydl = yt_dlp.YoutubeDL(options)
