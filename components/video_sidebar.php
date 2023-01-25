@@ -39,13 +39,13 @@ function video_scroll($course_tag, $video_number): string
             if ($x == $video_number) {
                 $html .= "<div class='video-block' id='current-video-playing' > 
    
-                        <div class='thumbnail'></div> 
+                        <img src='/resources/thumbnails/$video_tag.jpg' class='thumbnail'></img> 
                         <p>$video_name</p>
                        </div>"; #Hier moet de thumbnail komen
             } else {
                 $html .= "<a href='/courses/video/$video_tag'><div class='video-block' id='video_scroll_$x'> 
     
-                        <div class='thumbnail'></div> 
+                        <img src='/resources/thumbnails/$video_tag.jpg' class='thumbnail'></img> 
                         <p>$video_name</p>
                        </div></a>";
             }
@@ -105,7 +105,7 @@ function video_sidebar($video_id): bool
         $html = "<div class='video-sidebar'> 
     <div class='course-block-around'> 
     <a href='/courses/course/$course_tag'> <div class='course-block'> 
-    <div class='thumbnail'></div>
+    <img src='/resources/thumbnails/$course_tag.jpg' class='thumbnail'></img> 
     <p>$course_name <br> <span class='author' >$creator_name</span></p>
     </div> </a>
     </div>
@@ -123,8 +123,3 @@ function video_sidebar($video_id): bool
     }
     return true;
 }
-
-
-
-
-

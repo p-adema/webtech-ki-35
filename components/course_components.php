@@ -58,25 +58,6 @@ function get_video_names($videos): array
     return $array;
 }
 
-function render_thumbnails($videos): void
-{
-    require_once 'pdo_read.php';
-
-    $pdo_read = new_pdo_read();
-
-    $sql = 'SELECT thumbnail FROM db.videos WHERE tag = :video';
-    $sth = $pdo_read->prepare($sql);
-
-    foreach ($videos as $video) {
-        $sth->execute(['video' => $video['video_tag']]);
-        $image_name = $sth->fetch();
-        $thumbnail_url = '/videos/thumbnails/'.$image_name['thumbnail'].'.png';
-        $video_url = 'video.php?tag='.$video['video_tag'];
-        echo "<div class='thumbnail'><a href=$video_url><img class='thumbnail-image' src=$thumbnail_url alt='image of buck'></a><br>
-                <span class='video-name'>{$video['video_tag']}</span></div>";
-    }
-}
-
 function course_price($course_tag): string {
     require_once 'pdo_read.php';
 
@@ -140,7 +121,7 @@ function display_course_videos($course_tag): void
             $video_tag = $all_videos[$x]['video_tag'];
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
-                        <div class='thumbnail'><img class='thumbnail-picture' src='/images/thumbnail.jpeg'></div> 
+                        <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg'></div> 
                         <p>$video_name</p>
                        </div></a>";
             }

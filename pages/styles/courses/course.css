@@ -144,7 +144,6 @@ button.form-submit.form-submit-blue:hover {
 
 
 .thumbnail {
-    background-color: black;
     width: 90%;
     aspect-ratio: 16/9;
     margin: 14px;
@@ -230,4 +229,3 @@ a {
 .perm-star-5:after {
     content: '★★★★★';
 }
-

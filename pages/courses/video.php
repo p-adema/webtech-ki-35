@@ -18,7 +18,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                         <div class="video">
                             <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
                                 <video width="600" controls>
-                                    <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
+                                    <source src="/resources/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
                                     Your browser does not support HTML video.
                                 </video>
                             <?php } else { ?>
