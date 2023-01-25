@@ -37,6 +37,7 @@ $(document).ready(function () {
 
         }
     })
+
     $(".comment-submit").submit(function (event) {
         event.preventDefault()
 
@@ -46,9 +47,10 @@ $(document).ready(function () {
             video_tag: parameter_list.get('tag'),
             message: $("#message").val()
         }
-
         const handler_options = {
-        }
+            success_handler: function(data, _) {
+            $(`.top`).html(data.html);
+        }}
 
         $.post('/api/courses/video.php', user_data, form_default_response(handler_options))
     })
@@ -101,16 +103,12 @@ $(document).ready(function () {
             $('div.comments').html(data.html)
             $('button.show-replies').click(load_replies)
             bind_score()
+            document.getElementById("message").value = "";
+            open_reply()
         }
     }
 
     $.post("/api/load/comments", video_data, form_default_response(handler_options));
-})
-
-$(document).ready(function(){
-    $('.comment-reactions-reply').click(function (event) {
-
-    })
 })
 
 function load_replies(_) {
@@ -128,6 +126,7 @@ function load_replies(_) {
             $(`#replies-${tag}`).html(data.html);
             $(`#replies-${tag} button.show-replies`).click(load_replies);
             bind_score()
+            open_reply()
         }
     }
 
@@ -159,5 +158,17 @@ function bind_score() {
         $.post("/api/courses/comments.php", {rating: -1, comment: comment_id})
         $(this).addClass('pressed')
         $(`#${comment_id}`).find('.comment-reactions-up').removeClass('pressed')
+    })
+}
+
+function open_reply() {
+    $('.comment-reactions-reply-box').click(function (event) {
+        event.preventDefault()
+        let $reply = $(this).children('.reply-box');
+        if ($(this).toggleClass('active').hasClass('active')) {
+            $reply.css('max-height', $reply.prop('scrollHeight'));
+        } else {
+            $reply.css('max-height', '0');
+        }
     })
 }

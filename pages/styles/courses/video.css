@@ -120,6 +120,7 @@ html {
 }
 
 button.form-submit {
+    align-self: center;
     height: 2em;
     font-size: medium;
     background: #52a452;
@@ -331,9 +332,9 @@ div.comment-reactions-gap-s {
     border-bottom-style: solid;
 
 
-
 }
- a   {
+
+a {
     color: black;
     text-decoration: none;
 }
@@ -354,7 +355,8 @@ div.comment-reactions-gap-s {
     width: 100%;
     height: 90px;
 }
-.course-block:hover{
+
+.course-block:hover {
     background-color: #7c7baccc;
 }
 
@@ -380,12 +382,15 @@ div.comment-reactions-gap-s {
     margin: 9px 9px 14px 9px;
     padding: 0 14px 14px 14px;
 }
+
 .course-block-around {
     padding: 0 32px 0 0;
 }
+
 #current-video-playing {
     background-color: #c1c0cf;
 }
+
 #current-video-playing:hover {
     background-color: #b1b0bf;
 }
@@ -393,4 +398,36 @@ div.comment-reactions-gap-s {
 .author {
     color: #000000;
     opacity: 0.45;
+}
+
+.reply-box {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-in-out;
+}
+
+input {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #000000;
+}
+
+label {
+    visibility: hidden;
+}
+
+#submit-group {
+    max-width: fit-content;
+    align-self: center;
+}
+
+.form-wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+}
+
+.like-dislike {
+    display: flex;
+    flex-flow: row;
 }

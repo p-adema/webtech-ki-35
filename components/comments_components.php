@@ -73,7 +73,7 @@ function render_comment(array $comment, int|null $score, bool $is_reply = false)
             <span class='comment-text'> {$comment['text']} </span>
         </div>
         <div class='comment-reactions-wrapper' tag='{$comment['tag']}'>
-            <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined $rating_class_up'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined $rating_class_down'>thumb_down</span><div class='comment-reactions-gap-l'></div><span class='comment-reactions-reply material-symbols-outlined'>reply</span>
+            <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined $rating_class_up'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined $rating_class_down'>thumb_down</span><div class='comment-reactions-gap-l'></div><div class='comment-reactions-reply-box'><span class='comment-reactions-reply material-symbols-outlined'>reply</span><div class='reply-box'>Hallo daar!</div></div>
         </div>
     </div>
     $replies
@@ -212,7 +212,7 @@ function get_reaction_votes($comment_id): array
     return $votes_array;
 }
 
-function add_new_comment(string $comment, string $video_tag): string
+function add_new_comment(string $comment, string $video_tag, $reply): string
 {
     ensure_session();
 
@@ -233,10 +233,10 @@ function add_new_comment(string $comment, string $video_tag): string
 
         $video_id = $sth_read->fetch()['id'];
 
-        $sql_new = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, score) 
-            VALUES (:tag, :uid, :video_id, :comment, DEFAULT, DEFAULT)';
+        $sql_new = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, reply_tag, score) 
+            VALUES (:tag, :uid, :video_id, :comment, DEFAULT, :reply, DEFAULT)';
         $sth_new = $pdo_write->prepare($sql_new);
-        $sth_new->execute(['tag' => $fresh_tag, 'uid' => $uid, 'video_id' => $video_id, 'comment' => $comment]);
+        $sth_new->execute(['tag' => $fresh_tag, 'uid' => $uid, 'video_id' => $video_id, 'comment' => $comment, 'reply' => $reply]);
 
         return $fresh_tag;
     }
@@ -245,15 +245,15 @@ function add_new_comment(string $comment, string $video_tag): string
 
 function get_comment_id($comment_tag): int
 {
-   require_once 'pdo_read.php';
+    require_once 'pdo_read.php';
 
-   $pdo_read = new_pdo_read();
+    $pdo_read = new_pdo_read();
 
-   $sql = 'SELECT id FROM db.comments WHERE tag = :comment_tag';
-   $sth = $pdo_read->prepare($sql);
-   $sth->execute(['comment_tag' => $comment_tag]);
+    $sql = 'SELECT id FROM db.comments WHERE tag = :comment_tag';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['comment_tag' => $comment_tag]);
 
-   return $sth->fetch()['id'];
+    return $sth->fetch()['id'];
 }
 
 function get_comment_info($comment_id, bool $replies): array
@@ -272,4 +272,32 @@ function get_comment_info($comment_id, bool $replies): array
     $info['replies'] = $replies;
 
     return $info;
+}
+
+function create_new_comment_box(): void
+{
+    require_once 'pdo_read.php';
+
+    $uid = $_SESSION['uid'];
+
+    $pdo_read = new_pdo_read();
+    $sql = 'SELECT name FROM db.users WHERE id = :uid';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['uid' => $uid]);
+
+    $name = $sth->fetch()['name'];
+
+    echo '<div class="comment-wrapper comment">';
+    echo '<span class="comment-username">';
+    echo $name;
+    echo '</span>';
+    echo '<div class="form-wrapper">';
+    echo '<form class="comment-submit" action="/api/courses/video.php" method="POST">';
+    form_input('message', 'Comment', placeholder: 'Type your comment');
+    form_error();
+    form_submit();
+    echo '</form>';
+    echo "<div class='like-dislike'><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_down</span></div>";
+    echo '</div>';
+    echo '</div>';
 }
