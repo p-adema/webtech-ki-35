@@ -1,7 +1,7 @@
 <?php
 require 'tag_actions.php';
 require 'html_page.php';
-html_header(title: 'Change password', styled: 'form.css', scripted: true);
+html_header(title: 'Change password', authentication: true, styled: 'form.css', scripted: true);
 ?>
 
     <div class="form-content">

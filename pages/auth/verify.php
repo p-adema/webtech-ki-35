@@ -25,7 +25,7 @@ if (isset($_GET['tag'])) {
 }
 
 require "html_page.php";
-html_header('Invalid link');
-echo "<p> This link ($tag) doesn't seem quite right. </p>
+html_header('Invalid link', authentication: true);
+echo "<p> This link doesn't seem quite right. </p>
 <a href='/'> Go back to home </a>";
 html_footer();

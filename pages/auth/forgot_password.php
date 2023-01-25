@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Forgot password', styled: 'form.css', scripted: true);
+html_header(title: 'Forgot password', authentication: true, styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">
         <h1> Forgot password </h1>

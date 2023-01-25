@@ -16,7 +16,7 @@ require_once 'navbar.php';
  * @param string $extra Extra header elements put after all other tags
  * @return void Echoes to the page
  */
-function html_header(string $title, string $description = '', bool $navbar = true,
+function html_header(string $title, string $description = '', bool $navbar = true, bool $authentication = false,
                      bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
 
@@ -67,6 +67,10 @@ function html_header(string $title, string $description = '', bool $navbar = tru
 
     ensure_session();
 
+    if (!$authentication) {
+        $_SESSION['auth-target'] = str_replace('index', '', $page);
+    }
+
     echo $html;
 
     if ($navbar) {
@@ -93,6 +97,7 @@ function auth_redirect(?string $if_auth = null, ?string $if_not_auth = null): vo
         exit;
     }
     if ($if_not_auth !== null and !$_SESSION['auth']) {
+        $_SESSION['auth-target'] = str_replace('index', '', explode('.php', $_SERVER['SCRIPT_NAME'])[0]);
         header('Location: ' . $if_not_auth);
         exit;
     }

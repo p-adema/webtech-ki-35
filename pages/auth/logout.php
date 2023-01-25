@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Log out', styled: 'form.css', scripted: true);
+html_header(title: 'Log out', authentication: true, styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">
         <h1> Log out </h1>

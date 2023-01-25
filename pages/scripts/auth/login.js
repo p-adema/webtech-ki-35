@@ -10,8 +10,8 @@ $(document).ready(function () {
 
         const handler_options = {
             redirect: {
-                link: '/',
-                delay: 5000
+                link: $(this).attr('tag'),
+                delay: 3000
             }
         }
 

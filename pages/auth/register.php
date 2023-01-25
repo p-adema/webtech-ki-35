@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_auth: '/auth/logout');
-html_header(title: 'Register', styled: 'form.css', scripted: true);
+html_header(title: 'Register', authentication: true, styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">
         <h1> Register </h1>

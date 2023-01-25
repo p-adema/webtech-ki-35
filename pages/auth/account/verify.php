@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Verify account', styled: 'form.css', scripted: true);
+html_header(title: 'Verify account', authentication: true, styled: 'form.css', scripted: true);
 
 ?>
     <div class="form-content">
