@@ -140,10 +140,11 @@ function display_course_videos($course_tag): void
             $video_tag = $all_videos[$x]['video_tag'];
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
-                        <div class='thumbnail'></div> 
+                        <div class='thumbnail'><img class='thumbnail-picture' src='/images/thumbnail.jpeg'></div> 
                         <p>$video_name</p>
                        </div></a>";
             }
 
         }
     }
+

@@ -3,7 +3,7 @@ require 'html_page.php';
 require 'relative_time.php';
 require 'course_components.php';
 require 'video_functionality.php';
-html_header(title: 'Course', styled: true, scripted: 'ajax');
+html_header(title: 'Course', styled: true, scripted: true);
 
 $course_tag = $_GET['tag'];
 if ($_SESSION['auth']) {
@@ -20,16 +20,21 @@ $time_since = time_since($course_info['creation_date']);
 $videos = get_videos($course_tag);
 $video_names = get_video_names($videos);
 ?>
-    <body>
     <div class="course-page">
         <div class="information-block">
             <p id="course-title"> <?php echo $course_info['name'] ?></p>
 
             <p id="author"> Author: <br> <?php echo $course_creator['name'] ?> </p>
 
-            <p id="rating">
-                Rating: <br> Rating placeholder
-            </p>
+                <?php if ($has_course) :?>
+                <div class="ratings-box">
+                        <div class="stars-empty stars"> </div>
+                    <p> Rating </p>
+                </div>
+                <?php else: ?>
+                <div class="ratings-box"> <p> Stars <br> rating</p> </div>
+                <?php endif;?>
+
 
             <div class="description-box">
                 <p id="views-and-time"> <?php echo $course_info['views'] ?> views <?php echo $time_since ?> ago</p>
@@ -76,7 +81,6 @@ $video_names = get_video_names($videos);
 
     </div>
 
-    </body>
 
 <?php
 

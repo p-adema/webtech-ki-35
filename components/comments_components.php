@@ -1,5 +1,6 @@
 <?php
 require_once "relative_time.php";
+require_once 'tag_actions.php';
 
 function get_id(string $tag, PDO $PDO): int|false
 {
@@ -208,6 +209,67 @@ function get_reaction_votes($comment_id): array
         }
     }
 
-
     return $votes_array;
+}
+
+function add_new_comment(string $comment, string $video_tag): string
+{
+    ensure_session();
+
+    if ($_SESSION['auth'] != null) {
+
+        require_once 'pdo_write.php';
+        require_once 'pdo_read.php';
+
+        $uid = $_SESSION['uid'];
+        $fresh_tag = tag_create();
+        $pdo_write = new_pdo_write();
+        $pdo_read = new_pdo_read();
+
+
+        $sql_read = 'SELECT id FROM db.items WHERE (tag = :tag)';
+        $sth_read = $pdo_read->prepare($sql_read);
+        $sth_read->execute(['tag' => $video_tag]);
+
+        $video_id = $sth_read->fetch()['id'];
+
+        $sql_new = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, score) 
+            VALUES (:tag, :uid, :video_id, :comment, DEFAULT, DEFAULT)';
+        $sth_new = $pdo_write->prepare($sql_new);
+        $sth_new->execute(['tag' => $fresh_tag, 'uid' => $uid, 'video_id' => $video_id, 'comment' => $comment]);
+
+        return $fresh_tag;
+    }
+    return '';
+}
+
+function get_comment_id($comment_tag): int
+{
+   require_once 'pdo_read.php';
+
+   $pdo_read = new_pdo_read();
+
+   $sql = 'SELECT id FROM db.comments WHERE tag = :comment_tag';
+   $sth = $pdo_read->prepare($sql);
+   $sth->execute(['comment_tag' => $comment_tag]);
+
+   return $sth->fetch()['id'];
+}
+
+function get_comment_info($comment_id, bool $replies): array
+{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score FROM comments as c
+            INNER JOIN users u on c.commenter_id = u.id
+            WHERE c.id = :comment';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['comment' => $comment_id]);
+
+    $info = $sth->fetch(PDO::FETCH_ASSOC);
+    $info['replies'] = $replies;
+
+    return $info;
 }
