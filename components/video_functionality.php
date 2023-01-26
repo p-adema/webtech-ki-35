@@ -1,5 +1,6 @@
 <?php
 require_once "relative_time.php";
+require_once "rating_functionality.php";
 
 function get_video_data($video_tag): array|false
 {
@@ -74,7 +75,7 @@ function update_rating($rating, $uid, $tag): void
     $pdo_read = new_pdo_read();
     $pdo_write = new_pdo_write();
 
-    $sql_get_id = 'SELECT id FROM db.videos WHERE (tag = :name)';
+    $sql_get_id = 'SELECT id FROM db.items WHERE (tag = :name)';
     $sth_get_id = $pdo_read->prepare($sql_get_id);
     $sth_get_id->execute(['name' => $tag]);
 
@@ -98,6 +99,8 @@ function update_rating($rating, $uid, $tag): void
         $sth = $pdo_write->prepare($sql_update);
         $sth->execute(['new_rating' => $rating, 'rater' => $uid, 'video' => $video_id]);
     }
+
+    calculate_rating($video_id);
 }
 
 //function get_video_watch_amount($uid, $video_tag): float

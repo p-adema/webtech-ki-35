@@ -10,3 +10,4 @@ docker cp scraped.sql "$sql":/var/www/server/scraped.sql &&
 echo 'Step 2/4: Handover to client script' &&
 docker cp client-sql.sh "$sql":/var/www/server/client-sql.sh &&
 docker exec -it "$sql" bash /var/www/server/client-sql.sh
+

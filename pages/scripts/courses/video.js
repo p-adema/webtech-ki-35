@@ -77,12 +77,10 @@ $(document).ready(function () {
 
         let star_count = Math.ceil(((x_cord / tot_length) * 5))
 
-        const video_data = {
-            type: 'item',
-            on: video_tag
-        }
+        const parameter_list = new URLSearchParams(window.location.search)
+
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/stars', {star: star_count, tag: video_data})
+        jQuery.post('/api/courses/stars.php', {star: star_count, tag: parameter_list.get('tag')})
     })
 
     function form_custom_success(data, __) {
@@ -107,7 +105,7 @@ $(document).ready(function () {
             $('div.comments').html(data.html)
             $('button.show-replies').click(load_replies)
             bind_score()
-            document.getElementById("message").value = "";
+            // document.getElementById("message").value = "";
             open_reply()
         }
     }
