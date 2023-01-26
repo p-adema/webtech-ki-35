@@ -103,6 +103,20 @@ function update_rating($rating, $uid, $tag): void
     calculate_rating($video_id);
 }
 
+function name_of_uploader($uid): string
+{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+    $sql = 'SELECT name FROM db.users WHERE id = :uid';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['uid' => $uid]);
+
+    $data = $sth->fetch()['name'];
+
+    return $data;
+}
+
 //function get_video_watch_amount($uid, $video_tag): float
 //{
 //    require_once 'pdo_read.php';
