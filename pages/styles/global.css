@@ -252,19 +252,26 @@ body {
 }
 
 .checkout-button {
-    display: none;
-    height: 2em;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    text-align: center;
+    height: 2.5em;
     font-size: medium;
     width: 10em;
-    background: #52a452;
+    background: #5276a4;
     color: whitesmoke;
     transition-duration: 0.3s;
     border-radius: 5px;
-    border-color: darkgreen;
+    border-color: #003e64;
+}
+
+.checkout-button > span {
+    flex: auto;
 }
 
 .checkout-button:hover {
-    background: #63b963;
+    background: #6586b1;
     cursor: pointer;
 }
 

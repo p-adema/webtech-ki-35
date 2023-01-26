@@ -6,7 +6,7 @@ function navbar(): void
 
  $html = "
      <div class='topnav'>
-     <a href='/'><img src='/images/logo-no-background.png' width='110px' height='32px' ></a>
+     <a href='/'><img src='/resources/images/logo-no-background.png' width='110px' height='32px' ></a>
       ";
      if ($_SESSION['auth']) {
          $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/logout'], ['Account management', 'Log out']);

@@ -58,25 +58,6 @@ function get_video_names($videos): array
     return $array;
 }
 
-function render_thumbnails($videos): void
-{
-    require_once 'pdo_read.php';
-
-    $pdo_read = new_pdo_read();
-
-    $sql = 'SELECT thumbnail FROM db.videos WHERE tag = :video';
-    $sth = $pdo_read->prepare($sql);
-
-    foreach ($videos as $video) {
-        $sth->execute(['video' => $video['video_tag']]);
-        $image_name = $sth->fetch();
-        $thumbnail_url = '/videos/thumbnails/'.$image_name['thumbnail'].'.png';
-        $video_url = 'video.php?tag='.$video['video_tag'];
-        echo "<div class='thumbnail'><a href=$video_url><img class='thumbnail-image' src=$thumbnail_url alt='image of buck'></a><br>
-                <span class='video-name'>{$video['video_tag']}</span></div>";
-    }
-}
-
 function course_price($course_tag): string {
     require_once 'pdo_read.php';
 
@@ -94,7 +75,7 @@ function has_course($course_tag, $user_id): bool {
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT id FROM db.ownership WHERE item_tag =:course_tag and user_id =: user_id';
+    $sql = 'SELECT id FROM db.course_ownership WHERE item_tag = :course_tag and user_id = :user_id';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['course_tag' => $course_tag, 'user_id' => $user_id]);
     $id = $sth->fetch();
@@ -140,7 +121,7 @@ function display_course_videos($course_tag): void
             $video_tag = $all_videos[$x]['video_tag'];
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
-                        <div class='thumbnail'><img class='thumbnail-picture' src='/images/thumbnail.jpeg'></div> 
+                        <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg'></div> 
                         <p>$video_name</p>
                        </div></a>";
             }
@@ -148,3 +129,36 @@ function display_course_videos($course_tag): void
         }
     }
 
+function get_course_id($course_tag): string {
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT id FROM db.items WHERE tag = :course_tag';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['course_tag' => $course_tag]);
+
+    return $sth->fetch()['id'];
+}
+
+function get_rating_info($item_id): array{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT rating FROM db.ratings WHERE item_id = :item_id';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['item_id' => $item_id]);
+    $ratings = $sth->fetchAll();
+    $total_ratings = count($ratings);
+    $score = 0;
+
+
+    for ($x = 0; $x < $total_ratings; $x++) {
+        $score += $ratings[$x]['rating'];
+    }
+    $score = $total_ratings === 0 ? 3 : $score/$total_ratings;
+
+
+    return [$total_ratings, $score];
+}

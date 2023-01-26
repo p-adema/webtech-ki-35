@@ -7,9 +7,9 @@ $(document).ready(function () {
     $('div.description').click(function (_) {
         const $content = $(this).children('div.content');
         if ($(this).children('button.collapsible').toggleClass('active').hasClass('active')) {
-            $content.css('max-height', $content.prop('scrollHeight'));
+            $content.css('max-height', $content.prop('scrollHeight')).css('padding-bottom', '15px');
         } else {
-            $content.css('max-height', '0');
+            $content.css('max-height', '0').css('padding-bottom', '5px');
         }
     })
     $(".shop").submit(function (event) {
@@ -85,9 +85,13 @@ $(document).ready(function () {
         jQuery.post('/api/courses/stars', {star: star_count, tag: video_data})
     })
 
-    function form_custom_success(_, __) {
-        $('form#add').hide()
-        $('form#cart').show()
+    function form_custom_success(data, __) {
+        $('form#add').hide();
+        $('form#cart').show();
+        $('.cart-item-anchor').remove();
+        $('.sidebar-close').after(data.html);
+        $('.cart-item-delete').click(cart_item_delete);
+
     }
 
     const video_data = {
@@ -145,14 +149,14 @@ function show_replies(_) {
 }
 
 function bind_score() {
-    $('.comment-reactions-up').click(function (event) {
+    $('.comment-reactions-up').unbind('click').click(function (event) {
         event.preventDefault();
         let comment_id = $(this).parent().attr('tag')
         $.post("/api/courses/comments.php", {rating: 1, comment: comment_id})
         $(this).addClass('pressed')
         $(`#${comment_id}`).find('.comment-reactions-down').removeClass('pressed')
     })
-    $('.comment-reactions-down').click(function (event) {
+    $('.comment-reactions-down').unbind('click').click(function (event) {
         event.preventDefault()
         let comment_id = $(this).parent().attr('tag')
         $.post("/api/courses/comments.php", {rating: -1, comment: comment_id})

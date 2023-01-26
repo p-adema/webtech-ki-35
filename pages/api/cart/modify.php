@@ -51,7 +51,10 @@ if ($type === 'add') {
         api_fail('This item was already in your cart', $errors);
     }
 
-    api_succeed('Item added to cart', $errors);
+    require_once "sidebar_right.php";
+    $response = ['html' => render_cart()];
+
+    api_succeed('Item added to cart', $errors, $response);
 }
 
 if (!$cart->remove_item($id)) {

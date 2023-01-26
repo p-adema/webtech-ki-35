@@ -1,6 +1,9 @@
 html{
     background-color: #e1f0ff;
 }
+p {
+    margin: 0;
+}
 .course-page {
     min-height: 93vh;
     display: flex;
@@ -8,10 +11,111 @@ html{
 }
 
 .information-block {
+    padding: 14px;
     min-width: 20vw;
     display: flex;
-    background-color: brown;
+    background-color: #435443cc;
     flex-flow: column;
+    color: #131413;
+}
+.title-box {
+    flex: 1;
+    align-self: center;
+    text-decoration: underline;
+
+}
+.author-box {
+    flex: 1;
+}
+#author{
+    margin: 0;
+}
+
+.ratings-box {
+    flex: 2;
+}
+.star-score {
+    font-size: 20px;
+}
+.total-ratings {
+    text-decoration: underline;
+}
+
+.description-box {
+    flex: 1;
+}
+
+.video-information {
+    flex: 2;
+}
+#subject {
+    text-decoration: underline;
+    font-size: 18px;
+    margin-bottom: 7px;
+}
+#total-videos{
+    margin-top: 7px;
+}
+
+.course-buying {
+    flex: 0;
+}
+.stretch-box {
+    align-self: stretch;
+    flex: 6;
+}
+
+
+.form-container{
+    align-self: center;
+}
+
+
+.add-to-cart-box {
+    align-self: center;
+    flex: 1;
+}
+form#cart {
+    display: none;
+}
+.form-error {
+    visibility: hidden;
+}
+
+button.form-submit {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 2.5em;
+    font-size: medium;
+    background: #52a452;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: darkgreen;
+}
+
+button.form-submit:hover {
+    background: #63b963;
+    cursor: pointer;
+}
+
+button.form-submit.pressed {
+    background: #386838;
+}
+
+button.form-submit.go-to-cart {
+    visibility: hidden;
+}
+
+button.form-submit.form-submit-blue {
+    background: #5276a4;
+    border-color: #003e64;
+}
+
+button.form-submit.form-submit-blue:hover {
+    background: #6586b1;
+    cursor: pointer;
 }
 
 .video-block {
@@ -40,7 +144,6 @@ html{
 
 
 .thumbnail {
-    background-color: black;
     width: 90%;
     aspect-ratio: 16/9;
     margin: 14px;
@@ -125,8 +228,4 @@ a {
 
 .perm-star-5:after {
     content: '★★★★★';
-}
-
-.ratings-box {
-    /* moet nog wat */
 }

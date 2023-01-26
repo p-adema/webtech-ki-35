@@ -15,28 +15,34 @@ function render_cart_item(array $item): string
 </a>";
 }
 
-function sidebar_right(): string
+function render_cart(): string
 {
     $cart = new Cart;
-    $items_html = '';
     $items = $cart->items_long();
+    $items_rendered = [];
+    foreach ($items as $item) {
+        $items_rendered[] = render_cart_item($item);
+    }
+    return join(PHP_EOL, $items_rendered);
+}
+
+function sidebar_right(): string
+{
     $items_empty = "
 <span class='cart-items-empty'>
     You don't seem to have anything in your cart.
     Browse videos and courses to find new items!
 </span>
 ";
-    foreach ($items as $item) {
-        $items_html .= render_cart_item($item);
-    }
-
+    $items_html = render_cart();
+    $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
     return "
 <div class='sidebar-right sidebar-block sidebar_animate_right'>
     <button onclick='close_right_menu()' class='sidebar-close'>Close</button>
     $items_html
     $items_empty
     <div class='checkout-sidebar'>
-        <button onclick='go_to_checkout()' class='checkout-button' type='button'>Continue to cart</button> 
+        <button onclick='go_to_checkout()' class='checkout-button' type='button'>$cart_go Continue to cart</button> 
     </div>
 </div>";
 }

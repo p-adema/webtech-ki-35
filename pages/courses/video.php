@@ -5,7 +5,7 @@ require 'video_sidebar.php';
 require 'comments_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
-$tag = $_GET['tag'];
+$tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
 if (isset($_GET['tag']) and $video_info !== false): ?>
@@ -18,22 +18,24 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                         <div class="video">
                             <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
                                 <video width="600" controls>
-                                    <source src="/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
+                                    <source src="/resources/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
                                     Your browser does not support HTML video.
                                 </video>
                             <?php } else { ?>
                                 <div class="paid-video">
-                                    <span class="paid-video-text">This is a premium video, add it to your cart and checkout to watch.</span>
+                                    <span class="paid-video-text">This is a premium video, please purchase it first before watching </span>
                                     <form class="shop" id="add">
                                         <?php
-                                        form_submit(text: 'Add to cart', extra_cls: 'long-btn');
+                                        $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
+                                        form_submit(text: "$cart_add Add to cart", extra_cls: 'long-btn');
                                         form_error('item');
                                         form_error();
                                         ?>
                                     </form>
                                     <form class="shop" id="cart">
                                         <?php
-                                        form_submit(text: 'Go to cart', extra_cls: 'long-btn');
+                                        $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
+                                        form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn');
                                         form_error('item');
                                         form_error();
                                         ?>
@@ -68,10 +70,6 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
         $success = video_sidebar($tag);
         echo "<span id='sidebar-load-success' tag='$success' style='display: none'></span>" ?>
     </div>
-
-    <?php
-//    if ($_SESSION['auth']) {
-//    } ?>
 
 
 <?php else: ?>

@@ -14,7 +14,7 @@ INSERT INTO db.videos
     (tag, name, free, description, subject, uploader)
 VALUES 
 """
-sql_video = "('{tag}', '{name}', {free}, 'TODO: descrition', 'physics', 3),\n"
+sql_video = "('{tag}', '{name}', {free}, 'TODO: descrition', 'geography', 4),\n"
 
 sql_rels_h = """\n
 INSERT INTO db.course_videos 
@@ -27,7 +27,7 @@ sql_course = """\n
 INSERT INTO db.courses 
     (tag, name, description, subject, creator)
 VALUES 
-    ('{course_tag}', 'CC Physics', 'Example Physics course by Crash Course!', 'physics', 3);
+    ('{course_tag}', 'Indigenous Insights', 'Extra conservation course by IUCN', 'geography', 4);
 """
 
 
@@ -52,6 +52,7 @@ def pricer(vid_num: int) -> tuple[int, float]:
 def generate_sql(course):
     course_tag = gen_tag()
     items = [sql_items_h, sql_item.format(tag=course_tag, type='course', price=50)]
+    print(f'\nRename the course thumbnail to {course_tag}.jpg')
     videos = [sql_videos_h]
     rels = [sql_rels_h]
 

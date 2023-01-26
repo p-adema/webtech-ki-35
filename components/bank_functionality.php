@@ -123,19 +123,28 @@ function confirm_payment($tag): void
     $sth_bal = $pdo_write->prepare($sql_bal_change);
     $sth_bal->execute(['user' => $data_pending['user_id'], 'new_bal' => $user_bal - $data_pending['amount']]);
 
-    $sql_own = "INSERT INTO ownership (item_tag, user_id, origin, purchase_id) 
+    $sql_own_videos = "INSERT INTO ownership (item_tag, user_id, origin, purchase_id) 
                 SELECT i.tag, :uid, 'purchase', :pid
                 FROM purchase_items AS P
                 INNER JOIN items i on P.item_id = i.id
-                WHERE purchase_id = :pid";
+                WHERE purchase_id = :pid AND type = 'video'";
 
-    $p_own = $pdo_write->prepare($sql_own);
+    $p_own_videos = $pdo_write->prepare($sql_own_videos);
+
+    $sql_own_courses = "INSERT INTO course_ownership (item_tag, user_id, origin, purchase_id) 
+                SELECT i.tag, :uid, 'purchase', :pid
+                FROM purchase_items AS P
+                INNER JOIN items i on P.item_id = i.id
+                WHERE purchase_id = :pid AND type = 'course'";
+
+    $p_own_courses = $pdo_write->prepare($sql_own_courses);
     $data_own = [
         'uid' => $data_pending['user_id'],
         'pid' => $data_pending['purchase_id']
     ];
 
-    $p_own->execute($data_own);
+    $p_own_videos->execute($data_own);
+    $p_own_courses->execute($data_own);
 }
 
 function deny_payment($tag): void
