@@ -1,7 +1,9 @@
 div.form-group {
     display: flex;
     flex-flow: column;
+    align-items: center;
     margin-top: 10px;
+    min-width: 190px;
     align-self: center;
 }
 
@@ -34,10 +36,68 @@ form > p {
 
 input {
     border: solid lightslategrey 2px;
+    transition: background-color 100ms;
     border-radius: 8px;
     min-width: min-content;
     max-width: 100%;
     height: 2em;
+}
+
+input:disabled {
+    background-color: #d9dada;
+    border: solid #808791 2px;
+}
+
+.resizable-y {
+    overflow: hidden;
+    resize: vertical;
+    min-height: 3em;
+    display: inline-block;
+    height: 5em;
+}
+
+.form-group > textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    border: solid lightslategrey 2px;
+    border-radius: 8px;
+    resize: vertical;
+    min-width: min-content;
+    max-width: 100%;
+    min-height: 2.5em;
+    width: 100%;
+    height: 5em;
+}
+
+.form-group > select {
+    border: solid lightslategrey 2px;
+    background-color: white;
+    align-self: start;
+    border-radius: 8px;
+    min-width: min-content;
+    max-width: 100%;
+    height: 2em;
+}
+
+fieldset {
+    display: flex;
+    flex-flow: row;
+    border: none;
+    align-items: center;
+    width: 100%;
+}
+
+fieldset > div {
+    display: flex;
+    flex-flow: row;
+    flex: auto;
+    align-items: center;
+}
+
+fieldset > div > label {
+    margin-top: 0;
+    align-self: end;
+    margin-left: 5px;
 }
 
 .has-error > input {
@@ -80,9 +140,12 @@ span#submit-error {
 
 div.form-btns {
     display: flex;
-    flex-flow: row;
     width: 100%;
     margin-top: 30px;
+}
+
+div.form-btns.form-btns-down {
+    flex-flow: column;
 }
 
 div.form-btns > div {
@@ -133,9 +196,44 @@ a:hover {
 }
 
 label {
+    align-self: start;
     font-weight: normal;
     margin-top: 10px;
     margin-bottom: 3px;
+    user-select: none;
+}
+
+input#file {
+    display: none;
+}
+
+label.file-button {
+    display: flex;
+    align-self: center;
+    width: 100%;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    height: 2.5em;
+    font-size: medium;
+    background: #2a6bbe;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border: solid 2px #003e64;
+}
+
+label.file-button:hover {
+    background: #6586b1;
+    cursor: pointer;
+}
+
+label.file-button.has-file {
+    background: #5276a4;
+}
+
+label.file-button.has-file {
+    background: #89a6cc;
 }
 
 button.form-submit {
@@ -233,6 +331,41 @@ button.med-btn {
 
 .billing-seperator {
     width: 100%;
+}
+
+.upload-progress-wrapper {
+    width: 80%;
+}
+
+#upload-progress {
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    border: 1px solid #0099CC;
+    width: 100%;
+    padding: 1px;
+    position: relative;
+    height: 30px;
+    border-radius: 3px;
+    margin: 10px;
+    text-align: left;
+    background: #fff;
+    box-shadow: inset 1px 3px 6px rgba(0, 0, 0, 0.12);
+}
+
+.upload-progress-bar {
+    height: 100%;
+    border-radius: 3px;
+    background-color: #b9dfea;
+    width: 0;
+    box-shadow: inset 1px 1px 10px rgba(0, 0, 0, 0.11);
+}
+
+.upload-progress-text {
+    position: absolute;
+    left: 45%;
+    display: inline-block;
+    color: #000000;
 }
 
 @media only screen and (max-width: 1200px) {

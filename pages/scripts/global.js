@@ -61,6 +61,27 @@ function form_default_success(data, options) {
     }
 }
 
+$.upload = function (target, user_data, success_handler) {
+    $('#upload-progress').css('visibility', 'visible')
+    $.ajax({
+        type: "POST",
+        url: target,
+        xhr: function () {
+            let xhr_settings = $.ajaxSettings.xhr();
+            xhr_settings.upload.addEventListener('progress', upload_progress_handler);
+            return xhr_settings;
+        },
+        success: success_handler,
+        error: function (error) {
+            console.log('Ajax upload error')
+            console.log(error)
+        },
+        data: user_data,
+        contentType: false,
+        processData: false,
+    })
+}
+
 function openRightMenu() {
     $('.sidebar_right').animate({right: '-0'}, 400);
 }

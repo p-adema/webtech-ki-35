@@ -1,5 +1,10 @@
 <?php
 define("PAGE", explode('.php', $_SERVER['SCRIPT_NAME'])[0]);
+const SUBJECTS = [
+    'physics',
+    'biology',
+    'geography'
+];
 require_once "api_resolve.php";
 require_once 'navbar.php';
 
