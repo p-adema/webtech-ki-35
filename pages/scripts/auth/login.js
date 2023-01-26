@@ -8,6 +8,7 @@ $(document).ready(function () {
             password: $("#password").val(),
         };
 
+
         const handler_options = {
             redirect: {
                 link: $(this).attr('tag'),

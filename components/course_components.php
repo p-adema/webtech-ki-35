@@ -122,7 +122,7 @@ function display_course_videos($course_tag): void
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
                         <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg'></div> 
-                        <p>$video_name</p>
+                        <p class='thumbnail-text' >$video_name</p>
                        </div></a>";
             }
 

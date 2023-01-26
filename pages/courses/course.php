@@ -12,10 +12,11 @@ if ($_SESSION['auth']) {
 } else {
     $has_course = false;
 }
+$course_info = get_course_info($course_tag);
+if (isset($_GET['tag']) and $course_info !== false):
 $course_id = get_course_id($course_tag);
 $cart = new Cart;
 $course_in_cart = in_array($course_id, $cart->ids());
-$course_info = get_course_info($course_tag);
 $course_creator = course_creator($course_info['creator']);
 $time_since = time_since($course_info['creation_date']);
 $videos = get_videos($course_tag);
@@ -24,6 +25,7 @@ $rating = get_rating_info($course_id);
 $score = 0;
 $ratings = 0;
 $course_has_ratings = true;
+$course_creation_date = explode(' ', $course_info['creation_date']);
 if (count($rating) == 0) {
     $course_has_ratings = false;
 } else {
@@ -31,24 +33,36 @@ if (count($rating) == 0) {
     $ratings = $rating[0];
 }
 
+$tag = $_GET['tag'] ?? '';
+$video_info = get_video_data($tag);
 
-?>
+ ?>
     <div class="course-page">
         <div class="information-block">
             <div class="title-box"><p id="course-title"> <?php echo $course_info['name'] ?></p>
+                <p id="author"> <?php echo $course_creator['name'] ?> </p>
             </div>
-            <div class="author-box">
-                <p id="author"> By: <?php echo $course_creator['name'] ?> </p>
+            <div class="stretch-box-1"></div>
+
+            <div class="video-information">
+                <p id="subject"> Subject: <?php echo $course_info['subject'] ?></p>
+                <p id="description"><?php echo $course_info['description'] ?> </p>
+                <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
+                <p id="since">Since: <?php echo $course_creation_date[0] ?> </p>
+                <p id="views-and-time"> <?php echo $course_info['views'] ?> views </p>
+
             </div>
+            <div class="stretch-box-2"></div>
 
             <?php
             if ($has_course):
                 if ($course_has_ratings):
                     ?>
                     <div class="ratings-box">
-                        <div class="stars-empty stars"></div>
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p></div>
+                        <div class="stars-empty stars"></div>
+                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                    </div>
                 <?php else: ?>
                     <div class="ratings-box">
                         <div class="stars-empty stars"></div>
@@ -57,101 +71,109 @@ if (count($rating) == 0) {
                 <?php
                 endif;
             else:
-            if ($course_has_ratings): ?>
-                <div class="ratings-box">
-            <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-            <p class="total-ratings"><?php echo "$ratings" ?> ratings</p></div>
+                if ($course_has_ratings): ?>
+                    <div class="ratings-box">
+                        <p class="star-score"> ★<?php echo "$score" ?> <br></p>
+                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                    </div>
 
-        <?php else: ?>
-            <div class="ratings-box">
-                <p class="total-ratings">This course does not have ratings </p></div>
-        <?php
-        endif;
-        endif;
-        ?>
-
-
-        <div class="video-information">
-            <p id="subject"> Subject: <?php echo $course_info['subject'] ?></p>
-            <p id="description"><?php echo $course_info['description'] ?> </p>
-            <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
-        </div>
-
-        <div class="description-box">
-            <p id="views-and-time"> <?php echo $course_info['views'] ?> views <?php echo $time_since ?> ago</p>
-        </div>
-
-        <?php
-        if ($has_course):
-            ?>
-            <div class="course-buying">
-                <p id="course-owned"> You own this course</p>
-            </div>
-        <?php
-        else:
-            ?>
-
-
-            <div class="stretch-box"></div>
-            <div class="add-to-cart-box">
-                <?php if ($course_in_cart): ?>
-                    <form class="shop" id="cart" style="display: block">
-                        <?php
-                        form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
-                        form_error('item');
-                        form_error();
-                        ?>
-                    </form>
                 <?php else: ?>
+                    <div class="ratings-box">
+                        <p class="total-ratings">This course does not have ratings </p></div>
+                <?php
+                endif;
+            endif;
+            ?>
 
 
-                    <form class="shop" id="add">
-                        <?php
-                        form_submit("Add to cart <span
+            <div class="stretch-box-3"></div>
+            <?php
+            if ($has_course):
+                ?>
+                <div class="course-buying">
+                    <p id="course-owned"> You own this course</p>
+                </div>
+            <?php
+            else:
+                ?>
+
+
+                <div class="add-to-cart-box">
+                    <?php if ($course_in_cart): ?>
+                        <form class="shop" id="cart" style="display: block">
+                            <?php
+                            form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
+                            form_error('item');
+                            form_error();
+                            ?>
+                        </form>
+                    <?php else: ?>
+
+
+                        <form class="shop" id="add">
+                            <?php
+                            form_submit("Add to cart <span
                                     class='material-symbols-outlined'>add_shopping_cart</span>", extra_cls: 'long-btn');
-                        form_error('item');
-                        form_error();
-                        ?>
-                    </form>
-                    <form class="shop" id="cart">
-                        <?php
-                        form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
-                        form_error('item');
-                        form_error();
-                        ?>
-                    </form>
-                <?php endif; ?>
-                <div class="course_tag" tag="<?php echo $_GET['tag'] ?>"></div>
+                            form_error('item');
+                            form_error();
+                            ?>
+                        </form>
+                        <form class="shop" id="cart">
+                            <?php
+                            form_submit(text: 'Go to cart', extra_cls: 'long-btn form-submit-blue');
+                            form_error('item');
+                            form_error();
+                            ?>
+                        </form>
+                    <?php endif; ?>
+                    <div class="course_tag" tag="<?php echo $_GET['tag'] ?>"></div>
+
+                </div>
+                <div class="course-buying">
+                    <p id="price"> <?php
+                        if (course_price($course_tag) == 0) {
+                            echo 'This course is free';
+                        } else {
+                            $html = 'The price of this course is ' . course_price($course_tag) . ' euro.';
+                            echo $html;
+                        } ?>
+                    </p>
+                </div>
+
+            <?php
+            endif;
+            ?>
+        </div>
+
+        <div class="video-block">
+            <div class="video-border">
+                <?php display_course_videos($course_tag) ?>
 
             </div>
-            <div class="course-buying">
-                <p id="price"> <?php
-                    if (course_price($course_tag) == 0) {
-                        echo 'This course is free';
-                    } else {
-                        $html = 'The price of this course is ' . course_price($course_tag) . ' euro.';
-                        echo $html;
-                    } ?>
-                </p>
-            </div>
-
-        <?php
-        endif;
-        ?>
-    </div>
-
-    <div class="video-block">
-        <div class="video-border">
-            <?php display_course_videos($course_tag) ?>
 
         </div>
 
     </div>
+<?php else: ?>
+    <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
 
+    <div class="form-content">
+        <h1> Invalid link </h1>
+        <div class="form-outline">
+            <form >
+                <p> This link doesn't seem quite right </p>
+                <?php
+                echo '<div class="form-btns">';
+                 text_link('Go back home', '/');
+                echo '</div>';
+                ?>
+            </form>
+        </div>
     </div>
-
 
 <?php
+endif;
+
 
 //echo get_video_watch_amount(2, 'example_paid');
 
