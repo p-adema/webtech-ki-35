@@ -6,7 +6,7 @@ html_header(title: 'Create an account', styled: 'form.css', scripted: true);
     <div class="form-content">
         <h1> Authenticate </h1>
         <div class="form-outline">
-            <form action="/api/register" method="POST">
+            <form>
                 <p> Please register or log in to continue with payment </p>
                 <?php
                 echo '<div class="form-btns">';

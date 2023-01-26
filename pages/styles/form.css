@@ -197,6 +197,13 @@ button.long-btn {
     align-self: center;
 }
 
+button.med-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 9em;
+    align-self: center;
+}
+
 .billing-wrapper {
     display: flex;
     align-self: center;
