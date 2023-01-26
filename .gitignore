@@ -16,3 +16,4 @@
 !docker-compose.yml
 /server/cert.txt
 *.DS_Store
+**cache__
