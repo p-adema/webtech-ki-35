@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_not_auth: '/upload/auth');
 html_header(title: 'Upload content', styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">

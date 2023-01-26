@@ -4,7 +4,7 @@ auth_redirect(if_auth: '/auth/logout');
 html_header(title: 'Log in', authentication: true, styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">
-        <h1> <?php echo $_SESSION['last-page']?> </h1>
+        <h1> Log in </h1>
         <div class="form-outline">
             <form action="/api/login" method="POST" tag="<?php echo $_SESSION['last-page']?>">
                 <?php

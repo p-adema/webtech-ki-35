@@ -26,22 +26,22 @@ function form_input(string $id, string $label, string $placeholder = '', string 
     echo $html;
 }
 
-function form_upload(string $label_text, string $button_text, string $types): void
+function form_upload(string $id, string $label_text, string $button_text, string $types, string $icon): void
 {
     $html = "
-<div id='file-group' class='form-group'>
-    <label for='file'>$label_text</label>
-    <label class='file-button' for='file'>
-        <span class='file-button-icon material-symbols-outlined'> upload </span>
+<div id='file-$id-group' class='form-group file-group'>
+    <label for='file-$id'>$label_text</label>
+    <label id='file-$id-button' class='file-button' for='file-$id'>
+        <span class='file-button-icon material-symbols-outlined' data_icon='$icon'> upload </span>
         <span class='file-button-text'> $button_text </span>
     </label>
     <input
         type='file'
-        id='file'
-        name='file'
+        id='file-$id'
+        name='file-$id'
         accept='$types'
     />
-    <span id='file-error' class='form-error'> No error </span>
+    <span id='file-$id-error' class='form-error'> No error </span>
 </div>
     ";
     echo $html;

@@ -35,7 +35,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                     <form class="shop" id="cart">
                                         <?php
                                         $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
-                                        form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn');
+                                        form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
                                         form_error('item');
                                         form_error();
                                         ?>

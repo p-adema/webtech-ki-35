@@ -94,7 +94,6 @@ function display_course_videos($course_tag): void
     } catch (PDOException) {
     }
     if (isset($pdo_write)) {
-        /** @noinspection DuplicatedCode */
         $sql = 'SELECT  video_tag, `order` FROM db.course_videos WHERE course_tag = :course_tag;';
         $data = ['course_tag' => $course_tag];
 

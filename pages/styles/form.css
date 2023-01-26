@@ -203,7 +203,7 @@ label {
     user-select: none;
 }
 
-input#file {
+.file-group > input {
     display: none;
 }
 
@@ -211,6 +211,7 @@ label.file-button {
     display: flex;
     align-self: center;
     width: 100%;
+    max-width: 190px;
     flex-flow: row;
     align-items: center;
     justify-content: center;
@@ -234,6 +235,14 @@ label.file-button.has-file {
 
 label.file-button.has-file {
     background: #89a6cc;
+}
+
+.has-error > label.file-button {
+    background: #a4527b;
+}
+
+.has-error > label.file-button:hover {
+    background: #c965b8;
 }
 
 button.form-submit {

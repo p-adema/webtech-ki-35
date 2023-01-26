@@ -13,28 +13,48 @@ $(document).ready(function () {
         event.preventDefault();
         $('button.form-submit').addClass('pressed').removeClass('error');
 
-        const files = $('#file')[0].files
+        const video_files = $('#file-video')[0].files
 
-        if (files.length === 0) {
-            $(`.file-group`).addClass("has-error")
-            $(`.file-error`).css('visibility', 'visible').text('Please provide a file');
+        if (video_files.length === 0) {
+            $('#file-video-group').addClass("has-error")
+            $('#file-video-error').css('visibility', 'visible').text('Please provide a file');
             return;
         }
-        const file = files[0]
+        const video = video_files[0]
 
-        if (file.type !== 'video/mp4') {
-            $(`.file-group`).addClass("has-error")
-            $(`.file-error`).css('visibility', 'visible').text('Please provide a mp4 file');
+        if (video.type !== 'video/mp4') {
+            $('#file-video-group').addClass("has-error")
+            $('#file-video-error').css('visibility', 'visible').text('Please provide a mp4 file');
             return;
-        } else if (file.size > 5e7) {
-            $(`.file-group`).addClass("has-error")
-            $(`.file-error`).css('visibility', 'visible').text('Please provide a smaller file');
+        } else if (video.size > 1e8) {
+            $('#file-video-group').addClass("has-error")
+            $('#file-video-error').css('visibility', 'visible').text('Please provide a smaller file');
+            return;
+        }
+
+        const thumbnail_files = $('#file-thumbnail')[0].files
+
+        if (thumbnail_files.length === 0) {
+            $('#file-thumbnail-group').addClass("has-error")
+            $('#file-thumbnail-error').css('visibility', 'visible').text('Please provide a file');
+            return;
+        }
+        const thumbnail = thumbnail_files[0]
+
+        if (thumbnail.type !== 'image/jpeg') {
+            $('#file-thumbnail-group').addClass("has-error")
+            $('#file-video-error').css('visibility', 'visible').text('Please provide a jpeg file');
+            return;
+        } else if (thumbnail.size > 1e5) {
+            $('#file-thumbnail-group').addClass("has-error")
+            $('#file-thumbnail-error').css('visibility', 'visible').text('Please provide a smaller file');
             return;
         }
 
         let user_data = new FormData();
 
-        user_data.set("file", file, file.name);
+        user_data.set("video", video, video.name);
+        user_data.set("thumbnail", thumbnail, thumbnail.name);
         user_data.set('title', $("#title").val());
         user_data.set('description', $("#description").val())
         user_data.set('subject', $("#subject").val())
@@ -46,19 +66,21 @@ $(document).ready(function () {
         $.upload("/api/upload/video", user_data, form_default_response(handler_options))
     });
 
-    $("#file").on("change", function (_) {
+    $(".file-group > input").on("change", function (_) {
         let filename = $(this).val();
+        const id = this.id;
         if (filename !== "") {
             if (filename.length > 28) {
                 filename = filename.slice(12, 26) + '...'
             } else {
                 filename = filename.slice(12)
             }
-            $('.file-button-text').text(filename)
-            $('.file-button-icon').text('video_file')
+            $(`#${id}-button > .file-button-text`).text(filename)
+            const $icon = $(`#${id}-button > .file-button-icon`);
+            $icon.text($icon.attr('data_icon'))
         } else {
-            $('.file-button-text').text("Upload")
-            $('.file-button-icon').text('upload')
+            $(`#${id}-button > .file-button-text`).text("Upload")
+            $(`#${id}-button > .file-button-icon`).text('upload')
         }
     })
 

@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_not_auth: '/upload/auth');
 html_header(title: 'Create new course', styled: 'form.css', scripted: false);
 ?>
     <div class="form-content">

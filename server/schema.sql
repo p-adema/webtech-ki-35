@@ -30,11 +30,11 @@ CREATE TABLE `billing_information`
 
 CREATE TABLE `items`
 (
-    `id`    BIGINT UNSIGNED          NOT NULL AUTO_INCREMENT,
-    `tag`   CHAR(64) UNIQUE          NOT NULL,
-    `type`  ENUM ('video', 'course') NOT NULL,
-    `price` DECIMAL(5, 2) DEFAULT 0  NOT NULL,
-    `rating` DECIMAL(3, 2) DEFAULT 0 NOT NULL,
+    `id`     BIGINT UNSIGNED          NOT NULL AUTO_INCREMENT,
+    `tag`    CHAR(64) UNIQUE          NOT NULL,
+    `type`   ENUM ('video', 'course') NOT NULL,
+    `price`  DECIMAL(5, 2) DEFAULT 0  NOT NULL,
+    `rating` DECIMAL(3, 2) DEFAULT 0  NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -184,12 +184,12 @@ CREATE TABLE `gifts`
 
 CREATE TABLE `ownership`
 (
-    `id`          BIGINT UNSIGNED           NOT NULL AUTO_INCREMENT,
-    `item_tag`    CHAR(64)                  NOT NULL,
-    `user_id`     BIGINT UNSIGNED           NOT NULL,
-    `origin`      ENUM ('purchase', 'gift') NOT NULL,
-    `purchase_id` BIGINT UNSIGNED           NULL,
-    `gift_id`     BIGINT UNSIGNED           NULL,
+    `id`          BIGINT UNSIGNED                    NOT NULL AUTO_INCREMENT,
+    `item_tag`    CHAR(64)                           NOT NULL,
+    `user_id`     BIGINT UNSIGNED                    NOT NULL,
+    `origin`      ENUM ('purchase', 'gift', 'owner') NOT NULL,
+    `purchase_id` BIGINT UNSIGNED                    NULL,
+    `gift_id`     BIGINT UNSIGNED                    NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`item_tag`) REFERENCES db.videos (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
@@ -250,11 +250,11 @@ CREATE TABLE `item_tags`
 
 CREATE TABLE `watches`
 (
-  `id` BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `video_tag` CHAR(64),
-  `user_id` BIGINT UNSIGNED NOT NULL,
-  `watch_amount` DECIMAL(5, 2),
-  PRIMARY KEY (`id`),
-  FOREIGN KEY (`video_tag`) REFERENCES db.videos (`tag`),
-  FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
+    `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    `video_tag`    CHAR(64),
+    `user_id`      BIGINT UNSIGNED NOT NULL,
+    `watch_amount` DECIMAL(5, 2),
+    PRIMARY KEY (`id`),
+    FOREIGN KEY (`video_tag`) REFERENCES db.videos (`tag`),
+    FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );

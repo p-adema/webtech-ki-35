@@ -10,7 +10,6 @@ function video_scroll($course_tag, $video_number): string
         $valid = false;
     }
     if (isset($pdo_write)) {
-        /** @noinspection DuplicatedCode */
         $sql = 'SELECT  video_tag, `order` FROM db.course_videos WHERE course_tag = :course_tag;';
         $data = ['course_tag' => htmlspecialchars($course_tag)];
 
@@ -67,7 +66,6 @@ function video_sidebar($video_id): bool
     }
     $html = '';
     if (isset($pdo_write)) {
-        /** @noinspection DuplicatedCode */
         $sql = 'SELECT course_tag, `order`  FROM db.course_videos WHERE video_tag = :video_tag;';
         $data = ['video_tag' => htmlspecialchars($video_id)];
 
