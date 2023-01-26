@@ -34,6 +34,7 @@ CREATE TABLE `items`
     `tag`   CHAR(64) UNIQUE          NOT NULL,
     `type`  ENUM ('video', 'course') NOT NULL,
     `price` DECIMAL(5, 2) DEFAULT 0  NOT NULL,
+    `rating` DECIMAL(3, 2) DEFAULT 0 NOT NULL,
     PRIMARY KEY (`id`)
 );
 

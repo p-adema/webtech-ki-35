@@ -12,47 +12,81 @@ if ($_SESSION['auth']) {
 } else {
     $has_course = false;
 }
+$course_info = get_course_info($course_tag);
+if (isset($_GET['tag']) and $course_info !== false):
 $course_id = get_course_id($course_tag);
 $cart = new Cart;
 $course_in_cart = in_array($course_id, $cart->ids());
-$course_info = get_course_info($course_tag);
 $course_creator = course_creator($course_info['creator']);
 $time_since = time_since($course_info['creation_date']);
 $videos = get_videos($course_tag);
 $video_names = get_video_names($videos);
 $rating = get_rating_info($course_id);
-$score = $rating[1];
-$ratings = $rating[0];
+$score = 0;
+$ratings = 0;
+$course_has_ratings = true;
+$course_creation_date = explode(' ', $course_info['creation_date']);
+if (count($rating) == 0) {
+    $course_has_ratings = false;
+} else {
+    $score = $rating[1];
+    $ratings = $rating[0];
+}
 
-?>
+$tag = $_GET['tag'] ?? '';
+$video_info = get_video_data($tag);
+
+ ?>
     <div class="course-page">
         <div class="information-block">
             <div class="title-box"><p id="course-title"> <?php echo $course_info['name'] ?></p>
+                <p id="author"> <?php echo $course_creator['name'] ?> </p>
             </div>
-            <div class="author-box">
-                <p id="author"> By: <?php echo $course_creator['name'] ?> </p>
-            </div>
+            <div class="stretch-box-1"></div>
 
-            <?php if ($has_course) : ?>
-                <div class="ratings-box">
-                    <div class="stars-empty stars"></div>
-                    <p> Rating</p>
-                </div>
-            <?php else: ?>
-                <div class="ratings-box">
-                    <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-                    <p class="total-ratings"><?php echo "$ratings" ?> ratings</p></div>
-            <?php endif; ?>
             <div class="video-information">
                 <p id="subject"> Subject: <?php echo $course_info['subject'] ?></p>
                 <p id="description"><?php echo $course_info['description'] ?> </p>
                 <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
-            </div>
+                <p id="since">Since: <?php echo $course_creation_date[0] ?> </p>
+                <p id="views-and-time"> <?php echo $course_info['views'] ?> views </p>
 
-            <div class="description-box">
-                <p id="views-and-time"> <?php echo $course_info['views'] ?> views <?php echo $time_since ?> ago</p>
             </div>
+            <div class="stretch-box-2"></div>
 
+            <?php
+            if ($has_course):
+                if ($course_has_ratings):
+                    ?>
+                    <div class="ratings-box">
+                        <p class="star-score"> ★<?php echo "$score" ?> <br></p>
+                        <div class="stars-empty stars"></div>
+                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                    </div>
+                <?php else: ?>
+                    <div class="ratings-box">
+                        <div class="stars-empty stars"></div>
+                        <p class="total-ratings">This course does not have ratings </p>
+                    </div>
+                <?php
+                endif;
+            else:
+                if ($course_has_ratings): ?>
+                    <div class="ratings-box">
+                        <p class="star-score"> ★<?php echo "$score" ?> <br></p>
+                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                    </div>
+
+                <?php else: ?>
+                    <div class="ratings-box">
+                        <p class="total-ratings">This course does not have ratings </p></div>
+                <?php
+                endif;
+            endif;
+            ?>
+
+
+            <div class="stretch-box-3"></div>
             <?php
             if ($has_course):
                 ?>
@@ -64,7 +98,6 @@ $ratings = $rating[0];
                 ?>
 
 
-                <div class="stretch-box"></div>
                 <div class="add-to-cart-box">
                     <?php if ($course_in_cart): ?>
                         <form class="shop" id="cart" style="display: block">
@@ -111,6 +144,7 @@ $ratings = $rating[0];
             endif;
             ?>
         </div>
+
         <div class="video-block">
             <div class="video-border">
                 <?php display_course_videos($course_tag) ?>
@@ -120,9 +154,26 @@ $ratings = $rating[0];
         </div>
 
     </div>
+<?php else: ?>
+    <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
 
+    <div class="form-content">
+        <h1> Invalid link </h1>
+        <div class="form-outline">
+            <form >
+                <p> This link doesn't seem quite right </p>
+                <?php
+                echo '<div class="form-btns">';
+                 text_link('Go back home', '/');
+                echo '</div>';
+                ?>
+            </form>
+        </div>
+    </div>
 
 <?php
+endif;
+
 
 //echo get_video_watch_amount(2, 'example_paid');
 

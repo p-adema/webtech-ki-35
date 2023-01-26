@@ -5,6 +5,7 @@ p {
     margin: 0;
 }
 .course-page {
+    overflow: hidden;
     min-height: 93vh;
     display: flex;
     flex-flow: row;
@@ -14,39 +15,50 @@ p {
     padding: 14px;
     min-width: 20vw;
     display: flex;
-    background-color: #435443cc;
+    background-color: #637463;
     flex-flow: column;
     color: #131413;
 }
 .title-box {
-    flex: 1;
+    padding-bottom: 21px;
     align-self: center;
-    text-decoration: underline;
+}
 
-}
-.author-box {
-    flex: 1;
-}
+
 #author{
     margin: 0;
+    font-style: italic;
+    color: #2a3a2a;
 }
 
 .ratings-box {
-    flex: 2;
+    display: flex;
+    align-content: center;
+    flex-flow: column;
+    text-align: center;
+    padding: 30px 0 30px 0;
 }
 .star-score {
-    font-size: 20px;
+    font-size: 50px;
+    color: 	#CFB53B;
 }
-.total-ratings {
-    text-decoration: underline;
+.total-ratings{
+    color: #232;
 }
 
+
 .description-box {
-    flex: 1;
+}
+
+.thumbnail-text {
+    padding-left: 14px;
 }
 
 .video-information {
-    flex: 2;
+    color: #232;
+    border-radius: 15px;
+    background-color: #839483;
+    padding: 14px 14px 7px 14px;
 }
 #subject {
     text-decoration: underline;
@@ -56,11 +68,25 @@ p {
 #total-videos{
     margin-top: 7px;
 }
+#since{
+    padding-top: 7px;
+}
+
+.total-ratings{
+    text-decoration: underline;
+}
 
 .course-buying {
-    flex: 0;
 }
-.stretch-box {
+.stretch-box-1 {
+    align-self: stretch;
+    flex: 1;
+}
+.stretch-box-2 {
+    align-self: stretch;
+    flex: 1;
+}
+.stretch-box-3 {
     align-self: stretch;
     flex: 6;
 }
@@ -72,8 +98,8 @@ p {
 
 
 .add-to-cart-box {
+    padding: 30px 30px 0 30px;
     align-self: center;
-    flex: 1;
 }
 form#cart {
     display: none;
@@ -125,7 +151,9 @@ button.form-submit.form-submit-blue:hover {
     flex-flow: row;
 }
 #course-title{
+    color: #232;
     font-size: 30px;
+    border-bottom: solid;
 }
 
 
@@ -134,7 +162,7 @@ button.form-submit.form-submit-blue:hover {
     display: flex;
     overflow-y: scroll;
     flex-wrap: wrap;
-    max-height: 92vh;
+    height: 92vh;
     min-width: 100%;
     max-width: 100%;
     border-style: solid;
@@ -179,15 +207,15 @@ a {
 }
 
 .stars {
+    color: #CFB53B;
     max-width: fit-content;
-    font-size: 20px;
+    align-self: center;
 }
 
 .stars-empty:after {
     content: '☆☆☆☆☆';
     font-size: 20px;
     font-weight: bolder;
-    color: black;
 }
 
 .star-1:after {

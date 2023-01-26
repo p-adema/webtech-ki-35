@@ -1,0 +1,96 @@
+html {
+    background-color: #c3e0c0;
+}
+
+
+.header-box {
+    margin-top: 80px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.header {
+    font-size: 60px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: solid black 5px;
+}
+
+.best-header-box {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.best-video-header {
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.thumbnail {
+    max-width: 500px;
+    max-height: 282px;
+}
+
+.box {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.formal-box {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.all-videos {
+    margin-top: 60px;
+    text-align: center;
+    display: flex;
+    flex-flow: wrap;
+    flex: auto;
+    max-width: 90%;
+}
+
+.best-video-outline {
+    padding: 8px;
+    border: solid 8px #334433FF;
+    border-radius: 12px;
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.best-video-info {
+    text-align: center;
+    padding: 8px;
+    border-bottom: solid black 4px;
+    margin-bottom: 20px;
+}
+
+.normal-video-outline {
+    padding: 8px;
+    border: solid 8px #334433FF;
+    border-radius: 12px;
+    margin: 8px;
+}
+
+.normal-video-info {
+    padding: 8px;
+    border-bottom: solid black 4px;
+    margin-bottom: 20px;
+}
+
+.all-videos-header-box {
+    margin-top: 40px;
+}
+
+.all-videos-header {
+    font-size: 40px;
+    font-weight: bold;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-bottom: solid black 5px;
+}

@@ -73,7 +73,21 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
 
 
 <?php else: ?>
-    <span>This link doesn't seem quite right.</span>
+    <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
+
+    <div class="form-content">
+        <h1> Invalid link </h1>
+        <div class="form-outline">
+            <form >
+                <p> This link doesn't seem quite right </p>
+                <?php
+                echo '<div class="form-btns">';
+                text_link('Go back home', '/');
+                echo '</div>';
+                ?>
+            </form>
+        </div>
+    </div>
 <?php endif;
 
 html_footer();

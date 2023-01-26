@@ -72,7 +72,7 @@ function html_header(string $title, string $description = '', bool $navbar = tru
     ensure_session();
 
     if (!$authentication) {
-        $_SESSION['last-page'] = str_replace('index', '', PAGE);
+        $_SESSION['last-page'] = str_replace('index', '', PAGE) . (isset($_GET['tag']) ? "/{$_GET['tag']}" : '');
     }
 
     echo $html;

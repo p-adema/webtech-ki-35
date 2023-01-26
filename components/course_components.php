@@ -122,7 +122,7 @@ function display_course_videos($course_tag): void
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
                         <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg'></div> 
-                        <p>$video_name</p>
+                        <p class='thumbnail-text' >$video_name</p>
                        </div></a>";
             }
 
@@ -137,8 +137,8 @@ function get_course_id($course_tag): string {
     $sql = 'SELECT id FROM db.items WHERE tag = :course_tag';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['course_tag' => $course_tag]);
-
-    return $sth->fetch()['id'];
+    $result = $sth->fetch();
+    return $result['id'];
 }
 
 function get_rating_info($item_id): array{
@@ -152,13 +152,17 @@ function get_rating_info($item_id): array{
     $ratings = $sth->fetchAll();
     $total_ratings = count($ratings);
     $score = 0;
+    if ($total_ratings == 0){
+        return [];
+    } else {
+        for ($x = 0; $x < $total_ratings; $x++) {
+            $score += $ratings[$x]['rating'];
+        }
+        $score = $score/$total_ratings;
 
 
-    for ($x = 0; $x < $total_ratings; $x++) {
-        $score += $ratings[$x]['rating'];
+        return [$total_ratings, $score];
     }
-    $score = $total_ratings === 0 ? 3 : $score/$total_ratings;
 
 
-    return [$total_ratings, $score];
 }

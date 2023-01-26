@@ -1,10 +1,13 @@
 <?php
 
+require_once 'api_resolve.php';
+require_once 'video_functionality.php';
+
 ensure_session();
 
 if ($_SESSION['auth'] and $_POST['star'] != null) {
 
-    $tag = $_POST['on'];
+    $tag = $_POST['tag'];
     $uid = $_SESSION['uid'];
     $star = $_POST['star'];
 
