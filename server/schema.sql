@@ -171,13 +171,11 @@ CREATE TABLE `purchase_items`
 CREATE TABLE `gifts`
 (
     `id`                BIGINT UNSIGNED AUTO_INCREMENT,
-    `url_tag`           CHAR(64)               NOT NULL,
     `item_id`           BIGINT UNSIGNED        NOT NULL,
     `user_id`           BIGINT UNSIGNED        NOT NULL,
     `admin_id`          BIGINT UNSIGNED        NOT NULL,
     `confirmation_time` DATETIME DEFAULT NOW() NOT NULL,
     PRIMARY KEY (`id`),
-    UNIQUE (`url_tag`),
     FOREIGN KEY (`item_id`) REFERENCES db.items (`id`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
     FOREIGN KEY (`admin_id`) REFERENCES db.users (`id`)
