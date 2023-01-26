@@ -13,6 +13,7 @@ echo '<br/> See <a href="/courses/video/example_free">example free</a> to view a
 echo '<br/> See <a href="/courses/video/example_paid">example paid</a> to view a paid example video';
 echo '<br/> See <a href="/bank/"> bank</a> to see your balance';
 echo '<br/> See <a href="/courses/course/bh5ubPO5vCg71d5D64a5GeQMP2enL02DHBiOSTne5vYdlS15rGmsRWuwAuW8t06h"> Physics</a> for a first scraped course';
+echo '<br/> See <a href="/courses/course/bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65UgqwsiY1kw1DaeFxmHgen4nx9QR"> Environmental Science </a> for a second scraped course';
 echo '</p>';
 
 html_footer();
