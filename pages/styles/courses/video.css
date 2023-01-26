@@ -2,6 +2,8 @@ html {
     background-color: #e1f0ff;
 }
 
+
+
 .video-page-flexbox {
     display: flex;
     flex-flow: row;

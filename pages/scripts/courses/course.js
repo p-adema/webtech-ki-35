@@ -22,13 +22,11 @@ $(document).ready(function () {
 
         let star_count = Math.ceil(((x_cord / tot_length) * 5))
 
-        const video_data = {
-            type: 'item',
-            on: course_tag,
-            star: star_count
-        }
+        let link_array = ($(location).attr('href')).split('/')
+        let tag = link_array[link_array.length -1]
+
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/stars', video_data)
+        jQuery.post('/api/courses/stars', {star: star_count, tag: tag})
     })
     $(".shop").submit(function (event) {
         event.preventDefault();
