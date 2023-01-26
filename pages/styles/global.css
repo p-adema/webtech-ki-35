@@ -99,6 +99,8 @@ body {
 }
 
 .topnav {
+    display: flex;
+    flex-flow: row;
     background-color: #343;
     height: 60px;
     position: fixed;
@@ -108,6 +110,26 @@ body {
     z-index: 2;
 
 }
+.navbar-stretch-1{
+flex: 1;
+}
+.navbar-stretch-2{
+flex: 9;
+}
+.home-button{
+
+}
+.browse-button:hover{
+    background-color: #676;
+}
+.courses-button:hover{
+    background-color: #676;
+}
+.videos-button:hover{
+    background-color: #676;
+}
+
+
 
 .topnav a {
     float: left;
@@ -119,7 +141,6 @@ body {
 }
 
 .topnav #mandje {
-    float: right;
     padding: 14px 14px 10px;
 }
 
@@ -129,8 +150,8 @@ body {
     background-color: #676;
 }
 
+
 .topnav a:hover {
-    color: black;
     cursor: pointer;
 }
 
