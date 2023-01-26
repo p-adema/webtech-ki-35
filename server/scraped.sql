@@ -1,3 +1,4 @@
+-- Physics
 INSERT INTO db.items
     (tag, type, price)
 VALUES ('bh5ubPO5vCg71d5D64a5GeQMP2enL02DHBiOSTne5vYdlS15rGmsRWuwAuW8t06h', 'course', 50.00),
@@ -249,7 +250,7 @@ VALUES ('63GIeZ6XJTJXbwEw4Db9emAkvTIUCXMbcoQXP3jaXfeOsOB7381vmdSzMjdiJNLR',
        ('NMW5sovCrMzjRJxuPUZBqKzMxR1Gl7iG4vezyiITDn2i8lkgd7BP0C9DoHBYP1q8',
         'bh5ubPO5vCg71d5D64a5GeQMP2enL02DHBiOSTne5vYdlS15rGmsRWuwAuW8t06h', 46);
 
-
+-- Environmental Science
 INSERT INTO db.items
     (tag, type, price)
 VALUES ('bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65UgqwsiY1kw1DaeFxmHgen4nx9QR', 'course', 20.00),
@@ -355,3 +356,50 @@ VALUES ('l2TiuglxfLOvijvYyJlQaD2qRW2vLTvJm87mMRgLJ5KHgOhqDI51E0rleDDVJZwM',
         'bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65UgqwsiY1kw1DaeFxmHgen4nx9QR', 16),
        ('GGNxoIzCVoDihwoNOBc7ZbZcYlO3luIMgUlmQWwe2BolVSrDvAGOuRucg4wZd4kN',
         'bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65UgqwsiY1kw1DaeFxmHgen4nx9QR', 17);
+
+-- IUCN
+INSERT INTO db.items
+    (tag, type, price)
+VALUES ('69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 'course', 8.00),
+       ('RsszczsnLyWKdBCcoEsMwm8tkMaUQmvLvdy4sLNCZM1Mn5koFwx2oa2fmPJojxcG', 'video', 0.00),
+       ('FQgCkg2ZVrwzVlln4FIIi43edzQvWwuU0nxISJeE6h55946gAYcp8nupGTC7U7fL', 'video', 4.04),
+       ('7Rpg1ikqjb2eMpZ7jJ2RWyKdnGNrg5kBBMECqqSrnlrLStc4rmJsjaFs1Od8KNpE', 'video', 2.86),
+       ('Eu8McO5SI1H4oHe3CZmMtiWfIKNDRYgRf3blZ1UrAFA6X9lRUnsqWlDXYolWHJuC', 'video', 3.72),
+       ('KCHJrfxocuPgQ7e52RL4vLbCkr1TmISRgFzJhIcCmfgBYGlAYaoFbhTmxCBmqnMf', 'video', 3.61),
+       ('fqaWYZQDZWIgKpYiiCdgwQtblev0Ln6sjeCz0v3YrXabYRFxcpk7gr5sywskFON5', 'video', 1.45);
+
+INSERT INTO db.courses
+    (tag, name, description, subject, creator)
+VALUES ('69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 'Indigenous Insights',
+        'Extra conservation course by IUCN', 'geography', 4);
+
+
+INSERT INTO db.videos
+    (tag, name, free, description, subject, uploader)
+VALUES ('RsszczsnLyWKdBCcoEsMwm8tkMaUQmvLvdy4sLNCZM1Mn5koFwx2oa2fmPJojxcG', 'An end-of-the-year reflection', 1,
+        'TODO: descrition', 'geography', 4),
+       ('FQgCkg2ZVrwzVlln4FIIi43edzQvWwuU0nxISJeE6h55946gAYcp8nupGTC7U7fL', 'Protecting 80% of the Amazon by 2025', 0,
+        'TODO: descrition', 'geography', 4),
+       ('7Rpg1ikqjb2eMpZ7jJ2RWyKdnGNrg5kBBMECqqSrnlrLStc4rmJsjaFs1Od8KNpE', 'Biodiversity and climate change', 0,
+        'TODO: descrition', 'geography', 4),
+       ('Eu8McO5SI1H4oHe3CZmMtiWfIKNDRYgRf3blZ1UrAFA6X9lRUnsqWlDXYolWHJuC', 'Indigenous Women Leaders', 0,
+        'TODO: descrition', 'geography', 4),
+       ('KCHJrfxocuPgQ7e52RL4vLbCkr1TmISRgFzJhIcCmfgBYGlAYaoFbhTmxCBmqnMf', 'Indigenous Food Systems', 0,
+        'TODO: descrition', 'geography', 4),
+       ('fqaWYZQDZWIgKpYiiCdgwQtblev0Ln6sjeCz0v3YrXabYRFxcpk7gr5sywskFON5', 'Indigenous governance and conservation', 0,
+        'TODO: descrition', 'geography', 4);
+
+INSERT INTO db.course_videos
+    (video_tag, course_tag, `order`)
+VALUES ('RsszczsnLyWKdBCcoEsMwm8tkMaUQmvLvdy4sLNCZM1Mn5koFwx2oa2fmPJojxcG',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 0),
+       ('FQgCkg2ZVrwzVlln4FIIi43edzQvWwuU0nxISJeE6h55946gAYcp8nupGTC7U7fL',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 1),
+       ('7Rpg1ikqjb2eMpZ7jJ2RWyKdnGNrg5kBBMECqqSrnlrLStc4rmJsjaFs1Od8KNpE',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 2),
+       ('Eu8McO5SI1H4oHe3CZmMtiWfIKNDRYgRf3blZ1UrAFA6X9lRUnsqWlDXYolWHJuC',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 3),
+       ('KCHJrfxocuPgQ7e52RL4vLbCkr1TmISRgFzJhIcCmfgBYGlAYaoFbhTmxCBmqnMf',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 4),
+       ('fqaWYZQDZWIgKpYiiCdgwQtblev0Ln6sjeCz0v3YrXabYRFxcpk7gr5sywskFON5',
+        '69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS', 5);
