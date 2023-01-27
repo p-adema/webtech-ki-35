@@ -9,7 +9,7 @@ if ($homepage):
     <div class='homepage-all'>
     <div class='homepage-top'>
     
-    <img class='background-grove' src='/resources/images/homepage.gif' alt='testtest'>
+    <img class='background-grove' src='/resources/images/homepage2.gif' alt='testtest'>
     <div class='welcome-text'>
     <p id='welcome-text'>EduGrove: Your path to growth</p>
 </div>
