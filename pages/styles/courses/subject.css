@@ -3,12 +3,66 @@ html {
 }
 
 
+.course-and-video {
+    display: flex;
+    flex-flow: row;
+    max-width: 100%;
+}
+
+.empty-space {
+    min-width: 10%;
+}
+
 .header-box {
     margin-top: 80px;
     margin-bottom: 20px;
     display: flex;
     flex-flow: column;
     align-items: center;
+}
+
+.text-and-course {
+    display: flex;
+    flex-flow: column;
+    max-width: fit-content;
+}
+
+.empty-space-course {
+    min-width: 10%;
+}
+
+.course-text-outline {
+    align-self: center;
+    display: flex;
+    flex-flow: column;
+}
+
+.course-text {
+    text-align: center;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+.course-box {
+    align-self: end;
+}
+
+.no-course-box {
+    display: flex;
+    flex-flow: column;
+    text-align: center;
+    align-items: center;
+    min-width: 500px;
+    min-height: 282px;
+    background-color: black;
+}
+
+.no-course {
+    margin-top: 22%;
+    font-size: 30px;
+    color: white;
+    align-self: center;
+    text-align: center;
 }
 
 .header {
@@ -19,9 +73,17 @@ html {
     border-bottom: solid black 5px;
 }
 
+.best-header-box-course {
+    margin-top: 30px;
+    text-align: center;
+    max-width: 100%;
+    margin-bottom: 5%;
+}
+
 .best-header-box {
     margin-top: 30px;
     margin-bottom: 20px;
+    text-align: center;
 }
 
 .best-video-header {
@@ -84,7 +146,7 @@ html {
 }
 
 .all-videos-header-box {
-    margin-top: 40px;
+    margin-top: 80px;
 }
 
 .all-videos-header {
