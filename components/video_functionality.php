@@ -112,9 +112,8 @@ function name_of_uploader($uid): string
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['uid' => $uid]);
 
-    $data = $sth->fetch()['name'];
+    return $sth->fetch()['name'];
 
-    return $data;
 }
 
 //function get_video_watch_amount($uid, $video_tag): float

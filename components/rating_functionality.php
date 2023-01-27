@@ -44,10 +44,22 @@ function get_popular_video(): string
 {
     require_once 'pdo_read.php';
 
-    $pod_read = new_pdo_read();
+    $pdo_read = new_pdo_read();
     $sql = 'SELECT tag FROM db.items WHERE type = :video ORDER BY rating DESC';
-    $sth = $pod_read->prepare($sql);
+    $sth = $pdo_read->prepare($sql);
     $sth->execute(['video' => 'video']);
-    $thing = $sth->fetch()['tag'];
-    return $thing;
+    return $sth->fetch()['tag'];
+}
+
+function get_popular_course($subject): array|false
+{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+
+    $sql = 'SELECT items.tag FROM items INNER JOIN courses ON items.tag = courses.tag WHERE courses.subject = :genre ORDER BY items.rating DESC';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['genre' => $subject]);
+
+    return $sth->fetch();
 }

@@ -16,11 +16,12 @@ function navbar(): void
       <div class='courses-button'> 
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
-      <div class='videos-button '> 
-      <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>    
+      <div class='videos-button dropdown-videos'> 
+      <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
+        
       </div>
         <div class='navbar-stretch-2'></div>
-     
+        
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
      <span id='shopping-cart' class='material-symbols-outlined'>
@@ -35,8 +36,16 @@ function navbar(): void
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
     }
     $html .= " </div>" .
-     sidebar_right()
-     ."</div> ". sidebar_cover();
+        sidebar_right()
+        . "</div> 
+ <div class='videos-button dropdown-videos'>
+ <div class='dropdown-videos-content'> 
+      <a href='/courses/'> Phsics</a>
+      <a href='/courses/'> Biologie</a>
+      <a href='/courses/'> Maths</a>
+      </div>
+      </div>
+ ". sidebar_cover();
 
      echo $html;
 

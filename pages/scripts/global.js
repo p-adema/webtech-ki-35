@@ -119,6 +119,9 @@ function symbol_default_leave(_) {
 }
 
 $(document).ready(function () {
+    let $dropdown_videos = $('.dropdown-videos');
+    let $dropdown_videos_content = $('.dropdown-videos-content')
+    $dropdown_videos_content.stop().show().animate({opacity: 0, left: $dropdown_videos.offset().left, top: -$dropdown_videos_content.height() }, 40)
     $('.sidebar-active-cover').click(function (_) {
         close_right_menu()
     })
@@ -135,6 +138,15 @@ $(document).ready(function () {
     $('.link-back').click(function (event) {
         event.preventDefault();
         window.history.back();
+    })
+    $dropdown_videos.mouseenter(function (_) {
+        $('.dropdown-videos-content').stop().show().animate({opacity: 1, top: 60}, 400)
+        $dropdown_videos.css('background-color', '#676')
+    })
+    $dropdown_videos.mouseleave(function (_) {
+        $dropdown_videos.css('background-color', '#343')
+        $dropdown_videos_content.stop().animate({opacity: 0, top: -$dropdown_videos_content.height()}, 400)
+
     })
 })
 
