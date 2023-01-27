@@ -2,6 +2,7 @@
 
 require_once 'rating_functionality.php';
 require_once 'video_functionality.php';
+require_once 'courses_browse_functionality.php';
 
 function render_best_videos_subject_page($subject): void
 {
@@ -9,8 +10,58 @@ function render_best_videos_subject_page($subject): void
     $popular_video = $videos[0];
     $popular_video_data = get_video_data($popular_video['tag']);
     $name_of_popular_uploader = name_of_uploader($popular_video_data['uploader']);
-    
+    $course = get_popular_course($subject);
+
+    echo "<div class='course-and-video'>";
+
+    if (!empty($course)) {
+
+        $course_info = get_course_info($course['tag']);
+        $creator = name_of_uploader($course_info['creator']);
+
+        echo "
+    <div class='course-box'>
+        <div class='best-header-box-course'>
+            <span class='best-video-header'>Recommended course</span>
+        </div>
+        <div class='text-and-course'>
+            <div class='best-video-outline'>
+                <a href='/courses/video?tag={$course['tag']}'>
+                    <img class='thumbnail'
+                    src='/resources/thumbnails/{$course['tag']}.jpg'
+                    alt='Your browser does not support this image type.'>
+                </a>
+                <div class='best-video-info'>
+                    <span class='best-video-name'>{$course_info['name']}</span>
+                    <span class='best-video-creator'>By $creator </span>
+                </div>
+            </div>
+            <div class='empty-space-course'></div>
+            <div class='course-text-outline'><span class='course-text'>Users like you love this $subject course!</span></div>
+        </div>
+    </div>
+    ";
+    }
+
+    else {
+        echo "
+        <div class='course-box'>
+        <div class='best-header-box'>
+            <span class='best-video-header'>Recommended course</span>
+        </div>
+        <div class='best-video-outline'>
+            <div class='no-course-box'><span class='no-course'>Sorry, no courses found for this subject</span></div>    
+            <div class='best-video-info'>
+                <span class='best-video-name'>No course found</span>
+            </div>
+        </div>
+    </div>
+    ";
+    }
+
     echo "
+    <div class='empty-space'></div>
+    <div class='best-box'>    
         <div class='best-header-box'>
             <span class='best-video-header'>Recommended video</span>
         </div>
@@ -25,7 +76,10 @@ function render_best_videos_subject_page($subject): void
                 <span class='best-video-creator'>By $name_of_popular_uploader</span>
             </div>
         </div>
+    </div>    
     ";
+
+    echo "</div>";
 
     echo "<div class='all-videos-header-box'><span class='all-videos-header'>All videos</span></div>";
 
