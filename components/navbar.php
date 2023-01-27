@@ -16,11 +16,11 @@ function navbar(): void
       <div class='courses-button'> 
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
-      <div class='videos-button'> 
+      <div class='videos-button '> 
       <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>    
       </div>
         <div class='navbar-stretch-2'></div>
-        
+     
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
      <span id='shopping-cart' class='material-symbols-outlined'>
