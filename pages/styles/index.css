@@ -1,9 +1,8 @@
 html{
-    background-color: lightseagreen;
+    background-color: #676;
 }
 
 .homepage-all {
-    background-color: black;
     display: flex;
     flex-flow: column;
 }
@@ -11,20 +10,72 @@ html{
     display: flex;
     flex-flow: column;
     width: 100vw;
-    height: 500px;
+    height: 60vh;
 }
 .background-grove {
     z-index: 0;
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 60vh;
+    object-fit: fill;
 }
 .welcome-text {
     align-self: center;
-    position: absolute;
-    z-index: 1;
+    z-index: 0;
     font-size: 40px;
     color: darkgreen;
-    font-weight: bold;
     padding: 21px;
+}
+.explore-button {
+    align-self: center;
+    z-index: 3;
+}
+.stretch-box-homepage-1 {
+    flex: 3;
+}
+.stretch-box-homepage-2 {
+    flex: 1;
+}
+.stretch-box-homepage-3 {
+    flex: 1;
+}
+
+.explore-button {
+    background-color: #66776666;
+    border-radius: 20px;
+    border: 2px solid #343;
+}
+.explore-button:hover{
+    background-color: #667766aa;
+}
+
+.explore-button .button-text {
+    color: #343;
+    padding: 14px;
+    text-decoration: none;
+    font-size: 21px;
+}
+
+.explore-button  a {
+    text-decoration: none;
+}
+
+.homepage-bottom {
+    padding-top: 7px;
+    font-family: "Abyssinica SIL", sans-serif;
+    color: #232;
+    height: 31vh;
+    display: flex;
+    flex-flow: row;
+}
+
+.homepage-information{
+    width: 33vw;
+    padding: 14px;
+    border-right: 2px solid;
+}
+.homepage-bottom .text h1 {
+    font-size: 25px;
+    font-weight: normal;
+
 }

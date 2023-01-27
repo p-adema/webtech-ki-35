@@ -8,19 +8,46 @@ if ($homepage):
     $html = "
     <div class='homepage-all'>
     <div class='homepage-top'>
-    
-    <img class='background-grove' src='/resources/images/homepage2.gif' alt='testtest'>
+    <video autoplay loop muted  class='background-grove' src='/resources/images/homepage-video.mp4'></video>
     <div class='welcome-text'>
     <p id='welcome-text'>EduGrove: Your path to growth</p>
 </div>
+<div class='stretch-box-homepage-1'></div>
+<div class='explore-button'>
+<a href='/courses'> <div class='button-text'>
+<span> Start exploring</span>
+</div> </a>
+</div>
+<div class='stretch-box-homepage-2'></div>
 </div>
 
-<div class='homepage-middle'>
-
-</div>
 <div class='homepage-bottom'>
-
+<div class='homepage-information'>
+<div class='text'>
+<h1> About us: </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
 </div>
+</div>
+<div class='homepage-information'>
+<div class='text'>
+<h1> How does it work? </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+</div>
+</div>
+<div class='homepage-information'>
+<div class='text'>
+<h1> Contact </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+</div>
+</div>
+</div>
+
     
 </div>
     ";
