@@ -1,7 +1,28 @@
 <?php
 require 'html_page.php';
-html_header('EduGrove', scripted: 'ajax');
+html_header('EduGrove', styled: true, scripted: 'ajax');
 
+$homepage = true;
+if ($homepage):
+
+    $html = "
+    <div class='homepage-all'>
+    <div class='homepage-top'>
+    <img class='background-grove' src='/resources/images/grove-background.jpg' alt='testtest'>
+    <p>tooooooo</p>
+</div>
+
+<div class='homepage-middle'>
+
+</div>
+<div class='homepage-bottom'>
+
+</div>
+    
+</div>
+    ";
+    echo $html;
+    else:
 echo '<p>';
 echo 'Base page';
 echo '<br/> See <a href="/auth/register">auth/register</a> for a registration form';
@@ -17,5 +38,7 @@ echo '<br/> See <a href="/courses/course/bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65Ug
 echo '<br/> See <a href="/courses/course/69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS"> IUCN </a> for a third scraped course';
 echo '<br/><br/> See <a href="/upload/"> upload </a> to upload new content';
 echo '</p>';
+
+endif;
 
 html_footer();

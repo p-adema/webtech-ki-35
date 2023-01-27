@@ -121,7 +121,7 @@ function symbol_default_leave(_) {
 $(document).ready(function () {
     let $dropdown_videos = $('.dropdown-videos');
     let $dropdown_videos_content = $('.dropdown-videos-content')
-    $dropdown_videos_content.stop().show().animate({opacity: 0, left: $dropdown_videos.offset().left, top: -$dropdown_videos_content.height() }, 40)
+    $dropdown_videos_content.stop().animate({opacity: 0, left: $dropdown_videos.offset().left, top: -$dropdown_videos_content.height() }, 40)
     $('.sidebar-active-cover').click(function (_) {
         close_right_menu()
     })

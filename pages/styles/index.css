@@ -1,0 +1,24 @@
+html{
+    background-color: lightseagreen;
+}
+
+.homepage-all {
+    background-color: black;
+    display: flex;
+    flex-flow: column;
+}
+.homepage-top {
+    width: 100vw;
+    height: 500px;
+}
+.background-grove {
+    z-index: 0;
+    position: absolute;
+    width: 100vw;
+    height: 60vh;
+}
+p {
+    z-index: 3;
+
+    color: white;
+}
