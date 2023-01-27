@@ -18,11 +18,7 @@ function navbar(): void
       </div>
       <div class='videos-button dropdown-videos'> 
       <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
-      <div class='dropdown-videos-content'> 
-      <a href='/courses/'> Physics</a>
-      <a href='/courses/'> Biologie</a>
-      <a href='/courses/'> Maths</a>
-      </div>  
+        
       </div>
         <div class='navbar-stretch-2'></div>
         
@@ -40,8 +36,16 @@ function navbar(): void
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
     }
     $html .= " </div>" .
-     sidebar_right()
-     ."</div> ". sidebar_cover();
+        sidebar_right()
+        . "</div> 
+ <div class='videos-button dropdown-videos'>
+ <div class='dropdown-videos-content'> 
+      <a href='/courses/'> Phsics</a>
+      <a href='/courses/'> Biologie</a>
+      <a href='/courses/'> Maths</a>
+      </div>
+      </div>
+ ". sidebar_cover();
 
      echo $html;
 

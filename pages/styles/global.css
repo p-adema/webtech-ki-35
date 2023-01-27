@@ -30,7 +30,7 @@ html {
     background-color: #676;
     right: -150px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 0;
+    z-index: 3;
     min-width: 150px;
     text-align: left;
 }
@@ -44,8 +44,18 @@ html {
     text-align: right;
     width: 90%;
 }
+.dropdown-videos-content a {
+    float: none;
+    color: black;
+    padding: 6px 6px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    width: 90%;
+}
 
 .dropdown-content a:hover {background-color: darkcyan;}
+.dropdown-videos-content a:hover {background-color: darkcyan;}
 
 
 
@@ -130,25 +140,27 @@ flex: 9;
 }
 
 .dropdown-videos-content {
+
     display: inline;
-    opacity: 100%;
     position: absolute;
+    left: 400px;
+    top: 60px;
     background-color: #676;
-    right: 500px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 3;
+    z-index: 0;
     min-width: 150px;
     text-align: left;
 }
 
 .dropdown-videos-content a {
-    float: none;
-    color: black;
-    padding: 6px 6px;
     text-decoration: none;
     display: block;
-    text-align: right;
-    width: 90%;
+    width: 100%;
+    float: left;
+    color: #fafaf0;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    font-size: 18px;
 }
 
 .topnav a {
@@ -159,6 +171,9 @@ flex: 9;
     text-decoration: none;
     font-size: 17px;
 }
+
+
+
 
 .topnav #mandje {
     padding: 14px 14px 10px;
