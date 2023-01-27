@@ -8,6 +8,8 @@ html{
     flex-flow: column;
 }
 .homepage-top {
+    display: flex;
+    flex-flow: column;
     width: 100vw;
     height: 500px;
 }
@@ -17,8 +19,11 @@ html{
     width: 100vw;
     height: 60vh;
 }
-p {
-    z-index: 3;
-
-    color: white;
+.welcome-text {
+    align-self: center;
+    position: absolute;
+    z-index: 1;
+    font-size: 40px;
+    color: #2a3f3f;
+    padding: 21px;
 }

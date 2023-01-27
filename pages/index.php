@@ -8,8 +8,11 @@ if ($homepage):
     $html = "
     <div class='homepage-all'>
     <div class='homepage-top'>
-    <img class='background-grove' src='/resources/images/grove-background.jpg' alt='testtest'>
-    <p>tooooooo</p>
+    
+    <img class='background-grove' src='/resources/images/homepage.gif' alt='testtest'>
+    <div class='welcome-text'>
+    <p id='welcome-text'>EduGrove: Your path to growth</p>
+</div>
 </div>
 
 <div class='homepage-middle'>
