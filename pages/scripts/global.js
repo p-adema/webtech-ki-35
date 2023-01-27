@@ -136,6 +136,13 @@ $(document).ready(function () {
         event.preventDefault();
         window.history.back();
     })
+    let $dropdown_videos = $('.dropdown-videos');
+    $dropdown_videos.mouseenter(function (_) {
+        $('.dropdown-videos-content').stop().show().animate({opacity: 1, right: 300}, 400)
+    })
+    $dropdown_videos.mouseleave(function (_) {
+        $('.dropdown-videos-content').stop().animate({opacity: 0, right: -300}, 400)
+    })
 })
 
 function cart_item_delete(event) {

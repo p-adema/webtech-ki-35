@@ -16,8 +16,13 @@ function navbar(): void
       <div class='courses-button'> 
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
-      <div class='videos-button'> 
-      <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>    
+      <div class='videos-button dropdown-videos'> 
+      <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
+      <div class='dropdown-videos-content'> 
+      <a href='/courses/'> Physics</a>
+      <a href='/courses/'> Biologie</a>
+      <a href='/courses/'> Maths</a>
+      </div>  
       </div>
         <div class='navbar-stretch-2'></div>
         

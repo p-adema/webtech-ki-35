@@ -129,7 +129,27 @@ flex: 9;
     background-color: #676;
 }
 
+.dropdown-videos-content {
+    display: inline;
+    opacity: 100%;
+    position: absolute;
+    background-color: #676;
+    right: 500px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 3;
+    min-width: 150px;
+    text-align: left;
+}
 
+.dropdown-videos-content a {
+    float: none;
+    color: black;
+    padding: 6px 6px;
+    text-decoration: none;
+    display: block;
+    text-align: right;
+    width: 90%;
+}
 
 .topnav a {
     float: left;
