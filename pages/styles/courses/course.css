@@ -257,3 +257,12 @@ a {
 .perm-star-5:after {
     content: '★★★★★';
 }
+
+@media screen and (max-width: 800px) {
+    .video-border {
+        flex-wrap: nowrap;
+        flex-flow: column;
+        text-align: center;
+        align-items: center;
+    }
+}

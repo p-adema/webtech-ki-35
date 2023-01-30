@@ -1,7 +1,58 @@
 <?php
 require 'html_page.php';
-html_header('EduGrove', scripted: 'ajax');
+html_header('EduGrove', styled: true, scripted: 'ajax');
 
+$homepage = true;
+if ($homepage):
+
+    $html = "
+    <div class='homepage-all'>
+    <div class='homepage-top'>
+    <video autoplay loop muted  class='background-grove' src='/resources/images/homepage-video.mp4'></video>
+    <div class='welcome-text'>
+    <p id='welcome-text'>EduGrove: Your path to growth</p>
+</div>
+<div class='stretch-box-homepage-1'></div>
+<div class='explore-button'>
+<a href='/courses/browse_videos'> <div class='button-text'>
+<span> Start exploring</span>
+</div> </a>
+</div>
+<div class='stretch-box-homepage-2'></div>
+</div>
+
+<div class='homepage-bottom'>
+<div class='homepage-information'>
+<div class='text'>
+<h1> About us: </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+</div>
+</div>
+<div class='homepage-information'>
+<div class='text'>
+<h1> How does it work? </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+</div>
+</div>
+<div class='homepage-information'>
+<div class='text'>
+<h1> Contact </h1>  
+<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
+ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
+laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+</div>
+</div>
+</div>
+
+    
+</div>
+    ";
+    echo $html;
+    else:
 echo '<p>';
 echo 'Base page';
 echo '<br/> See <a href="/auth/register">auth/register</a> for a registration form';
@@ -17,5 +68,7 @@ echo '<br/> See <a href="/courses/course/bPp0NYKzPJb8s6iBjnTphRwn9RG09phKh6V65Ug
 echo '<br/> See <a href="/courses/course/69z4eIxCHLIkEoR6jNTdAoyEjaRwj0Q8wGgsjj4pBtgIyH0XtgxAXBT1VfCWXWtS"> IUCN </a> for a third scraped course';
 echo '<br/><br/> See <a href="/upload/"> upload </a> to upload new content';
 echo '</p>';
+
+endif;
 
 html_footer();

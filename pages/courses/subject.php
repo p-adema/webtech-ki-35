@@ -2,12 +2,16 @@
 require 'html_page.php';
 require_once 'rating_functionality.php';
 require_once 'subject_page_functionality.php';
-html_header(title: 'Subject', styled: true, scripted: false);
+require_once 'courses_browse_functionality.php';
+html_header(title: 'Subject', styled: true, scripted: 'ajax');
 
 ensure_session();
 
 $subject = $_GET['tag'];
-$subject_header = ucfirst($subject);
+
+if (!empty($subject) and ($subject === 'physics' or $subject === 'geography' or $subject === 'biology')) {
+
+    $subject_header = ucfirst($subject);
 
 ?>
     <div class="header-box">
@@ -19,7 +23,9 @@ $subject_header = ucfirst($subject);
         <?php render_best_videos_subject_page($subject); ?>
     </div>
 
-    Hallo
-
 <?php
+}
+else {
+    echo "This link does not seem quite right.";
+}
 html_footer();

@@ -559,10 +559,6 @@ button.med-btn {
         padding: 10px 10px;
     }
 
-    .form-content {
-        max-width: 90vw;
-    }
-
     span.form-error {
         font-size: 30px;
     }
@@ -603,6 +599,12 @@ button.med-btn {
 
     h1 {
         font-size: 70px;
-        margin: 20px;
+        margin: 40px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    input {
+        font-size: 26px;
     }
 }
