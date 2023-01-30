@@ -60,6 +60,7 @@ CREATE TABLE `courses`
     `id`            BIGINT UNSIGNED               NOT NULL AUTO_INCREMENT,
     `tag`           CHAR(64) UNIQUE               NOT NULL,
     `name`          VARCHAR(100)                  NOT NULL,
+    `free`          BOOLEAN         DEFAULT FALSE NOT NULL,
     `description`   VARCHAR(256)                  NOT NULL,
     `subject`       VARCHAR(100)                  NOT NULL,
     `creator`       BIGINT UNSIGNED               NOT NULL,
