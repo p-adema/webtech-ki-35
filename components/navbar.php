@@ -17,7 +17,7 @@ function navbar(): void
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
       <div class='videos-button dropdown-videos'> 
-      <a href='/courses/'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
+      <a href='/courses/browse_videos'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
         
       </div>
         <div class='navbar-stretch-2'></div>
@@ -40,9 +40,9 @@ function navbar(): void
         . "</div> 
  <div class='videos-button dropdown-videos'>
  <div class='dropdown-videos-content'> 
-      <a href='/courses/'> Phsics</a>
-      <a href='/courses/'> Biologie</a>
-      <a href='/courses/'> Maths</a>
+      <a href='/courses/subject?tag=physics'> Phsics</a>
+      <a href='/courses/subject?tag=biology'> Biology</a>
+      <a href='/courses/subject?tag=geography'> Geography</a>
       </div>
       </div>
  ". sidebar_cover();

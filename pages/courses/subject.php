@@ -3,7 +3,7 @@ require 'html_page.php';
 require_once 'rating_functionality.php';
 require_once 'subject_page_functionality.php';
 require_once 'courses_browse_functionality.php';
-html_header(title: 'Subject', styled: true, scripted: false);
+html_header(title: 'Subject', styled: true, scripted: 'ajax');
 
 ensure_session();
 

@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 require_once 'courses_browse_functionality.php';
-html_header(title: 'Browse Courses', styled: true, scripted: false);
+html_header(title: 'Browse Courses', styled: true, scripted: 'ajax');
 
 ?>
     <div class="header-box"><span class="header">Browse our courses</span></div>
