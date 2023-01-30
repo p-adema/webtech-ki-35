@@ -142,7 +142,7 @@ flex: 9;
 .dropdown-videos-content {
     display: none;
     opacity: 0;
-    position: absolute;
+    position: fixed;
     background-color: #676;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;

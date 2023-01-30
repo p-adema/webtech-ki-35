@@ -171,12 +171,12 @@ div.submit-with-long-btn {
     width: 100%;
 }
 
-a {
+form a {
     color: cornflowerblue;
     transition-duration: 0.3s;
 }
 
-a:hover {
+form a:hover {
     color: #80a8f1;
 }
 
