@@ -5,6 +5,7 @@ const SUBJECTS = [
     'biology',
     'geography'
 ];
+const DENY_CACHE = true;
 require_once "api_resolve.php";
 require_once 'navbar.php';
 
@@ -24,20 +25,20 @@ require_once 'navbar.php';
 function html_header(string $title, string $description = '', bool $navbar = true, bool $authentication = false,
                      bool|string $styled = false, bool|string $scripted = false, string $extra = ''): void
 {
-
+    $postfix = DENY_CACHE ? ('?' . rand()) : '';
     if ($scripted) {
         if ($scripted === 'ajax') {
-            $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
-                            <script src=\"/scripts/global.js\"></script>";
+            $script_tags = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>
+                            <script src='/scripts/global.js$postfix'></script>";
         } else {
             if ($scripted === true) {
                 $script = PAGE . '.js';
             } else {
                 $script = $scripted;
             }
-            $script_tags = "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js\"></script>
-                            <script src=\"/scripts/global.js\"></script>
-                            <script src=\"/scripts$script\"></script>";
+            $script_tags = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>
+                            <script src='/scripts/global.js$postfix'></script>
+                            <script src='/scripts$script$postfix'></script>";
         }
     } else {
         $script_tags = '';
@@ -48,7 +49,7 @@ function html_header(string $title, string $description = '', bool $navbar = tru
         } else {
             $style = '/' . $styled;
         }
-        $style_tag = "<link rel='stylesheet' href='/styles$style' type='text/css'/>";
+        $style_tag = "<link rel='stylesheet' href='/styles$style$postfix' type='text/css'/>";
     } else {
         $style_tag = '';
     }
@@ -59,11 +60,11 @@ function html_header(string $title, string $description = '', bool $navbar = tru
                 <meta name='description' content=$description/>
                 <title>$title</title>
                 $script_tags
-                <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\" />
-                <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin />
-                <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap\" rel=\"stylesheet\" />
-                <link rel=\"stylesheet\" href=\"https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400..600,0..1,0\" />
-                <link rel='stylesheet' href='/styles/global.css' type='text/css'/>
+                <link rel='preconnect' href='https://fonts.googleapis.com' />
+                <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
+                <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap' rel='stylesheet' />
+                <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400..600,0..1,0' />
+                <link rel='stylesheet' href='/styles/global.css$postfix' type='text/css'/>
                 $style_tag
                 $extra
             </head>
@@ -73,6 +74,8 @@ function html_header(string $title, string $description = '', bool $navbar = tru
 
     if (!$authentication) {
         $_SESSION['last-page'] = str_replace('index', '', PAGE) . (isset($_GET['tag']) ? "/{$_GET['tag']}" : '');
+    } else {
+        $_SESSION['last-page'] ??= '/';
     }
 
     echo $html;
