@@ -78,6 +78,7 @@ CREATE TABLE `course_videos`
     `course_tag` CHAR(64)          NOT NULL,
     `order`      SMALLINT UNSIGNED NOT NULL,
     PRIMARY KEY (`id`),
+    UNIQUE (`video_tag`),
     FOREIGN KEY (`video_tag`) REFERENCES `videos` (`tag`),
     FOREIGN KEY (`course_tag`) REFERENCES `courses` (`tag`)
 );
@@ -192,7 +193,7 @@ CREATE TABLE `ownership`
     `purchase_id` BIGINT UNSIGNED                    NULL,
     `gift_id`     BIGINT UNSIGNED                    NULL,
     PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_tag`) REFERENCES db.videos (`tag`),
+    FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
     FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),
     FOREIGN KEY (`gift_id`) REFERENCES db.gifts (`id`)

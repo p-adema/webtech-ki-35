@@ -16,6 +16,28 @@ $(document).ready(function () {
             }
         })
     })
+
+    $("form").submit(function (event) {
+        event.preventDefault();
+        $('button.form-submit').addClass('pressed').removeClass('error')
+
+        const tags = $(".input-sortable-item:not(.query-result)").map(function () {
+            return $(this).attr("data-tag");
+        }).get();
+        const user_data = {
+            title: $("#title").val(),
+            description: $("#description").val(),
+            subject: $("#subject").val(),
+            free: $('#free').prop('checked') ? 'yes' : 'no',
+            price: $("#price").val(),
+            tags: tags
+        };
+
+        const handler_options = {}
+
+        $.post("/api/upload/course", user_data, form_default_response(handler_options))
+    });
+
 }).on('dragover', '.input-sortable-slot', function (event) {
     if (!$(this).hasClass('query-result')) {
         event.preventDefault();
