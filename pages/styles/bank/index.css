@@ -186,14 +186,20 @@ a:link {
     text-decoration: none;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
     .big-transaction-box {
-        max-width: 800px;
+        max-width: 100%;
         flex-flow: column;
+        align-items: center;
+    }
+
+    .balance-header {
+        text-align: center;
     }
 
     .pending-header {
         font-size: 22px;
+        text-align: center;
     }
 
     .transaction-title {
@@ -202,6 +208,7 @@ a:link {
 
     .main-pending-box {
         margin-top: 49px;
+        margin-left: 0;
     }
 
     .transaction-boxy {
@@ -211,4 +218,22 @@ a:link {
     .payment-when {
         margin-left: 36px;
     }
+
+    .all-transactions {
+        margin-left: 0;
+        float: none;
+        align-self: center;
+        align-items: normal;
+        text-align: center;
+    }
+
+    .transaction-box {
+        align-items: center;
+    }
+
+    .pending_box {
+        margin-left: 0;
+    }
+
+    .
 }
