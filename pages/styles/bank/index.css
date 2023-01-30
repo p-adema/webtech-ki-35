@@ -35,7 +35,7 @@ body {
 
 .big-transaction-box {
     display: flex;
-    align-items: baseline;
+    flex-flow: row;
 }
 
 .big-balance-box {
@@ -104,18 +104,18 @@ body {
 }
 
 .all-transactions {
+    margin-left: 49%;
+    float: right;
     align-self: end;
     margin-top: 50px;
     display: flex;
     flex-flow: column;
     align-items: end;
-    margin-left: 900px;
 }
 
 .transaction-title {
     margin-left: 15px;
     margin-bottom: 30px;
-    margin-top: 20px;
     font-size: 30px;
     font-weight: bold;
     border-bottom: solid #d54f1a 5px;
@@ -184,4 +184,31 @@ body {
 
 a:link {
     text-decoration: none;
+}
+
+@media screen and (max-width: 800px) {
+    .big-transaction-box {
+        max-width: 800px;
+        flex-flow: column;
+    }
+
+    .pending-header {
+        font-size: 22px;
+    }
+
+    .transaction-title {
+        font-size: 22px;
+    }
+
+    .main-pending-box {
+        margin-top: 49px;
+    }
+
+    .transaction-boxy {
+        font-size: 22px;
+    }
+
+    .payment-when {
+        margin-left: 36px;
+    }
 }

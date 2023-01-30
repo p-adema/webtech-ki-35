@@ -85,3 +85,9 @@ html {
     padding-right: 15px;
     border-bottom: solid black 5px;
 }
+
+@media screen and (max-width: 600px) {
+    .all-courses {
+        flex-flow: column;
+    }
+}

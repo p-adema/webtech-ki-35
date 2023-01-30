@@ -121,6 +121,11 @@ img.best-video {
     margin-bottom: 10px;
 }
 
+.text-deco {
+    text-decoration: none;
+    color: black;
+}
+
 .please-center {
     display: flex;
     flex-flow: column;
@@ -165,4 +170,53 @@ img.best-video {
     align-items: baseline;
     flex-flow: column;
     margin-top: 30px;
+}
+
+@media screen and (max-width: 800px) {
+    .genre-overall-box {
+        max-width: 500px;
+    }
+
+    .lots-of-things {
+        flex-flow: column;
+    }
+
+    .best-video-header {
+        font-size: 25px;
+        align-self: center;
+    }
+
+    .slogan-box {
+        visibility: collapse;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .genre-overall-box {
+        max-width: 300px;
+    }
+
+    img.best-video {
+        max-width: 300px;
+        max-height: 150px;
+        overflow: hidden;
+    }
+
+    .best-video-name {
+        font-size: 15px;
+    }
+
+    .best-video-creator {
+        font-size: 15px;
+    }
+
+    .best-video-header-box {
+        margin-top: 36px;
+        align-self: start;
+    }
+
+    .best-video-header {
+        font-size: 15px;
+        align-self: start;
+    }
 }

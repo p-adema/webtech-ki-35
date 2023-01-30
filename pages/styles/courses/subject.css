@@ -156,3 +156,33 @@ html {
     padding-right: 15px;
     border-bottom: solid black 5px;
 }
+
+@media screen and (max-width: 800px) {
+    .all-videos {
+        flex-flow: column;
+    }
+
+    .thumbnail {
+        max-width: 424px;
+    }
+
+    .course-and-video {
+        flex-flow: column;
+    }
+
+    .best-video-outline {
+        text-align: center;
+    }
+
+    .course-text {
+        margin-top: 20px;
+    }
+
+    .thumbnail {
+        max-width: 345px;
+    }
+
+    .no-course {
+        max-width: 80%;
+    }
+}
