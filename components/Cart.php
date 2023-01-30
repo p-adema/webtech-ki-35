@@ -12,13 +12,18 @@ class Cart
     private string $sql_video_long;
     private string $sql_type;
     private string $sql_course_long;
+    private string $sql_owned_video_prices;
     private string $sql_course_videos;
+    private string $sql_course_total;
     private PDOStatement|false $p_tag;
+    private PDOStatement|false $p_course_total;
     private PDOStatement|false $p_price;
     private PDOStatement|false $p_type;
     private PDOStatement|false $p_video_long;
     private PDOStatement|false $p_course_long;
     private PDOStatement|false $p_course_videos;
+    private PDOStatement|false $p_owned_item_prices;
+
 
 
     /**
@@ -45,10 +50,18 @@ class Cart
             api_fail('Internal cart error', ['submit' => 'Unknown cart error']);
         }
 
+        $this->sql_course_total = 'SELECT SUM(v.price) as price
+FROM course_videos cv
+         INNER JOIN items v on v.tag = cv.video_tag
+        INNER JOIN items c on cv.course_tag = c.tag
+         WHERE c.id = :course_id
+';
+        $this->p_course_total = $this->PDO->prepare($this->sql_course_total);
+
         $this->sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
         $this->p_tag = $this->PDO->prepare($this->sql_tag);
 
-        $this->sql_price = 'SELECT price FROM db.items WHERE (id = :id)';
+        $this->sql_price = 'SELECT price, type FROM db.items WHERE (id = :id)';
         $this->p_price = $this->PDO->prepare($this->sql_price);
 
         $this->sql_type = 'SELECT type FROM items WHERE (id = :id)';
@@ -89,11 +102,21 @@ class Cart
                                     WHERE c.course_tag = i.tag';
         $this->p_course_videos = $this->PDO->prepare($this->sql_course_videos);
 
+        $this->sql_owned_video_prices = '                SELECT SUM(v.price) as price
+                 FROM course_videos cv 
+               INNER JOIN items v on v.tag = cv.video_tag
+               INNER JOIN ownership o on o.item_tag = v.tag
+                 INNER JOIN items c on c.tag = cv.course_tag
+                WHERE o.user_id = :uid and c.id = :course_id';
+        $this->p_owned_item_prices = $this->PDO->prepare($this->sql_owned_video_prices);
+
         if ($this->p_price === false or $this->p_type === false or
             $this->p_tag === false or $this->p_video_long === false) {
             api_fail('Internal cart error', ['submit' => 'Loading cart failed']);
         }
     }
+
+
 
     public function get_id(string $tag): int|false
     {
@@ -137,9 +160,29 @@ class Cart
     private function get_price($id): float|false
     {
         $this->p_price->execute(['id' => $id]);
-        return $this->p_price->fetch(PDO::FETCH_ASSOC)['price'];
+        $item = $this->p_price->fetch(PDO::FETCH_ASSOC);
+        if ($item['type'] === 'course'){
+            if ($_SESSION['auth']) {
+                $user_id = $_SESSION['uid'];
+                $this->p_owned_item_prices->execute(['uid' => $user_id, 'course_id' => $id]);
+                $owned_total = $this->p_owned_item_prices->fetch()['price'];
+                $this->p_course_total->execute(['course_id' => $id]);
+                $total_price = $this->p_course_total->fetch()['price'];
+                $course['price'] = $item['price'] * (1 - ($owned_total / $total_price));
+                $total = round($course['price'], 2);
+            } else {
+                $total = $item['price'];
+            }
+            return $total;
+        } else {
+            return $item['price'];
+        }
     }
 
+    public function tag_price($tag): float|false
+    {
+        return $this->get_price($this->get_id($tag));
+ }
     /**
      * Remove an item from the session cart
      * @param int $id db.items.id to remove from cart
@@ -242,7 +285,10 @@ class Cart
     public function course_long($id)
     {
         $this->p_course_long->execute(['id' => $id]);
-        return $this->p_course_long->fetch(PDO::FETCH_ASSOC);
+
+        $course = $this->p_course_long->fetch(PDO::FETCH_ASSOC);
+        $course['price'] = $this->get_price($id);
+        return $course;
     }
 
     public function clear(): void

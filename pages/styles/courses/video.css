@@ -338,6 +338,7 @@ div.comment-reactions-gap-s {
 
 
 .video-sidebar {
+    z-index: 1;
     max-width: 400px;
     background-color: #e1e0ef;
     display: flex;
@@ -387,6 +388,8 @@ a {
 .video-block:hover {
     background-color: #b1b0bf;
 }
+
+
 
 .big-video-block {
     overflow-y: scroll;

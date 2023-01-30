@@ -134,14 +134,14 @@ fieldset > div > label {
 }
 
 .input-sortable-slot {
-    z-index: 2;
+    z-index: 20;
     background-color: #eae0d2;
     border-radius: 0 10px 10px 0;
     padding-right: 5px;
 }
 
 .input-sortable-slot.input-sortable-slot-awaiting::before {
-    z-index: 1;
+    z-index: 10;
     height: 24px;
     width: var(--slot-width);
     border-radius: 0 10px 10px 0;

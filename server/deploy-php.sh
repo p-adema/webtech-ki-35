@@ -1,6 +1,6 @@
 #!/bin/bash
 echo 'Step 1/4: Upload pages (not course videos)' &&
-rsync --include='example*.mp4' --exclude='*.mp4' --exclude='.DS_Store' ./pages/ -raz --no-perms  -O "$1"@webtech-ki35.webtech-uva.nl:/var/www/html/ &&
+rsync --include='example*.mp4' --include='homepage*.mp4' --exclude='*.mp4' --exclude='.DS_Store' ./pages/ -raz --no-perms  -O "$1"@webtech-ki35.webtech-uva.nl:/var/www/html/ &&
 echo 'Step 2/4: Upload components' &&
 rsync ./components/ -raz --no-perms -O "$1"@webtech-ki35.webtech-uva.nl:/var/www/components/ &&
 echo 'Step 3/4: Overwrite remote.htaccess' &&

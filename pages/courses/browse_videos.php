@@ -21,7 +21,7 @@ $popular_video_tag = get_popular_video();
                                 <div class="best-video-header">Watch the best our creators have to offer!</div>
                             </div>
                             <div class="best-video-outline">
-                                <a href="/courses/video?tag=<?php echo $popular_video_tag ?>">
+                                <a href="/courses/video/<?php echo $popular_video_tag ?>">
                                     <img class="best-video"
                                          src="/resources/thumbnails/<?php echo $popular_video_tag ?>.jpg"
                                          alt="Your browser does not support this image type.">

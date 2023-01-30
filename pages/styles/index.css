@@ -14,7 +14,6 @@ html{
 }
 .background-grove {
     filter: brightness(70%) contrast(70%);
-    z-index: 0;
     width: 100vw;
     height: 60vh;
     object-fit: fill;
@@ -22,7 +21,6 @@ html{
 .welcome-text {
     position: absolute;
     align-self: center;
-    z-index: 0;
     font-size: 40px;
     color: #aca ;
     padding: 21px;
@@ -31,7 +29,7 @@ html{
     top: 45vh;
     position: absolute;
     align-self: center;
-    z-index: 3;
+    z-index: 30;
 }
 .stretch-box-homepage-1 {
     flex: 3;

@@ -32,7 +32,7 @@ if (count($rating) == 0) {
     $score = $rating[1];
     $ratings = $rating[0];
 }
-
+$cart = new Cart();
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
@@ -136,7 +136,7 @@ $video_info = get_video_data($tag);
                         if (course_price($course_tag) == 0) {
                             echo 'This course is free';
                         } else {
-                            $html = 'The price of this course is ' . course_price($course_tag) . ' euro.';
+                            $html = 'The price of this course is ' . number_format($cart->tag_price($tag), 2) . ' euro.';
                             echo $html;
                         } ?>
                     </p>
