@@ -127,7 +127,7 @@ $(document).ready(function () {
     })
     let $dropdown = $('.dropdown');
     $dropdown.mouseenter(function (_) {
-        $('.dropdown-content').show().animate({opacity: 1, right: 0}, 400)
+        $('.dropdown-content').stop().show().animate({opacity: 1, right: 0}, 400)
     })
     $dropdown.mouseleave(function (_) {
         $('.dropdown-content').stop().animate({opacity: 0, right: -300}, 400)
@@ -140,7 +140,7 @@ $(document).ready(function () {
         window.history.back();
     })
     $dropdown_videos.mouseenter(function (_) {
-        $dropdown_videos_content.stop().animate({opacity: 0, left: $dropdown_videos.offset().left, top: -$dropdown_videos_content.height() }, 4)
+        $dropdown_videos_content.stop().animate({left: $dropdown_videos.offset().left }, 4)
 
         $('.dropdown-videos-content').show().animate({opacity: 1, top: 60}, 400)
         $dropdown_videos.css('background-color', '#676')
