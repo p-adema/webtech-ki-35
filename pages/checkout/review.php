@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 html_header(title: 'Checkout', styled: true, scripted: 'ajax');
-require "checkout_components.php";
+require "review_components.php";
 require "billing_info.php";
 ?>
     <div class="content-wrapper">

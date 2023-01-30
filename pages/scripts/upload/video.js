@@ -77,7 +77,7 @@ $(document).ready(function () {
             }
             $(`#${id}-button > .file-button-text`).text(filename)
             const $icon = $(`#${id}-button > .file-button-icon`);
-            $icon.text($icon.attr('data_icon'))
+            $icon.text($icon.attr('data-icon'))
         } else {
             $(`#${id}-button > .file-button-text`).text("Upload")
             $(`#${id}-button > .file-button-icon`).text('upload')
