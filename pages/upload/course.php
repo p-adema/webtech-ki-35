@@ -8,12 +8,13 @@ html_header(title: 'Create new course', styled: 'form.css', scripted: true);
         <div class="form-outline">
             <form action="/api/upload/course" method="POST">
                 <?php
-                form_input('name', 'Course name');
+                form_input('title', 'Course name');
                 form_input_paragraph('description', 'Description');
                 form_dropdown('subject', 'Subject', 'Select subject', SUBJECTS);
                 form_price();
 
                 form_sortable('videos', 'Course videos', []);
+                form_error('tags');
 
                 form_error();
                 echo '<div class="form-btns">';

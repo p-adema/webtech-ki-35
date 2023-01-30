@@ -272,7 +272,7 @@ fieldset > div > label {
 }
 
 
-.has-error > input {
+.has-error > input, .has-error > textarea, .has-error > select {
     border-color: #b54d58;
 }
 
