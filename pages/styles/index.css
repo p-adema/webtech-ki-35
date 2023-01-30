@@ -13,20 +13,23 @@ html{
     height: 60vh;
 }
 .background-grove {
+    filter: brightness(70%) contrast(70%);
     z-index: 0;
-    position: fixed;
     width: 100vw;
     height: 60vh;
     object-fit: fill;
 }
 .welcome-text {
+    position: absolute;
     align-self: center;
     z-index: 0;
     font-size: 40px;
-    color: darkgreen;
+    color: #aca ;
     padding: 21px;
 }
 .explore-button {
+    top: 45vh;
+    position: absolute;
     align-self: center;
     z-index: 3;
 }
@@ -41,12 +44,12 @@ html{
 }
 
 .explore-button {
-    background-color: #66776666;
+    background-color: #cceecc66;
     border-radius: 20px;
     border: 2px solid #343;
 }
 .explore-button:hover{
-    background-color: #667766aa;
+    background-color: #cceeccaa;
 }
 
 .explore-button .button-text {
@@ -70,7 +73,6 @@ html{
 }
 
 .homepage-information{
-    width: 33vw;
     padding: 14px;
     border-right: 2px solid;
 }
@@ -78,4 +80,14 @@ html{
     font-size: 25px;
     font-weight: normal;
 
+}
+
+@media screen and (max-aspect-ratio: 1/1){
+    .homepage-bottom {
+        flex-flow: column;
+    }
+    .homepage-information {
+        padding: 14px;
+        border-bottom: 2px solid;
+    }
 }

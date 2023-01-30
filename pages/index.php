@@ -14,7 +14,7 @@ if ($homepage):
 </div>
 <div class='stretch-box-homepage-1'></div>
 <div class='explore-button'>
-<a href='/courses'> <div class='button-text'>
+<a href='/courses/browse_videos'> <div class='button-text'>
 <span> Start exploring</span>
 </div> </a>
 </div>

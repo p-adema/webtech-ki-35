@@ -11,13 +11,13 @@ function navbar(): void
      </div>
      <div class='navbar-stretch-1'> </div>
       <div class='browse-button'> 
-      <a href='/courses/'><div id='browse-button'> <span class='material-symbols-outlined'>search</span> Explore</div></a>
+      <a href='/courses/browse_videos'><div id='browse-button'> <span class='material-symbols-outlined'>search</span> Explore</div></a>
       </div>
       <div class='courses-button'> 
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
       <div class='videos-button dropdown-videos'> 
-      <a href='/courses/browse_videos'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
+      <a><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
         
       </div>
         <div class='navbar-stretch-2'></div>
