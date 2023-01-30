@@ -16,6 +16,28 @@ $(document).ready(function () {
             }
         })
     })
+
+    $("form").submit(function (event) {
+        event.preventDefault();
+        $('button.form-submit').addClass('pressed').removeClass('error')
+
+        const tags = $(".input-sortable-item:not(.query-result)").map(function () {
+            return $(this).attr("data-tag");
+        }).get();
+        const user_data = {
+            title: $("#title").val(),
+            description: $("#description").val(),
+            subject: $("#subject").val(),
+            free: $('#free').prop('checked') ? 'yes' : 'no',
+            price: $("#price").val(),
+            tags: tags
+        };
+
+        const handler_options = {}
+
+        $.post("/api/upload/course", user_data, form_default_response(handler_options))
+    });
+
 }).on('dragover', '.input-sortable-slot', function (event) {
     if (!$(this).hasClass('query-result')) {
         event.preventDefault();
@@ -33,23 +55,38 @@ $(document).ready(function () {
 }).on('dragend', '.input-sortable-item', function (_) {
     $(this).parent().removeClass('input-sortable-slot-awaiting');
 }).on('click', '.input-sortable-row.query-result', function (_) {
-    const tag = $(this).children('.input-sortable-item').attr('tag');
+    const video_tag = $(this).find('.input-sortable-item').attr('data-tag');
 
     const query_data = {
-        tag: tag,
-        count: current_videos.length
+        tag: video_tag,
+        count: current_videos.length + 1
     }
+    const $this = $(this)
 
     const handler_options = {
         success_handler: function (data, _) {
-            $target.html(data.html);
-            $('button.form-submit').removeClass('error')
+            $('#videos').append(data.html);
+            $this.remove()
+            current_videos.push(data.tag)
         },
         error_handler: function (errors, _) {
             console.log(errors);
-            $target.text('There was a problem loading the videos')
         }
     }
+
+    $.post('/api/load/render_course_video', query_data, form_default_response(handler_options))
+
+}).on("change", '#type', function (_) {
+    if ($('#free').prop('checked')) {
+        $('#price').prop('disabled', 'true')
+    } else {
+        $('#price').removeAttr('disabled')
+    }
+}).on('click', 'fieldset input', function (event) {
+    event.stopPropagation();
+}).on('click', 'fieldset > div', function (event) {
+    event.preventDefault();
+    $(this).children('input').click()
 })
 
 function search_videos(val) {
@@ -61,7 +98,6 @@ function search_videos(val) {
     const handler_options = {
         success_handler: function (data, _) {
             $target.html(data.html);
-            $('button.form-submit').removeClass('error')
         },
         error_handler: function (errors, _) {
             console.log(errors);

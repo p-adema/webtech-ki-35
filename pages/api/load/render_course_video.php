@@ -17,7 +17,7 @@ if (empty($tag)) {
     $valid = false;
 }
 
-if (empty($count)) {
+if ($count === '') {
     $errors['count'][] = 'Please provide the amount of added videos';
     $valid = false;
 } elseif (!is_numeric($count)) {
@@ -46,5 +46,5 @@ if ($video === false) {
 }
 
 require_once "form_elements.php";
-$response = ['html' => form_sortable_item('videos', $count, $video)];
-api_succeed('Video rendered', $response);
+$response = ['html' => form_sortable_item('videos', $count, $video), 'tag' => $video['tag']];
+api_succeed('Video rendered', data: $response);
