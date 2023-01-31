@@ -40,7 +40,7 @@ if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
     $sql = 'SELECT password, verified FROM db.users WHERE (name = :name);';
 }
 
-require "pdo_read.php";
+require_once 'pdo_read.php';
 try {
     $pdo_read = new_pdo_read(err_fatal: false);
 } catch (PDOException $e) {

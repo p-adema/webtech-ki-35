@@ -3,6 +3,7 @@
 require_once 'tag_actions.php';
 require_once 'api_resolve.php';
 require_once 'admin_controls.php';
+api_ensure_admin();
 
 $errors = [
     'user' => [],
@@ -13,12 +14,6 @@ $valid = true;
 
 $reciever_username = $_POST['user'] ?? '';
 $item_tag = $_POST['item_tag'] ?? '';
-
-ensure_session();
-if (!$_SESSION['auth'] or !is_admin($_SESSION['uid'])) {
-    $errors['submit'][] = 'Insufficient privileges';
-    api_fail('Insufficient privileges', $errors);
-}
 
 $reciever_uid = user_id_from_name($reciever_username);
 if ($reciever_uid === false) {
@@ -36,7 +31,7 @@ if (!$valid) {
     api_fail('Please fill in all fields correctly', $errors);
 }
 
-if (!gift_item($_SESSION['uid'], $reciever_uid, $item_id, $item_tag)) {
+if (!admin_gift_item($_SESSION['uid'], $reciever_uid, $item_id, $item_tag)) {
     $errors['submit'][] = 'Error gifting item';
     api_fail('Error gifting item', $errors);
 }

@@ -3,15 +3,15 @@ USE db;
 
 CREATE TABLE `users`
 (
-    `id`         BIGINT UNSIGNED                        NOT NULL AUTO_INCREMENT,
-    `name`       VARCHAR(128) UNIQUE                    NOT NULL,
-    `email`      VARCHAR(128) UNIQUE                    NOT NULL,
-    `password`   VARCHAR(256)                           NOT NULL,
-    `full_name`  VARCHAR(128)                           NULL,
-    `membership` ENUM ('none', 'member') DEFAULT 'none' NOT NULL,
-    `join_date`  DATETIME                DEFAULT NOW()  NOT NULL,
-    `verified`   BOOLEAN                 DEFAULT FALSE  NOT NULL,
-    `admin`      BOOLEAN                 DEFAULT FALSE  NOT NULL,
+    `id`        BIGINT UNSIGNED        NOT NULL AUTO_INCREMENT,
+    `name`      VARCHAR(128) UNIQUE    NOT NULL,
+    `email`     VARCHAR(128) UNIQUE    NOT NULL,
+    `password`  VARCHAR(256)           NOT NULL,
+    `full_name` VARCHAR(128)           NULL,
+    `join_date` DATETIME DEFAULT NOW() NOT NULL,
+    `verified`  BOOLEAN  DEFAULT FALSE NOT NULL,
+    `admin`     BOOLEAN  DEFAULT FALSE NOT NULL,
+    `banned`    BOOLEAN  DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -30,11 +30,12 @@ CREATE TABLE `billing_information`
 
 CREATE TABLE `items`
 (
-    `id`     BIGINT UNSIGNED          NOT NULL AUTO_INCREMENT,
-    `tag`    CHAR(64) UNIQUE          NOT NULL,
-    `type`   ENUM ('video', 'course') NOT NULL,
-    `price`  DECIMAL(5, 2) DEFAULT 0  NOT NULL,
-    `rating` DECIMAL(3, 2) DEFAULT 0  NOT NULL,
+    `id`      BIGINT UNSIGNED             NOT NULL AUTO_INCREMENT,
+    `tag`     CHAR(64) UNIQUE             NOT NULL,
+    `type`    ENUM ('video', 'course')    NOT NULL,
+    `price`   DECIMAL(5, 2) DEFAULT 0     NOT NULL,
+    `rating`  DECIMAL(3, 2) DEFAULT 0     NOT NULL,
+    `deleted` BOOLEAN       DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`)
 );
 

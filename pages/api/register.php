@@ -13,16 +13,6 @@ require "mail.php";
 require "pdo_write.php";
 require "check_acc_fields.php";
 
-$errors = [
-    'name' => [],
-    'email' => [],
-    'password' => [],
-    're_pwd' => [],
-    'full_name' => [],
-    'submit' => []
-];
-$valid = true;
-
 $name = $_POST['name'];
 $email = $_POST['email'];
 $password = $_POST['password'];
@@ -31,50 +21,19 @@ $full_name = $_POST['full_name'];
 
 /** @noinspection DuplicatedCode */
 try {
-//      Use a read/write, because we might need to insert a user later
     $pdo_write = new_pdo_write(err_fatal: false);
-
-//      Checks if name is valid
-    $errors['name'] = check_name($name, $pdo_write);
-    if (!empty($errors['name'])) {
-        $valid = false;
-    }
-
-//      Checks if email is valid
-    $errors['email'] = check_email($email, $pdo_write);
-    if (!empty($errors['email'])) {
-        $valid = false;
-    }
+    $errors = check_acc_fields($pdo_write, $name, $email, $password, $re_pwd, $full_name);
+    $errors['submit'] = [];
+    $valid = check_acc_err($errors);
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    $valid = false;
-}
-
-/*
-Password constraints:
-     *  Length >= 8
-     *  Contains uppercase letter
-     *  Contains lowercase letter
-     *  Contains number
-     *  Contains special character
- */
-
-$errors['password'] = check_password($password);
-if (!empty($errors['password'])) {
-    $valid = false;
-} elseif ($password !== $re_pwd) {
-    $errors['re_pwd'][] = 'Passwords do not match';
-    $valid = false;
-}
-
-if (strlen(htmlspecialchars($full_name)) > 128) {
-    $errors['full_name'][] = "Full name must be shorter (max 128 standard characters).";
-    $valid = false;
+    api_fail('Internal database error', $errors);
 }
 
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
+
 $data = [
     'name' => htmlspecialchars($_POST['name']),
     'email' => htmlspecialchars($_POST['email']),
@@ -82,10 +41,9 @@ $data = [
     'full_name' => htmlspecialchars($_POST['full_name'])
 ];
 
-$sql_user = 'INSERT INTO db.users (name, email, password, full_name, membership)
-VALUES (:name, :email, :password, :full_name, \'none\');';
+$sql_user = 'INSERT INTO db.users (name, email, password, full_name)
+VALUES (:name, :email, :password, :full_name);';
 
-/** @noinspection PhpUndefinedVariableInspection : If the connection failed, we'd already have exited */
 $sql_prep = $pdo_write->prepare($sql_user);
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';

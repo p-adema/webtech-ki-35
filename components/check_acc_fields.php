@@ -1,4 +1,14 @@
 <?php
+
+/*
+Password constraints:
+     *  Length >= 8
+     *  Contains uppercase letter
+     *  Contains lowercase letter
+     *  Contains number
+     *  Contains special character
+ */
+
 /**
  * Checks whether the given password is valid
  * @param string $password Password to be checked
@@ -88,4 +98,47 @@ function check_email(string $email, PDO $PDO): array
     }
 
     return $errors;
+}
+
+function check_re_pwd(string $password, string $re_pwd): array
+{
+    $errors = [];
+
+    if ($password !== $re_pwd) {
+        $errors[] = 'Passwords do not match';
+    }
+
+    return $errors;
+}
+
+function check_full_name(string $full_name): array
+{
+    $errors = [];
+    if (strlen(htmlspecialchars($full_name)) > 128) {
+        $errors[] = "Full name must be shorter (max 128 standard characters).";
+    }
+
+    return $errors;
+}
+
+function check_acc_fields(PDO $PDO, string $name, string $email, string $password, string $re_pwd, string $full_name): array
+{
+    $errors = [];
+
+    $errors['name'] = check_name($name, $PDO);
+    $errors['email'] = check_email($email, $PDO);
+    $errors['password'] = check_password($password);
+    $errors['re_pwd'] = check_re_pwd($password, $re_pwd);
+    $errors['full_name'] = check_full_name($full_name);
+
+    return $errors;
+}
+
+function check_acc_err(array $acc_errors): bool
+{
+    return empty($acc_errors['name'])
+        && empty($acc_errors['email'])
+        && empty($acc_errors['password'])
+        && empty($acc_errors['re_pwd'])
+        && empty($acc_errors['full_name']);
 }

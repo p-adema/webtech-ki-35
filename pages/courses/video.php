@@ -8,7 +8,7 @@ html_header(title: 'Video', styled: true, scripted: true);
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
-if (isset($_GET['tag']) and $video_info !== false): ?>
+if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']): ?>
 
     <div class="video-page-flexbox">
         <div class="test">
@@ -71,15 +71,15 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
         echo "<span id='sidebar-load-success' tag='$success' style='display: none'></span>" ?>
     </div>
 
-
 <?php else: ?>
+
     <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
 
     <div class="form-content">
         <h1> Invalid link </h1>
         <div class="form-outline">
-            <form >
-                <p> This link doesn't seem quite right </p>
+            <form>
+                <p> The video at this link is missing or deleted </p>
                 <?php
                 echo '<div class="form-btns">';
                 text_link('Go back home', '/');
@@ -88,6 +88,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             </form>
         </div>
     </div>
+
 <?php endif;
 
 html_footer();

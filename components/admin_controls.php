@@ -14,9 +14,16 @@ function is_admin($uid): bool
 
     if ($yes_or_no === 1) {
         return true;
-    }
-    else {
+    } else {
         return false;
+    }
+}
+
+function api_ensure_admin(): void
+{
+    ensure_session();
+    if (!$_SESSION['auth'] or !is_admin($_SESSION['uid'])) {
+        api_fail('Insufficient privileges', ['submit' => ['Insufficient privileges']]);
     }
 }
 
@@ -46,7 +53,7 @@ function item_id_from_tag($item_tag): int|false
     return $item !== false ? $item['id'] : false;
 }
 
-function gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
+function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
 {
     require_once 'pdo_write.php';
     $pdo_write = new_pdo_write();
@@ -62,7 +69,7 @@ function gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
     return $prep->execute($data);
 }
 
-function remove_comment($comment_tag): void
+function admin_remove_comment($comment_tag): void
 {
     require_once 'pdo_write.php';
 
@@ -82,4 +89,37 @@ function remove_video($video_tag): void
     $sql = 'DELETE FROM db.videos WHERE tag = :video_tag';
     $sth = $pdo_write->prepare($sql);
     $sth->execute(['video_tag' => $video_tag]);
+}
+
+function admin_ban_user(int $target_uid): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE users SET banned = TRUE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $target_uid]);
+}
+
+function admin_unban_user(int $target_uid): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE users SET banned = FALSE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $target_uid]);
+}
+
+function admin_delete_item(int $item_id): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE items SET deleted = TRUE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $item_id]);
 }

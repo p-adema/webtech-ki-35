@@ -8,7 +8,11 @@ function get_video_data($video_tag): array|false
 
     $new_pdo_read = new_pdo_read();
 
-    $sql = 'SELECT name, description, subject, uploader, upload_date, views FROM db.videos WHERE (tag = :video_tag)';
+    $sql = 'SELECT name, description, subject, uploader, upload_date, views, deleted 
+            FROM db.videos v 
+                INNER JOIN items i on v.tag = i.tag 
+            WHERE v.tag = :video_tag';
+
     $sth = $new_pdo_read->prepare($sql);
     $sth->execute(['video_tag' => $video_tag]);
 

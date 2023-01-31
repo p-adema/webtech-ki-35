@@ -7,7 +7,7 @@
  */
 
 require "api_resolve.php";
-require "pdo_read.php";
+require_once 'pdo_read.php';
 require "comments_components.php";
 
 $errors = [
