@@ -1,5 +1,6 @@
 <?php
 require 'html_page.php';
+require 'admin_controls.php';
 html_header(title: 'Gift', styled: 'form.css', scripted: true);
 
 ensure_session();
@@ -8,7 +9,7 @@ if ($_SESSION['auth']) {
     if (is_admin($_SESSION['uid'])) {
         ?>
         <div class="form-content">
-            <h1>Gift something</h1>
+            <h1>Gift user an item</h1>
             <div class="form-outline">
                 <form action="/api/admin/gift" method="POST">
                     <?php

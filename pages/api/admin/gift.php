@@ -6,7 +6,8 @@ require_once 'admin_controls.php';
 
 $errors = [
     'user' => [],
-    'item_tag' => []
+    'item_tag' => [],
+    'submit' => []
 ];
 
 ensure_session();
@@ -14,9 +15,13 @@ ensure_session();
 if ($_SESSION['auth']) {
 
     $valid = true;
-    $uid = $_POST['user'];
-    $item_tag = $_POST['item_tag'];
+    $uid = $_POST['user'] ?? '';
+    $item_tag = $_POST['item_tag'] ?? '';
     $aid = $_SESSION['uid'];
+
+    if (!is_admin($aid)) {
+        api_fail('Insufficient privileges', ['submit' => 'Insufficient privileges']);
+    }
 
 
     if (empty(username($uid))) {
@@ -33,10 +38,10 @@ if ($_SESSION['auth']) {
         gift_item($aid, username($uid), item($item_tag), $item_tag);
         api_succeed('Successfully gifted this item!', $errors);
     } else {
-        api_fail('Unable to gift items at this time.', $errors);
+        api_fail('Please provide correct parameters', $errors);
     }
 }
 
 else {
-    echo 'Looks like you are not logged in bucko.';
+    api_fail('You must be logged in to perform this action', ['submit' => 'Log in first']);
 }

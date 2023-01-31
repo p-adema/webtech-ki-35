@@ -423,6 +423,24 @@ flex: 9;
     display: none;
 }
 
+a.navbar-upload-button {
+    height: 24px;
+    transition-duration: 0.3s;
+    border-radius: 10px;
+    display: flex;
+    background: #3f6026;
+    align-items: center;
+    padding: 5px;
+    align-self: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.navbar-upload-button:hover {
+    background: #659341;
+}
+
 .disable-scrollbars::-webkit-scrollbar {
     background: transparent;
     width: 0;

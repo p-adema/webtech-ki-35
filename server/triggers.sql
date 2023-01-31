@@ -91,6 +91,26 @@ BEGIN
             );
     END LOOP own_course;
     CLOSE cursor_courses;
-
 END//
+
+CREATE
+    DEFINER = 'triggers' PROCEDURE resolve_gift(
+    IN admin_uid BIGINT UNSIGNED,
+    IN receiving_uid BIGINT UNSIGNED,
+    IN itm_id BIGINT UNSIGNED,
+    IN itm_tag CHAR(64)
+)
+BEGIN
+    INSERT INTO db.gifts (`item_id`, `user_id`, `admin_id`)
+    VALUES (itm_id, receiving_uid, admin_uid);
+
+    SELECT last_insert_id() INTO @gift_id;
+
+    CASE (SELECT type FROM items WHERE id = itm_id)
+        WHEN 'video' THEN INSERT INTO db.ownership (`item_tag`, `user_id`, `origin`, `gift_id`)
+                          VALUES (itm_tag, receiving_uid, 'gift', @gift_id);
+        WHEN 'course' THEN CALL course_ownership_add(receiving_uid, itm_tag, 'gift', null, @gift_id);
+        END CASE;
+END
+//
 DELIMITER ;

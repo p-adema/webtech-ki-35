@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 require 'admin_controls.php';
-html_header(title: 'Admin Controls', styled: true, scripted: false);
+html_header(title: 'Admin Controls', styled: true, scripted: 'ajax');
 
 ensure_session();
 
@@ -12,12 +12,12 @@ if ($_SESSION['auth']) {
         <body>
         <div class="main-container">
             <span>Here are your controls</span><br>
-            <a href="gift">Click here for a gift form</a>
+            <a href="/admin/gift">Click here for a gift form</a>
             <a href="remove_comment"></a>
         </div>
         </body>
 
-        <?php }
+    <?php }
     else {
         echo "You do not have the permissions to be on this page.";
     }

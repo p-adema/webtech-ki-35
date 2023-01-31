@@ -317,7 +317,7 @@ div.form-btns {
 }
 
 div.form-btns.form-btns-down {
-    flex-flow: column;
+    flex-flow: column-reverse;
 }
 
 div.form-btns > div {
