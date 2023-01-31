@@ -25,25 +25,30 @@ if ($homepage):
 <div class='homepage-information'>
 <div class='text'>
 <h1> About us: </h1>  
-<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
-ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
-laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+<p> We are a group of students at the University of Amsterdam. 
+We were tasked to create a website. We chose to center it around education for everyone. Our organisation is non-profit.
+  All the money you spend will either go to the creators of the courses or charity.</p>
 </div>
 </div>
 <div class='homepage-information'>
 <div class='text'>
 <h1> How does it work? </h1>  
-<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
-ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
-laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+<p> On our site you can both upload and watch educational videos. 
+If you have don't have an account you can only watch the free videos and courses. If you do have an account you can deposit money on to it. 
+With your balance you can buy courses and single videos. If you buy a course you will get some bulk discount.</p>
 </div>
 </div>
 <div class='homepage-information'>
 <div class='text'>
 <h1> Contact </h1>  
-<p> Our goal is to provide education too all, on our site you can both upload and watch educational videos Lorem 
-ipsum dolor sit amet, consectetur adipisicing elit. Animi deserunt dicta dignissimos, ducimus error in incidunt 
-laboriosam laborum molestiae nemo numquam officiis optio provident quidem ratione soluta veritatis? Nesciunt, ullam!</p>
+<p> If there are any questions you can contact us throughout email or by phone. 
+If you have a question about a video you can also leave a comment. 
+<br>
+<br>
+Email: test123@bartje.nl
+<br>
+Phone number: +31 6 12345678
+ </p>
 </div>
 </div>
 </div>

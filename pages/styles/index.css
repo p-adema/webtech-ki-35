@@ -26,6 +26,7 @@ html{
     font-size: 40px;
     color: #aca ;
     padding: 21px;
+
 }
 .explore-button {
     top: 45vh;
@@ -73,6 +74,7 @@ html{
 }
 
 .homepage-information{
+    min-width: 28vw;
     padding: 14px;
     border-right: 2px solid;
 }

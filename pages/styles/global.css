@@ -30,7 +30,7 @@ html {
     background-color: #676;
     right: -150px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 3;
+    z-index: 30;
     min-width: 150px;
     text-align: left;
 }
@@ -65,7 +65,7 @@ html {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 1;
+    z-index: 10;
     left: 0;
     top: 0;
     padding-top: 60px;
@@ -117,7 +117,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 20;
 
 }
 .navbar-stretch-1{
@@ -142,10 +142,10 @@ flex: 9;
 .dropdown-videos-content {
     display: none;
     opacity: 0;
-    position: absolute;
+    position: fixed;
     background-color: #676;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 10;
     min-width: 150px;
     text-align: left;
 }
@@ -156,7 +156,7 @@ flex: 9;
     background-color: #676;
     right: -150px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 3;
+    z-index: 30;
     min-width: 150px;
     text-align: left;
 }
@@ -367,7 +367,7 @@ flex: 9;
     top: 0;
     left: 0;
     height: 100vw;
-    z-index: 1;
+    z-index: 10;
     position: fixed;
     opacity: 0;
 }
@@ -388,3 +388,10 @@ flex: 9;
 }
 
 
+
+
+
+.disable-scrollbars::-webkit-scrollbar {
+    background: transparent; /* Chrome/Safari/Webkit */
+    width: 0;
+}
