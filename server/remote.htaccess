@@ -8,4 +8,6 @@ php_value session.sid_length "48"
 RewriteEngine On
 RewriteCond %{HTTPS} off
 RewriteRule ^(.*)$ https://webtech-ki35.webtech-uva.nl/$1 [L,R=301]
+RewriteRule ^search/([a-zA-Z0-9]+) search.php\?tag=$1 [END]
+RewriteRule ^search/$ search.php [END]
 RewriteRule (^[^.?]+[^/])(\?.+)?$ $1\.php$2

@@ -1,6 +1,7 @@
 <?php
 require_once 'dropdown_function.php';
 require_once 'sidebar_right.php';
+require_once "searchbar.php";
 function navbar(): void
 {
 
@@ -21,6 +22,7 @@ function navbar(): void
         
       </div>
         <div class='navbar-stretch-2'></div>
+        ". searchbar() . "
         
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
@@ -45,7 +47,7 @@ function navbar(): void
       <a href='/courses/subject?tag=geography'> Geography</a>
       </div>
       </div>
- ". sidebar_cover();
+ ". sidebar_cover() . searchbar_results();
 
      echo $html;
 
