@@ -172,7 +172,7 @@ img.best-video {
     margin-top: 30px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .genre-overall-box {
         max-width: 500px;
     }
@@ -191,7 +191,7 @@ img.best-video {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .genre-overall-box {
         max-width: 300px;
     }

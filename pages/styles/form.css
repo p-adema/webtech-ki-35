@@ -550,7 +550,7 @@ button.med-btn {
     color: #000000;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-aspect-ratio: 1/1) {
     .link-box > a {
         font-size: 25px;
     }
@@ -603,7 +603,7 @@ button.med-btn {
     }
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-aspect-ratio: 1/1) {
     input {
         font-size: 26px;
     }

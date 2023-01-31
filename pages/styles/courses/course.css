@@ -258,7 +258,7 @@ a {
     content: '★★★★★';
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .video-border {
         flex-wrap: nowrap;
         flex-flow: column;
