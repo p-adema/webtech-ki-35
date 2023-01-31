@@ -12,7 +12,7 @@ $errors = [
 $check = false;
 $valid = true;
 
-$tag = $_POST['tag'];
+$tag = $_POST['tag'] ?? '';
 
 if (empty($tag)) {
     $valid = false;

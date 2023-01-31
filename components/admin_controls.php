@@ -14,13 +14,20 @@ function is_admin($uid): bool
 
     if ($yes_or_no === 1) {
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
 
-function username($uid): int|false
+function api_require_admin(): void
+{
+    ensure_session();
+    if (!$_SESSION['auth'] or !is_admin($_SESSION['uid'])) {
+        api_fail('Insufficient privileges', ['submit' => ['Insufficient privileges']]);
+    }
+}
+
+function user_id_from_name($uid): int|false
 {
     require_once 'pdo_read.php';
 
@@ -29,10 +36,11 @@ function username($uid): int|false
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['uid' => $uid]);
 
-    return $sth->fetch()['id'];
+    $user = $sth->fetch();
+    return $user !== false ? $user['id'] : false;
 }
 
-function item($item_tag): int|false
+function item_id_from_tag($item_tag): int|false
 {
     require_once 'pdo_read.php';
 
@@ -41,35 +49,27 @@ function item($item_tag): int|false
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['item_tag' => $item_tag]);
 
-    return $sth->fetch()['id'];
+    $item = $sth->fetch();
+    return $item !== false ? $item['id'] : false;
 }
 
-function gift_item($aid, $uid, $item_id, $item_tag): void
+function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
 {
     require_once 'pdo_write.php';
-    require_once 'pdo_read.php';
-
     $pdo_write = new_pdo_write();
-    $pdo_read = new_pdo_read();
 
-    $sql_gift_log = 'INSERT INTO db.gifts (item_id, user_id, admin_id, confirmation_time)
-                    VALUES (:item_id, :uid, :admin_id, DEFAULT)';
-    $sth_gift_log = $pdo_write->prepare($sql_gift_log);
-    $sth_gift_log->execute(['item_id' => $item_id, 'uid' => $uid, 'admin_id' => $aid]);
-
-    $sql_gift_id = 'SELECT id FROM db.gifts WHERE user_id = :uid AND item_id = :item_id';
-    $sth_gift_id = $pdo_read->prepare($sql_gift_id);
-    $sth_gift_id->execute(['uid' => $uid, 'item_id' => $item_id]);
-
-    $gift_id = $sth_gift_id->fetch()['id'];
-
-    $sql_ownership = 'INSERT INTO db.ownership (item_tag, user_id, origin, gift_id)
-                    VALUES (:item_tag, :uid, :origin, :gift_id)';
-    $sth_ownership = $pdo_write->prepare($sql_ownership);
-    $sth_ownership->execute(['item_tag' => $item_tag, 'uid' => $uid, 'origin' => 'gift', 'gift_id' => $gift_id]);
+    $sql = 'CALL resolve_purchase(:admin_id, :reciever_id, :item_id, :item_tag);';
+    $prep = $pdo_write->prepare($sql);
+    $data = [
+        'admin_id' => $admin_uid,
+        'reciever_id' => $reciever_uid,
+        'item_id' => $item_id,
+        'item_tag' => $item_tag,
+    ];
+    return $prep->execute($data);
 }
 
-function remove_comment($comment_tag): void
+function admin_remove_comment($comment_tag): void
 {
     require_once 'pdo_write.php';
 
@@ -89,4 +89,37 @@ function remove_video($video_tag): void
     $sql = 'DELETE FROM db.videos WHERE tag = :video_tag';
     $sth = $pdo_write->prepare($sql);
     $sth->execute(['video_tag' => $video_tag]);
+}
+
+function admin_ban_user(int $target_uid): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE users SET banned = TRUE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $target_uid]);
+}
+
+function admin_unban_user(int $target_uid): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE users SET banned = FALSE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $target_uid]);
+}
+
+function admin_delete_item(int $item_id): bool
+{
+    require_once 'pdo_write.php';
+
+    $pdo_write = new_pdo_write();
+
+    $sql = 'UPDATE items SET deleted = TRUE WHERE id = :uid';
+    $prep = $pdo_write->prepare($sql);
+    return $prep->execute(['uid' => $item_id]);
 }

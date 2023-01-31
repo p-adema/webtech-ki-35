@@ -8,12 +8,7 @@ function searchbar(): string
 </div>
 ";
 }
-function searchbar_results() : string
-{
-    return "
-<div class='navbar-search-results'> </div>
-";
-}
+
 
 function render_search_result(array $item, string $origin): string
 {

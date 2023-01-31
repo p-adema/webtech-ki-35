@@ -12,8 +12,8 @@ $errors = [
 ];
 
 
-$video_tag = $_POST['video_tag'];
-$comment = $_POST['message'];
+$video_tag = $_POST['video_tag'] ?? '';
+$comment = $_POST['message'] ?? '';
 
 if (empty($comment)) {
     $valid = false;

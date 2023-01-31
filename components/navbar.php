@@ -22,8 +22,10 @@ function navbar(): void
         
       </div>
         <div class='navbar-stretch-2'></div>
-        ". searchbar() . "
-        
+        " . searchbar() . "
+        <a href='/upload/' class='navbar-upload-button'> <span class=\"material-symbols-outlined\">
+upload
+</span> Upload </a>
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
      <span id='shopping-cart' class='material-symbols-outlined'>
@@ -47,7 +49,7 @@ function navbar(): void
       <a href='/courses/subject?tag=geography'> Geography</a>
       </div>
       </div>
- ". sidebar_cover() . searchbar_results();
+ ". sidebar_cover();
 
      echo $html;
 

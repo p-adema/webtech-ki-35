@@ -51,7 +51,7 @@ $(document).ready(function () {
              success_handler: form_custom_success
          }
 
-         $.post("/api/account/modify.php", user_data, form_default_response(handler_options));
+         $.post('/api/account/modify', user_data, form_default_response(handler_options));
      });
 });
 

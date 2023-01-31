@@ -12,7 +12,7 @@ function tag_create(int $length = 64): string
 }
 
 
-function tag_check(string $tag, string $type): bool
+function email_tag_check(string $tag, string $type): bool
 {
     $valid = false;
     require_once "pdo_write.php";

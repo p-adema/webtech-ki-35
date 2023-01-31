@@ -35,7 +35,7 @@ $(document).ready(function () {
 
         const handler_options = {}
 
-        $.post("/api/upload/course", user_data, form_default_response(handler_options))
+        $.post('/api/upload/course', user_data, form_default_response(handler_options))
     });
 
 }).on('dragover', '.input-sortable-slot', function (event) {
@@ -51,7 +51,6 @@ $(document).ready(function () {
     const $slot = $(this).parent();
     event.originalEvent.dataTransfer.setData('text/plain', $slot.attr('id'));
     $slot.css('--slot-width', ($slot.width() + 5) + 'px').addClass('input-sortable-slot-awaiting');
-}).on('drag', '.input-sortable-item', function (event) {
 }).on('dragend', '.input-sortable-item', function (_) {
     $(this).parent().removeClass('input-sortable-slot-awaiting');
 }).on('click', '.input-sortable-row.query-result', function (_) {

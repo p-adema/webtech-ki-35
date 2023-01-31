@@ -3,11 +3,8 @@ require "api_resolve.php";
 require "Cart.php";
 require_once "pdo_write.php";
 require_once "tag_actions.php";
-ensure_session();
 
-if (!$_SESSION['auth']) {
-    api_fail('Please log in', ['submit' => 'Please log in']);
-}
+api_require_login();
 
 $cart = new Cart;
 

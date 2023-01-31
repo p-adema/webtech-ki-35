@@ -1,18 +1,17 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Gift item', styled: 'form.css', scripted: true);
+html_header(title: 'Ban user', styled: 'form.css', scripted: true);
 
 require 'admin_controls.php'; ?>
 
     <div class="form-content">
-        <h1>Gift user an item</h1>
+        <h1>Unban a user</h1>
         <div class="form-outline">
-            <form action="/api/admin/gift" method="POST">
+            <form action="/api/admin/unban" method="POST">
                 <?php
                 if (is_admin($_SESSION['uid'])) {
-                    form_input('user', 'Username of reciever');
-                    form_input('item-tag', 'Tag of gift item');
+                    form_input('user', 'Username to be unbanned');
                     form_error();
 
                     echo '<div class="form-btns">';

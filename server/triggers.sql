@@ -1,3 +1,4 @@
+-- Update the score of a comment on a new rating
 CREATE DEFINER = 'triggers' TRIGGER comments_new_score
     AFTER INSERT
     ON scores
@@ -6,6 +7,7 @@ CREATE DEFINER = 'triggers' TRIGGER comments_new_score
     SET score = score + NEW.score
     WHERE comments.tag = NEW.comment_tag;
 
+-- Update the score of a comment on a changed rating
 CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
     AFTER UPDATE
     ON scores
@@ -15,6 +17,8 @@ CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
     WHERE comments.tag = NEW.comment_tag;
 
 DELIMITER //
+
+-- Resolve ownership of a course and its videos
 CREATE
     DEFINER = 'triggers' PROCEDURE course_ownership_add(
     IN user_id BIGINT UNSIGNED,
@@ -24,19 +28,20 @@ CREATE
     IN gift_id BIGINT UNSIGNED
 )
 BEGIN
-    INSERT INTO db.ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
+    INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
     SELECT video_tag, user_id, origin, purchase_id, gift_id
-    FROM db.course_videos cv
+    FROM course_videos cv
     WHERE cv.course_tag = course_tag;
+
     INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
     VALUES (course_tag, user_id, origin, purchase_id, gift_id);
 END //
 
+-- Resolve a standard purchase
 CREATE PROCEDURE resolve_purchase(
     IN purchase_tag CHAR(64)
 )
 BEGIN
-    #     DECLARE emailAddress varchar(100) DEFAULT "";
     DECLARE done INT DEFAULT FALSE;
     DECLARE course_tag CHAR(64);
     DEClARE cursor_courses
@@ -53,17 +58,17 @@ BEGIN
 
     SELECT amount, request_time, user_id, purchase_id
     INTO @amount, @request_time, @user_id, @purchase_id
-    FROM db.transactions_pending
+    FROM transactions_pending
     WHERE (url_tag = purchase_tag);
 
-    INSERT INTO db.transaction_log(user_id, amount, request_time)
+    INSERT INTO transaction_log(user_id, amount, request_time)
     VALUES (@user_id, @amount, @request_time);
 
-    DELETE FROM db.transactions_pending WHERE (url_tag = purchase_tag);
+    DELETE FROM transactions_pending WHERE (url_tag = purchase_tag);
 
-    UPDATE db.balances SET balance = balance - @amount WHERE (user_id = @user_id);
+    UPDATE balances SET balance = balance - @amount WHERE (user_id = @user_id);
 
-    UPDATE db.purchases
+    UPDATE purchases
     SET confirmed         = TRUE,
         confirmation_time = NOW()
     WHERE id = @purchase_id;
@@ -91,6 +96,51 @@ BEGIN
             );
     END LOOP own_course;
     CLOSE cursor_courses;
+END //
 
-END//
+-- Resolve an admin gift
+CREATE
+    DEFINER = 'triggers' PROCEDURE resolve_gift(
+    IN admin_uid BIGINT UNSIGNED,
+    IN receiving_uid BIGINT UNSIGNED,
+    IN itm_id BIGINT UNSIGNED,
+    IN itm_tag CHAR(64)
+)
+BEGIN
+    INSERT INTO gifts (`item_id`, `user_id`, `admin_id`)
+    VALUES (itm_id, receiving_uid, admin_uid);
+
+    SELECT last_insert_id() INTO @gift_id;
+
+    CASE (SELECT type FROM items WHERE id = itm_id)
+        WHEN 'video' THEN INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `gift_id`)
+                          VALUES (itm_tag, receiving_uid, 'gift', @gift_id);
+        WHEN 'course' THEN CALL course_ownership_add(receiving_uid, itm_tag, 'gift', null, @gift_id);
+        END CASE;
+END //
+
+-- Resolve account verification, given an email tag
+CREATE
+    DEFINER = 'triggers' PROCEDURE resolve_account(
+    IN verification_tag CHAR(64)
+)
+BEGIN
+    SELECT user_id
+    INTO @user_id
+    FROM emails_pending
+    WHERE url_tag = verification_tag
+      AND type = 'verify';
+
+    UPDATE users u
+    SET u.verified = 1
+    WHERE u.id = @user_id;
+
+    DELETE
+    FROM emails_pending p
+    WHERE p.url_tag = verification_tag;
+
+    INSERT INTO balances (user_id, balance)
+    VALUES (@user_id, 100.00);
+END //
+
 DELIMITER ;

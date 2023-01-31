@@ -1,18 +1,17 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Gift item', styled: 'form.css', scripted: true);
+html_header(title: 'Delete item', styled: 'form.css', scripted: true);
 
 require 'admin_controls.php'; ?>
 
     <div class="form-content">
-        <h1>Gift user an item</h1>
+        <h1>Delete an item</h1>
         <div class="form-outline">
-            <form action="/api/admin/gift" method="POST">
+            <form action="/api/admin/delete" method="POST">
                 <?php
                 if (is_admin($_SESSION['uid'])) {
-                    form_input('user', 'Username of reciever');
-                    form_input('item-tag', 'Tag of gift item');
+                    form_input('item_tag', 'Tag of item to be deleted');
                     form_error();
 
                     echo '<div class="form-btns">';

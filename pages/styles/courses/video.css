@@ -320,12 +320,8 @@ div.comment-reactions-gap-s {
     width: 10px;
 }
 
-.comment-reactions-up:hover {
-    cursor: grab;
-}
-
-.comment-reactions-down:hover {
-    cursor: grab;
+.comment-reactions-wrapper span:hover {
+    cursor: pointer;
 }
 
 .comment-reactions-up.pressed {

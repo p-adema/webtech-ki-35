@@ -11,6 +11,6 @@ $(document).ready(function () {
                 delay: 5000
             }
         }
-        $.post("/api/account/verify", user_data, form_default_response(handler_options));
+        $.post('/api/account/verify', user_data, form_default_response(handler_options));
     });
 });

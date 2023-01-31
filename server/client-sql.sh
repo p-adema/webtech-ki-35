@@ -11,7 +11,7 @@ cd /var/www/server || exit 1
   cat scraped.sql;
 } > reset.sql
 echo 'Step 4/4: Drop tables & reset database'
-mysql $1 < reset.sql &&
+mysql < reset.sql &&
 rm schema.sql users.sh triggers.sql initial_data.sql scraped.sql reset.sql client-sql.sh &&
 echo '          SQL deployment success!' &&
 echo '          (Remember to log out of any previous sessions)'

@@ -1,4 +1,5 @@
 <?php
+require_once "pdo_read.php";
 
 # Linter attribute to describe control flow,
 # as these functions end script execution
@@ -7,17 +8,17 @@ use JetBrains\PhpStorm\NoReturn;
 /**
  * Send JSON data, then stop execution
  * @param string $message Message to be returned
- * @param array $errors Errors encountered during data processing
+ * @param ?array $errors Errors encountered during data processing. Defaults to 'message'
  * @param array $data Additional data to be sent
  */
-#[NoReturn] function api_fail(string $message, array $errors, array $data = []): void
+#[NoReturn] function api_fail(string $message, ?array $errors = null, array $data = []): void
 {
     $response['success'] = false;
     $response['message'] = $message;
-    $response['errors'] = $errors;
+    $response['errors'] = $errors ?? ['submit' => $message];
     $response['data'] = $data;
     echo json_encode($response);
-    exit();
+    exit;
 }
 
 /**
@@ -34,7 +35,7 @@ use JetBrains\PhpStorm\NoReturn;
     $data['message'] = $message;
     $response['data'] = $data;
     echo json_encode($response);
-    exit();
+    exit;
 }
 
 /**
@@ -47,6 +48,10 @@ function ensure_session(): void
     }
     if (!isset($_SESSION['auth'])) {
         $_SESSION['auth'] = false;
+    } elseif ($_SESSION['auth'] and user_is_banned($_SESSION['uid'])) {
+        unset($_SESSION['uid']);
+        $_SESSION['auth'] = false;
+        session_regenerate_id(true);
     }
 }
 
@@ -71,13 +76,15 @@ function api_login(string $username_or_email): bool
     $pdo_read = new_pdo_read();
     $sql_prep = $pdo_read->prepare($sql);
     $sql_prep->execute($data);
-    $uid = $sql_prep->fetch();
+    $uid = $sql_prep->fetch(PDO::FETCH_ASSOC);
 
     if ($uid === false) { # No such user
         return false;
+    } elseif (user_is_banned($uid['id'])) {
+        return false;
     }
     session_regenerate_id();
-    $_SESSION['uid'] = $uid[0];
+    $_SESSION['uid'] = $uid['id'];
     $_SESSION['auth'] = true;
     return true;
 }
@@ -96,4 +103,24 @@ function api_logout(): bool
     unset($_SESSION['uid']);
     $_SESSION['auth'] = false;
     return true;
+}
+
+function user_is_banned(int $uid): bool
+{
+    $pdo_read = new_pdo_read();
+    $sql = 'SELECT banned FROM users WHERE id = :uid';
+    $prep = $pdo_read->prepare($sql);
+    $prep->execute(['uid' => $uid]);
+    $user = $prep->fetch();
+
+    return $user !== false ? $user['banned'] : false;
+}
+
+function api_require_login(): void
+{
+    ensure_session();
+
+    if (!$_SESSION['auth']) {
+        api_fail('Please log in first');
+    }
 }
