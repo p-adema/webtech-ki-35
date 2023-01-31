@@ -20,7 +20,7 @@ function is_admin($uid): bool
     }
 }
 
-function username($uid): int|false
+function user_id_from_name($uid): int|false
 {
     require_once 'pdo_read.php';
 
@@ -29,10 +29,11 @@ function username($uid): int|false
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['uid' => $uid]);
 
-    return $sth->fetch()['id'];
+    $user = $sth->fetch();
+    return $user !== false ? $user['id'] : false;
 }
 
-function item($item_tag): int|false
+function item_id_from_tag($item_tag): int|false
 {
     require_once 'pdo_read.php';
 
@@ -41,10 +42,11 @@ function item($item_tag): int|false
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['item_tag' => $item_tag]);
 
-    return $sth->fetch()['id'];
+    $item = $sth->fetch();
+    return $item !== false ? $item['id'] : false;
 }
 
-function gift_item($admin_id, $reciever_id, $item_id, $item_tag): void
+function gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
 {
     require_once 'pdo_write.php';
     $pdo_write = new_pdo_write();
@@ -52,12 +54,12 @@ function gift_item($admin_id, $reciever_id, $item_id, $item_tag): void
     $sql = 'CALL resolve_purchase(:admin_id, :reciever_id, :item_id, :item_tag);';
     $prep = $pdo_write->prepare($sql);
     $data = [
-        'admin_id' => $admin_id,
-        'reciever_id' => $reciever_id,
+        'admin_id' => $admin_uid,
+        'reciever_id' => $reciever_uid,
         'item_id' => $item_id,
         'item_tag' => $item_tag,
     ];
-    $prep->execute($data);
+    return $prep->execute($data);
 }
 
 function remove_comment($comment_tag): void

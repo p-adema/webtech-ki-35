@@ -1,30 +1,29 @@
 <?php
 require 'html_page.php';
 require 'admin_controls.php';
-html_header(title: 'Admin Controls', styled: true, scripted: 'ajax');
+auth_redirect(if_not_auth: '/auth/login');
+html_header(title: 'Administration', styled: 'form.css', scripted: 'ajax');
 
-ensure_session();
+?>
+    <div class="form-content">
+        <h1>Administrative controls</h1>
+        <div class="form-outline">
+            <form action="/api/admin/gift" method="POST">
+                <?php
+                if (is_admin($_SESSION['uid'])) {
+                    echo '<p> Select an action: </p>';
 
-if ($_SESSION['auth']) {
-    if (is_admin($_SESSION['uid'])) {
-        ?>
+                    echo '<div class="form-btns form-btns-down form-btns-spaced">';
+                    text_link('Ban a user', '/admin/ban');
+                    text_link('Delete an item', '/admin/delete');
+                    text_link('Gift an item', '/admin/gift');
+                    echo '</div>';
 
-        <body>
-        <div class="main-container">
-            <span>Here are your controls</span><br>
-            <a href="/admin/gift">Click here for a gift form</a>
-            <a href="remove_comment"></a>
+                } else {
+                    echo "<p>Insufficient privileges</p>";
+                }
+                ?>
+            </form>
         </div>
-        </body>
-
-    <?php }
-    else {
-        echo "You do not have the permissions to be on this page.";
-    }
-}
-else {
-    echo 'You do not seem to be logged in.';
-}
-
-
-        html_footer();
+    </div>
+<?php html_footer();

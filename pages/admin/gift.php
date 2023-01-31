@@ -1,36 +1,30 @@
 <?php
 require 'html_page.php';
+auth_redirect(if_not_auth: '/auth/login');
+html_header(title: 'Gift item', styled: 'form.css', scripted: true);
+
 require 'admin_controls.php';
-html_header(title: 'Gift', styled: 'form.css', scripted: true);
 
-ensure_session();
-
-if ($_SESSION['auth']) {
-    if (is_admin($_SESSION['uid'])) {
-        ?>
-        <div class="form-content">
-            <h1>Gift user an item</h1>
-            <div class="form-outline">
-                <form action="/api/admin/gift" method="POST">
-                    <?php
-                    form_input('user', 'User to receive gift');
-                    form_input('item-tag', 'Item-tag to be gifted');
+?>
+    <div class="form-content">
+        <h1>Gift user an item</h1>
+        <div class="form-outline">
+            <form action="/api/admin/gift" method="POST">
+                <?php
+                if (is_admin($_SESSION['uid'])) {
+                    form_input('user', 'Username of reciever');
+                    form_input('item-tag', 'Tag of gift item');
                     form_error();
 
                     echo '<div class="form-btns">';
+                    text_link('Go back', '/admin/');
                     form_submit();
                     echo '</div>';
-                    ?>
-                </form>
-            </div>
+                } else {
+                    echo "<p>Insufficient privileges</p>";
+                }
+                ?>
+            </form>
         </div>
-    <?php }
-    else {
-        echo "You do not have the permissions to be on this page.";
-    }
-} else {
-    echo 'You do not seem to be logged in.';
-}
-
-
-html_footer();
+    </div>
+<?php html_footer();

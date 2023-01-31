@@ -326,6 +326,10 @@ div.form-btns > div {
     align-items: center;
 }
 
+.form-btns.form-btns-spaced > div {
+    margin: 10px;
+}
+
 .link-box {
 }
 
