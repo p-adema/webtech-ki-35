@@ -66,6 +66,7 @@ CREATE TABLE `courses`
     `creator`       BIGINT UNSIGNED               NOT NULL,
     `creation_date` DATETIME        DEFAULT NOW() NOT NULL,
     `views`         BIGINT UNSIGNED DEFAULT 0     NOT NULL,
+    FULLTEXT (`name`),
     PRIMARY KEY (`id`),
     FOREIGN KEY (`creator`) REFERENCES `users` (`id`),
     FOREIGN KEY (`tag`) REFERENCES `items` (`tag`)

@@ -34,7 +34,7 @@ if (!$valid) {
 }
 
 $sql = 'SELECT `name`, `tag` FROM db.videos
-        WHERE MATCH(`name`) AGAINST(:query) AND uploader = :uid ORDER BY views';
+        WHERE MATCH(`name`) AGAINST(:query) AND uploader = :uid ORDER BY views DESC';
 $data = [
     'query' => htmlspecialchars($query),
     'uid' => $_SESSION['uid']
@@ -46,7 +46,7 @@ try {
     $prep->execute($data);
     $videos = $prep->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-    api_fail("Couldn't perform search", ['submit' => "Coulnd't perform search"]);
+    api_fail("Couldn't perform search", ['submit' => "Couldn't perform search"]);
 }
 require_once "form_elements.php";
 $videos_rendered = [];
