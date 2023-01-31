@@ -98,53 +98,11 @@ function confirm_payment($tag): void
     require_once 'pdo_write.php';
     $pdo_write = new_pdo_write();
 
-    $sql_read = 'SELECT amount, request_time, user_id, purchase_id FROM db.transactions_pending where (url_tag = :url_tag)';
-    $sth_read = $pdo_write->prepare($sql_read);
-    $sth_read->execute(['url_tag' => $tag]);
+    $sql = 'CALL resolve_purchase(:url_tag);';
+    $prep = $pdo_write->prepare($sql);
+    $prep->execute(['url_tag' => $tag]);
 
-    $data_pending = $sth_read->fetch(PDO::FETCH_ASSOC);
 
-    $sql_add = 'INSERT INTO db.transaction_log(user_id, amount, request_time) 
-        VALUES(:identity, :money, :date)';
-    $sql_add = $pdo_write->prepare($sql_add);
-    $data_log = [
-        'identity' => $data_pending['user_id'],
-        'money' => $data_pending['amount'],
-        'date' => $data_pending['request_time']];
-    $sql_add->execute($data_log);
-
-    $sql_remove = 'DELETE FROM db.transactions_pending WHERE (url_tag = :url_tag)';
-    $sth_remove = $pdo_write->prepare($sql_remove);
-    $sth_remove->execute(['url_tag' => $tag]);
-
-    $user_bal = get_balance($data_pending['user_id']);
-
-    $sql_bal_change = 'UPDATE db.balances SET balance = :new_bal WHERE (user_id = :user)';
-    $sth_bal = $pdo_write->prepare($sql_bal_change);
-    $sth_bal->execute(['user' => $data_pending['user_id'], 'new_bal' => $user_bal - $data_pending['amount']]);
-
-    $sql_own_videos = "INSERT INTO ownership (item_tag, user_id, origin, purchase_id) 
-                SELECT i.tag, :uid, 'purchase', :pid
-                FROM purchase_items AS P
-                INNER JOIN items i on P.item_id = i.id
-                WHERE purchase_id = :pid AND type = 'video'";
-
-    $p_own_videos = $pdo_write->prepare($sql_own_videos);
-
-    $sql_own_courses = "INSERT INTO course_ownership (item_tag, user_id, origin, purchase_id) 
-                SELECT i.tag, :uid, 'purchase', :pid
-                FROM purchase_items AS P
-                INNER JOIN items i on P.item_id = i.id
-                WHERE purchase_id = :pid AND type = 'course'";
-
-    $p_own_courses = $pdo_write->prepare($sql_own_courses);
-    $data_own = [
-        'uid' => $data_pending['user_id'],
-        'pid' => $data_pending['purchase_id']
-    ];
-
-    $p_own_videos->execute($data_own);
-    $p_own_courses->execute($data_own);
 }
 
 function deny_payment($tag): void
