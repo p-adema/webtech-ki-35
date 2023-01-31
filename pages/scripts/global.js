@@ -140,16 +140,28 @@ $(document).ready(function () {
         window.history.back();
     })
     $dropdown_videos.mouseenter(function (_) {
-        $dropdown_videos_content.stop().animate({left: $dropdown_videos.offset().left }, 4)
-
+        $dropdown_videos_content.stop().animate({left: $dropdown_videos.offset().left}, 4)
         $('.dropdown-videos-content').show().animate({opacity: 1, top: 60}, 400)
         $dropdown_videos.css('background-color', '#676')
     })
     $dropdown_videos.mouseleave(function (_) {
         $dropdown_videos.css('background-color', '#343')
         $dropdown_videos_content.stop().animate({opacity: 0, top: -$dropdown_videos_content.height()}, 400)
-
     })
+
+    $('.navbar-search-icon').click(function (_) {
+        navbar_search()
+    })
+    $('.navbar-search-input').keydown(function (event) {
+        if (event.which === 13) {
+            navbar_search()
+        }
+    })
+}).on('keydown', function (event) {
+    if (event.which === 191 && $(':focus').length === 0) {
+        event.preventDefault()
+        $('.navbar-search-input').focus()
+    }
 })
 
 function cart_item_delete(event) {
@@ -177,4 +189,8 @@ function remove_item_success(data, __) {
         $(this).remove()
 
     })
+}
+
+function navbar_search() {
+    window.location.href = "/search/" + $('#navbar-search').val()
 }

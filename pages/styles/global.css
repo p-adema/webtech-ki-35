@@ -381,19 +381,54 @@ flex: 9;
     font-size: 32px;
 }
 
-#shopping-cart{
+#shopping-cart {
     color: white;
     font-size: 32px;
 
 }
 
+.navbar-search-wrapper {
+    flex: auto;
+    background: whitesmoke;
+    border-radius: 30px;
+    margin: 10px 20px 10px 0;
+    display: flex;
+    height: 32px;
+    justify-content: center;
+    align-self: center;
+}
+
+.navbar-search-icon {
+    background: #3f6026;
+    color: whitesmoke;
+    border-radius: 10px 0 0 10px;
+    height: 32px;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+.material-symbols-outlined {
+    user-select: none;
+}
+
+.navbar-search-input {
+    flex: auto;
+    height: 32px;
+    border: none;
+    padding: 0 0 0 10px;
+    border-radius: 0 30px 30px 0;
+}
+
+.navbar-search-results {
+    display: none;
+}
 
 .disable-scrollbars::-webkit-scrollbar {
-    background: transparent; /* Chrome/Safari/Webkit */
+    background: transparent;
     width: 0;
 }
 
 .disable-scrollbars {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
