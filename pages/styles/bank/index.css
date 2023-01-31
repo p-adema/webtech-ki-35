@@ -186,7 +186,7 @@ a:link {
     text-decoration: none;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .big-transaction-box {
         max-width: 100%;
         flex-flow: column;

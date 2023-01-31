@@ -157,7 +157,7 @@ html {
     border-bottom: solid black 5px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .all-videos {
         flex-flow: column;
     }

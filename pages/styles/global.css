@@ -65,7 +65,7 @@ html {
     height: 100%;
     width: 0;
     position: fixed;
-    z-index: 10;
+    z-index: 30;
     left: 0;
     top: 0;
     padding-top: 60px;
@@ -206,6 +206,7 @@ flex: 9;
 
 .sidebar-right{
     display: flex;
+    z-index: 30;
     flex-flow: column;
     align-items: baseline;
     right: -300px;
@@ -366,8 +367,8 @@ flex: 9;
     width: 100vw;
     top: 0;
     left: 0;
-    height: 100vw;
-    z-index: 10;
+    height: 100vh;
+    z-index: 21;
     position: fixed;
     opacity: 0;
 }

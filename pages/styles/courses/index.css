@@ -86,7 +86,7 @@ html {
     border-bottom: solid black 5px;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .all-courses {
         flex-flow: column;
     }
