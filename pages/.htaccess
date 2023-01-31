@@ -2,3 +2,5 @@ RewriteEngine On
 RewriteRule ^search/([a-zA-Z0-9]+) search.php\?tag=$1 [END]
 RewriteRule ^search/$ search.php [END]
 RewriteRule (^[^.?]+[^/])(\?.+)?$ $1\.php$2
+
+ErrorDocument 404 /404.php
