@@ -205,6 +205,7 @@ flex: 9;
 }
 
 .sidebar-right{
+    top: 0;
     display: flex;
     z-index: 30;
     flex-flow: column;

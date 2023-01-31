@@ -37,9 +37,7 @@ function navbar(): void
     } else{
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
     }
-    $html .= " </div>" .
-        sidebar_right()
-        . "</div> 
+    $html .= " </div></div> 
  <div class='videos-button dropdown-videos'>
  <div class='dropdown-videos-content'> 
       <a href='/courses/subject?tag=physics'> Phsics</a>
@@ -47,7 +45,7 @@ function navbar(): void
       <a href='/courses/subject?tag=geography'> Geography</a>
       </div>
       </div>
- ". sidebar_cover() . searchbar_results();
+ ". sidebar_cover() . searchbar_results() . sidebar_right();
 
      echo $html;
 
