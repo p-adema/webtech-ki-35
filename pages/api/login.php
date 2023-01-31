@@ -12,8 +12,8 @@ $errors = [
     'submit' => []
 ];
 $valid = true;
-$name = $_POST['name'];
-$password = $_POST['password'];
+$name = $_POST['name'] ?? '';
+$password = $_POST['password'] ?? '';
 
 if (empty($name)) {
     $errors['name'][] = 'Please fill in a username';

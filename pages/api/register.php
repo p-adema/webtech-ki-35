@@ -13,13 +13,12 @@ require "mail.php";
 require "pdo_write.php";
 require "check_acc_fields.php";
 
-$name = $_POST['name'];
-$email = $_POST['email'];
-$password = $_POST['password'];
-$re_pwd = $_POST['re_pwd'];
-$full_name = $_POST['full_name'];
+$name = $_POST['name'] ?? '';
+$email = $_POST['email'] ?? '';
+$password = $_POST['password'] ?? '';
+$re_pwd = $_POST['re_pwd'] ?? '';
+$full_name = $_POST['full_name'] ?? '';
 
-/** @noinspection DuplicatedCode */
 try {
     $pdo_write = new_pdo_write(err_fatal: false);
     $errors = check_acc_fields($pdo_write, $name, $email, $password, $re_pwd, $full_name);
@@ -52,8 +51,8 @@ if (!$sql_prep->execute($data)) {
 
 $url_tag = tag_create();
 
-$sql_email = 'INSERT INTO db.emails_pending (type, url_tag, user_id)
-        SELECT \'verify\', :tag, id FROM db.users WHERE name = :name';
+$sql_email = "INSERT INTO db.emails_pending (type, url_tag, user_id)
+        SELECT 'verify', :tag, id FROM db.users WHERE name = :name";
 
 $data = [
     'tag' => htmlspecialchars($url_tag),

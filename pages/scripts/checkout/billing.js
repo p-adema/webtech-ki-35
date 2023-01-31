@@ -16,6 +16,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/account/billing", user_data, form_default_response(handler_options))
+        $.post('/api/account/billing', user_data, form_default_response(handler_options))
     })
 })

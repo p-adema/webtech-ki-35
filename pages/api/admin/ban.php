@@ -3,7 +3,7 @@
 require_once 'tag_actions.php';
 require_once 'api_resolve.php';
 require_once 'admin_controls.php';
-api_ensure_admin();
+api_require_admin();
 
 $errors = [
     'user' => [],

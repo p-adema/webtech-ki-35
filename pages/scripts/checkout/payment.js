@@ -6,6 +6,6 @@ $(document).ready(function () {
 
         const handler_options = {}
 
-        $.post("/api/cart/pay", user_data, form_default_response(handler_options))
+        $.post('/api/cart/pay', user_data, form_default_response(handler_options))
     })
 })

@@ -19,7 +19,7 @@ function is_admin($uid): bool
     }
 }
 
-function api_ensure_admin(): void
+function api_require_admin(): void
 {
     ensure_session();
     if (!$_SESSION['auth'] or !is_admin($_SESSION['uid'])) {

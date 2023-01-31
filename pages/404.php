@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Page not found', styled: 'form.css', scripted: false);
+html_header(title: 'Page not found', styled: 'form.css');
 ?>
 
     <div class="form-content">

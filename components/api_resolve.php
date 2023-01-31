@@ -8,14 +8,14 @@ use JetBrains\PhpStorm\NoReturn;
 /**
  * Send JSON data, then stop execution
  * @param string $message Message to be returned
- * @param array $errors Errors encountered during data processing
+ * @param ?array $errors Errors encountered during data processing. Defaults to 'message'
  * @param array $data Additional data to be sent
  */
-#[NoReturn] function api_fail(string $message, array $errors, array $data = []): void
+#[NoReturn] function api_fail(string $message, ?array $errors = null, array $data = []): void
 {
     $response['success'] = false;
     $response['message'] = $message;
-    $response['errors'] = $errors;
+    $response['errors'] = $errors ?? ['submit' => $message];
     $response['data'] = $data;
     echo json_encode($response);
     exit;
@@ -114,4 +114,13 @@ function user_is_banned(int $uid): bool
     $user = $prep->fetch();
 
     return $user !== false ? $user['banned'] : false;
+}
+
+function api_require_login(): void
+{
+    ensure_session();
+
+    if (!$_SESSION['auth']) {
+        api_fail('Please log in first');
+    }
 }

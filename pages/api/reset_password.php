@@ -30,7 +30,7 @@ try {
 }
 
 
-$sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'password-reset\');';
+$sql = "SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = 'password-reset');";
 $data = ['tag' => $tag];
 $sql_prep = $pdo_write->prepare($sql);
 
@@ -40,14 +40,12 @@ if (!$sql_prep->execute($data)) {
 }
 $user_id = $sql_prep->fetch();
 
-if (empty($user_id)) {
+if ($user_id === false) {
     $errors['submit'][] = 'Invalid tag';
-    $valid = false;
-    # return user a error message
-} else {
-    $user_id = $user_id['user_id'];
+    api_fail('Invalid tag', $errors);
 }
 
+$user_id = $user_id['user_id'];
 
 $password = $_POST['password'] ?? '';
 $repeated_password = $_POST['password_repeated'] ?? '';

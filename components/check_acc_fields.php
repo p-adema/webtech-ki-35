@@ -42,7 +42,7 @@ function check_password(string $password): array
     return $errors;
 }
 
-function check_name(string $name, PDO $PDO): array
+function check_name(string $name, PDO $PDO, int $self_uid = -1): array
 {
     $errors = [];
 
@@ -64,7 +64,7 @@ function check_name(string $name, PDO $PDO): array
             $errors[] = 'Internal server error, try again later';
         }
         $duplicate = $sql_prep->fetch();
-        if (!empty($duplicate)) {
+        if (!empty($duplicate) and $duplicate['id'] !== $self_uid) {
             $errors[] = 'This username is already in use';
         }
     }
@@ -72,7 +72,7 @@ function check_name(string $name, PDO $PDO): array
     return $errors;
 }
 
-function check_email(string $email, PDO $PDO): array
+function check_email(string $email, PDO $PDO, int $self_uid = -1): array
 {
     $errors = [];
 
@@ -92,7 +92,7 @@ function check_email(string $email, PDO $PDO): array
             $errors[] = 'Internal server error, try again later';
         }
         $duplicate = $sql_prep->fetch();
-        if (!empty($duplicate)) {
+        if (!empty($duplicate) and $duplicate['id'] !== $self_uid) {
             $errors[] = 'This email is already in use';
         }
     }

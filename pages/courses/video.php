@@ -8,14 +8,16 @@ html_header(title: 'Video', styled: true, scripted: true);
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
-if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']): ?>
+if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
+    $stars = $video_info['rating'] ? ('perm-star-' . $video_info['rating']) : 'stars-empty';
+    ?>
 
     <div class="video-page-flexbox">
         <div class="test">
             <div class="video-and-description-big-box">
                 <div class="video-and-description">
                     <div class="video-outline">
-                        <div class="video">
+                        <div class="video" id="video" data-tag="<?php echo $_GET['tag'] ?>">
                             <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
                                 <video width="600" controls>
                                     <source src="/resources/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
@@ -43,7 +45,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']): 
                                 </div>
                             <?php } ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars stars-empty"></div>
+                            <div class="stars <?php echo $stars ?>"></div>
                             <div id="log"></div>
                         </div>
                     </div>

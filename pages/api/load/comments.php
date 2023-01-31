@@ -15,8 +15,8 @@ $errors = [
     'on' => []
 ];
 $valid = true;
-$type = $_POST['type'];
-$on = $_POST['on'];
+$type = $_POST['type'] ?? '';
+$on = $_POST['on'] ?? '';
 
 if (empty($type)) {
     $errors['type'][] = 'Please provide the comment source type';
@@ -39,7 +39,7 @@ $pdo_read = new_pdo_read();
 $response = [];
 
 if ($type === 'item') {
-    $id = get_id($on, $pdo_read);
+    $id = item_id_from_tag($on, $pdo_read);
 
     if ($id === false) {
         $errors['on'][] = 'Invalid item tag';
@@ -47,10 +47,9 @@ if ($type === 'item') {
     }
     $comments = get_comments_item($id, $pdo_read);
     $rendered = [];
-    $score_array = get_main_votes($id);
 
     foreach ($comments as $comment) {
-        $rendered[] = render_comment($comment, $score_array[$comment['tag']]);
+        $rendered[] = render_comment($comment);
     }
 
     $response['html'] = join(PHP_EOL, $rendered);
@@ -62,8 +61,7 @@ $comments = get_replies_comment($on, $pdo_read);
 $rendered = [];
 
 foreach ($comments as $comment) {
-    $score_array = get_reaction_votes($on);
-    $rendered[] = render_comment($comment, $score_array[$comment['tag']]);
+    $rendered[] = render_comment($comment);
 }
 
 $response['html'] = join(PHP_EOL, $rendered);

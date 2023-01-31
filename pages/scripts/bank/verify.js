@@ -19,6 +19,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post("/api/bank", user_data, form_default_response(handler_options))
+        $.post('/api/bank', user_data, form_default_response(handler_options))
     })
 })

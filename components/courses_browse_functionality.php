@@ -16,7 +16,7 @@ function render_courses(): void
 
     $best_course = $courses[0];
     $best_course_info = get_course_info($best_course['tag']);
-    $best_creator_name = name_of_uploader($best_course_info['creator']);
+    $best_creator_name = user_name_from_id($best_course_info['creator']);
 
     echo "
         <div class='best-header-box'>
@@ -38,7 +38,7 @@ function render_courses(): void
 
     foreach (array_slice($courses, 1) as $course) {
         $course_info = get_course_info($course['tag']);
-        $creator_name = name_of_uploader($course_info['creator']);
+        $creator_name = user_name_from_id($course_info['creator']);
         echo "
                 <div class='course'>
                     <a href='/courses/course/{$course['tag']}'>
@@ -67,4 +67,3 @@ function get_course_info($course_tag): array
 
     return $sth->fetch();
 }
-

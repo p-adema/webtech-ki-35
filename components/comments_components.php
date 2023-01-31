@@ -2,7 +2,7 @@
 require_once "relative_time.php";
 require_once 'tag_actions.php';
 
-function get_id(string $tag, PDO $PDO): int|false
+function item_id_from_tag(string $tag, PDO $PDO): int|false
 {
     $sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
     $p_tag = $PDO->prepare($sql_tag);
@@ -10,51 +10,56 @@ function get_id(string $tag, PDO $PDO): int|false
     return $p_tag->fetch(PDO::FETCH_ASSOC)['id'];
 }
 
-function count_replies(string $tag, PDO $PDO): int
-{
-    $sql = 'SELECT COUNT(*) AS replies FROM comments WHERE reply_tag = :tag';
-    $prepared = $PDO->prepare($sql);
-    $prepared->execute(['tag' => $tag]);
-    return $prepared->fetch(PDO::FETCH_ASSOC)['replies'];
-}
-
 function get_comments_item(int $id, PDO $PDO): array
 {
-    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score FROM comments as c
-            INNER JOIN users u on c.commenter_id = u.id
-            WHERE c.item_id = :item AND c.reply_tag IS NULL';
-    $prepared = $PDO->prepare($sql);
-    $prepared->execute(['item' => $id]);
-    $comments = $prepared->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($comments as &$comment) {
-        $comment['replies'] = count_replies($comment['tag'], $PDO);
-    }
-    return $comments;
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies 
+            FROM comments as c
+                INNER JOIN users u on c.commenter_id = u.id
+                LEFT JOIN scores s on c.tag = s.comment_tag and s.user_id = :uid
+                LEFT JOIN comments r on c.tag = r.reply_tag
+            WHERE c.item_id = :item AND c.reply_tag IS NULL
+            GROUP BY c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0)
+            ORDER BY c.score DESC';
+    ensure_session();
+    $data = [
+        'item' => $id,
+        'uid' => $_SESSION['uid'] ?? null
+    ];
+
+    $prep = $PDO->prepare($sql);
+    $prep->execute($data);
+    return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
 function get_replies_comment(string $tag, PDO $PDO): array
 {
-    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score FROM comments as c
-            INNER JOIN users u on c.commenter_id = u.id
-            WHERE c.reply_tag = :tag';
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies 
+            FROM comments as c
+                INNER JOIN users u on c.commenter_id = u.id
+                LEFT JOIN scores s on c.tag = s.comment_tag and s.user_id = :uid
+                LEFT JOIN comments r on c.tag = r.reply_tag
+            WHERE c.reply_tag = :tag
+            GROUP BY c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0)
+            ORDER BY c.score DESC';
+    ensure_session();
+    $data = [
+        'tag' => $tag,
+        'uid' => $_SESSION['uid'] ?? null
+    ];
 
-    $prepared = $PDO->prepare($sql);
-    $prepared->execute(['tag' => $tag]);
-    $comments = $prepared->fetchAll(PDO::FETCH_ASSOC);
-    foreach ($comments as &$comment) {
-        $comment['replies'] = count_replies($comment['tag'], $PDO);
-    }
-    return $comments;
+    $prep = $PDO->prepare($sql);
+    $prep->execute($data);
+    return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function render_comment(array $comment, int|null $score, bool $is_reply = false): string
+function render_comment(array $comment, bool $is_reply = false): string
 {
     $rating_class_down = '';
     $rating_class_up = '';
 
-    if ($score === 1) {
+    if ($comment['user_score'] === 1) {
         $rating_class_up = 'pressed';
-    } else if ($score === -1) {
+    } else if ($comment['user_score'] === -1) {
         $rating_class_down = 'pressed';
     }
 
@@ -135,81 +140,6 @@ function change_comment_score($rating, $comment_id, $user_id): void
         $sth_update = $pdo_write->prepare($sql_update);
         $sth_update->execute(['new_rating' => $rating, 'user' => $user_id, 'comment' => $comment_id]);
     }
-}
-
-function get_main_votes($item_id): array
-{
-    require_once 'pdo_read.php';
-    $pdo_read = new_pdo_read();
-
-    $video_comments_sql = 'SELECT tag FROM db.comments WHERE item_id = :item_id AND reply_tag IS NULL';
-    $video_comments_sth = $pdo_read->prepare($video_comments_sql);
-    $video_comments_sth->execute(['item_id' => $item_id]);
-    $data = $video_comments_sth->fetchAll(PDO::FETCH_DEFAULT);
-
-    ensure_session();
-    $votes_array = [];
-
-    if ($_SESSION['auth']) {
-        $uid = $_SESSION['uid'];
-        $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
-        $user_votes_sth = $pdo_read->prepare($user_votes_sql);
-
-
-        foreach ($data as $item) {
-            $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
-            $comment_score = $user_votes_sth->fetch();
-            if ($comment_score !== false) {
-                $votes_array[$item['tag']] = $comment_score['score'];
-            } else {
-                $votes_array[$item['tag']] = 0;
-            }
-        }
-    } else {
-        foreach ($data as $item) {
-            $votes_array[$item['tag']] = 0;
-        }
-    }
-
-
-    return $votes_array;
-}
-
-function get_reaction_votes($comment_id): array
-{
-    require_once 'pdo_read.php';
-    $pdo_read = new_pdo_read();
-
-    $comment_comments_sql = 'SELECT tag FROM db.comments WHERE reply_tag = :comment_id';
-    $comment_comments_sth = $pdo_read->prepare($comment_comments_sql);
-    $comment_comments_sth->execute(['comment_id' => $comment_id]);
-
-    $data = $comment_comments_sth->fetchAll(PDO::FETCH_DEFAULT);
-
-    ensure_session();
-    $votes_array = [];
-
-    if ($_SESSION['auth']) {
-        $uid = $_SESSION['uid'];
-        $user_votes_sql = 'SELECT score FROM db.scores WHERE (user_id = :user) AND (comment_tag = :comment)';
-        $user_votes_sth = $pdo_read->prepare($user_votes_sql);
-
-        foreach ($data as $item) {
-            $user_votes_sth->execute(['user' => $uid, 'comment' => $item['tag']]);
-            $comment_score = $user_votes_sth->fetch();
-            if ($comment_score !== false) {
-                $votes_array[$item['tag']] = $comment_score['score'];
-            } else {
-                $votes_array[$item['tag']] = 0;
-            }
-        }
-    } else {
-        foreach ($data as $item) {
-            $votes_array[$item['tag']] = 0;
-        }
-    }
-
-    return $votes_array;
 }
 
 function add_new_comment(string $comment_text, string $video_tag, $reply): string

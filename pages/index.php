@@ -2,8 +2,8 @@
 require 'html_page.php';
 html_header('EduGrove', styled: true, scripted: 'ajax');
 
-$homepage = true;
-if ($homepage):
+const homepage = true;
+if (homepage):
 
     $html = "
     <div class='homepage-all'>

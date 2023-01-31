@@ -177,7 +177,7 @@ function cart_item_delete(event) {
         success_handler: remove_item_success
     };
 
-    $.post("/api/cart/modify", user_data, form_default_response(handler_options));
+    $.post('/api/cart/modify', user_data, form_default_response(handler_options));
 }
 
 function remove_item_err(errors, _) {
