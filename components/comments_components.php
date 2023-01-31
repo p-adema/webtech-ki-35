@@ -212,7 +212,7 @@ function get_reaction_votes($comment_id): array
     return $votes_array;
 }
 
-function add_new_comment(string $comment, string $video_tag, $reply): string
+function add_new_comment(string $comment_text, string $video_tag, $reply): string
 {
     ensure_session();
 
@@ -236,7 +236,12 @@ function add_new_comment(string $comment, string $video_tag, $reply): string
         $sql_new = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, reply_tag, score) 
             VALUES (:tag, :uid, :video_id, :comment, DEFAULT, :reply, DEFAULT)';
         $sth_new = $pdo_write->prepare($sql_new);
-        $sth_new->execute(['tag' => $fresh_tag, 'uid' => $uid, 'video_id' => $video_id, 'comment' => $comment, 'reply' => $reply]);
+        $data_comment = ['tag' => $fresh_tag,
+            'uid' => $uid,
+            'video_id' => $video_id,
+            'comment' => htmlspecialchars($comment_text),
+            'reply' => $reply];
+        $sth_new->execute($data_comment);
 
         return $fresh_tag;
     }
