@@ -29,7 +29,7 @@ $course_creation_date = explode(' ', $course_info['creation_date']);
 if (count($rating) == 0) {
     $course_has_ratings = false;
 } else {
-    $score = $rating[1];
+    $score = number_format($rating[1], 1);
     $ratings = $rating[0];
 }
 $cart = new Cart();
@@ -45,11 +45,10 @@ $video_info = get_video_data($tag);
             <div class="stretch-box-1"></div>
 
             <div class="video-information">
-                <p id="subject"> Subject: <?php echo $course_info['subject'] ?></p>
                 <p id="description"><?php echo $course_info['description'] ?> </p>
                 <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
-                <p id="since">Since: <?php echo $course_creation_date[0] ?> </p>
-                <p id="views-and-time"> <?php echo $course_info['views'] ?> views </p>
+                <p id="since">Creation date: <?php echo $course_creation_date[0] ?> </p>
+<!--                <p id="views-and-time"> --><?php //echo $course_info['views'] ?><!-- views </p>-->
 
             </div>
             <div class="stretch-box-2"></div>
@@ -61,7 +60,7 @@ $video_info = get_video_data($tag);
                     <div class="ratings-box">
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
                         <div class="stars-empty stars"></div>
-                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                        <p class="total-ratings"><?php echo "$ratings", $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                     </div>
                 <?php else: ?>
                     <div class="ratings-box">
@@ -74,7 +73,7 @@ $video_info = get_video_data($tag);
                 if ($course_has_ratings): ?>
                     <div class="ratings-box">
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-                        <p class="total-ratings"><?php echo "$ratings" ?> ratings</p>
+                        <p class="total-ratings"><?php echo "$ratings", $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                     </div>
 
                 <?php else: ?>
@@ -90,22 +89,30 @@ $video_info = get_video_data($tag);
             <?php
             if ($has_course):
                 ?>
-                <div class="course-buying">
+                <div class="course-buying-box">
                     <p id="course-owned"> You own this course</p>
                 </div>
             <?php
             else:
                 ?>
-
-
+<div class="course-buying-box">
+                <div class="course-buying">
+                    <p id="price"> <?php
+                        if (course_price($course_tag) == 0) {
+                            echo 'This course is free';
+                        } else {
+                            $html = "The price of this course <br> is  " . number_format($cart->tag_price($tag), 2) . ' euro.';
+                            echo $html;
+                        } ?>
+                    </p>
+                </div>
                 <div class="add-to-cart-box">
                     <?php if ($course_in_cart): ?>
                         <form class="shop" id="cart" style="display: block">
                             <?php
                             $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
                             form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
-                            form_error('item');
-                            form_error();
+
                             ?>
                         </form>
                     <?php else: ?>
@@ -115,32 +122,20 @@ $video_info = get_video_data($tag);
                             <?php
                             $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
                             form_submit("$cart_add Add to cart", extra_cls: 'long-btn');
-                            form_error('item');
-                            form_error();
                             ?>
                         </form>
                         <form class="shop" id="cart">
                             <?php
                             $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
                             form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
-                            form_error('item');
-                            form_error();
+
                             ?>
                         </form>
                     <?php endif; ?>
                     <div class="course_tag" tag="<?php echo $_GET['tag'] ?>"></div>
 
                 </div>
-                <div class="course-buying">
-                    <p id="price"> <?php
-                        if (course_price($course_tag) == 0) {
-                            echo 'This course is free';
-                        } else {
-                            $html = 'The price of this course is ' . number_format($cart->tag_price($tag), 2) . ' euro.';
-                            echo $html;
-                        } ?>
-                    </p>
-                </div>
+</div>
 
             <?php
             endif;

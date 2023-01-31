@@ -12,8 +12,11 @@ p {
 }
 
 .information-block {
+
+    bottom: 0;
     padding: 14px;
     min-width: 20vw;
+    height: calc(100vh - 88px);
     display: flex;
     background-color: #637463;
     flex-flow: column;
@@ -28,7 +31,7 @@ p {
 #author{
     margin: 0;
     font-style: italic;
-    color: #2a3a2a;
+    color: #9b9;
 }
 
 .ratings-box {
@@ -43,10 +46,14 @@ p {
     color: 	#CFB53B;
 }
 .total-ratings{
-    color: #232;
+    color: #9b9;
 }
 
-
+#course-owned{
+    text-align: center;
+    padding: 11px 0 11px 0;
+    color: #232;
+}
 .description-box {
 }
 
@@ -57,6 +64,7 @@ p {
 .video-information {
     color: #232;
     border-radius: 15px;
+    border: #343 solid 2px;
     background-color: #839483;
     padding: 14px 14px 7px 14px;
 }
@@ -77,7 +85,20 @@ p {
 }
 
 .course-buying {
+    align-self: center;
+    text-align: center;
+    color: #232;
+    padding: 7px 0 7px 0;
 }
+.course-buying-box{
+    margin-bottom: 21px;
+    align-self: center;
+    background: #839483;
+    border-radius: 20px;
+    border: #343 solid 2px;
+    width: 70%;
+}
+
 .stretch-box-1 {
     align-self: stretch;
     flex: 1;
@@ -98,8 +119,12 @@ p {
 
 
 .add-to-cart-box {
-    padding: 30px 30px 0 30px;
+    padding: 7px 0 14px 0;
     align-self: center;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    align-content: center;
 }
 form#cart {
     display: none;
@@ -151,7 +176,7 @@ button.form-submit.form-submit-blue:hover {
     flex-flow: row;
 }
 #course-title{
-    color: #232;
+    color: #9b9;
     font-size: 30px;
     border-bottom: solid;
 }
@@ -208,13 +233,14 @@ a {
 
 .stars {
     color: #CFB53B;
+    font-size: 20px;
     max-width: fit-content;
     align-self: center;
+    font-weight: bolder;
 }
 
 .stars-empty:after {
     content: '☆☆☆☆☆';
-    font-size: 20px;
     font-weight: bolder;
 }
 

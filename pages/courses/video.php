@@ -11,7 +11,7 @@ $video_info = get_video_data($tag);
 if (isset($_GET['tag']) and $video_info !== false): ?>
 
     <div class="video-page-flexbox">
-        <div class="test">
+        <div class="sub-video-flexbox">
             <div class="video-and-description-big-box">
                 <div class="video-and-description">
                     <div class="video-outline">

@@ -9,7 +9,7 @@ html {
     flex-flow: row;
 }
 
-.test {
+.sub-video-flexbox {
     display: flex;
     flex-flow: column;
     flex: auto;
