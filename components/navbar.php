@@ -35,7 +35,7 @@ upload
      <div class='dropdown-menu'>
       ";
     if ($_SESSION['auth']) {
-        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/logout'], ['Account management', 'Log out']);
+        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/account/invoice', '/auth/logout'], ['Account management', 'Invoice logs', 'Log out']);
     } else{
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
     }

@@ -388,6 +388,12 @@ flex: 9;
 
 }
 
+@media screen and (max-width: 1200px) {
+    .topnav a {
+        font-size: revert;
+    }
+}
+
 .navbar-search-wrapper {
     flex: auto;
     background: whitesmoke;

@@ -2,19 +2,27 @@
 require 'html_page.php';
 require 'bank_tags.php';
 if (isset($_GET['tag']) and check_tag($_GET['tag'])):
-html_header(title: 'Verify transaction', navbar: false, styled: 'form.css', scripted: true);
+html_header(title: 'Verify transaction', navbar: false, styled: true, scripted: true);
 
     require 'bank_functionality.php';
 
 
     $tag = $_GET['tag'];
-    $user_id = obtain_user_information($tag);
+    $user_info = obtain_user_information($tag);
+    $user_id = $user_info['user_id']
 
     ?>
-
+    <div class="background-box">
+        <a href="/">
+            <div class="title-box">
+                <span class="title"> NietNG </span>
+            </div>
+        </a>
+    </div>
     <div class="form-content">
         <h1 class='Header'>Verify payment</h1>
         <div class="form-outline">
+            <span class="amount">€<?php echo $user_info['amount'] ?></span>
             <form method="post" tag="<?php echo $tag ?>">
                 <div class="form-group">
                     <button type="submit" <?php
