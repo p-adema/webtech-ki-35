@@ -10,7 +10,7 @@ html_header(title: 'Administration', styled: 'form.css', scripted: 'ajax');
         <div class="form-outline">
             <form action="/api/admin/gift" method="POST">
                 <?php
-                if (is_admin($_SESSION['uid'])) {
+                if ($_SESSION['admin']) {
                     echo '<p> Select an action: </p>';
 
                     echo '<div class="form-btns form-btns-down form-btns-spaced">';

@@ -48,11 +48,17 @@ function ensure_session(): void
     }
     if (!isset($_SESSION['auth'])) {
         $_SESSION['auth'] = false;
-    } elseif ($_SESSION['auth'] and invalid_user($_SESSION['uid'])) {
-        unset($_SESSION['uid']);
-        $_SESSION['auth'] = false;
-        session_regenerate_id(true);
+    } elseif ($_SESSION['auth']) {
+        $user_type = user_type($_SESSION['uid']);
+        if ($user_type === 'invalid') {
+            unset($_SESSION['uid']);
+            $_SESSION['auth'] = false;
+            session_regenerate_id(true);
+        } elseif ($user_type === 'admin') {
+            $_SESSION['admin'] = true;
+        }
     }
+    $_SESSION['admin'] ??= false;
 }
 
 /**
@@ -80,7 +86,7 @@ function api_login(string $username_or_email): bool|string
 
     if ($uid === false) { # No such user
         return 'No such user';
-    } elseif (invalid_user($uid['id'])) {
+    } elseif (user_type($uid['id']) === 'invalid') {
         return 'User has been banned';
     }
     session_regenerate_id();
@@ -105,15 +111,20 @@ function api_logout(): bool
     return true;
 }
 
-function invalid_user(int $uid): bool
+function user_type(int $uid): string
 {
     $pdo_read = new_pdo_read();
-    $sql = 'SELECT banned FROM users WHERE id = :uid';
+    $sql = 'SELECT banned, admin FROM users WHERE id = :uid';
     $prep = $pdo_read->prepare($sql);
     $prep->execute(['uid' => $uid]);
     $user = $prep->fetch();
 
-    return $user === false or $user['banned'];
+    if ($user === false or $user['banned']) {
+        return 'invalid';
+    } elseif ($user['admin']) {
+        return 'admin';
+    }
+    return 'standard';
 }
 
 function api_require_login(): void
