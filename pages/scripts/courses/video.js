@@ -1,5 +1,8 @@
 // Description load more function
 $(document).ready(function () {
+    setTimeout(add_view, 1000);
+
+
     const video_tag = $('.comments').attr('tag')
     if ($('#sidebar-load-success').attr('tag') === '1') {
         $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
@@ -173,4 +176,10 @@ function open_reply() {
             $reply.css('max-height', '0');
         }
     })
+}
+
+function add_view() {
+    const video_tag = $('.comments').attr('tag');
+    alert('testtest')
+    $.post("/api/courses/add_views.php", {video_tag})
 }

@@ -14,6 +14,26 @@ CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
     SET score = score + NEW.score - OLD.score
     WHERE comments.tag = NEW.comment_tag;
 
+CREATE DEFINER = 'triggers' TRIGGER videos_new_watch
+    AFTER INSERT
+    ON watches
+    FOR EACH ROW
+    UPDATE db.videos v SET v.views = v.views + 1 WHERE v.tag = NEW.video_tag;
+
+CREATE DEFINER = 'triggers' TRIGGER courses_new_watch
+    AFTER INSERT
+    ON watches
+    FOR EACH ROW
+    UPDATE courses c
+        INNER JOIN course_videos cv on c.tag = cv.course_tag
+        SET c.views = c.views + 1
+        WHERE cv.video_tag = NEW.video_tag;
+
+
+
+
+
+
 DELIMITER //
 CREATE
     DEFINER = 'triggers' PROCEDURE course_ownership_add(
