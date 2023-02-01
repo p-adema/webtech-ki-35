@@ -48,7 +48,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
                 <p id="description"><?php echo $course_info['description'] ?> </p>
                 <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
                 <p id="since">Creation date: <?php echo $course_creation_date[0] ?> </p>
-<!--                <p id="views-and-time"> --><?php //echo $course_info['views'] ?><!-- views </p>-->
+                <p id="views-and-time"> <?php echo $course_info['views'], $course_info['views'] !== 1 ? ' total views' : ' total view'  ?> </p>
 
             </div>
             <div class="stretch-box-2"></div>
