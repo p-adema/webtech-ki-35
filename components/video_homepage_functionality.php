@@ -9,7 +9,7 @@ function render_genre_videos($videos): void
     echo "<div class='genre-overall-box disable-scrollbars'>";
     foreach ($videos as $video) {
         $video_name = get_video_data($video['tag'])['name'];
-        $video_uploader = name_of_uploader(get_video_data($video['tag'])['uploader']);
+        $video_uploader = user_name_from_id(get_video_data($video['tag'])['uploader']);
         echo "
         <div class='genre-video-big-box'>
             <div class='genre-video-outline'>

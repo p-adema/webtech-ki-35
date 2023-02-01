@@ -81,16 +81,16 @@ function print_pending($pending): void
     echo '</div>';
 }
 
-function obtain_user_information($tag): string
+function obtain_user_information($tag): array
 {
     require_once "pdo_read.php";
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT (user_id) FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+    $sql = 'SELECT user_id, amount FROM db.transactions_pending WHERE (url_tag = :url_tag)';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['url_tag' => $tag]);
 
-    return $sth->fetch()['user_id'];
+    return $sth->fetch();
 }
 
 function confirm_payment($tag): void

@@ -10,7 +10,7 @@ function review_item(array $item): void
     <div class='review-item-wrapper'>
         <span class='review-item-icon material-symbols-outlined'> $icon </span>
         <span class='review-item-name'> {$item['name']} </span>
-        <span class='review-item-price'> €{$price} </span>
+        <span class='review-item-price'> €$price </span>
         <span class='cart-item-delete material-symbols-outlined' tag='{$item['tag']}'> cancel </span>
     </div>
 </a>

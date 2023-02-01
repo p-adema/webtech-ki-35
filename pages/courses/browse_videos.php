@@ -28,7 +28,7 @@ $popular_video_tag = get_popular_video();
                                 </a>
                                 <div class="best-video-info">
                                     <span class="best-video-name"><?php echo get_video_data($popular_video_tag)['name'] ?></span>
-                                    <span class="best-video-creator">By <?php echo name_of_uploader(get_video_data($popular_video_tag)['uploader']) ?></span>
+                                    <span class="best-video-creator">By <?php echo user_name_from_id(get_video_data($popular_video_tag)['uploader']) ?></span>
                                 </div>
                             </div>
                         </div>

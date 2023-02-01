@@ -8,14 +8,16 @@ html_header(title: 'Video', styled: true, scripted: true);
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
 
-if (isset($_GET['tag']) and $video_info !== false): ?>
+if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
+    $stars = $video_info['rating'] ? ('perm-star-' . $video_info['rating']) : 'stars-empty';
+    ?>
 
     <div class="video-page-flexbox">
         <div class="sub-video-flexbox">
             <div class="video-and-description-big-box">
                 <div class="video-and-description">
                     <div class="video-outline">
-                        <div class="video">
+                        <div class="video" id="video" data-tag="<?php echo $_GET['tag'] ?>">
                             <?php if (($_SESSION['auth'] and owns_video($_SESSION['uid'], $tag)) or video_cost($tag)) { ?>
                                 <video width="600" controls>
                                     <source src="/resources/videos/<?php echo $tag; ?>.mp4" type="video/mp4">
@@ -43,7 +45,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
                                 </div>
                             <?php } ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars stars-empty"></div>
+                            <div class="stars <?php echo $stars ?>"></div>
                             <div id="log"></div>
                         </div>
                     </div>
@@ -71,15 +73,15 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
         echo "<span id='sidebar-load-success' tag='$success' style='display: none'></span>" ?>
     </div>
 
-
 <?php else: ?>
+
     <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
 
     <div class="form-content">
         <h1> Invalid link </h1>
         <div class="form-outline">
-            <form >
-                <p> This link doesn't seem quite right </p>
+            <form>
+                <p> The video at this link is missing or deleted </p>
                 <?php
                 echo '<div class="form-btns">';
                 text_link('Go back home', '/');
@@ -88,6 +90,7 @@ if (isset($_GET['tag']) and $video_info !== false): ?>
             </form>
         </div>
     </div>
+
 <?php endif;
 
 html_footer();

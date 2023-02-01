@@ -44,7 +44,7 @@ $(document).ready(function () {
                 success_handler: form_custom_success
             }
 
-            $.post("/api/cart/modify", user_data, form_default_response(handler_options));
+            $.post('/api/cart/modify', user_data, form_default_response(handler_options));
         } else {
 
             $('button.form-submit').addClass('pressed').removeClass('error')

@@ -7,13 +7,14 @@
  */
 
 require "api_resolve.php";
-require "pdo_read.php";
+require_once 'pdo_read.php';
 
 $errors = [
     'item' => [],
     'submit' => []
 ];
 $valid = true;
+
 $tag = $_POST['item'] ?? '';
 $type = $_POST['type'] ?? '';
 
@@ -35,7 +36,7 @@ if (!$valid) {
     api_fail('Please fill in all fields', $errors);
 }
 
-require "Cart.php";
+require_once "Cart.php";
 $cart = new Cart;
 
 $id = $cart->get_id($tag);

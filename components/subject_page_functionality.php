@@ -9,7 +9,7 @@ function render_best_videos_subject_page($subject): void
     $videos = best_videos_of_genre($subject);
     $popular_video = $videos[0];
     $popular_video_data = get_video_data($popular_video['tag']);
-    $name_of_popular_uploader = name_of_uploader($popular_video_data['uploader']);
+    $name_of_popular_uploader = user_name_from_id($popular_video_data['uploader']);
     $course = get_popular_course($subject);
 
     echo "<div class='course-and-video'>";
@@ -17,7 +17,7 @@ function render_best_videos_subject_page($subject): void
     if (!empty($course)) {
 
         $course_info = get_course_info($course['tag']);
-        $creator = name_of_uploader($course_info['creator']);
+        $creator = user_name_from_id($course_info['creator']);
 
         echo "
     <div class='course-box'>
@@ -87,7 +87,7 @@ function render_best_videos_subject_page($subject): void
 
     foreach (array_slice($videos, 1) as $video) {
         $video_data = get_video_data($video['tag']);
-        $name_of_uploader = name_of_uploader($video_data['uploader']);
+        $name_of_uploader = user_name_from_id($video_data['uploader']);
 
         echo "
         <div class='normal-video-outline'>

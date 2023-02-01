@@ -21,62 +21,51 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-rese
 } else {
     $tag = $_SESSION['url_tag'];
 }
-# TODO: check that password and tag are both actually POSTed
 
 try {
     $pdo_write = new_pdo_write(err_fatal: false);
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
+    api_fail('Internal server error', $errors);
+}
+
+
+$sql = "SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = 'password-reset');";
+$data = ['tag' => $tag];
+$sql_prep = $pdo_write->prepare($sql);
+
+if (!$sql_prep->execute($data)) {
+    $errors['submit'][] = 'Internal server error, try again later';
     $valid = false;
 }
+$user_id = $sql_prep->fetch();
 
-
-if (isset($pdo_write)) {
-    $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = \'password-reset\');';
-    $data = ['tag' => $tag];
-    $sql_prep = $pdo_write->prepare($sql);
-
-    if (!$sql_prep->execute($data)) {
-        $errors['submit'][] = 'Internal server error, try again later';
-        $valid = false;
-    }
-    $user_id = $sql_prep->fetch();
-
-    if (empty($user_id)) {
-        $errors['submit'][] = 'Invalid tag';
-        $valid = false;
-        # return user a error message
-    } else {
-        $user_id = $user_id['user_id'];
-    }
-
+if ($user_id === false) {
+    $errors['submit'][] = 'Invalid tag';
+    api_fail('Invalid tag', $errors);
 }
-$password = $_POST['password'];
-$repeated_password = $_POST['password_repeated'];
+
+$user_id = $user_id['user_id'];
+
+$password = $_POST['password'] ?? '';
+$repeated_password = $_POST['password_repeated'] ?? '';
 
 $errors['password'] = check_password($password);
-if (!empty($errors['password'])) {
-    $valid = false;
-}
-
-if ($password != $repeated_password) {
-    $errors['password_repeated'][] = "Passwords do not match.";
-    $valid = false;
-}
+$errors['password_repeated'] = check_re_pwd($password, $repeated_password);
+$valid &= empty($errors['password']) && empty($errors['password_repeated']);
 
 
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);
 }
-if (isset($pdo_write)) {
-    $sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
+$sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
 
-    $data = [
-        'new_password' => password_hash($password, PASSWORD_DEFAULT),
-        'user_id' => $user_id
-    ];
-    $sql_prep = $pdo_write->prepare($sql);
-    $sql_prep->execute($data);
-}
+$data = [
+    'new_password' => password_hash($password, PASSWORD_DEFAULT),
+    'user_id' => $user_id
+];
+$sql_prep = $pdo_write->prepare($sql);
+$sql_prep->execute($data);
+
 
 api_succeed('Password has been changed!', $errors);

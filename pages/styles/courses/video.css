@@ -2,8 +2,6 @@ html {
     background-color: #e1f0ff;
 }
 
-
-
 .video-page-flexbox {
     display: flex;
     flex-flow: row;
@@ -320,12 +318,8 @@ div.comment-reactions-gap-s {
     width: 10px;
 }
 
-.comment-reactions-up:hover {
-    cursor: grab;
-}
-
-.comment-reactions-down:hover {
-    cursor: grab;
+.comment-reactions-wrapper span:hover {
+    cursor: pointer;
 }
 
 .comment-reactions-up.pressed {
@@ -447,4 +441,52 @@ label {
 .like-dislike {
     display: flex;
     flex-flow: row;
+}
+
+.comment-reactions-reply:hover {
+    cursor: grab;
+}
+
+@media screen and (max-width: 800px) {
+    .description {
+        max-width: fit-content;
+    }
+
+    span.comments-title {
+        transform: translateX(3vw);
+    }
+
+    div.comments-wrapper {
+        transform: revert;
+    }
+
+    div.video-sidebar {
+        border-left-style: revert;
+        border-bottom-style: revert;
+        border-right: solid black 2px;
+    }
+
+    div.video-page-flexbox {
+        flex-flow: column;
+    }
+
+    video {
+        max-width: 100%;
+    }
+
+    .video {
+        margin-top: 10px;
+    }
+
+    span.video-name {
+        margin-left: 3px;
+    }
+
+    div.stars {
+        margin-left: 3px;
+    }
+
+    div.description {
+        margin-left: 3px;
+    }
 }

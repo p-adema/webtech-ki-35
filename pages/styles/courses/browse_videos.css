@@ -173,6 +173,7 @@ img.best-video {
 }
 
 @media screen and (max-aspect-ratio: 1/1) {
+
     .genre-overall-box {
         max-width: 500px;
     }

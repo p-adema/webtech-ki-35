@@ -13,30 +13,30 @@ if ($_SESSION['auth']) {
     $has_course = false;
 }
 $course_info = get_course_info($course_tag);
-if (isset($_GET['tag']) and $course_info !== false):
-$course_id = get_course_id($course_tag);
-$cart = new Cart;
-$course_in_cart = in_array($course_id, $cart->ids());
-$course_creator = course_creator($course_info['creator']);
-$time_since = time_since($course_info['creation_date']);
-$videos = get_videos($course_tag);
-$video_names = get_video_names($videos);
-$rating = get_rating_info($course_id);
-$score = 0;
-$ratings = 0;
-$course_has_ratings = true;
-$course_creation_date = explode(' ', $course_info['creation_date']);
-if (count($rating) == 0) {
-    $course_has_ratings = false;
-} else {
-    $score = number_format($rating[1], 1);
-    $ratings = $rating[0];
-}
-$cart = new Cart();
-$tag = $_GET['tag'] ?? '';
-$video_info = get_video_data($tag);
+if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted']):
+    $course_id = get_course_id($course_tag);
+    $cart = new Cart;
+    $course_in_cart = in_array($course_id, $cart->ids());
+    $course_creator = course_creator($course_info['creator']);
+    $time_since = time_since($course_info['creation_date']);
+    $videos = get_videos($course_tag);
+    $video_names = get_video_names($videos);
+    $rating = get_rating_info($course_id);
+    $score = 0;
+    $ratings = 0;
+    $course_has_ratings = true;
+    $course_creation_date = explode(' ', $course_info['creation_date']);
+    if (count($rating) == 0) {
+        $course_has_ratings = false;
+    } else {
+        $score = number_format($rating[1], 1);
+        $ratings = $rating[0];
+    }
+    $cart = new Cart();
+    $tag = $_GET['tag'] ?? '';
+    $video_info = get_video_data($tag);
 
- ?>
+    ?>
     <div class="course-page">
         <div class="information-block">
             <div class="title-box"><p id="course-title"> <?php echo $course_info['name'] ?></p>
@@ -151,29 +151,25 @@ $video_info = get_video_data($tag);
         </div>
 
     </div>
+
 <?php else: ?>
+
     <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
 
     <div class="form-content">
         <h1> Invalid link </h1>
         <div class="form-outline">
-            <form >
-                <p> This link doesn't seem quite right </p>
+            <form>
+                <p> The course at this link is missing or deleted </p>
                 <?php
                 echo '<div class="form-btns">';
-                 text_link('Go back home', '/');
+                text_link('Go back home', '/');
                 echo '</div>';
                 ?>
             </form>
         </div>
     </div>
 
-<?php
-endif;
-
-
-//echo get_video_watch_amount(2, 'example_paid');
-
-//To do: Allow users to save their courses.
+<?php endif;
 
 html_footer();

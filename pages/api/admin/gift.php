@@ -3,40 +3,37 @@
 require_once 'tag_actions.php';
 require_once 'api_resolve.php';
 require_once 'admin_controls.php';
+api_require_admin();
 
 $errors = [
     'user' => [],
-    'item_tag' => []
+    'item_tag' => [],
+    'submit' => []
 ];
+$valid = true;
 
-ensure_session();
+$reciever_username = $_POST['user'] ?? '';
+$item_tag = $_POST['item_tag'] ?? '';
 
-if ($_SESSION['auth']) {
-
-    $valid = true;
-    $uid = $_POST['user'];
-    $item_tag = $_POST['item_tag'];
-    $aid = $_SESSION['uid'];
-
-
-    if (empty(username($uid))) {
-        $valid = false;
-        $errors['user'][] = 'Please select an existing user to gift to.';
-    }
-
-    if (empty(item($item_tag))) {
-        $valid = false;
-        $errors['item_tag'][] = 'Please select an existing item to gift.';
-    }
-
-    if ($valid) {
-        gift_item($aid, username($uid), item($item_tag), $item_tag);
-        api_succeed('Successfully gifted this item!', $errors);
-    } else {
-        api_fail('Unable to gift items at this time.', $errors);
-    }
+$reciever_uid = user_id_from_name($reciever_username);
+if ($reciever_uid === false) {
+    $valid = false;
+    $errors['user'][] = 'Invalid username';
 }
 
-else {
-    echo 'Looks like you are not logged in bucko.';
+$item_id = item_id_from_tag($item_tag);
+if ($item_id === false) {
+    $valid = false;
+    $errors['item_tag'][] = 'Invalid item tag';
 }
+
+if (!$valid) {
+    api_fail('Please fill in all fields correctly', $errors);
+}
+
+if (!admin_gift_item($_SESSION['uid'], $reciever_uid, $item_id, $item_tag)) {
+    $errors['submit'][] = 'Error gifting item';
+    api_fail('Error gifting item', $errors);
+}
+
+api_succeed('Successfully gifted item!', $errors);

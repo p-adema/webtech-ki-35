@@ -12,8 +12,8 @@ $errors = [
 
 $valid = true;
 
-$tag = $_POST['tag'];
-$type = $_POST['type'];
+$tag = $_POST['tag'] ?? '';
+$type = $_POST['type'] ?? '';
 
 if (empty($tag)) {
     $valid = false;

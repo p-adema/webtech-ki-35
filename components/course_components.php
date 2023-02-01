@@ -6,7 +6,11 @@ function get_course_info($tag): array|false
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT name, description, subject, creator, creation_date, views FROM db.courses WHERE tag = :tag';
+    $sql = 'SELECT name, description, subject, creator, creation_date, views, deleted 
+            FROM db.courses c
+                INNER JOIN items i on c.tag = i.tag
+            WHERE c.tag = :tag';
+
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['tag' => $tag]);
 

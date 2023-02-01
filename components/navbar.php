@@ -22,8 +22,10 @@ function navbar(): void
         
       </div>
         <div class='navbar-stretch-2'></div>
-        ". searchbar() . "
-        
+        " . searchbar() . "
+        <a href='/upload/' class='navbar-upload-button'> <span class=\"material-symbols-outlined\">
+upload
+</span> Upload </a>
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
      <span id='shopping-cart' class='material-symbols-outlined'>
@@ -33,11 +35,12 @@ function navbar(): void
      <div class='dropdown-menu'>
       ";
     if ($_SESSION['auth']) {
-        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/logout'], ['Account management', 'Log out']);
+        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/account/invoice', '/auth/logout'], ['Account management', 'Invoice logs', 'Log out']);
     } else{
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
     }
-    $html .= " </div></div> 
+    $html .= " </div>" .
+        . "</div> 
  <div class='videos-button dropdown-videos'>
  <div class='dropdown-videos-content'> 
       <a href='/courses/subject?tag=physics'> Phsics</a>
