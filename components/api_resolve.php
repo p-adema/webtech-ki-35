@@ -108,6 +108,7 @@ function api_logout(): bool
     session_regenerate_id();
     unset($_SESSION['uid']);
     $_SESSION['auth'] = false;
+    $_SESSION['admin'] = false;
     return true;
 }
 
