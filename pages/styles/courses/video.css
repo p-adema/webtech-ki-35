@@ -27,6 +27,7 @@ html {
 }
 
 .description {
+    max-width: 50vw;
     align-self: start;
     display: flex;
     flex-flow: column;

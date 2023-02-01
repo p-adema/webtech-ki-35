@@ -11,10 +11,22 @@ do
   mv "$thumbnail" "../pages/resources/thumbnails/${name[3]}"
 done
 
-for setup in ./courses/*.sql
+for videos in ./courses/*.videos.sql
 do
-  cat "$setup" >> "../server/scraped.sql"
-  rm "$setup"
+  cat "$videos" >> "../server/scraped.sql"
+  rm "$videos"
 done
 
-rm -rf ./courses/*
+#for users in ./courses/*.users.sql
+#do
+#  cat "$users" >> "../server/scraped/users.sql"
+#  rm "$users"
+#done
+#
+#for comments in ./courses/*.comments.sql
+#do
+#  cat "$comments" >> "../server/scraped/comments.sql"
+#  rm "$comments"
+#done
+
+#rm -rf ./courses/*
