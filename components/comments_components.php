@@ -63,7 +63,7 @@ function render_comment(array $comment, bool $is_reply = false): string
         $rating_class_down = 'pressed';
     }
 
-    $ago = time_since($comment['date']);
+    $ago = relative_time($comment['date']);
     $class = $is_reply ? 'comment-top' : 'comment-reply';
     $replies = render_show_replies($comment['replies'], $comment['tag']);
     $new_reply = render_comment_form($comment['tag'], true);
@@ -73,7 +73,7 @@ function render_comment(array $comment, bool $is_reply = false): string
         <div class='head'>
             <span class='comment-username'> {$comment['name']} </span>
             <span class='head-space'></span>
-            <span class='comment-date'> $ago ago </span>
+            <span class='comment-date'> $ago </span>
         </div>
         <div class='comment-text-wrapper'>
             <span class='comment-text'> {$comment['text']} </span>
@@ -85,9 +85,10 @@ function render_comment(array $comment, bool $is_reply = false): string
     <div class='comment-new-reply-wrapper' id='new-reply-{$comment['tag']}' style='max-height: 0;'>
         $new_reply
     </div>
+    <div class='new-reply-slot' id='new-reply-slot-{$comment['tag']}'></div>
     $replies
 </div>
-<div class='comment-replies-wrapper' id='replies-{$comment['tag']}'></div>
+<div class='comment-replies-wrapper' id='replies-{$comment['tag']}' style='max-height: 0'></div>
     ";
 }
 
@@ -236,30 +237,30 @@ function render_comment_form(string $tag, bool $reply): string
                 <span class='head-space'></span>
             </div>";
         $wrapper_class = $reply ? '' : 'comment-new-top';
-        $reply = $reply ? 'yes' : 'no';
     } else {
         $head = "<span class='headless-label'> Add comment: </span>";
         $wrapper_class = $reply ? '' : 'comment-new-top-headless';
-        $reply = $reply ? 'yes' : 'no';
     }
+    $placeholder = $reply ? 'Write a reply...' : 'Write a comment...';
+    $reply = $reply ? 'yes' : 'no';
     $auth = $_SESSION['auth'] ? 'yes' : 'no';
 
     return "
         <div class='comment-wrapper comment $wrapper_class'>
             $head
             <div class='form-wrapper'>
-                <form class='new-comment' action='/api/courses/add_comment.php' method='POST' data-tag='$tag'>
+                <form class='new-comment' data-tag='$tag' data-reply='$reply'>
                     <div id='comment-$tag-group' class='form-group form-group-comment'>
                         <label for='comment-$tag-text'></label>
                         <textarea
                                 id='comment-$tag-text'
                                 name='comment-text'
-                                placeholder='Write a comment...'
+                                placeholder='$placeholder'
                                 data-auth='$auth'></textarea>
                         <span id='comment-text-error' class='form-error'> No error </span>
                     </div>
                     <div class='comment-button-wrapper'>
-                        <button class='comment-button' data-auth='$auth' data-reply='$reply'> Post </button>
+                        <button class='comment-button' data-auth='$auth'> Post </button>
                     </div>
                 </form>
             </div>

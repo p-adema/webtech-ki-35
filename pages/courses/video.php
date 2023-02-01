@@ -52,7 +52,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                     <div class="description">
                         <button class="collapsible">
                             <span class="view-count"><?php echo $video_info['views'] ?> views</span>
-                            <span class="upload-date">Posted <?php since_upload($video_info['upload_date']) ?> ago </span>
+                            <span class="upload-date">Posted <?php echo relative_time($video_info['upload_date']) ?> </span>
                         </button>
                         <div class="content">
                             <span class="video-info"><br><?php echo $video_info['description'] ?></span>

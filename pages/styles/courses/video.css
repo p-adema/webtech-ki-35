@@ -244,11 +244,14 @@ button.show-replies {
     text-align: center;
     border-radius: 10px;
     transform: translateX(15%);
-    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%)
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%);
+    cursor: pointer;
 }
 
 div.comment-replies-wrapper {
     padding-left: 25px;
+    overflow: hidden;
+    transition: max-height 200ms ease-in-out;
 }
 
 .stars {
@@ -502,4 +505,8 @@ textarea {
 
 .comment-reactions-reply-box.active > span {
     font-variation-settings: 'wght' 600;
+}
+
+.new-reply-slot {
+    padding-left: 15px;
 }

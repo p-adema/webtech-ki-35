@@ -110,15 +110,22 @@ $(document).ready(function () {
     event.preventDefault()
     const tag = $(this).parent().attr('data-tag');
     const $reply = $(`#new-reply-${tag}`);
-    if ($(this).toggleClass('active').hasClass('active')) {
-        $reply.css('max-height', $reply.prop('scrollHeight'));
+    const $this = $(this);
+    if (!$(this).hasClass('active')) {
+        $reply.css('max-height', $reply.prop('scrollHeight')).stop();
+        $this.toggleClass('active')
         setTimeout(function () {
-            $reply.css('max-height', '');
-        }, 200)
+            if ($reply.css('max-height') === $reply.prop('scrollHeight') + 'px') {
+                $reply.css('max-height', '');
+            }
+        }, 250)
     } else {
-        $reply.css('max-height', $reply.prop('scrollHeight'));
+        $reply.css('max-height', $reply.prop('scrollHeight')).stop();
         setTimeout(function () {
-            $reply.css('max-height', '0');
+            if ($reply.css('max-height') === $reply.prop('scrollHeight') + 'px') {
+                $this.toggleClass('active')
+                $reply.css('max-height', '0');
+            }
         })
     }
 }).on('submit', '.new-comment', function (event) {
@@ -127,35 +134,50 @@ $(document).ready(function () {
         window.location.href = '/auth/login';
         return
     }
-    const $comment = $(this).parent().parent();
+    const $reply_field = $(this).parent().parent().parent();
     let user_data;
+    const tag = $(this).attr('data-tag');
     if ($(this).attr('data-reply') === 'yes') {
         user_data = {
             item_tag: $('#video').attr('data-tag'),
-            comment_tag: $(this).attr('data-tag'),
+            comment_tag: tag,
             message: $(this).find('textarea').val()
         }
-    } else {
-        user_data = {
-            item_tag: $(this).attr('data-tag'),
-            message: $(this).find('textarea').val()
+        const handler_options = {
+            success_handler: function (data, _) {
+                $reply_field.css('max-height', '0');
+                $(`#new-reply-slot-${tag}`).html(data.html);
+                $(`#${tag} .comment-reactions-reply-box`).removeClass('active');
+            }
         }
+
+        $.post('/api/courses/add_reply', user_data, form_default_response(handler_options))
+
+        return
     }
+
+    user_data = {
+        item_tag: tag,
+        message: $(this).find('textarea').val()
+    }
+
     const handler_options = {
         success_handler: function (data, _) {
             $('.comments').prepend(data.html);
-            $comment.remove();
+            $reply_field.remove();
         }
     }
 
     $.post('/api/courses/add_comment', user_data, form_default_response(handler_options))
+
 
 }).on('focus', 'textarea[data-auth="no"]', function (_) {
     window.location.href = '/auth/login';
 })
 
 function load_replies(_) {
-    const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
+    const $this = $(this);
+    const tag = $this.unbind('click').click(show_replies).attr('query')
 
     const replies_data = {
         type: 'replies',
@@ -168,6 +190,7 @@ function load_replies(_) {
         success_handler: function (data, __) {
             $(`#replies-${tag}`).html(data.html);
             $(`#replies-${tag} button.show-replies`).click(load_replies);
+            $this.click();
         }
     }
 
@@ -176,11 +199,26 @@ function load_replies(_) {
 }
 
 function hide_replies(_) {
-    const tag = $(this).text(`Show ${$(this).attr('count')}`).unbind('click').click(show_replies).attr('query')
-    $(`#replies-${tag}`).hide()
+    const $this = $(this);
+    const tag = $this.attr('query')
+    const $replies = $(`#replies-${tag}`)
+    $replies.css('max-height', $replies.prop('scrollHeight')).stop();
+    setTimeout(function () {
+        if ($replies.css('max-height') === $replies.prop('scrollHeight') + 'px') {
+            $this.text(`Show ${$this.attr('count')}`).unbind('click').click(show_replies)
+            $replies.css('max-height', '0');
+        }
+    })
+
 }
 
 function show_replies(_) {
     const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
-    $(`#replies-${tag}`).show()
+    const $replies = $(`#replies-${tag}`)
+    $replies.css('max-height', $replies.prop('scrollHeight')).stop();
+    setTimeout(function () {
+        if ($replies.css('max-height') === $replies.prop('scrollHeight') + 'px') {
+            $replies.css('max-height', '');
+        }
+    }, 250)
 }

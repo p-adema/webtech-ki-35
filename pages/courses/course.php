@@ -18,7 +18,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
     $cart = new Cart;
     $course_in_cart = in_array($course_id, $cart->ids());
     $course_creator = course_creator($course_info['creator']);
-    $time_since = time_since($course_info['creation_date']);
+//    $time_since = time_ago_en($course_info['creation_date']);
     $videos = get_videos($course_tag);
     $video_names = get_video_names($videos);
     $rating = get_rating_info($course_id);

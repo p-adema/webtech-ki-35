@@ -16,7 +16,7 @@ $errors = [
 
 $comment = $_POST['message'] ?? '';
 $item_tag = $_POST['item_tag'] ?? '';
-$comment_tag = $_POST['comment_tag'] ?? '';
+$reply_to = $_POST['comment_tag'] ?? '';
 
 if (empty($comment)) {
     $valid = false;
@@ -28,7 +28,7 @@ if (empty($item_tag)) {
     $errors['item_tag'][] = 'Please provide an item tag';
 }
 
-if (empty($comment_tag)) {
+if (empty($reply_to)) {
     $errors['comment_tag'][] = 'Please provide a comment tag';
     $valid = false;
 }
@@ -36,7 +36,7 @@ if (empty($comment_tag)) {
 if (!$valid) {
     api_fail('Please provide all information', $errors);
 } else {
-    $comment_tag = add_comment($comment, $item_tag, $comment_tag);
+    $comment_tag = add_comment($comment, $item_tag, $reply_to);
     if ($comment_tag === false) {
         api_fail('Invalid item or comment tag');
     }
