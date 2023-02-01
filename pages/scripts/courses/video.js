@@ -137,7 +137,7 @@ $(document).ready(function () {
         window.location.href = '/auth/login';
         return
     }
-    const $reply_field = $(this).parent().parent().parent();
+    const $reply_field = $(this).parent().parent();
     let user_data;
     const tag = $(this).attr('data-tag');
     if ($(this).attr('data-reply') === 'yes') {
@@ -148,7 +148,7 @@ $(document).ready(function () {
         }
         const handler_options = {
             success_handler: function (data, _) {
-                $reply_field.css('max-height', '0');
+                $reply_field.parent().css('max-height', '0');
                 $(`#new-reply-slot-${tag}`).html(data.html);
                 $(`#${tag} .comment-reactions-reply-box`).removeClass('active');
             }
