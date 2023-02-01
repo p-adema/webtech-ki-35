@@ -173,7 +173,7 @@ button:hover {
     flex: auto;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .purchase-information {
         margin-top: 8vw;
         margin-bottom: 6vw;
