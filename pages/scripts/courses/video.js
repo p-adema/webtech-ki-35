@@ -1,6 +1,6 @@
 // Description load more function
 $(document).ready(function () {
-    setTimeout(add_view, 1000);
+    setTimeout(add_view, 30000);
 
 
     const video_tag = $('.comments').attr('tag')
@@ -43,8 +43,6 @@ $(document).ready(function () {
 
     $(".comment-submit").submit(function (event) {
         event.preventDefault()
-
-        const parameter_list = new URLSearchParams(window.location.search)
 
         const user_data = {
             video_tag: $('#video').attr('data-tag'),

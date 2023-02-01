@@ -192,7 +192,7 @@ img.best-video {
     }
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .genre-overall-box {
         max-width: 90vw;
     }

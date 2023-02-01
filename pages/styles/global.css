@@ -11,7 +11,7 @@ html {
 }
 
 .dropbtn {
-
+    align-self: end;
     background-color: #343;
     color: black;
     padding: 12px;
@@ -185,6 +185,7 @@ flex: 9;
 
 
 .topnav #mandje {
+    align-self: end;
     padding: 14px 14px 10px;
 }
 
