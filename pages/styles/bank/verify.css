@@ -508,7 +508,7 @@ button.med-btn {
     align-self: center;
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-aspect-ratio: 1/1) {
     div.form_success > span {
         font-size: 10px;
     }
@@ -518,6 +518,7 @@ button.med-btn {
     }
 
     div.form-outline {
+        margin-top: 10vw;
         padding: 10px 10px;
     }
 
@@ -546,7 +547,7 @@ button.med-btn {
     }
 
     button.form-submit {
-        font-size: x-large;
+        font-size: 40px;
     }
 
     label {
@@ -560,7 +561,7 @@ button.med-btn {
     }
 
     h1 {
-        font-size: 60px;
+        font-size: 90px;
         margin-top: 40px;
         margin-bottom: 40px;
     }
@@ -615,6 +616,10 @@ button.med-btn {
 
     .pending_box {
         margin-left: 0;
+    }
+
+    .amount {
+        font-size: 70px;
     }
 }
 

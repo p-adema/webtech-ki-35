@@ -25,27 +25,27 @@ if (homepage):
 <div class='homepage-information'>
 <div class='text'>
 <h1> About us: </h1>  
-<p> We are a group of students at the University of Amsterdam. 
-We were tasked to create a website. We chose to center it around education for everyone. Our organisation is non-profit.
-  All the money you spend will either go to the creators of the courses or charity.</p>
+<p> We are a group of students at the University of Amsterdam and 
+we were tasked to create our own website. We chose to center it around education for everyone where we would make no profit.
+All the money you spend will either go to the creators of the courses or charity.</p>
 </div>
 </div>
 <div class='homepage-information'>
 <div class='text'>
 <h1> How does it work? </h1>  
 <p> On our site you can both upload and watch educational videos. 
-If you have don't have an account you can only watch the free videos and courses. If you do have an account you can deposit money on to it. 
-With your balance you can buy courses and single videos. If you buy a course you will get some bulk discount.</p>
+If you have don't have an account you can only watch the free videos and courses. If you do have an account you can deposit money on to it and 
+with your balance you can buy courses and single videos. If you buy a course you will get some bulk discount.</p>
 </div>
 </div>
 <div class='homepage-information'>
 <div class='text'>
 <h1> Contact </h1>  
-<p> If there are any questions you can contact us throughout email or by phone. 
+<p> If there are any questions you can contact us through email or by phone. 
 If you have a question about a video you can also leave a comment. 
 <br>
 <br>
-Email: test123@bartje.nl
+Email: notareal@email.com
 <br>
 Phone number: +31 6 12345678
  </p>
