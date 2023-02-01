@@ -48,7 +48,7 @@ function ensure_session(): void
     }
     if (!isset($_SESSION['auth'])) {
         $_SESSION['auth'] = false;
-    } elseif ($_SESSION['auth'] and user_is_banned($_SESSION['uid'])) {
+    } elseif ($_SESSION['auth'] and invalid_user($_SESSION['uid'])) {
         unset($_SESSION['uid']);
         $_SESSION['auth'] = false;
         session_regenerate_id(true);
@@ -60,12 +60,12 @@ function ensure_session(): void
  * @param string $username_or_email Name/email of user to be logged in as
  * @return bool Success of login
  */
-function api_login(string $username_or_email): bool
+function api_login(string $username_or_email): bool|string
 {
     require_once "pdo_read.php";
     ensure_session();
     if ($_SESSION['auth']) { # Can't log in if already logged in
-        return false;
+        return 'Already logged in';
     }
     if (filter_var($username_or_email, FILTER_VALIDATE_EMAIL)) {
         $sql = 'SELECT (id) FROM db.users WHERE (email = :name);';
@@ -79,9 +79,9 @@ function api_login(string $username_or_email): bool
     $uid = $sql_prep->fetch(PDO::FETCH_ASSOC);
 
     if ($uid === false) { # No such user
-        return false;
-    } elseif (user_is_banned($uid['id'])) {
-        return false;
+        return 'No such user';
+    } elseif (invalid_user($uid['id'])) {
+        return 'User has been banned';
     }
     session_regenerate_id();
     $_SESSION['uid'] = $uid['id'];
@@ -105,7 +105,7 @@ function api_logout(): bool
     return true;
 }
 
-function user_is_banned(int $uid): bool
+function invalid_user(int $uid): bool
 {
     $pdo_read = new_pdo_read();
     $sql = 'SELECT banned FROM users WHERE id = :uid';
@@ -113,7 +113,7 @@ function user_is_banned(int $uid): bool
     $prep->execute(['uid' => $uid]);
     $user = $prep->fetch();
 
-    return $user !== false ? $user['banned'] : false;
+    return $user === false or $user['banned'];
 }
 
 function api_require_login(): void

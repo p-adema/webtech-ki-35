@@ -63,8 +63,9 @@ if (!$user['verified']) {
     api_fail('Unverified email address', $errors);
 }
 
-if (!api_login($name)) {
-    $errors['submit'][] = 'Unexpected server error (are you logged in?)';
+$success = api_login($name);
+if ($success !== true) {
+    $errors['submit'][] = $success;
     api_fail('Unexpected server error', $errors);
 }
 
