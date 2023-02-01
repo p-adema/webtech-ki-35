@@ -1,0 +1,221 @@
+html {
+    background-color: #c3e0c0;
+}
+
+.main-container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.title {
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bold;
+    border-bottom: solid black 5px
+}
+
+.history-outline {
+    display: flex;
+    flex-flow: row;
+    font-size: 25px;
+}
+
+.transaction-history {
+    min-width: 50vw;
+    float: left;
+    display: flex;
+    flex-flow: column;
+    margin: 0 auto;
+}
+
+.purchase-title {
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    text-align: start;
+    font-size: 40px;
+    font-weight: bold;
+    border-bottom: solid black 3px
+}
+
+.box-outline-items {
+    display: flex;
+    flex-flow: column;
+    width: fit-content;
+}
+
+.box-outline-purchases {
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+}
+
+.purchase {
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #afccba;;
+}
+
+.space-inbetween {
+    min-width: 3vw;
+}
+
+.gift-history {
+    margin: 0 auto;
+    display: flex;
+    flex-flow: column;
+    float: right;
+}
+
+.gift-title {
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    text-align: end;
+    font-size: 40px;
+    font-weight: bold;
+    border-bottom: solid black 3px
+}
+
+.box-outline-gifts {
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+}
+
+button.not-button:hover {
+    cursor: default;
+}
+
+button:hover {
+    cursor: grab;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    background-color: #afccba;
+    margin: 15px;
+    font-size: 25px;
+    border-radius: 15px;
+    padding: 8px;
+    border: solid black 3px;
+    box-shadow: 0 5px 15px hsl(0, 0%, 0.2%);
+}
+
+/*.when {*/
+/*    margin-right: 5%;*/
+/*}*/
+
+.billing-container {
+    margin-top: 2vw;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.billing-wrapper {
+    min-width: 50vw;
+    max-width: 50vw;
+    display: flex;
+    align-self: center;
+    flex-flow: column;
+    border: solid #9a9a77 2px;
+    background: #dedeae;
+    padding: 15px;
+    border-radius: 20px;
+}
+
+.billing-group {
+    display: flex;
+    margin-top: 10px;
+    flex-flow: row;
+}
+
+.billing-label {
+    margin-right: 10px;
+    flex: auto;
+    font-weight: bold;
+    color: #2a3f3f;
+}
+
+.billing-value {
+    flex: auto;
+    text-align: end;
+}
+
+.billing-seperator {
+    width: 100%;
+}
+
+.purchase-information {
+    padding: 8px;
+    margin-top: 2vw;
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    font-size: 20px;
+    border-radius: 15px;
+    border: solid black 3px;
+    box-shadow: 0 5px 15px hsl(0, 0%, 0.2%);
+    background-color: #b1cbb0;
+}
+
+.video-name {
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 4%;
+}
+
+.amount {
+    flex: auto;
+}
+
+@media screen and (max-width: 1200px) {
+    .purchase-information {
+        margin-top: 8vw;
+        margin-bottom: 6vw;
+    }
+
+    .title {
+        margin-top: 6vw;
+        font-size: 30px;
+    }
+
+    .purchase-title {
+        margin-top: 7vw;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .gift-title {
+        margin-top: 7vw;
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .box-outline-purchases {
+        align-items: center;
+    }
+
+    .box-outline-gifts {
+        align-items: center;
+    }
+
+    .history-outline {
+        flex-flow: column;
+    }
+
+    button > span {
+        align-self: center;
+        font-size: 15px;
+    }
+
+    .purchase > span {
+        align-self: center;
+        text-align: center;
+        font-size: 15px;
+    }
+}

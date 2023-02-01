@@ -1,0 +1,3 @@
+RewriteEngine On
+RewriteOptions Inherit
+RewriteRule ^invoice/(\w+) invoice.php\?tag=$1 [END]

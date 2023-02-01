@@ -172,7 +172,8 @@ img.best-video {
     margin-top: 30px;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1200px) {
+
     .genre-overall-box {
         max-width: 500px;
     }

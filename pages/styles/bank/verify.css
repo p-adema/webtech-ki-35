@@ -1,0 +1,625 @@
+html {
+    background-color: #ffd6b8;
+}
+
+body {
+    font-size: 40px;
+    margin: 0;
+}
+
+.title-box {
+    margin-top: 7px;
+    padding-left: 3px;
+    padding-right: 3px;
+    max-width: max-content;
+    background-color: black;
+    border-radius: 10px;
+}
+
+.background-box {
+    padding-bottom: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: #ff713c;
+    max-height: 200px;
+}
+
+.title {
+    display: flex;
+    font-size: 50px;
+    color: #ff6428;
+    font-weight: bold;
+    align-self: center;
+}
+
+.big-transaction-box {
+    display: flex;
+    flex-flow: row;
+}
+
+.big-balance-box {
+    margin-top: 50px;
+    align-self: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    display: flex;
+    align-items: center;
+    flex-flow: column;
+}
+
+.balance-header {
+    font-size: 60px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.balance {
+    border-bottom: solid #d54f1a 8px;
+    border-radius: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 50px;
+    display: flex;
+    align-items: baseline;
+}
+
+.balance-text {
+    display: flex;
+}
+
+.balance-amount {
+    display: flex;
+}
+
+.main-container {
+    display: flex;
+    flex-flow: column;
+    font-size: 30px;
+}
+
+.main-pending-box {
+    margin-left: 20px;
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    margin-top: 60px;
+}
+
+.pending_box {
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+    max-width: max-content;
+    font-size: 30px;
+    margin-left: 10px;
+
+}
+
+.pending-header {
+    display: flex;
+    font-weight: bold;
+    margin-bottom: 30px;
+    border-bottom: solid #d54f1a 5px;
+}
+
+.all-transactions {
+    margin-left: 49%;
+    float: right;
+    align-self: end;
+    margin-top: 50px;
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+}
+
+.transaction-title {
+    margin-left: 15px;
+    margin-bottom: 30px;
+    font-size: 30px;
+    font-weight: bold;
+    border-bottom: solid #d54f1a 5px;
+}
+
+.transaction-box {
+    align-self: end;
+    margin: 10px;
+    display: flex;
+    align-items: end;
+    text-align: center;
+    max-width: 1200px;
+    flex-flow: column;
+    border: white 5px;
+    padding-left: 30px;
+    font-size: 30px;
+}
+
+.transaction-text {
+    display: flex;
+    font-size: 30px;
+
+}
+
+.transactions {
+    margin-bottom: 500px;
+    margin-left: 400px;
+    font-size: 30px;
+    display: flex;
+    flex-flow: column;
+    align-items: start;
+}
+
+.transaction-boxy {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    border: solid #ff6428 3px;
+    box-shadow: 0 5px 15px hsl(0, 0%, 0.2%);
+}
+
+.amount-text {
+    display: flex;
+}
+
+.payment-when {
+    display: flex;
+    margin-left: 50px;
+}
+
+.pay-button {
+    border: none;
+    border-radius: 15px;
+    color: white;
+    padding: 18px;
+    margin-left: 50px;
+    display: inline-block;
+    text-decoration: none;
+    font-size: 16px;
+    text-align: center;
+    background-color: #ff6428;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+div.form-group {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 10px;
+    min-width: 190px;
+    align-self: center;
+}
+
+form {
+    display: flex;
+    flex-flow: column;
+    align-items: baseline;
+    margin: 2px;
+    width: 30vw;
+    min-width: min-content;
+    max-width: 300px;
+}
+
+body {
+    background: var(--bg_color);
+    transition-duration: 0.3s;
+}
+
+div.link-box-text {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-content: center;
+}
+
+form > p {
+    align-self: center;
+    max-width: 190px;
+}
+
+input {
+    border: solid lightslategrey 2px;
+    transition: background-color 100ms;
+    border-radius: 8px;
+    min-width: min-content;
+    max-width: 100%;
+    height: 2em;
+}
+
+input:disabled {
+    background-color: #d9dada;
+    border: solid #808791 2px;
+}
+
+.resizable-y {
+    overflow: hidden;
+    resize: vertical;
+    min-height: 3em;
+    display: inline-block;
+    height: 5em;
+}
+
+.form-group > textarea {
+    font-family: 'Roboto', sans-serif;
+    font-size: 13px;
+    border: solid lightslategrey 2px;
+    border-radius: 8px;
+    resize: vertical;
+    min-width: min-content;
+    max-width: 100%;
+    min-height: 2.5em;
+    width: 100%;
+    height: 5em;
+}
+
+.form-group > select {
+    border: solid orange 2px;
+    background-color: orange;
+    align-self: start;
+    border-radius: 8px;
+    min-width: min-content;
+    max-width: 100%;
+    height: 2em;
+}
+
+fieldset {
+    display: flex;
+    flex-flow: row;
+    border: none;
+    align-items: center;
+    width: 100%;
+}
+
+fieldset > div {
+    display: flex;
+    flex-flow: row;
+    flex: auto;
+    align-items: center;
+}
+
+fieldset > div > label {
+    margin-top: 0;
+    align-self: end;
+    margin-left: 5px;
+}
+
+.has-error > input {
+    border-color: #b54d58;
+}
+
+div.form-success {
+    background: #ff6428;
+    border-radius: 5px;
+    border-color: #ff6428;
+    width: 70%;
+    align-self: center;
+    height: 20%;
+    margin: 20px;
+    padding: 10px;
+    text-align: center;
+    transition-duration: 0.3s;
+}
+
+div.form-success.clickable:hover {
+    background: #ee7a4d;
+}
+
+div.form_success > span {
+    color: whitesmoke;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+span.form-error {
+    visibility: hidden;
+    color: red;
+    font-size: xx-small;
+    margin: 2px;
+}
+
+span#submit-error {
+    margin-top: 10px;
+}
+
+div.form-btns {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+}
+
+div.form-btns.form-btns-down {
+    flex-flow: column;
+}
+
+div.form-btns > div {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+
+.link-box {
+}
+
+div#forgot-password-box {
+    margin-top: 20px;
+}
+
+div#submit-group {
+    margin: 0;
+    flex: 1;
+}
+
+div.submit-with-long-btn {
+    display: flex;
+    width: 100%;
+}
+
+span.amount {
+    font-weight: bold;
+}
+
+a {
+    color: cornflowerblue;
+    transition-duration: 0.3s;
+}
+
+a:hover {
+    color: #80a8f1;
+}
+
+.form-content {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background-color: #ffd6b8;
+}
+
+.form-outline {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    background: #ffd6b8;
+    max-width: 60vw;
+    /*border: solid white 2px;*/
+    border-radius: 15px;
+    border: solid #f59248 3px;
+    padding: 50px 30px;
+    box-shadow: 0 15px 35px hsl(0, 0%, 0.2%);
+}
+
+label {
+    align-self: start;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 3px;
+    user-select: none;
+}
+
+.file-group > input {
+    display: none;
+}
+
+label.file-button {
+    display: flex;
+    align-self: center;
+    width: 100%;
+    max-width: 190px;
+    flex-flow: row;
+    align-items: center;
+    justify-content: center;
+    height: 2.5em;
+    font-size: medium;
+    background: #2a6bbe;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border: solid 2px #003e64;
+}
+
+label.file-button:hover {
+    background: #6586b1;
+    cursor: pointer;
+}
+
+label.file-button.has-file {
+    background: #5276a4;
+}
+
+label.file-button.has-file {
+    background: #89a6cc;
+}
+
+.has-error > label.file-button {
+    background: #a4527b;
+}
+
+.has-error > label.file-button:hover {
+    background: #c965b8;
+}
+
+button.form-submit {
+    height: 2em;
+    font-size: medium;
+    width: 5em;
+    background: #ff6428;
+    color: black;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: #ff6428;
+}
+
+button.form-submit:hover {
+    background: #f17849;
+    cursor: pointer;
+}
+
+button.form-submit.pressed {
+    background: #386838;
+}
+
+button.form-submit.disabled:hover {
+    background: #8b2000;
+    cursor: default;
+}
+
+button.form-submit.disabled {
+    background: #8b2000;
+}
+
+button.form-submit.pressed:hover {
+    background: #447c44;
+}
+
+button.form-submit.error {
+    background: #683838;
+    border-color: black;
+}
+
+button.form-submit.error:hover {
+    background: #7c4444;
+    border-color: black;
+}
+
+h1 {
+    font-family: sans-serif;
+    margin-top: 70px;
+    color: black;
+    font-size: xxx-large;
+    text-align: center;
+    cursor: default;
+}
+
+button.long-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 11em;
+    align-self: center;
+}
+
+button.med-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 9em;
+    align-self: center;
+}
+
+@media only screen and (max-width: 1200px) {
+    div.form_success > span {
+        font-size: 10px;
+    }
+
+    .link-box > a {
+        font-size: 25px;
+    }
+
+    div.form-outline {
+        padding: 10px 10px;
+    }
+
+    span.form-error {
+        font-size: 30px;
+    }
+
+    div.form-group {
+        margin-top: 20px;
+        margin-left: 10px;
+    }
+
+    input {
+        transition-duration: 100ms;
+        min-width: 50vw;
+        max-width: 70vw;
+        font-size: 40px;
+    }
+
+    .form-outline {
+        max-width: 80vw;
+    }
+
+    div#submit-group {
+        margin-top: 0;
+    }
+
+    button.form-submit {
+        font-size: x-large;
+    }
+
+    label {
+        font-size: 30px;
+        margin: 0;
+    }
+
+    form {
+        align-items: center;
+        font-size: 26px;
+    }
+
+    h1 {
+        font-size: 60px;
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    form > p {
+        text-align: center;
+    }
+
+    .big-transaction-box {
+        max-width: 100%;
+        flex-flow: column;
+        align-items: center;
+    }
+
+    .balance-header {
+        text-align: center;
+    }
+
+    .pending-header {
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .transaction-title {
+        font-size: 22px;
+    }
+
+    .main-pending-box {
+        margin-top: 49px;
+        margin-left: 0;
+    }
+
+    .transaction-boxy {
+        font-size: 22px;
+    }
+
+    .payment-when {
+        margin-left: 36px;
+    }
+
+    .all-transactions {
+        margin-left: 0;
+        float: none;
+        align-self: center;
+        align-items: normal;
+        text-align: center;
+    }
+
+    .transaction-box {
+        align-items: center;
+    }
+
+    .pending_box {
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    input {
+        font-size: 26px;
+    }
+}
