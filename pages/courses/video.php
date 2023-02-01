@@ -3,6 +3,7 @@ require 'html_page.php';
 require 'video_functionality.php';
 require 'video_sidebar.php';
 require 'comments_components.php';
+require_once 'course_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'] ?? '';
