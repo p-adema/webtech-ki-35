@@ -7,6 +7,16 @@ html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
+if ($_SESSION['auth']){
+    $user_id = $_SESSION['uid'];
+    if (has_course($tag, $user_id)){
+        $has_video = '';
+    } else{
+        $has_video = 'not_have_video';
+    }
+} else {
+    $has_video = 'not_have_video';
+}
 
 if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
     $stars = $video_info['rating'] ? ('perm-star-' . $video_info['rating']) : 'stars-empty';
@@ -45,7 +55,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                                 </div>
                             <?php } ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars <?php echo $stars ?>"></div>
+                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
                             <div id="log"></div>
                         </div>
                     </div>

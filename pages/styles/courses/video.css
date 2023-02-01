@@ -411,6 +411,10 @@ a {
     background-color: #b1b0bf;
 }
 
+.not_have_video {
+    display: none;
+}
+
 .author {
     color: #000000;
     opacity: 0.45;
