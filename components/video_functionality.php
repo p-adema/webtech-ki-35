@@ -45,11 +45,6 @@ function check_video_tag($tag): bool
     return !empty($sql_prep->fetch());
 }
 
-function since_upload($upload_date): void
-{
-    echo time_since($upload_date);
-}
-
 function owns_video($user, $video_id): bool
 {
     require_once 'pdo_read.php';

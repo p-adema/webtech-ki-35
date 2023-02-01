@@ -26,7 +26,7 @@ $(document).ready(function () {
         let tag = link_array[link_array.length -1]
 
         stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-        jQuery.post('/api/courses/stars', {star: star_count, tag: tag})
+        jQuery.post('/api/courses/rate_item', {star: star_count, tag: tag})
     })
     $(".shop").submit(function (event) {
         event.preventDefault();
