@@ -172,7 +172,7 @@ img.best-video {
     margin-top: 30px;
 }
 
-@media screen and (max-aspect-ratio: 1/1) {
+@media screen and (max-width: 1200px) {
 
     .genre-overall-box {
         max-width: 500px;
@@ -192,19 +192,19 @@ img.best-video {
     }
 }
 
-@media screen and (max-aspect-ratio: 1/1) {
+@media screen and (max-width: 1200px) {
     .genre-overall-box {
-        max-width: 300px;
+        max-width: 90vw;
     }
 
     img.best-video {
-        max-width: 300px;
-        max-height: 150px;
+        max-width: 40vw;
+        max-height: 40vw;
         overflow: hidden;
     }
 
     .best-video-name {
-        font-size: 15px;
+        font-size: 30px;
     }
 
     .best-video-creator {
@@ -217,7 +217,14 @@ img.best-video {
     }
 
     .best-video-header {
-        font-size: 15px;
+        font-size: 38px;
         align-self: start;
     }
+
+    .genre-video-info {
+        font-size: 20px;
+        text-align: start;
+    }
+
+    .
 }

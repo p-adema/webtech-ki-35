@@ -162,12 +162,13 @@ html {
         flex-flow: column;
     }
 
-    .thumbnail {
-        max-width: 424px;
+    .normal-video-outline {
+        min-width: fit-content;
     }
 
     .course-and-video {
         flex-flow: column;
+        align-items: center;
     }
 
     .best-video-outline {
@@ -178,11 +179,23 @@ html {
         margin-top: 20px;
     }
 
+    .course-box {
+        align-self: revert;
+    }
+
     .thumbnail {
-        max-width: 345px;
+        max-width: 50vw;
     }
 
     .no-course {
         max-width: 80%;
+    }
+
+    .best-video-info {
+        font-size: 30px;
+    }
+
+    .normal-video-info {
+        font-size: 25px;
     }
 }

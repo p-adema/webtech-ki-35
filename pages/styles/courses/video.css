@@ -447,7 +447,7 @@ label {
     cursor: grab;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-aspect-ratio: 1/1) {
     .description {
         max-width: fit-content;
     }
@@ -463,11 +463,12 @@ label {
     div.video-sidebar {
         border-left-style: revert;
         border-bottom-style: revert;
-        border-right: solid black 2px;
+        margin-right: 20vw;
     }
 
     div.video-page-flexbox {
         flex-flow: column;
+        align-items: center;
     }
 
     video {
