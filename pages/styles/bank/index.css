@@ -106,7 +106,6 @@ body {
 .all-transactions {
     margin-left: 49%;
     float: right;
-    align-self: end;
     margin-top: 50px;
     display: flex;
     flex-flow: column;
@@ -170,11 +169,11 @@ body {
 }
 
 .pay-button {
+    flex: auto;
     border: none;
     border-radius: 15px;
     color: white;
     padding: 18px;
-    margin-left: 50px;
     display: inline-block;
     text-decoration: none;
     font-size: 16px;
@@ -184,6 +183,12 @@ body {
 
 a:link {
     text-decoration: none;
+    max-width: fit-content;
+    margin-left: 50px;
+}
+
+.pay-button:hover {
+    cursor: grab;
 }
 
 @media screen and (max-aspect-ratio: 1/1) {
@@ -198,21 +203,26 @@ a:link {
     }
 
     .pending-header {
-        font-size: 22px;
+        font-size: 50px;
         text-align: center;
     }
 
     .transaction-title {
-        font-size: 22px;
+        font-size: 50px;
     }
 
     .main-pending-box {
         margin-top: 49px;
         margin-left: 0;
+        align-items: center;
+    }
+
+    .pay-button {
+        font-size: 30px;
     }
 
     .transaction-boxy {
-        font-size: 22px;
+        font-size: 40px;
     }
 
     .payment-when {
@@ -233,7 +243,7 @@ a:link {
 
     .pending_box {
         margin-left: 0;
+        align-items: center;
+        font-size: 20px;
     }
-
-    .
 }

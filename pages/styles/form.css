@@ -557,10 +557,11 @@ button.med-btn {
 
 @media only screen and (max-aspect-ratio: 1/1) {
     .link-box > a {
-        font-size: 25px;
+        font-size: 35px;
     }
 
     div.form-outline {
+        margin-top: 5vw;
         padding: 10px 10px;
     }
 
@@ -589,11 +590,11 @@ button.med-btn {
     }
 
     button.form-submit {
-        font-size: x-large;
+        font-size: 35px;
     }
 
     label {
-        font-size: 30px;
+        font-size: 40px;
         margin: 0;
     }
 
@@ -603,7 +604,7 @@ button.med-btn {
     }
 
     h1 {
-        font-size: 60px;
+        font-size: 80px;
         margin-top: 40px;
         margin-bottom: 40px;
     }
