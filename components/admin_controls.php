@@ -22,7 +22,7 @@ function is_admin($uid): bool
 function api_require_admin(): void
 {
     ensure_session();
-    if (!$_SESSION['auth'] or !is_admin($_SESSION['uid'])) {
+    if (!$_SESSION['admin']) {
         api_fail('Insufficient privileges', ['submit' => ['Insufficient privileges']]);
     }
 }

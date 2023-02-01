@@ -435,7 +435,7 @@ flex: 9;
     display: none;
 }
 
-a.navbar-upload-button {
+a.navbar-round-button {
     height: 24px;
     transition-duration: 0.3s;
     border-radius: 10px;
@@ -449,8 +449,16 @@ a.navbar-upload-button {
     margin-right: 20px;
 }
 
-.navbar-upload-button:hover {
+.navbar-round-button:hover {
     background: #659341;
+}
+
+a.navbar-round-button.navbar-admin-button {
+    background: #263260;
+}
+
+a.navbar-round-button.navbar-admin-button:hover {
+    background: #5459b0;
 }
 
 .disable-scrollbars::-webkit-scrollbar {

@@ -4,8 +4,8 @@ require_once 'sidebar_right.php';
 require_once "searchbar.php";
 function navbar(): void
 {
-
- $html = "
+    $admin = $_SESSION['admin'] ? "<a href='/admin/' class='navbar-round-button navbar-admin-button'> <span class=\"material-symbols-outlined\"> admin_panel_settings </span> Admin </a>" : '';
+    $html = "
      <div class='topnav'>
      <div class='home-button'>
      <a href='/'><img src='/resources/images/logo.png' width='110px' height='32px' ></a>
@@ -23,9 +23,8 @@ function navbar(): void
       </div>
         <div class='navbar-stretch-2'></div>
         " . searchbar() . "
-        <a href='/upload/' class='navbar-upload-button'> <span class=\"material-symbols-outlined\">
-upload
-</span> Upload </a>
+        <a href='/upload/' class='navbar-round-button'> <span class=\"material-symbols-outlined\"> upload </span> Upload </a>
+        $admin
     <div class='shopping-cart'>
      <div id='mandje' onclick='open_right_menu()'>
      <span id='shopping-cart' class='material-symbols-outlined'>
@@ -36,8 +35,8 @@ upload
       ";
     if ($_SESSION['auth']) {
         $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/account/', '/auth/account/invoice', '/auth/logout'], ['Account management', 'Invoice logs', 'Log out']);
-    } else{
-        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'],['Register', 'Log in']);
+    } else {
+        $html .= dropDown("<span id='account-picture' class='material-symbols-outlined'>account_circle</span>", ['/auth/register', '/auth/login'], ['Register', 'Log in']);
     }
     $html .= " </div>"
         . "</div> 
@@ -48,9 +47,9 @@ upload
       <a href='/courses/subject?tag=geography'> Geography</a>
       </div>
       </div>
- ". sidebar_cover() . sidebar_right();
+ " . sidebar_cover() . sidebar_right();
 
-     echo $html;
+    echo $html;
 
 
 }
