@@ -37,24 +37,6 @@ $(document).ready(function () {
 
         }
     })
-
-    $(".comment-submit").submit(function (event) {
-        event.preventDefault()
-
-
-        const user_data = {
-            video_tag: $('#video').attr('data-tag'),
-            message: $("#message").val()
-        }
-        const handler_options = {
-            success_handler: function (data, _) {
-                $(`.top`).html(data.html);
-            }
-        }
-
-        $.post('/api/courses/video', user_data, form_default_response(handler_options))
-    })
-
     const stars = $(".stars");
 
     stars.mousemove(function (event) {
@@ -84,7 +66,7 @@ $(document).ready(function () {
             tag: $('#video').attr('data-tag')
         };
 
-        $.post('/api/courses/stars', user_data);
+        $.post('/api/courses/rate_item', user_data);
     })
 
     function form_custom_success(data, __) {
@@ -108,13 +90,68 @@ $(document).ready(function () {
         success_handler: function (data, __) {
             $('div.comments').html(data.html)
             $('button.show-replies').click(load_replies)
-            bind_score()
-            // document.getElementById("message").value = "";
-            open_reply()
         }
     }
 
     $.post('/api/load/comments', video_data, form_default_response(handler_options));
+}).on('click', '.comment-reactions-up', function (event) {
+    event.preventDefault();
+    const tag = $(this).parent().attr('data-tag')
+    $.post('/api/courses/score_comment', {rating: 1, comment: tag})
+    $(this).addClass('pressed')
+    $(`#${tag}`).find('.comment-reactions-down').removeClass('pressed')
+}).on('click', '.comment-reactions-down', function (event) {
+    event.preventDefault()
+    const tag = $(this).parent().attr('data-tag')
+    $.post('/api/courses/score_comment', {rating: -1, comment: tag})
+    $(this).addClass('pressed')
+    $(`#${tag}`).find('.comment-reactions-up').removeClass('pressed')
+}).on('click', '.comment-reactions-reply-box', function (event) {
+    event.preventDefault()
+    const tag = $(this).parent().attr('data-tag');
+    const $reply = $(`#new-reply-${tag}`);
+    if ($(this).toggleClass('active').hasClass('active')) {
+        $reply.css('max-height', $reply.prop('scrollHeight'));
+        setTimeout(function () {
+            $reply.css('max-height', '');
+        }, 200)
+    } else {
+        $reply.css('max-height', $reply.prop('scrollHeight'));
+        setTimeout(function () {
+            $reply.css('max-height', '0');
+        })
+    }
+}).on('submit', '.new-comment', function (event) {
+    event.preventDefault()
+    if ($(this).attr('data-auth') === 'no') {
+        window.location.href = '/auth/login';
+        return
+    }
+    const $comment = $(this).parent().parent();
+    let user_data;
+    if ($(this).attr('data-reply') === 'yes') {
+        user_data = {
+            item_tag: $('#video').attr('data-tag'),
+            comment_tag: $(this).attr('data-tag'),
+            message: $(this).find('textarea').val()
+        }
+    } else {
+        user_data = {
+            item_tag: $(this).attr('data-tag'),
+            message: $(this).find('textarea').val()
+        }
+    }
+    const handler_options = {
+        success_handler: function (data, _) {
+            $('.comments').prepend(data.html);
+            $comment.remove();
+        }
+    }
+
+    $.post('/api/courses/add_comment', user_data, form_default_response(handler_options))
+
+}).on('focus', 'textarea[data-auth="no"]', function (_) {
+    window.location.href = '/auth/login';
 })
 
 function load_replies(_) {
@@ -131,8 +168,6 @@ function load_replies(_) {
         success_handler: function (data, __) {
             $(`#replies-${tag}`).html(data.html);
             $(`#replies-${tag} button.show-replies`).click(load_replies);
-            bind_score()
-            open_reply()
         }
     }
 
@@ -148,33 +183,4 @@ function hide_replies(_) {
 function show_replies(_) {
     const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
     $(`#replies-${tag}`).show()
-}
-
-function bind_score() {
-    $('.comment-reactions-up').unbind('click').click(function (event) {
-        event.preventDefault();
-        let comment_id = $(this).parent().attr('tag')
-        $.post('/api/courses/comments', {rating: 1, comment: comment_id})
-        $(this).addClass('pressed')
-        $(`#${comment_id}`).find('.comment-reactions-down').removeClass('pressed')
-    })
-    $('.comment-reactions-down').unbind('click').click(function (event) {
-        event.preventDefault()
-        let comment_id = $(this).parent().attr('tag')
-        $.post('/api/courses/comments', {rating: -1, comment: comment_id})
-        $(this).addClass('pressed')
-        $(`#${comment_id}`).find('.comment-reactions-up').removeClass('pressed')
-    })
-}
-
-function open_reply() {
-    $('.comment-reactions-reply-box').click(function (event) {
-        event.preventDefault()
-        let $reply = $(this).children('.reply-box');
-        if ($(this).toggleClass('active').hasClass('active')) {
-            $reply.css('max-height', $reply.prop('scrollHeight'));
-        } else {
-            $reply.css('max-height', '0');
-        }
-    })
 }

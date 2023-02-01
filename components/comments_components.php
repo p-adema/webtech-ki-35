@@ -66,6 +66,7 @@ function render_comment(array $comment, bool $is_reply = false): string
     $ago = time_since($comment['date']);
     $class = $is_reply ? 'comment-top' : 'comment-reply';
     $replies = render_show_replies($comment['replies'], $comment['tag']);
+    $new_reply = render_comment_form($comment['tag'], true);
     return "
 <div class='comment-wrapper' id='{$comment['tag']}'>
     <div class='comment $class'>
@@ -77,9 +78,12 @@ function render_comment(array $comment, bool $is_reply = false): string
         <div class='comment-text-wrapper'>
             <span class='comment-text'> {$comment['text']} </span>
         </div>
-        <div class='comment-reactions-wrapper' tag='{$comment['tag']}'>
-            <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined $rating_class_up'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined $rating_class_down'>thumb_down</span><div class='comment-reactions-gap-l'></div><div class='comment-reactions-reply-box'><span class='comment-reactions-reply material-symbols-outlined'>reply</span><div class='reply-box'>Hallo daar!</div></div>
+        <div class='comment-reactions-wrapper' data-tag='{$comment['tag']}'>
+            <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined $rating_class_up'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined $rating_class_down'>thumb_down</span><div class='comment-reactions-gap-l'></div><div class='comment-reactions-reply-box'><span class='comment-reactions-reply material-symbols-outlined'>reply</span></div>
         </div>
+    </div>
+    <div class='comment-new-reply-wrapper' id='new-reply-{$comment['tag']}' style='max-height: 0;'>
+        $new_reply
     </div>
     $replies
 </div>
@@ -142,40 +146,44 @@ function change_comment_score($rating, $comment_id, $user_id): void
     }
 }
 
-function add_new_comment(string $comment_text, string $video_tag, $reply): string
+function add_comment(string $comment_text, string $item_tag, $reply_tag = null): string|false
 {
-    ensure_session();
+    require_once 'pdo_write.php';
+    require_once 'pdo_read.php';
 
-    if ($_SESSION['auth']) {
-
-        require_once 'pdo_write.php';
-        require_once 'pdo_read.php';
-
-        $uid = $_SESSION['uid'];
-        $fresh_tag = tag_create();
-        $pdo_write = new_pdo_write();
-        $pdo_read = new_pdo_read();
+    $uid = $_SESSION['uid'];
+    $comment_tag = tag_create();
+    $pdo_write = new_pdo_write();
 
 
-        $sql_read = 'SELECT id FROM db.items WHERE (tag = :tag)';
-        $sth_read = $pdo_read->prepare($sql_read);
-        $sth_read->execute(['tag' => $video_tag]);
+    $sql_id = 'SELECT id FROM db.items WHERE (tag = :tag)';
+    $prep_id = $pdo_write->prepare($sql_id);
+    $prep_id->execute(['tag' => $item_tag]);
 
-        $video_id = $sth_read->fetch()['id'];
+    $item = $prep_id->fetch();
 
-        $sql_new = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, reply_tag, score) 
-            VALUES (:tag, :uid, :video_id, :comment, DEFAULT, :reply, DEFAULT)';
-        $sth_new = $pdo_write->prepare($sql_new);
-        $data_comment = ['tag' => $fresh_tag,
-            'uid' => $uid,
-            'video_id' => $video_id,
-            'comment' => htmlspecialchars($comment_text),
-            'reply' => $reply];
-        $sth_new->execute($data_comment);
-
-        return $fresh_tag;
+    if ($item === false) {
+        return false;
     }
-    return '';
+
+    $item_id = $item['id'];
+
+    $sql_comment = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, reply_tag, score) 
+            VALUES (:tag, :uid, :video_id, :comment, DEFAULT, :reply, DEFAULT)';
+    $prep_comment = $pdo_write->prepare($sql_comment);
+    $data_comment = [
+        'tag' => $comment_tag,
+        'uid' => $uid,
+        'video_id' => $item_id,
+        'comment' => htmlspecialchars($comment_text),
+        'reply' => $reply_tag
+    ];
+
+    if (!$prep_comment->execute($data_comment)) {
+        return false;
+    }
+
+    return $comment_tag;
 }
 
 function get_comment_id($comment_tag): int
@@ -191,7 +199,7 @@ function get_comment_id($comment_tag): int
     return $sth->fetch()['id'];
 }
 
-function get_comment_info($comment_id, bool $replies): array
+function get_comment_info($comment_id, int $replies): array
 {
     require_once 'pdo_read.php';
 
@@ -205,15 +213,16 @@ function get_comment_info($comment_id, bool $replies): array
 
     $info = $sth->fetch(PDO::FETCH_ASSOC);
     $info['replies'] = $replies;
+    $info['user_score'] = 0;
 
     return $info;
 }
 
-function create_new_comment_box(): void
+function render_comment_form(string $tag, bool $reply): string
 {
-    if ($_SESSION['auth']) { #TODO: make this work better (eg. you're shown comment box, but prompted to login on click)
-        require_once 'pdo_read.php';
+    require_once 'pdo_read.php';
 
+    if ($_SESSION['auth']) {
         $uid = $_SESSION['uid'];
 
         $pdo_read = new_pdo_read();
@@ -222,19 +231,38 @@ function create_new_comment_box(): void
         $sth->execute(['uid' => $uid]);
 
         $name = $sth->fetch()['name'];
-
-        echo '<div class="comment-wrapper comment">';
-        echo '<span class="comment-username">';
-        echo $name;
-        echo '</span>';
-        echo '<div class="form-wrapper">';
-        echo '<form class="comment-submit" action="/api/courses/video.php" method="POST">';
-        form_input('message', 'Comment', placeholder: 'Type your comment');
-        form_error();
-        form_submit();
-        echo '</form>';
-        echo "<div class='like-dislike'><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='material-symbols-outlined'>thumb_down</span></div>";
-        echo '</div>';
-        echo '</div>';
+        $head = "<div class='head'>
+                <span class='comment-username'> $name </span>
+                <span class='head-space'></span>
+            </div>";
+        $wrapper_class = $reply ? '' : 'comment-new-top';
+        $reply = $reply ? 'yes' : 'no';
+    } else {
+        $head = "<span class='headless-label'> Add comment: </span>";
+        $wrapper_class = $reply ? '' : 'comment-new-top-headless';
+        $reply = $reply ? 'yes' : 'no';
     }
+    $auth = $_SESSION['auth'] ? 'yes' : 'no';
+
+    return "
+        <div class='comment-wrapper comment $wrapper_class'>
+            $head
+            <div class='form-wrapper'>
+                <form class='new-comment' action='/api/courses/add_comment.php' method='POST' data-tag='$tag'>
+                    <div id='comment-$tag-group' class='form-group form-group-comment'>
+                        <label for='comment-$tag-text'></label>
+                        <textarea
+                                id='comment-$tag-text'
+                                name='comment-text'
+                                placeholder='Write a comment...'
+                                data-auth='$auth'></textarea>
+                        <span id='comment-text-error' class='form-error'> No error </span>
+                    </div>
+                    <div class='comment-button-wrapper'>
+                        <button class='comment-button' data-auth='$auth' data-reply='$reply'> Post </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        ";
 }

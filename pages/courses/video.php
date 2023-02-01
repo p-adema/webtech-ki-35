@@ -62,7 +62,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
             </div>
             <div class="comments-wrapper">
                 <span class="comments-title"> Comments </span>
-                <?php create_new_comment_box(); ?>
+                <?php echo render_comment_form($_GET['tag'], false); ?>
                 <div class="top"></div>
                 <div class="comments" tag="<?php echo $_GET['tag'] ?>"></div>
                 <div class="bottom"></div>

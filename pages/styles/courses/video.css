@@ -121,7 +121,7 @@ html {
     visibility: hidden;
 }
 
-button.form-submit {
+.form-submit {
     display: flex;
     flex-flow: row;
     align-items: center;
@@ -204,6 +204,8 @@ div.comment {
     display: flex;
     flex-flow: row;
     width: 300px;
+    align-self: start;
+    margin-left: 20px;
 }
 
 span.comment-username {
@@ -413,9 +415,9 @@ a {
     opacity: 0.45;
 }
 
-.reply-box {
-    max-height: 0;
+.comment-new-reply-wrapper {
     overflow: hidden;
+    padding-left: 25px;
     transition: max-height 0.2s ease-in-out;
 }
 
@@ -425,8 +427,50 @@ input {
     border-bottom: 1px solid #000000;
 }
 
-label {
-    visibility: hidden;
+.form-group {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+}
+
+textarea {
+    background: #cbdbec;
+    border-radius: 20px;
+    width: 100%;
+    padding-left: 10px;
+    resize: vertical;
+    height: 5em;
+    font-family: 'Roboto', sans-serif;
+}
+
+.comment-button {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    height: 2em;
+    width: 5em;
+    justify-content: center;
+    font-size: medium;
+    background: #5298a4;
+    color: whitesmoke;
+    transition-duration: 0.3s;
+    border-radius: 5px;
+    border-color: #2b4065;
+}
+
+.comment-button-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.form-group-comment {
+    width: 100%;
+    flex-flow: column;
+}
+
+.comment-button:hover {
+    background: #6db4c0;
 }
 
 #submit-group {
@@ -438,9 +482,24 @@ label {
     display: flex;
     flex-flow: column;
     align-items: baseline;
+    width: 80%;
+    align-self: start;
+    margin-left: 10px;
+    margin-top: 10px;
 }
 
-.like-dislike {
-    display: flex;
-    flex-flow: row;
+.form-wrapper > form {
+    width: 100%;
+}
+
+.comment-new-top {
+    width: 365px;
+}
+
+.comment-new-top-headless {
+    width: 320px;
+}
+
+.comment-reactions-reply-box.active > span {
+    font-variation-settings: 'wght' 600;
 }

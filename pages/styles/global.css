@@ -104,10 +104,6 @@ html {
     padding: 16px;
 }
 
-body {
-    margin-top: 60px;
-}
-
 .topnav {
     display: flex;
     flex-flow: row;
