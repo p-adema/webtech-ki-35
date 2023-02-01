@@ -176,7 +176,7 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
         'tag' => $comment_tag,
         'uid' => $uid,
         'video_id' => $item_id,
-        'comment' => htmlspecialchars($comment_text),
+        'comment' => str_replace(PHP_EOL, '<br />', htmlspecialchars($comment_text)),
         'reply' => $reply_tag
     ];
 
