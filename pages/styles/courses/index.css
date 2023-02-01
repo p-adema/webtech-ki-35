@@ -90,4 +90,8 @@ html {
     .all-courses {
         flex-flow: column;
     }
+
+    .thumbnail {
+        min-width: 40vw;
+    }
 }
