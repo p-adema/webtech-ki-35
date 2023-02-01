@@ -291,4 +291,19 @@ a {
         text-align: center;
         align-items: center;
     }
+    .course-page {
+        flex-flow: column;
+        display: flex;
+    }
+    .information-block {
+        display: flex;
+        flex-flow: row;
+        align-items: start;
+        height: unset;
+    }
+    .title-box{
+        align-self: start;
+    }
+
+
 }
