@@ -390,10 +390,17 @@ flex: 9;
 
 }
 
-@media screen and (max-width: 1200px) {
-    .topnav a {
-        font-size: revert;
+@media screen and (max-aspect-ratio: 1/1) {
+
+    .navbar-search-input{
+        flex-grow: 0.5;
+        min-width: 0;
+
     }
+    .navbar-search-wrapper{
+        width: 200px;
+    }
+
 }
 
 .navbar-search-wrapper {
