@@ -187,6 +187,7 @@ div.comments {
 
 div.comment-wrapper {
     margin: 10px;
+    max-width: 30vw;
 }
 
 div.comment {

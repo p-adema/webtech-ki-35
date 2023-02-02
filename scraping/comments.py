@@ -2,6 +2,9 @@ import yt_dlp
 import json
 import random
 import html
+import os
+import mysql
+import db
 
 
 def get_comments(video: str) -> None:
@@ -87,7 +90,7 @@ def parse_comments(course: str, video: str, users: Users):
             'timestamp': timestamp,
             'likes': likes,
             'uid': uid,
-            'vid': video,
+            'vid': db.get_video_id(video),
             'reply_tag': "'" + reply_tag + "'" if reply_tag != 'null' else 'null',
         }
         comments.append(data)
@@ -97,38 +100,50 @@ def parse_comments(course: str, video: str, users: Users):
 
 users_sql_h = """
 INSERT INTO db.users 
-    (name, email, password, verified, banned)
+    (name, email, password, verified)
 VALUES\n"""
 
-user_sql = "    ('{name}', '{email}@gmail.com', 'NOLOGIN', 1, 1),\n"
+user_sql = "    ('{name}', '{email}@gmail.com', 'NOLOGIN', 1),\n"
 
 comments_sql_h = """
 INSERT INTO comments 
     (tag, commenter_id, item_id, text, date, reply_tag, score) 
 VALUES\n"""
 
-comment_sql = "    ('{tag}', {uid}, '{vid}', '{text}', FROM_UNIXTIME({timestamp}), {reply_tag}, {likes}),\n"
+comment_sql = "    ('{tag}', {uid}, {vid}, '{text}', FROM_UNIXTIME({timestamp}), {reply_tag}, {likes}),\n"
 
 
-def gen_sql(comments: list[dict[str, str | int]], users: Users, filename: str) -> None:
+def sql_comments(comments: list[dict[str, str | int]], users: Users, filename: str) -> None:
     if not comments:
         return
-
-    with open(f'{filename}.users.sql', 'a') as file:
-        for username in users:
-            user = user_sql.format(name=username, email=gen_tag())
-            file.write(user)
 
     with open(f'{filename}.comments.sql', 'a') as file:
         for comment in comments:
             file.write(comment_sql.format(**comment))
 
 
+def sql_users(users: Users, filename: str) -> None:
+    with open(f'{filename}.users.sql', 'w') as file:
+        file.write(users_sql_h)
+        for username in users:
+            user = user_sql.format(name=username, email=gen_tag())
+            file.write(user)
+
+
+def gen_all() -> None:
+    with db.Connection():
+        courses = os.listdir('.')
+        users = Users(4)
+        for course in next(os.walk('.'))[1]:
+            print('Parsing', course, '...')
+            videos = os.listdir('./' + course)
+            for video in (file.split('.')[0] for file in videos if file.endswith('.info.json') and len(file) > 48):
+                # print(course, video)
+                video_comments = parse_comments(course, video, users)
+                sql_comments(video_comments, users, course)
+
+    sql_users(users, 'all')
+
+
 if __name__ == '__main__':
-    # ID = 'Indigenous Insights - Stewarding the Earth： An end-of-the-year reflection'
-    # # get_comments(ID)
-    # gl_users = Users(4)
-    # gl_comments = parse_comments('IUCN', ID, gl_users)
-    # print(gl_comments)
-    # gen_sql(gl_comments, gl_users, 'test')
-    print(sanitize())
+    gen_all()

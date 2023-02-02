@@ -75,7 +75,7 @@ def generate_sql(course):
         rel = sql_rel.format(video_tag=tag, course_tag=course_tag, order=order)
         rels.append(rel)
 
-        comments.gen_sql(comments.parse_comments(course, tag, users), users, course)
+        comments.sql_comments(comments.parse_comments(course, tag, users), users, course)
 
     items[-1] = items[-1][:-2] + ';'
     videos[-1] = videos[-1][:-2] + ';'

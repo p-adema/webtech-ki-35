@@ -25,7 +25,7 @@ VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'Placeholder Title',
+VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'Crash Course AI',
         'Placeholder description', 'technology', 3);
 
 
@@ -194,7 +194,7 @@ VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'Placeholder Title',
+VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'Crash Course Biology',
         'Placeholder description', 'biology', 3);
 
 
@@ -474,7 +474,7 @@ VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'Placeholder Title',
+VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'Crash Course Chemistry',
         'Placeholder description', 'chemistry', 3);
 
 
@@ -738,7 +738,7 @@ VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'Placeholder Title',
+VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'Crash Course Climate',
         'Placeholder description', 'geography', 3);
 
 
@@ -827,7 +827,7 @@ VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'Placeholder Title',
+VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'Crash Course Computer Science',
         'Placeholder description', 'technology', 3);
 
 
@@ -1152,14 +1152,15 @@ VALUES ('S6jKULL8iXYK6zzf10bPuA7e6zcHhLAO6Ng2QcHcePIEmz0z0RZ7dPrQ5jcHN11G', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('S6jKULL8iXYK6zzf10bPuA7e6zcHhLAO6Ng2QcHcePIEmz0z0RZ7dPrQ5jcHN11G', 'Placeholder Title',
+VALUES ('S6jKULL8iXYK6zzf10bPuA7e6zcHhLAO6Ng2QcHcePIEmz0z0RZ7dPrQ5jcHN11G', 'Crash Course Physics',
         'Placeholder description', 'physics', 3);
 
 
 INSERT INTO db.videos
     (tag, name, free, description, subject, uploader, views)
 VALUES ('An4ydD6EIcKRp9Ueiz5cgBwgfxp079KLkRLEF23gJvVZITjfTZ9TjXZWoEFtbVF0', 'Crash Course Physics Preview', 1,
-        'It&#x27;s time! Crash Course Physics is coming soon and here is your introduction to our host for this series, Dr. Shini Somara. You can find out more about her linked below! <br /><br />What is AP Physics? Check it out here: https://advancesinap.collegeboard.org/stem/physics<br /><br />Twitter: https://twitter.com/shinisomara<br />IMDB: http://www.imdb.com/name/nm4997483/?r...<br />Website: http://www.drshinisomara.com/<br /><br />***<br /><br />Crash Course is on Patreon! You can support us directly by signing up at http://www.patreon.com/crashcourse<br /><br />Thanks to the following Patrons for their generous monthly contributions that help keep Crash Course free for everyone forever:<br /><br />Mark, Eric Kitchen, Jessica Wode, Jeffrey Thompson, Steve Marshall, Moritz Schmidt, Robert Kunz, Tim Curwick, Jason A Saslow, SR Foxley, Elliot Beter, Jacob Ash, Christian, Jan Schmid, Jirat, Christy Huddleston, Daniel Baulig, Chris Peters, Anna-Ester Volozh, Ian Dundore, Caleb Weeks<br /><br />--<br /><br />Want to find Crash Course elsewhere on the internet?<br />Facebook - http://www.facebook.com/YouTubeCrashC...<br />Twitter - http://www.twitter.com/TheCrashCourse<br />Tumblr - http://thecrashcourse.tumblr.com <br />Support Crash Course on Patreon: http://patreon.com/crashcourse<br /><br />CC Kids: http://www.youtube.com/crashcoursekids',
+        'It&#x27;s
+time! Crash Course Physics is coming soon and here is your introduction to our host for this series, Dr. Shini Somara. You can find out more about her linked below! <br /><br />What is AP Physics? Check it out here: https://advancesinap.collegeboard.org/stem/physics<br /><br />Twitter: https://twitter.com/shinisomara<br />IMDB: http://www.imdb.com/name/nm4997483/?r...<br />Website: http://www.drshinisomara.com/<br /><br />***<br /><br />Crash Course is on Patreon! You can support us directly by signing up at http://www.patreon.com/crashcourse<br /><br />Thanks to the following Patrons for their generous monthly contributions that help keep Crash Course free for everyone forever:<br /><br />Mark, Eric Kitchen, Jessica Wode, Jeffrey Thompson, Steve Marshall, Moritz Schmidt, Robert Kunz, Tim Curwick, Jason A Saslow, SR Foxley, Elliot Beter, Jacob Ash, Christian, Jan Schmid, Jirat, Christy Huddleston, Daniel Baulig, Chris Peters, Anna-Ester Volozh, Ian Dundore, Caleb Weeks<br /><br />--<br /><br />Want to find Crash Course elsewhere on the internet?<br />Facebook - http://www.facebook.com/YouTubeCrashC...<br />Twitter - http://www.twitter.com/TheCrashCourse<br />Tumblr - http://thecrashcourse.tumblr.com <br />Support Crash Course on Patreon: http://patreon.com/crashcourse<br /><br />CC Kids: http://www.youtube.com/crashcoursekids',
         'physics', 3, 1453316),
        ('hAktg8AjcirdASWIhqG4lFJnWXps7yuK4bXFFDovOuqKS6lFmKNagK2sVmdrsK7q', 'Motion in a Straight Line', 0,
         'In this, THE FIRST EPISODE of Crash Course Physics, your host Dr. Shini Somara introduces us to the ideas of motion in a straight line. She talks about displacement, acceleration, time, velocity, and the definition of acceleration. Also, how does a physicist discuss speed as opposed to a police officer? And did you deserve that ticket? You can figure it all out with the help of Physics! <br /><br />--<br /><br />Produced in collaboration with PBS Digital Studios: http://youtube.com/pbsdigitalstudios<br /><br />--<br /><br />Want to find Crash Course elsewhere on the internet?<br />Facebook - http://www.facebook.com/YouTubeCrashC...<br />Twitter - http://www.twitter.com/TheCrashCourse<br />Tumblr - http://thecrashcourse.tumblr.com <br />Support CrashCourse on Patreon: http://www.patreon.com/crashcourse<br /><br />CC Kids: http://www.youtube.com/crashcoursekids<br /><br />Crash Course is on Patreon! You can support us directly by signing up at http://www.patreon.com/crashcourse',
@@ -1449,7 +1450,7 @@ VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'cou
 
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
-VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'Placeholder Title',
+VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'Crash Course Statistics',
         'Placeholder description', 'mathematics', 3);
 
 
