@@ -7,7 +7,7 @@ require_once 'rating_functionality.php';
 function render_genre_videos($videos): void
 {
     echo "<div class='genre-overall-box disable-scrollbars'>";
-    foreach ($videos as $video) {
+    foreach (array_slice($videos, 0, 10) as $video) {
         $video_name = get_video_data($video['tag'])['name'];
         $video_uploader = user_name_from_id(get_video_data($video['tag'])['uploader']);
         echo "

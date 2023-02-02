@@ -5,6 +5,12 @@ require_once "searchbar.php";
 function navbar(): void
 {
     $admin = $_SESSION['admin'] ? "<a href='/admin/' class='navbar-round-button navbar-admin-button'> <span class=\"material-symbols-outlined\"> admin_panel_settings </span> Admin </a>" : '';
+    $dropdown_subjects_rendered = [];
+    foreach (SUBJECTS as $subject) {
+        $capitalised = ucfirst($subject);
+        $dropdown_subjects_rendered[] = "<a href='/courses/subject?tag=$subject'> $capitalised </a>";
+    }
+    $dropdown_subjects = join(PHP_EOL, $dropdown_subjects_rendered);
     $html = "
      <div class='topnav'>
      <div class='home-button'>
@@ -42,9 +48,7 @@ function navbar(): void
         . "</div> 
  <div class='videos-button dropdown-videos'>
  <div class='dropdown-videos-content'> 
-      <a href='/courses/subject?tag=physics'> Phsics</a>
-      <a href='/courses/subject?tag=biology'> Biology</a>
-      <a href='/courses/subject?tag=geography'> Geography</a>
+      $dropdown_subjects
       </div>
       </div>
  " . sidebar_cover() . sidebar_right();
