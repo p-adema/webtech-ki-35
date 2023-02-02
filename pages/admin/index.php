@@ -14,6 +14,7 @@ html_header(title: 'Administration', styled: 'form.css', scripted: 'ajax');
                     echo '<p> Select an action: </p>';
 
                     echo '<div class="form-btns form-btns-down form-btns-spaced">';
+                    text_link('Sudo as a user', '/admin/sudo');
                     text_link('Unban a user', '/admin/unban');
                     text_link('Ban a user', '/admin/ban');
                     text_link('Delete an item', '/admin/delete');
