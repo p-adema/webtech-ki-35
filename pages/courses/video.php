@@ -6,8 +6,23 @@ require 'comments_components.php';
 require_once 'course_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
 
+
+
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
+$video_id = get_course_id($tag);
+$rating = get_rating_info($video_id);
+$ratings = 0;
+
+if (count($rating) == 0) {
+    $video_has_ratings = false;
+    $score = '';
+} else {
+    $score = number_format($rating[1], 1);
+    $ratings = $rating[0];
+    $video_has_ratings = true;
+}
+
 if ($_SESSION['auth']){
     $user_id = $_SESSION['uid'];
     if (has_course($tag, $user_id)){
@@ -55,9 +70,17 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                                     </form>
                                 </div>
                             <?php } ?>
+                            <?php if ($video_has_ratings) { ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
                             <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0"> ★<?php echo " $score <br> $ratings", $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                             <div id="log"></div>
+
+                            <?php }else {?>
+                            <span class="video-name"><?php echo $video_info['name'] ?></span>
+                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                             <div id="log"></div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="description">
