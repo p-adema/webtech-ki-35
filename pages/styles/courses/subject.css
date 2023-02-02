@@ -143,6 +143,7 @@ html {
     padding: 8px;
     border-bottom: solid black 4px;
     margin-bottom: 20px;
+    max-width: 26vw;
 }
 
 .all-videos-header-box {
