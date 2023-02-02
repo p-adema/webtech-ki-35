@@ -5,12 +5,14 @@ require_once "pdo_read.php";
 $errors = [
     'query' => [],
     'origin' => [],
+    'sort' => [],
     'submit' => []
 ];
 $valid = true;
 
 $query = $_POST['query'] ?? '';
 $origin = $_POST['origin'] ?? '';
+$sort = $_POST['sort'] ?? '';
 
 
 if ($query === '') {
@@ -23,17 +25,62 @@ if (empty($origin)) {
     $valid = false;
 }
 
+if (empty($sort)) {
+    $errors['sort'][] = 'Please provide a sort mode';
+    $valid = false;
+} elseif (!in_array($sort, ['views', 'rating', 'recent'])) {
+    $errors['sort'][] = 'Please provide a valid sort mode';
+    $valid = false;
+}
+
 if (!$valid) {
     api_fail('Please fill in all fields correctly', $errors);
 }
 
-$sql = 'SELECT COALESCE(v.tag, c.tag) as tag, COALESCE(v.name, c.name) as name, i.type
-        FROM items i
-        LEFT JOIN videos v on i.tag = v.tag
-        LEFT JOIN courses c on i.tag = c.tag
-        WHERE MATCH(v.name) AGAINST(:query) OR MATCH(c.name) AGAINST(:query)';
+$sql = match ($sort) {
+    'views' => 'SELECT COALESCE(v.tag, c.tag) as tag, COALESCE(v.name, c.name) as name,
+                       i.type, COALESCE(v.free, c.free) as free, o.id as owned
+                FROM items i
+                    LEFT JOIN videos v on i.tag = v.tag
+                    LEFT JOIN courses c on i.tag = c.tag
+                    LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+                WHERE MATCH(v.name) AGAINST(:query) OR MATCH(c.name) AGAINST(:query)
+                ORDER BY COALESCE(v.views, c.views) DESC',
+
+    'rating' => 'SELECT COALESCE(v.tag, c.tag)   as tag,
+                        COALESCE(v.name, c.name) as name,
+                        i.type,
+                        COALESCE(v.free, c.free) as free,
+                        o.id                     as owned,
+                        AVG(r.rating)
+                 FROM items i
+                          LEFT JOIN videos v on i.tag = v.tag
+                          LEFT JOIN courses c on i.tag = c.tag
+                          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+                          LEFT JOIN ratings r on i.id = r.item_id
+                 WHERE MATCH(v.name) AGAINST(:query)
+                    OR MATCH(c.name) AGAINST(:query)
+                 GROUP BY COALESCE(v.tag, c.tag), COALESCE(v.name, c.name), i.type, COALESCE(v.free, c.free), o.id
+                 ORDER BY AVG(r.rating) DESC',
+
+    'recent' => 'SELECT COALESCE(v.tag, c.tag)   as tag,
+                        COALESCE(v.name, c.name) as name,
+                        i.type,
+                        COALESCE(v.free, c.free) as free,
+                        o.id                     as owned
+                 FROM items i
+                          LEFT JOIN videos v on i.tag = v.tag
+                          LEFT JOIN courses c on i.tag = c.tag
+                          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+                 WHERE MATCH(v.name) AGAINST(:query)
+                    OR MATCH(c.name) AGAINST(:query)
+                 ORDER BY COALESCE(v.upload_date, c.creation_date) DESC'
+};
+
+ensure_session();
 $data = [
     'query' => htmlspecialchars($query),
+    'uid' => $_SESSION['uid'] ?? 0
 ];
 
 try {
