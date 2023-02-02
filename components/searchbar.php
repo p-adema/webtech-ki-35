@@ -14,8 +14,15 @@ function render_search_result(array $item, string $origin): string
 {
     $link = '/courses/' . ($item['type'] === 'video' ? 'video/' : 'course/') . $item['tag'];
     $icon = $item['type'] === 'video' ? 'movie' : 'library_books';
+    if ($item['owned']) {
+        $class = 'owned';
+    } elseif ($item['free']) {
+        $class = 'free';
+    } else {
+        $class = 'unowned';
+    }
     return "
-<a class='$origin-review-item-anchor' href='$link' tag='{$item['tag']}'>
+<a class='$origin-review-item-anchor $class' href='$link' tag='{$item['tag']}'>
     <div class='$origin-search-result-wrapper'>
         <span class='$origin-search-result-icon material-symbols-outlined'> $icon </span>
         <span class='$origin-search-result-name'> {$item['name']} </span>

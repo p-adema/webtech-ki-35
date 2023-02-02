@@ -10,7 +10,7 @@ require 'admin_controls.php'; ?>
         <div class="form-outline">
             <form action="/api/admin/gift" method="POST">
                 <?php
-                if (is_admin($_SESSION['uid'])) {
+                if ($_SESSION['admin']) {
                     form_input('user', 'Username of reciever');
                     form_input('item-tag', 'Tag of gift item');
                     form_error();

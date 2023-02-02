@@ -7,7 +7,12 @@ $(document).ready(function () {
             item_tag: $("#item_tag").val(),
         };
 
-        const handler_options = {}
+        const handler_options = {
+            redirect: {
+                link: '/admin/',
+                delay: 3000
+            }
+        }
 
         $.post('/api/admin/delete', user_data, form_default_response(handler_options));
     });

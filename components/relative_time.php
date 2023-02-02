@@ -3,8 +3,8 @@ function relative_time(string $since): string
 {
     $since = strtotime($since);
 
-    $units = ["second", "minute", "hour", "day", "week", "month", "year"];
-    $durations = ["60", "60", "24", "7", "4.35", "12"];
+    $units = ["second", "minute", "hour", "day", "week", "month", "year", "centuries"];
+    $durations = ["60", "60", "24", "7", "4.35", "12", "100"];
 
     $current_time = time();
 
