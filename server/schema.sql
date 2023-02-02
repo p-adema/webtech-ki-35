@@ -228,15 +228,6 @@ CREATE TABLE `transaction_log`
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`)
 );
 
-CREATE TABLE `item_tags`
-(
-    `id`      BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
-    `item_id` BIGINT UNSIGNED NOT NULL,
-    `tag`     VARCHAR(16),
-    PRIMARY KEY (`id`),
-    FOREIGN KEY (`item_id`) REFERENCES db.items (`id`)
-);
-
 CREATE TABLE `watches`
 (
     `id`           BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
