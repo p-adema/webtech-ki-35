@@ -13,7 +13,7 @@ $query = $_GET['tag'] ?? ''
         </div>
         <div class="controls-wrapper">
             <div class="controls-wrapper-inner">
-                <span class="filters-label"> Filter results: </span>
+                <span class="controls-label"> Filter results: </span>
                 <div class="control-buttons-wrapper" id="filter-buttons">
                     <span class="control-button filter-all active"
                           data-class="search-results"> All </span>
@@ -27,7 +27,7 @@ $query = $_GET['tag'] ?? ''
             </div>
             <span class="controls-gap"></span>
             <div class="controls-wrapper-inner">
-                <span class="sort-label"> Sort by: </span>
+                <span class="controls-label"> Sort by: </span>
                 <div class="control-buttons-wrapper" id="sort-buttons">
                     <span class="control-button sort-views"
                           data-sort="views"> Views </span>
