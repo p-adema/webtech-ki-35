@@ -35,7 +35,6 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
     $cart = new Cart();
     $tag = $_GET['tag'] ?? '';
     $video_info = get_video_data($tag);
-
     ?>
     <div class="course-page">
         <div class="information-block">
@@ -48,7 +47,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
                 <p id="description"><?php echo $course_info['description'] ?> </p>
                 <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
                 <p id="since">Creation date: <?php echo $course_creation_date[0] ?> </p>
-                <p id="views-and-time"> <?php echo $course_info['views'], $course_info['views'] !== 1 ? ' total views' : ' total view'  ?> </p>
+                <p id="views-and-time"> <?php echo number_format( $course_info['views'], 0, '', '.'), $course_info['views'] !== 1 ? ' total views' : ' total view'  ?> </p>
 
             </div>
             <div class="stretch-box-2"></div>
@@ -60,7 +59,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
                     <div class="ratings-box">
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
                         <div class="stars-empty stars"></div>
-                        <p class="total-ratings"><?php echo "$ratings", $ratings !== 1 ? ' ratings' : ' rating' ?></p>
+                        <p class="total-ratings"><?php echo number_format( $ratings, 0, '', '.'), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                     </div>
                 <?php else: ?>
                     <div class="ratings-box">
@@ -73,7 +72,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
                 if ($course_has_ratings): ?>
                     <div class="ratings-box">
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-                        <p class="total-ratings"><?php echo "$ratings", $ratings !== 1 ? ' ratings' : ' rating' ?></p>
+                        <p class="total-ratings"><?php echo number_format( $ratings['views'], 0, '', '.'), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                     </div>
 
                 <?php else: ?>
