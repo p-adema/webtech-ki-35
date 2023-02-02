@@ -72,7 +72,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                             <?php if ($video_has_ratings) { ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
                             <div class="stars <?php echo "$stars $has_video" ?>"></div>
-                                <p style="margin: 0"> ★<?php echo " $score <br>". number_format( $ratings, 0, '', '.'), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
+                                <p style="margin: 0"> ★<?php echo " $score <br>". number_format( $ratings, 0, '', ','), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                             <div id="log"></div>
 
                             <?php }else {?>
@@ -85,7 +85,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                     </div>
                     <div class="description">
                         <button class="collapsible">
-                            <span class="view-count"><?php echo number_format( $video_info['views'], 0, '', '.') ?> views</span>
+                            <span class="view-count"><?php echo number_format( $video_info['views'], 0, '', ',') ?> views</span>
                             <span class="upload-date">Posted <?php echo relative_time($video_info['upload_date']) ?> </span>
                         </button>
                         <div class="content">
