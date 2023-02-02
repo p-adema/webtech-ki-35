@@ -79,6 +79,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                             <?php }else {?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
                             <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0"> This video doesn't have ratings</p>
                              <div id="log"></div>
                             <?php } ?>
                         </div>
