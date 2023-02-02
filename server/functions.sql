@@ -36,7 +36,7 @@ CREATE DEFINER = 'triggers' TRIGGER courses_new_watch
 
 
 
-DELIMITER //
+DELIMITER $$
 
 -- Resolve ownership of a course and its videos
 CREATE
@@ -55,7 +55,7 @@ BEGIN
 
     INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
     VALUES (course_tag, user_id, origin, purchase_id, gift_id);
-END //
+END $$
 
 -- Resolve a standard purchase
 CREATE PROCEDURE resolve_purchase(
@@ -116,7 +116,7 @@ BEGIN
             );
     END LOOP own_course;
     CLOSE cursor_courses;
-END //
+END $$
 
 -- Resolve an admin gift
 CREATE
@@ -137,7 +137,7 @@ BEGIN
                           VALUES (itm_tag, receiving_uid, 'gift', @gift_id);
         WHEN 'course' THEN CALL course_ownership_add(receiving_uid, itm_tag, 'gift', null, @gift_id);
         END CASE;
-END //
+END $$
 
 -- Resolve account verification, given an email tag
 CREATE
@@ -161,6 +161,6 @@ BEGIN
 
     INSERT INTO balances (user_id, balance)
     VALUES (@user_id, 100.00);
-END //
+END $$
 
 DELIMITER ;
