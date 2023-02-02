@@ -73,7 +73,7 @@ function product_information($uid, $url_tag): void
                     $sth = $pdo_read->prepare($sql);
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
-                    $upload_date = time_since($data_ex['upload_date']);
+                    $upload_date = relative_time($data_ex['upload_date']);
                     $creator = course_creator($data_ex['uploader'])['name'];
                 }
                 else {
@@ -81,7 +81,7 @@ function product_information($uid, $url_tag): void
                     $sth = $pdo_read->prepare($sql);
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
-                    $upload_date = time_since($data_ex['creation_date']);
+                    $upload_date = relative_time($data_ex['creation_date']);
                     $creator = course_creator($data_ex['creator'])['name'];
                 }
 
