@@ -1,6 +1,6 @@
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'course', 50.00),
+VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'course', 20.00),
        ('QIXymoPQ3k3KHoaedY3gTX9Rv0ey7c5p7eSFlMM6UuI3y6zLzKXD67iRvnkwDwfg', 'video', 0.00),
        ('odanwB1lKsu8EJBmK2kp00kwZoQOqBhMAbEUqZYA6qjB4bLBq0xsVPKfmXXFIGiE', 'video', 1.03),
        ('rrDuJF9oDqcgIUe6b2DsQB00l9MSkLKDd0yyM8Ifzt5dI5NzvHvwrODfm82PvFJH', 'video', 2.55),
@@ -26,7 +26,8 @@ VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('h4lE1vUqTqnlbHVcKpmT5esdj8ouDMeIC2TzjM7V0B9J7teGR2XY9r1i7uzxlL2B', 'Crash Course AI',
-        'Placeholder description', 'technology', 3);
+        'Want to learn more about the amazing technologies behind Artificial Intelligence? Buy this course!',
+        'technology', 3);
 
 
 INSERT INTO db.videos
@@ -149,7 +150,7 @@ VALUES ('QIXymoPQ3k3KHoaedY3gTX9Rv0ey7c5p7eSFlMM6UuI3y6zLzKXD67iRvnkwDwfg',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'course', 50.00),
+VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'course', 35.00),
        ('EjMYnIR5Eod5oSKJvqDVoWTbiinzYMcRrDmP2jdWJSZ00II69u0wxjqyYeVk6bdg', 'video', 0.00),
        ('71yHBAEVyK2Pz4GfDdtqUih0DagN00ZuE40mnhPhwHRLCYVyHF6mbD01K9VAn3Bk', 'video', 1.89),
        ('0cS2UeLy3XWNwgLADo2UlyhOwjZ5uiikzLU93BK1phw4U5GlRPYXjNjEWX85BU82', 'video', 0.79),
@@ -195,7 +196,8 @@ VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('YynM9nGauMCD3Zc9FGSbKNOqGndes6FlnKLO7kiy39ojJliTB5Af3Qi5698bRrvm', 'Crash Course Biology',
-        'Placeholder description', 'biology', 3);
+        'Want to find out about the intricacies of living creatures and the internals of humans? Buy this course!',
+        'biology', 3);
 
 
 INSERT INTO db.videos
@@ -423,7 +425,7 @@ VALUES ('EjMYnIR5Eod5oSKJvqDVoWTbiinzYMcRrDmP2jdWJSZ00II69u0wxjqyYeVk6bdg',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'course', 50.00),
+VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'course', 45.00),
        ('DfyfGaM4cDxQiwE9z5KxiWyHNhVyJamR7iB4GdwJl0O6sPRq4bOOqlgWm38iduEs', 'video', 0.00),
        ('dLYkuUHUjVeGoY4VdaWxj7reDQIchD34Odj2kYrL1cSJOxfhTgoBZlF23WwFTFgm', 'video', 0.87),
        ('ke6sLjGXHNWNoBRonyGVZhNG1kwKNrlxrh7SPluUrgsylT8SijSbAhFmlKUH3FZ8', 'video', 1.12),
@@ -475,7 +477,8 @@ VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('mcNaYbZF3GHRgytY8GXNyWXmpcJXLhvW38vxyyz2qvZq3nmXFGQcXUOMChuPBLdG', 'Crash Course Chemistry',
-        'Placeholder description', 'chemistry', 3);
+        'Want to learn more about the fascinating world of atoms and molecules, as well as the interactions between them? Buy this course!',
+        'chemistry', 3);
 
 
 INSERT INTO db.videos
@@ -728,7 +731,7 @@ VALUES ('DfyfGaM4cDxQiwE9z5KxiWyHNhVyJamR7iB4GdwJl0O6sPRq4bOOqlgWm38iduEs',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'course', 50.00),
+VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'course', 8.00),
        ('i1mICFUFBZvhzzYtqMdaaUyCt66hvVzywvFaEE0VMtG9lOgws9Cuspt9yYy3hIu1', 'video', 0.00),
        ('HcY2FcpEeX2yflglWSmezJQvMReCz1xVQXGaoYwIDbnOUDE5kOxu1AZADkgOuq84', 'video', 1.97),
        ('NhEK9rwR3d7HwTRiuT3XuBMQAvF4mVnHQ3Kda8iHorhnmAacgBMh93KiKzVJpByy', 'video', 1.12),
@@ -739,7 +742,8 @@ VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('mficlXEqrgO5ktzHymyny591G1EKJvtx4JPcQXX8Wk1zjGiyWy80t1GVlZob2FWV', 'Crash Course Climate',
-        'Placeholder description', 'geography', 3);
+        'Want to learn more about the changing climate on planet Earth, and what we can do about it? Buy this course!',
+        'geography', 3);
 
 
 INSERT INTO db.videos
@@ -782,7 +786,7 @@ VALUES ('i1mICFUFBZvhzzYtqMdaaUyCt66hvVzywvFaEE0VMtG9lOgws9Cuspt9yYy3hIu1',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'course', 50.00),
+VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'course', 40.00),
        ('xhCCS0B2y4EVMTnPXeVZmrS7WqCOmQRcq6S3xlTWcbd5sBYQSEX1xi1kHArEI07g', 'video', 0.00),
        ('oUouKfX1mtpdk2tO32RHo4qvwe8CWnjb7FvGuQv7xWMuIvrwV8zCeiJ7ENpCeVDa', 'video', 2.18),
        ('PuCtyxrjQhgquOaP1id9lF184RtU2gROxTXJnFBKTDJCa1BMCo96JTVu7MIEabxs', 'video', 0.61),
@@ -828,7 +832,8 @@ VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('OMguX20nFIAGbVdmbgQPPvsKWmeZdhJUQQgERTn8ZchwTBuhtIiURcEmV96W87OL', 'Crash Course Computer Science',
-        'Placeholder description', 'technology', 3);
+        'Want to learn more about the complex world of computers and the history of how they functioned? Buy this course!',
+        'technology', 3);
 
 
 INSERT INTO db.videos
@@ -1048,7 +1053,7 @@ VALUES ('xhCCS0B2y4EVMTnPXeVZmrS7WqCOmQRcq6S3xlTWcbd5sBYQSEX1xi1kHArEI07g',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('JlA5225kcCAN2VIKm7Pd6g1yBqhUBk9OBNypQEidQSyyxL0pHciOfucsv0ac8FCV', 'course', 50.00),
+VALUES ('JlA5225kcCAN2VIKm7Pd6g1yBqhUBk9OBNypQEidQSyyxL0pHciOfucsv0ac8FCV', 'course', 5.00),
        ('ulPAlg617zhzUuhjKu2yE7OXdiACQLI0pRyrTZEviSNfZODLI0nx4MnROZy6Q7og', 'video', 0.00),
        ('JlvLT2xeanaiKXmPynODS6zazXmU6XIBz2cvtDr4mOVhq4FZd4zSMHEaFIzjSiBf', 'video', 0.91),
        ('b8efmKANsf61xoMIZxhWde7YMAooipwZOfwFYN8w4jZFAZd03X0MM9ubY5NOLZbG', 'video', 2.60),
@@ -1153,7 +1158,8 @@ VALUES ('S6jKULL8iXYK6zzf10bPuA7e6zcHhLAO6Ng2QcHcePIEmz0z0RZ7dPrQ5jcHN11G', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('S6jKULL8iXYK6zzf10bPuA7e6zcHhLAO6Ng2QcHcePIEmz0z0RZ7dPrQ5jcHN11G', 'Crash Course Physics',
-        'Placeholder description', 'physics', 3);
+        'Want to learn more about the amazing rules behind the physical phenomenae in this world? Buy this course!',
+        'physics', 3);
 
 
 INSERT INTO db.videos
@@ -1401,7 +1407,7 @@ VALUES ('An4ydD6EIcKRp9Ueiz5cgBwgfxp079KLkRLEF23gJvVZITjfTZ9TjXZWoEFtbVF0',
 
 INSERT INTO db.items
     (tag, type, price)
-VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'course', 50.00),
+VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'course', 40.00),
        ('TI5UfcCEHPpVomGugf7DswdAtEKXp53M1XPIRUPxTu2vYXTAM92GEsGXdvOInG8I', 'video', 0.00),
        ('d8Kj4NWVLtJYJO0XZeI2JUbvdTIEhKO7vKNesXDjd6LIOibAcfbKBhBfdZwhyBii', 'video', 0.81),
        ('rV2rWjuDoh82ap3aBxo1IO2iPxa2ngkRf7OCjaA52ai7c6faHZPigfb4ujyqcHVl', 'video', 1.83),
@@ -1451,7 +1457,8 @@ VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'cou
 INSERT INTO db.courses
     (tag, name, description, subject, creator)
 VALUES ('ab1uZy3y820niXUjHNE9itiU8u9RmVn4ZPDA05Hy3NpOR0WI8pyMu9hZGakwMtbJ', 'Crash Course Statistics',
-        'Placeholder description', 'mathematics', 3);
+        'Want to learn more about the astounding facts that can be gathered from large datasets and how they can be determined? Buy this course!',
+        'mathematics', 3);
 
 
 INSERT INTO db.videos
