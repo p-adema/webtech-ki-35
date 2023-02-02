@@ -5,7 +5,6 @@ $(document).ready(function () {
 
         const user_data = {
             user: $("#user").val(),
-            item_tag: $("#item-tag").val(),
         };
 
         const handler_options = {
@@ -15,6 +14,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post('/api/admin/gift', user_data, form_default_response(handler_options));
+        $.post('/api/admin/sudo', user_data, form_default_response(handler_options));
     });
 });

@@ -3,11 +3,36 @@ require 'html_page.php';
 require 'video_functionality.php';
 require 'video_sidebar.php';
 require 'comments_components.php';
+require_once 'course_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
+
+
 
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
+$video_id = get_item_id($tag);
+$rating = get_rating_info($video_id);
+$ratings = 0;
 
+if (count($rating) == 0) {
+    $video_has_ratings = false;
+    $score = '';
+} else {
+    $score = number_format($rating[1], 1);
+    $ratings = $rating[0];
+    $video_has_ratings = true;
+}
+
+if ($_SESSION['auth']){
+    $user_id = $_SESSION['uid'];
+    if (has_course($tag, $user_id)){
+        $has_video = '';
+    } else{
+        $has_video = 'not_have_video';
+    }
+} else {
+    $has_video = 'not_have_video';
+}
 if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
     $stars = $video_info['rating'] ? ('perm-star-' . $video_info['rating']) : 'stars-empty';
     ?>
@@ -44,14 +69,23 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                                     </form>
                                 </div>
                             <?php } ?>
+                            <?php if ($video_has_ratings) { ?>
                             <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars <?php echo $stars ?>"></div>
+                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0"> ★<?php echo " $score <br>". number_format( $ratings, 0, '', ','), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                             <div id="log"></div>
+
+                            <?php }else {?>
+                            <span class="video-name"><?php echo $video_info['name'] ?></span>
+                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0"> This video doesn't have ratings</p>
+                             <div id="log"></div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="description">
                         <button class="collapsible">
-                            <span class="view-count"><?php echo $video_info['views'] ?> views</span>
+                            <span class="view-count"><?php echo number_format( $video_info['views'], 0, '', ',') ?> views</span>
                             <span class="upload-date">Posted <?php echo relative_time($video_info['upload_date']) ?> </span>
                         </button>
                         <div class="content">

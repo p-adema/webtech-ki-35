@@ -8,7 +8,12 @@ $(document).ready(function () {
             action: 'unban'
         };
 
-        const handler_options = {}
+        const handler_options = {
+            redirect: {
+                link: '/admin/',
+                delay: 3000
+            }
+        }
 
         $.post('/api/admin/ban', user_data, form_default_response(handler_options));
     });

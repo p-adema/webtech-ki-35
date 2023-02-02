@@ -1,20 +1,32 @@
 #!/bin/bash
-for video in ./courses/*/*.mp4
+#for video in ./courses/*/*.mp4
+#do
+#  IFS='/' read -ra name <<< "$video"
+#  mv "$video" "../pages/resources/videos/${name[3]}"
+#done
+#
+#for thumbnail in ./courses/*/*.jpg
+#do
+#  IFS='/' read -ra name <<< "$thumbnail"
+#  mv "$thumbnail" "../pages/resources/thumbnails/${name[3]}"
+#done
+#
+#for videos in ./courses/*.videos.sql
+#do
+#  cat "$videos" >> "../server/scraped.sql" &&
+#  rm "$videos"
+#done
+
+for users in ./courses/*.users.sql
 do
-  IFS='/' read -ra name <<< "$video"
-  mv "$video" "../pages/resources/videos/${name[3]}"
+  cat "$users" >> "../server/scraped/users.sql" &&
+  rm "$users"
 done
 
-for thumbnail in ./courses/*/*.jpg
+for comments in ./courses/*.comments.sql
 do
-  IFS='/' read -ra name <<< "$thumbnail"
-  mv "$thumbnail" "../pages/resources/thumbnails/${name[3]}"
+  cat "$comments" >> "../server/scraped/comments.sql" &&
+  rm "$comments"
 done
 
-for setup in ./courses/*.sql
-do
-  cat "$setup" >> "../server/scraped.sql"
-  rm "$setup"
-done
-
-rm -rf ./courses/*
+#rm -rf ./courses/*

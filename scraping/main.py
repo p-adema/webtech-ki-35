@@ -9,7 +9,8 @@ if len(argv) < 2:
 
 course = argv[1]
 
-downloader.download_course(course)
-input('Please rename any necessary files, then hit enter')
+# downloader.download_course(course)
+# input('Please rename any necessary files, then hit enter')
+# for course in ['Climate', 'Chemistry', 'AI', 'Computer', 'Physics', 'Biology', 'Statistics']:
 reformatter.format_course(course)
 inserter.generate_sql(course)

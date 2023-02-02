@@ -10,7 +10,7 @@ require 'admin_controls.php'; ?>
         <div class="form-outline">
             <form action="/api/admin/unban" method="POST">
                 <?php
-                if (is_admin($_SESSION['uid'])) {
+                if ($_SESSION['admin']) {
                     form_input('user', 'Username to be unbanned');
                     form_error();
 

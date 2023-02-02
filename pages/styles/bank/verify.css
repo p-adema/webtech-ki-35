@@ -459,7 +459,7 @@ button.form-submit:hover {
 }
 
 button.form-submit.pressed {
-    background: #386838;
+    background: #c4572d;
 }
 
 button.form-submit.disabled:hover {
@@ -472,7 +472,7 @@ button.form-submit.disabled {
 }
 
 button.form-submit.pressed:hover {
-    background: #447c44;
+    background: #d5592a;
 }
 
 button.form-submit.error {

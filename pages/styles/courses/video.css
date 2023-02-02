@@ -27,6 +27,7 @@ html {
 }
 
 .description {
+    max-width: 50vw;
     align-self: start;
     display: flex;
     flex-flow: column;
@@ -186,6 +187,7 @@ div.comments {
 
 div.comment-wrapper {
     margin: 10px;
+    max-width: 30vw;
 }
 
 div.comment {
@@ -344,6 +346,7 @@ div.comment-reactions-gap-s {
     flex-flow: column;
     border-left-style: solid;
     border-bottom-style: solid;
+    height: 100%;
 
 
 }
@@ -409,6 +412,10 @@ a {
 
 #current-video-playing:hover {
     background-color: #b1b0bf;
+}
+
+.not_have_video {
+    display: none;
 }
 
 .author {
@@ -526,11 +533,6 @@ textarea {
         transform: revert;
     }
 
-    div.video-sidebar {
-        border-left-style: revert;
-        border-bottom-style: revert;
-        margin-right: 20vw;
-    }
 
     div.video-page-flexbox {
         flex-flow: column;

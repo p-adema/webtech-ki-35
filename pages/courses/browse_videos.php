@@ -36,30 +36,17 @@ $popular_video_tag = get_popular_video();
                 </div>
             </div>
             <div class="genres">
-                <div class="genre-box">
-                    <a class="text-deco" href="subject?tag=physics"><span class="genre-header">Physics</span></a>
-                    <div class="please-center">
-                        <?php
-                        render_genre_videos(best_videos_of_genre('physics'));
-                        ?>
+                <?php foreach (SUBJECTS as $subject) { ?>
+                    <div class="genre-box">
+                        <a class="text-deco" href="subject?tag=<?php echo $subject ?>"><span
+                                    class="genre-header"><?php echo ucfirst($subject) ?></span></a>
+                        <div class="please-center">
+                            <?php
+                            render_genre_videos(best_videos_of_genre($subject));
+                            ?>
+                        </div>
                     </div>
-                </div>
-                <div class="genre-box">
-                    <a class='text-deco' href="subject?tag=geography"><span class="genre-header">Geography</span></a>
-                    <div class="please-center">
-                        <?php
-                        render_genre_videos(best_videos_of_genre('geography'));
-                        ?>
-                    </div>
-                </div>
-                <div class="genre-box">
-                    <a class="text-deco" href="subject?tag=biology"><span class="genre-header">Biology</span></a>
-                    <div class="please-center">
-                        <?php
-                        render_genre_videos(best_videos_of_genre('biology'));
-                        ?>
-                    </div>
-                </div>
+                <?php } ?>
             </div>
         </div>
     </div>

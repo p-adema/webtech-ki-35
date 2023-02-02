@@ -1,8 +1,11 @@
 <?php
 define("PAGE", explode('.php', $_SERVER['SCRIPT_NAME'])[0]);
 const SUBJECTS = [
+    'technology',
     'physics',
     'biology',
+    'chemistry',
+    'mathematics',
     'geography'
 ];
 const DENY_CACHE = true;

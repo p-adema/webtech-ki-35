@@ -7,13 +7,13 @@ html_header(title: 'Subject', styled: true, scripted: 'ajax');
 
 ensure_session();
 
-$subject = $_GET['tag'];
+$subject = $_GET['tag'] ?? '';
 
-if (!empty($subject) and ($subject === 'physics' or $subject === 'geography' or $subject === 'biology')) {
+if (!empty($subject) and (in_array($subject, SUBJECTS))) {
 
     $subject_header = ucfirst($subject);
 
-?>
+    ?>
     <div class="header-box">
         <div class="header">
             <span><?php echo $subject_header ?></span>
