@@ -1,6 +1,6 @@
 // Description load more function
 $(document).ready(function () {
-    setTimeout(add_view, 30000);
+    setTimeout(add_view, 5000);
 
 
     const video_tag = $('.comments').attr('tag')
@@ -228,5 +228,5 @@ function show_replies(_) {
 
 function add_view() {
     const video_tag = $('.comments').attr('tag');
-    $.post("/api/courses/add_views.php", {video_tag})
+    $.post("/api/courses/add_views", {video_tag})
 }
