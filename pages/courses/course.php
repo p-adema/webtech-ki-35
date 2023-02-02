@@ -14,7 +14,7 @@ if ($_SESSION['auth']) {
 }
 $course_info = get_course_info($course_tag);
 if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted']):
-    $course_id = get_course_id($course_tag);
+    $course_id = get_item_id($course_tag);
     $cart = new Cart;
     $course_in_cart = in_array($course_id, $cart->ids());
     $course_creator = course_creator($course_info['creator']);
