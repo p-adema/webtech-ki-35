@@ -43,14 +43,24 @@
     display: flex;
     height: 48px;
     justify-content: center;
-    background: #ace5de;
     border-radius: 30px;
     cursor: pointer;
     margin-top: 15px;
 }
 
+.free > .main-search-result-wrapper {
+    background: #ace5de;
+}
+
+.owned > .main-search-result-wrapper {
+    background: #b2e5ac;
+}
+
+.unowned > .main-search-result-wrapper {
+    background: #e5e2ac;
+}
+
 .main-search-result-icon {
-    background: #446561;
     color: whitesmoke;
     border-radius: 30px 0 0 30px;
     height: 100%;
@@ -59,6 +69,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.free .main-search-result-icon {
+    background: #446561;
+}
+
+.owned .main-search-result-icon {
+    background: #4b6544;
+}
+
+.unowned .main-search-result-icon {
+    background: #655d44;
 }
 
 .main-search-result-name {
@@ -74,4 +96,106 @@
 
 a:link {
     text-decoration: none;
+}
+
+.controls-wrapper {
+    width: 50vw;
+    display: flex;
+}
+
+.controls-wrapper-inner {
+    display: flex;
+    flex-flow: column;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.controls-gap {
+    flex: 1;
+}
+
+.control-buttons-wrapper {
+    display: flex;
+    flex-flow: column;
+    width: 100%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.filters-label {
+    font-size: x-large;
+}
+
+.control-button {
+    height: 2em;
+    font-size: medium;
+    flex: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    transition: all 200ms ease-in-out;
+    box-shadow: 0 3px 7px hsl(0, 0%, 0.2%);
+    margin-top: 10px;
+}
+
+.control-button.active {
+    box-shadow: 0 -1px 3px hsl(0, 0%, 0.2%);
+}
+
+.filter-all {
+    background: #757454;
+}
+
+span.filter-all:hover {
+    background: #bebd9c;
+}
+
+.filter-all.active {
+    background: #cecca1;
+}
+
+.filter-available {
+    background: #557a74;
+}
+
+span.filter-available:hover {
+    background: #98c4c4;
+}
+
+.filter-available.active {
+    background: #86b2ae;
+}
+
+.filter-owned {
+    background: #537250;
+}
+
+span.filter-owned:hover {
+    background: #9cc29a;
+}
+
+.filter-owned.active {
+    background: #85a97b;
+}
+
+.search-results.hide-unowned > .unowned {
+    display: none;
+}
+
+.search-results.hide-free > .free {
+    display: none;
+}
+
+.sort-views {
+    background-color: #4f5054;
+}
+
+.sort-rating {
+    background-color: #564a67;
+}
+
+.sort-recent {
+    background-color: #654545;
 }

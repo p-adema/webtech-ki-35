@@ -16,14 +16,23 @@ $(document).ready(function () {
         history.replaceState(null, '', '/search/' + val)
         last_query = val;
     })
-
+    $('#filter-buttons > span').click(function (_) {
+        $('#filter-buttons > span').removeClass('active');
+        $('.search-results').removeClass().addClass($(this).addClass('active').attr('data-class'));
+    })
+    $('#sort-buttons > span').click(function (_) {
+        $('#sort-buttons > span').removeClass('active');
+        sort = $(this).addClass('active').attr('data-sort');
+        search($('.search-input').val())
+    })
 })
 
 function search(query) {
     if (query !== '') {
         const query_data = {
             query: query,
-            origin: 'main'
+            origin: 'main',
+            sort: sort
         }
         const $target = $('#main-search-results');
         const handler_options = {
@@ -41,3 +50,5 @@ function search(query) {
         $('#main-search-results').html('')
     }
 }
+
+let sort = 'views';
