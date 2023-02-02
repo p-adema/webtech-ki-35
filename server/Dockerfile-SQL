@@ -7,18 +7,22 @@ COPY server/mysql.docker /root/.my.cnf
 COPY server/schema.sql /var/www/server/schema.sql
 COPY tokens /var/www/tokens
 COPY server/users.sh /var/www/server/users.sh
-COPY server/triggers.sql /var/www/server/triggers.sql
+COPY server/functions.sql /var/www/server/functions.sql
 COPY server/initial_data.sql /var/www/server/initial_data.sql
-COPY server/scraped.sql /var/www/server/scraped.sql
+COPY server/scraped/videos.sql /var/www/server/videos.sql
+COPY server/scraped/users.sql /var/www/server/commenters.sql
+COPY server/scraped/comments.sql /var/www/server/comments.sql
 
 RUN cd /var/www/server/ \
     && { \
          cat schema.sql; \
          bash users.sh; \
-         cat triggers.sql; \
+         cat functions.sql; \
          cat initial_data.sql; \
-         cat scraped.sql; \
+         cat videos.sql; \
+         cat commenters.sql; \
+         cat comments.sql; \
        } > db.init \
     && rm *.sql users.sh
 
-CMD ["mysqld", "--init-file=/var/www/server/db.init"]
+CMD ["mysqld"]
