@@ -133,7 +133,7 @@ function render_items(): void
         foreach ($everything as $item) {
             if ($item['type'] === 'purchase') {
 
-                $time = time_since($item['request_time']);
+                $time = relative_time($item['request_time']);
 
                 $item_count = count($item['items']);
                 $count_text = 'item';
@@ -154,7 +154,7 @@ function render_items(): void
             ";
             }
             else {
-                $time = time_since($item['confirmation_time']);
+                $time = relative_time($item['confirmation_time']);
                 $name = get_gift_name($item['item_id']);
                 echo "
                     <button class='item not-button'>
