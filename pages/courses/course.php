@@ -72,7 +72,7 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['deleted'])
                 if ($course_has_ratings): ?>
                     <div class="ratings-box">
                         <p class="star-score"> ★<?php echo "$score" ?> <br></p>
-                        <p class="total-ratings"><?php echo number_format( $ratings['views'], 0, '', ','), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
+                        <p class="total-ratings"><?php echo number_format($ratings, 0, '', ','), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
                     </div>
 
                 <?php else: ?>
