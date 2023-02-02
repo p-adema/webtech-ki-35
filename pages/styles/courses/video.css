@@ -346,6 +346,7 @@ div.comment-reactions-gap-s {
     flex-flow: column;
     border-left-style: solid;
     border-bottom-style: solid;
+    height: 100%;
 
 
 }
@@ -532,11 +533,6 @@ textarea {
         transform: revert;
     }
 
-    div.video-sidebar {
-        border-left-style: revert;
-        border-bottom-style: revert;
-        margin-right: 20vw;
-    }
 
     div.video-page-flexbox {
         flex-flow: column;
