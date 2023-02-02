@@ -11,6 +11,7 @@ cd /var/www/server || exit 1
   cat videos.sql;
   cat commenters.sql;
   cat comments.sql;
+  cat ratings.sql;
 } > reset.sql
 echo 'Step 4/4: Drop tables & reset database'
 mysql < reset.sql &&
