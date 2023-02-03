@@ -62,5 +62,6 @@ if (!$cart->remove_item($id)) {
     $errors['item'][] = "You don't have this item";
     api_fail("This item wasn't in your cart", $errors);
 }
-$response = ['tag' => $tag];
+
+$response = ['tag' => $tag, 'total' => $cart->total()];
 api_succeed('Item removed from cart', $errors, $response);

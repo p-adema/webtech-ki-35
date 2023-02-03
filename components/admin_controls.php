@@ -13,16 +13,16 @@ function api_require_admin(): void
 }
 
 /**
- * @param int $uid users.id
- * @return int|false users.name
+ * @param string $username users.name
+ * @return int|false users.id
  */
-function user_id_from_name(int $uid): int|false
+function user_id_from_name(string $username): int|false
 {
     require_once 'pdo_read.php';
 
     $sql = 'SELECT id FROM db.users WHERE name = :uid';
     $sth = prepare_readonly($sql);
-    $sth->execute(['uid' => $uid]);
+    $sth->execute(['uid' => $username]);
 
     $user = $sth->fetch();
     return $user !== false ? $user['id'] : false;
@@ -72,7 +72,7 @@ function admin_gift_item(int $admin_uid, int $reciever_uid, int $item_id, string
 {
     require_once 'pdo_write.php';
 
-    $sql = 'CALL resolve_purchase(:admin_id, :reciever_id, :item_id, :item_tag);';
+    $sql = 'CALL resolve_gift(:admin_id, :reciever_id, :item_id, :item_tag);';
     $prep = prepare_write($sql);
     $data = [
         'admin_id' => $admin_uid,

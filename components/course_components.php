@@ -160,7 +160,7 @@ function display_course_videos(string $course_tag): void
  * @param string $item_tag items.tag
  * @return int items.id
  */
-function item_id_from_tag(string $item_tag): int
+function item_id_where_tag(string $item_tag): int
 {
     require_once 'pdo_read.php';
 

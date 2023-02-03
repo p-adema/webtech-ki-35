@@ -6,7 +6,7 @@ require_once 'tag_actions.php';
  * @param string $item_tag items.tag
  * @return int|false items.id
  */
-function item_id_from_tag(string $item_tag): int|false
+function item_id_given_tag(string $item_tag): int|false
 {
     $sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
     $p_tag = prepare_readonly($sql_tag);
@@ -139,17 +139,17 @@ function render_show_replies(int $count, string $tag): string
 
 /**
  * @param int $score Comment score, either -1, 0 or 1
- * @param int $comment_id ID of the comment to be scored
+ * @param string $comment_tag tag of the comment to be scored
  * @param int $user_id User that is scoring
  */
-function change_comment_score(int $score, int $comment_id, int $user_id): void
+function change_comment_score(int $score, string $comment_tag, int $user_id): void
 {
     require_once 'pdo_write.php';
     require_once 'pdo_read.php';
 
     $sql_read = 'SELECT score FROM db.scores WHERE user_id = :user AND comment_tag = :comment';
     $sth_read = prepare_readonly($sql_read);
-    $sth_read->execute(['user' => $user_id, 'comment' => $comment_id]);
+    $sth_read->execute(['user' => $user_id, 'comment' => $comment_tag]);
 
     $score_content = $sth_read->fetch()['score'];
 
@@ -157,12 +157,12 @@ function change_comment_score(int $score, int $comment_id, int $user_id): void
 
         $sql_new = 'INSERT INTO db.scores (user_id, comment_tag, score) VALUES (:user, :comment, :rating)';
         $sth_new = prepare_write($sql_new);
-        $sth_new->execute(['user' => $user_id, 'comment' => $comment_id, 'rating' => $score]);
+        $sth_new->execute(['user' => $user_id, 'comment' => $comment_tag, 'rating' => $score]);
     } else {
 
         $sql_update = 'UPDATE db.scores SET score = :new_rating WHERE (user_id = :user) AND (comment_tag = :comment)';
         $sth_update = prepare_write($sql_update);
-        $sth_update->execute(['new_rating' => $score, 'user' => $user_id, 'comment' => $comment_id]);
+        $sth_update->execute(['new_rating' => $score, 'user' => $user_id, 'comment' => $comment_tag]);
     }
 }
 

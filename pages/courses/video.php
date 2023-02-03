@@ -10,7 +10,7 @@ html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
-$video_id = item_id_from_tag($tag);
+$video_id = item_id_given_tag($tag);
 $rating = get_rating_info($video_id);
 $ratings = 0;
 

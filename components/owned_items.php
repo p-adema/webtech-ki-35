@@ -7,10 +7,11 @@ function get_owned_videos(string $query): array
     $sql = 'SELECT v.tag, v.name, u.name as uploader
             FROM videos v
                 INNER JOIN ownership o on v.tag = o.item_tag and o.user_id = :uid
-                INNER JOIN purchases p on o.purchase_id = p.id
+                LEFT JOIN purchases p on o.purchase_id = p.id
+                LEFT JOIN db.gifts g on o.gift_id = o.id
                 INNER JOIN users u on v.uploader = u.id
             WHERE v.name LIKE :query
-            ORDER BY p.confirmation_time DESC
+            ORDER BY COALESCE(p.confirmation_time, g.confirmation_time) DESC
             LIMIT 50';
     $prep = prepare_readonly($sql);
     $data = [

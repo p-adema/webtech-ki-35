@@ -14,7 +14,7 @@ if ($_SESSION['auth']) {
 }
 $course_info = get_course_info($course_tag);
 if (isset($_GET['tag']) and $course_info !== false and !$course_info['restricted']):
-    $course_id = item_id_from_tag($course_tag);
+    $course_id = item_id_where_tag($course_tag);
     $cart = new Cart;
     $course_in_cart = in_array($course_id, $cart->ids());
     $course_creator = user_names_from_id($course_info['creator']);

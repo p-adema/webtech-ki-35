@@ -26,7 +26,7 @@ html_header(title: 'Verify transaction', navbar: false, styled: true, scripted: 
             <form method="post" data-tag="<?php echo $tag ?>">
                 <div class="form-group">
                     <button type="submit" <?php
-                    if (!transaction_sufficient_balance($user_id, $tag)) {
+                    if (!transaction_sufficient_balance($tag)) {
                         echo "class='long-btn form-submit disabled' disabled='true'";
                     } else {
                         echo "class='long-btn form-submit'";

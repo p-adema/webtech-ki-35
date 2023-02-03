@@ -38,7 +38,7 @@ if (!$valid) {
 $response = [];
 
 if ($type === 'item') {
-    $id = item_id_from_tag($on);
+    $id = item_id_given_tag($on);
 
     if ($id === false) {
         $errors['on'][] = 'Invalid item tag';

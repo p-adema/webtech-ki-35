@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-html_header(title: 'Checkout', styled: true, scripted: 'ajax');
+html_header(title: 'Checkout', styled: true, scripted: true);
 require "review_components.php";
 require "billing_info.php";
 ?>
