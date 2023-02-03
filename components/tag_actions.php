@@ -28,5 +28,5 @@ function email_tag_check(string $tag): string|false
     if (empty($type_fetched)) {
         return false;
     }
-    return $type_fetched;
+    return $type_fetched['type'];
 }
