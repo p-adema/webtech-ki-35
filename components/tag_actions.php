@@ -12,20 +12,21 @@ function tag_create(int $length = 64): string
 }
 
 
-function email_tag_check(string $tag, string $type): bool
+function email_tag_check(string $tag): string|false
 {
     $valid = false;
     require_once "pdo_write.php";
 
-    $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = :type);';
+    $sql = 'SELECT (type) FROM db.emails_pending WHERE (url_tag = :tag);';
     $data = [
         'tag' => $tag,
-        'type' => $type
     ];
 
     $sql_prep = prepare_write($sql);
     $sql_prep->execute($data);
-    $user_id_fetch = $sql_prep->fetch();
-
-    return !empty($user_id_fetch);
+    $type_fetched = $sql_prep->fetch();
+    if (empty($type_fetched)) {
+        return false;
+    }
+    return $type_fetched;
 }

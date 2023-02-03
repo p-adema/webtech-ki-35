@@ -1,15 +1,4 @@
 <?php
-/*
- * TODO: Taak 2
- * Users can:
- *      Change password
- *      Change email
- *      Change full name
- *      Delete account
- *
- * Eventually:
- *      View payments & invoices
- */
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
 html_header(title: 'Account', styled: 'form.css', scripted: true);

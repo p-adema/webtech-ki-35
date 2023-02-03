@@ -49,9 +49,9 @@ $sql_prep->execute($data);
 
 $link = '/auth/verify/' . $url_tag;
 
-if (mail_forgot_password($link, $email)) { #TODO PRODUCTION: remove dev link
-    api_succeed("An email has been sent to the account linked to $email <br>  <a href='$link'>dev</a>", $errors);
+if (mail_forgot_password($link, $email)) {
+    api_succeed("An email has been sent to the account linked to $email", $errors);
 } else {
-    $errors['submit'][] = "Reset email couldn't be sent  <br>  <a href='$link'>dev</a>";
+    $errors['submit'][] = "Reset email couldn't be sent";
     api_fail("The email to reset your password couldn't be sent", $errors);
 }
