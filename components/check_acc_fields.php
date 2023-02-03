@@ -42,7 +42,7 @@ function check_password(string $password): array
     return $errors;
 }
 
-function check_name(string $name, PDO $PDO, int $self_uid = -1): array
+function check_name(string $name, int $self_uid = -1): array
 {
     $errors = [];
 
@@ -58,7 +58,7 @@ function check_name(string $name, PDO $PDO, int $self_uid = -1): array
         $sql_duplicate = 'SELECT (id) FROM db.users WHERE (name = :name);';
         $data = ['name' => htmlspecialchars($name)];
 
-        $sql_prep = $PDO->prepare($sql_duplicate);
+        $sql_prep = prepare_readonly($sql_duplicate);
 
         if (!$sql_prep->execute($data)) {
             $errors[] = 'Internal server error, try again later';
@@ -72,7 +72,7 @@ function check_name(string $name, PDO $PDO, int $self_uid = -1): array
     return $errors;
 }
 
-function check_email(string $email, PDO $PDO, int $self_uid = -1): array
+function check_email(string $email, int $self_uid = -1): array
 {
     $errors = [];
 
@@ -86,7 +86,7 @@ function check_email(string $email, PDO $PDO, int $self_uid = -1): array
         $sql_duplicate = 'SELECT (id) FROM db.users WHERE (email = :email);';
         $data = ['email' => htmlspecialchars($email)];
 
-        $sql_prep = $PDO->prepare($sql_duplicate);
+        $sql_prep = prepare_readonly($sql_duplicate);
 
         if (!$sql_prep->execute($data)) {
             $errors[] = 'Internal server error, try again later';
@@ -125,8 +125,8 @@ function check_acc_fields(PDO $PDO, string $name, string $email, string $passwor
 {
     $errors = [];
 
-    $errors['name'] = check_name($name, $PDO);
-    $errors['email'] = check_email($email, $PDO);
+    $errors['name'] = check_name($name);
+    $errors['email'] = check_email($email);
     $errors['password'] = check_password($password);
     $errors['re_pwd'] = check_re_pwd($password, $re_pwd);
     $errors['full_name'] = check_full_name($full_name);

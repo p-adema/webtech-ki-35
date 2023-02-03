@@ -30,9 +30,8 @@ if (!$valid) {
 }
 
 try {
-    $pdo_read = new_pdo_read();
     $sql = 'SELECT `name`, `tag` FROM db.videos WHERE tag = :tag';
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute(['tag' => $tag]);
     $video = $prep->fetch(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

@@ -10,9 +10,8 @@ function purchase_tag_exists($tag): bool
 
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
     $sql = 'SELECT id FROM db.purchases WHERE url_tag = :tag AND user_id = :uid';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['tag' => $tag, 'uid' => $_SESSION['uid']]);
 
     return !empty($sth->fetch()['id']);
@@ -22,9 +21,8 @@ function info_by_tag($item_tag): string
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
     $sql = 'SELECT amount FROM db.purchases WHERE url_tag = :tag';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['tag' => $item_tag]);
 
     return $sth->fetch()['amount'];
@@ -34,21 +32,19 @@ function item_tag_from_purchase_url($url): string
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
-
     $sql = '
 SELECT pi.item_id
 FROM db.purchase_items pi
          INNER JOIN db.purchases p ON pi.purchase_id = p.id
 WHERE p.url_tag = :tag';
 
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute(['tag' => $url]);
 
     $item_id = $prep->fetch()['item_id'];
 
     $sql_item = 'SELECT tag FROM items WHERE id = :id';
-    $sth_item = $pdo_read->prepare($sql_item);
+    $sth_item = prepare_readonly($sql_item);
     $sth_item->execute(['id' => $item_id]);
 
     return $sth_item->fetch()['tag'];
@@ -64,16 +60,15 @@ function display_product_information($uid, $url_tag): void
         if ($item['url_tag'] === $url_tag) {
             foreach($item['items'] as $product) {
 
-                $pdo_read = new_pdo_read();
                 $sql_type = 'SELECT type, tag FROM db.items WHERE id = :id';
-                $sth_type = $pdo_read->prepare($sql_type);
+                $sth_type = prepare_readonly($sql_type);
                 $sth_type->execute(['id' => $product['item_id']]);
 
                 $info = $sth_type->fetch();
 
                 if ($info['type'] === 'video') {
                     $sql = 'SELECT name, subject, uploader, upload_date FROM db.videos WHERE tag = :tag';
-                    $sth = $pdo_read->prepare($sql);
+                    $sth = prepare_readonly($sql);
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
                     $upload_date = relative_time($data_ex['upload_date']);
@@ -82,7 +77,7 @@ function display_product_information($uid, $url_tag): void
                 }
                 else {
                     $sql = 'SELECT name, subject, creator, creation_date FROM db.courses WHERE tag = :tag';
-                    $sth = $pdo_read->prepare($sql);
+                    $sth = prepare_readonly($sql);
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
                     $upload_date = relative_time($data_ex['creation_date']);

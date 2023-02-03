@@ -28,7 +28,7 @@ if (empty($email)) {
 
 require "pdo_write.php";
 try {
-    $pdo_write = new_pdo_write(err_fatal: false);
+    $pdo_write = new_pdo_write();
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
     api_fail('Internal error', $errors);
@@ -49,7 +49,7 @@ $data = [
     'email' => htmlspecialchars($email)
 ];
 
-$sql_prep = $pdo_write->prepare($sql_email);
+$sql_prep = prepare_write($sql_email);
 $sql_prep->execute($data);
 
 $link = '/auth/verify/' . $url_tag;

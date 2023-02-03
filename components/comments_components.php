@@ -2,15 +2,15 @@
 require_once "relative_time.php";
 require_once 'tag_actions.php';
 
-function item_id_from_tag(string $tag, PDO $PDO): int|false
+function item_id_from_tag(string $tag): int|false
 {
     $sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
-    $p_tag = $PDO->prepare($sql_tag);
+    $p_tag = prepare_readonly($sql_tag);
     $p_tag->execute(['tag' => $tag]);
     return $p_tag->fetch(PDO::FETCH_ASSOC)['id'];
 }
 
-function get_comments_item(int $id, PDO $PDO): array
+function get_comments_item(int $id): array
 {
     $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies, c.hidden
             FROM comments as c
@@ -26,12 +26,12 @@ function get_comments_item(int $id, PDO $PDO): array
         'uid' => $_SESSION['uid'] ?? null
     ];
 
-    $prep = $PDO->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute($data);
     return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_replies_comment(string $tag, PDO $PDO): array
+function get_replies_comment(string $tag): array
 {
     $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies , c.hidden
             FROM comments as c
@@ -47,7 +47,7 @@ function get_replies_comment(string $tag, PDO $PDO): array
         'uid' => $_SESSION['uid'] ?? null
     ];
 
-    $prep = $PDO->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute($data);
     return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -136,11 +136,10 @@ function change_comment_score($rating, $comment_id, $user_id): void
     require_once 'pdo_write.php';
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
     $pdo_write = new_pdo_write();
 
     $sql_read = 'SELECT score FROM db.scores WHERE user_id = :user AND comment_tag = :comment';
-    $sth_read = $pdo_read->prepare($sql_read);
+    $sth_read = prepare_readonly($sql_read);
     $sth_read->execute(['user' => $user_id, 'comment' => $comment_id]);
 
     $score_content = $sth_read->fetch()['score'];
@@ -148,12 +147,12 @@ function change_comment_score($rating, $comment_id, $user_id): void
     if (empty($score_content)) {
 
         $sql_new = 'INSERT INTO db.scores (user_id, comment_tag, score) VALUES (:user, :comment, :rating)';
-        $sth_new = $pdo_write->prepare($sql_new);
+        $sth_new = prepare_write($sql_new);
         $sth_new->execute(['user' => $user_id, 'comment' => $comment_id, 'rating' => $rating]);
     } else {
 
         $sql_update = 'UPDATE db.scores SET score = :new_rating WHERE (user_id = :user) AND (comment_tag = :comment)';
-        $sth_update = $pdo_write->prepare($sql_update);
+        $sth_update = prepare_write($sql_update);
         $sth_update->execute(['new_rating' => $rating, 'user' => $user_id, 'comment' => $comment_id]);
     }
 }
@@ -169,7 +168,7 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
 
 
     $sql_id = 'SELECT id FROM db.items WHERE (tag = :tag)';
-    $prep_id = $pdo_write->prepare($sql_id);
+    $prep_id = prepare_write($sql_id);
     $prep_id->execute(['tag' => $item_tag]);
 
     $item = $prep_id->fetch();
@@ -182,7 +181,7 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
 
     $sql_comment = 'INSERT INTO db.comments (tag, commenter_id, item_id, text, date, reply_tag, score) 
             VALUES (:tag, :uid, :video_id, :comment, DEFAULT, :reply, DEFAULT)';
-    $prep_comment = $pdo_write->prepare($sql_comment);
+    $prep_comment = prepare_write($sql_comment);
     $data_comment = [
         'tag' => $comment_tag,
         'uid' => $uid,
@@ -202,10 +201,9 @@ function get_comment_id($comment_tag): int
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
 
     $sql = 'SELECT id FROM db.comments WHERE tag = :comment_tag';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['comment_tag' => $comment_tag]);
 
     return $sth->fetch()['id'];
@@ -215,12 +213,11 @@ function get_comment_info($comment_id, int $replies): array
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
 
     $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, c.hidden FROM comments as c
             INNER JOIN users u on c.commenter_id = u.id
             WHERE c.id = :comment';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['comment' => $comment_id]);
 
     $info = $sth->fetch(PDO::FETCH_ASSOC);
@@ -237,9 +234,8 @@ function render_comment_form(string $tag, bool $reply): string
     if ($_SESSION['auth']) {
         $uid = $_SESSION['uid'];
 
-        $pdo_read = new_pdo_read();
         $sql = 'SELECT name FROM db.users WHERE id = :uid';
-        $sth = $pdo_read->prepare($sql);
+        $sth = prepare_readonly($sql);
         $sth->execute(['uid' => $uid]);
 
         $name = $sth->fetch()['name'];

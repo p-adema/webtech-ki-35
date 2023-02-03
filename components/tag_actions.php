@@ -17,7 +17,7 @@ function email_tag_check(string $tag, string $type): bool
     $valid = false;
     require_once "pdo_write.php";
     try {
-        $pdo_write = new_pdo_write(err_fatal: false);
+        $pdo_write = new_pdo_write();
     } catch (PDOException) {
         return false;
     }
@@ -29,7 +29,7 @@ function email_tag_check(string $tag, string $type): bool
         'type' => $type
     ];
 
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = prepare_write($sql);
     $sql_prep->execute($data);
     $user_id_fetch = $sql_prep->fetch();
 

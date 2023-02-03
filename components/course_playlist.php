@@ -7,7 +7,7 @@ function render_playlist_items($course_tag, $video_number): string
     $sql = 'SELECT  video_tag, `order` FROM db.course_videos WHERE course_tag = :course_tag;';
     $data = ['course_tag' => htmlspecialchars($course_tag)];
 
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = prepare_write($sql);
 
     if (!$sql_prep->execute($data)) {
         return "Server error ID=39504427 die()";
@@ -21,7 +21,7 @@ function render_playlist_items($course_tag, $video_number): string
         $sql = 'SELECT  name FROM db.videos WHERE tag = :tag;';
         $data = ['tag' => htmlspecialchars($all_videos[$order]['video_tag'])];
 
-        $sql_prep = $pdo_write->prepare($sql);
+        $sql_prep = prepare_write($sql);
 
         if (!$sql_prep->execute($data)) {
             return "Server error ID=39504427 die()";
@@ -54,14 +54,14 @@ function display_course_playlist(string $video_tag): bool
 {
     require_once "pdo_write.php";
     try {
-        $pdo_write = new_pdo_write(err_fatal: false);
+        $pdo_write = new_pdo_write();
     } catch (PDOException) {
         return false;
     }
     $sql_video = 'SELECT course_tag, `order`  FROM db.course_videos WHERE video_tag = :video_tag;';
     $data_video = ['video_tag' => $video_tag];
 
-    $sql_prep = $pdo_write->prepare($sql_video);
+    $sql_prep = prepare_write($sql_video);
     if (!$sql_prep->execute($data_video)) {
         return false;
     }
@@ -72,7 +72,7 @@ function display_course_playlist(string $video_tag): bool
 
     $sql = 'SELECT (name)  FROM db.courses WHERE (tag = :course_tag);';
     $data_course = ['course_tag' => $video_info['course_tag']];
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = prepare_write($sql);
 
     if (!$sql_prep->execute($data_course)) {
         return false;
@@ -84,7 +84,7 @@ function display_course_playlist(string $video_tag): bool
     $sql = 'SELECT u.name FROM courses as c 
                 INNER join users u on c.creator = u.id
                 WHERE c.tag = :course_tag;';
-    $sql_prep = $pdo_write->prepare($sql);
+    $sql_prep = prepare_write($sql);
     if (!$sql_prep->execute($data_course)) {
         return false;
     }

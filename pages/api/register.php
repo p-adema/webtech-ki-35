@@ -20,7 +20,7 @@ $re_pwd = $_POST['re_pwd'] ?? '';
 $full_name = $_POST['full_name'] ?? '';
 
 try {
-    $pdo_write = new_pdo_write(err_fatal: false);
+    $pdo_write = new_pdo_write();
     $errors = check_acc_fields($pdo_write, $name, $email, $password, $re_pwd, $full_name);
     $errors['submit'] = [];
     $valid = check_acc_err($errors);
@@ -43,7 +43,7 @@ $data = [
 $sql_user = 'INSERT INTO db.users (name, email, password, full_name)
 VALUES (:name, :email, :password, :full_name);';
 
-$sql_prep = $pdo_write->prepare($sql_user);
+$sql_prep = prepare_write($sql_user);
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';
     api_fail('Internal server error, try again later', $errors);
@@ -59,7 +59,7 @@ $data = [
     'name' => htmlspecialchars($name)
 ];
 
-$sql_prep = $pdo_write->prepare($sql_email);
+$sql_prep = prepare_write($sql_email);
 $sql_prep->execute($data);
 
 $link = '/auth/verify/' . $url_tag;

@@ -4,7 +4,6 @@ require_once "pdo_read.php";
 function get_owned_videos(string $query): array
 {
     ensure_session();
-    $pdo_read = new_pdo_read();
     $sql = 'SELECT v.tag, v.name, u.name as uploader
             FROM videos v
                 INNER JOIN ownership o on v.tag = o.item_tag and o.user_id = :uid
@@ -13,7 +12,7 @@ function get_owned_videos(string $query): array
             WHERE v.name LIKE :query
             ORDER BY p.confirmation_time DESC
             LIMIT 50';
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $data = [
         'uid' => $_SESSION['uid'] ?? '',
         'query' => '%' . htmlspecialchars($query) . '%'

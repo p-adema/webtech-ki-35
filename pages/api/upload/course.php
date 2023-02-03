@@ -98,7 +98,7 @@ try {
 }
 
 $sql_valid_vid = "SELECT id FROM videos v WHERE tag = :tag AND uploader = :uid";
-$prep_valid_vid = $pdo_write->prepare($sql_valid_vid);
+$prep_valid_vid = prepare_write($sql_valid_vid);
 foreach ($tags as $tag) {
     $data_valid_vid = [
         'tag' => $tag,
@@ -112,7 +112,7 @@ foreach ($tags as $tag) {
 }
 
 $sql_new_vid = "SELECT course_tag FROM db.course_videos WHERE video_tag = :tag;";
-$prep_new_vid = $pdo_write->prepare($sql_new_vid);
+$prep_new_vid = prepare_write($sql_new_vid);
 foreach ($tags as $tag) {
     $prep_new_vid->execute(['tag' => $tag]);
     if ($prep_new_vid->fetch() !== false) {
@@ -132,7 +132,7 @@ if (!copy($preview_thumbnail, $course_thumbnail)) {
 
 $sql_item = "INSERT INTO db.items (tag, type, price)
              VALUES (:tag, 'course', :price);";
-$prep_item = $pdo_write->prepare($sql_item);
+$prep_item = prepare_write($sql_item);
 $data_item = [
     'tag' => $course_tag,
     'price' => $price
@@ -145,7 +145,7 @@ if (!$prep_item->execute($data_item)) {
 
 $sql_course = "INSERT INTO db.courses (db.courses.tag, db.courses.name, db.courses.description, db.courses.subject, db.courses.creator, db.courses.free)
             VALUES (:tag, :title, :description, :subject, :uid, :free)";
-$prep_course = $pdo_write->prepare($sql_course);
+$prep_course = prepare_write($sql_course);
 $data_course = [
     'tag' => $course_tag,
     'title' => htmlspecialchars($title),
@@ -162,7 +162,7 @@ if (!$prep_course->execute($data_course)) {
 
 $sql_c_vid = "INSERT INTO db.course_videos (db.course_videos.video_tag, db.course_videos.course_tag, db.course_videos.`order`)
               SELECT :v_tag, :c_tag, :index";
-$prep_c_vid = $pdo_write->prepare($sql_c_vid);
+$prep_c_vid = prepare_write($sql_c_vid);
 
 $index = 0;
 foreach ($tags as $tag) {
@@ -176,7 +176,7 @@ foreach ($tags as $tag) {
 
 $sql_own = "INSERT INTO db.ownership (item_tag, user_id, origin)
             VALUES (:tag, :uid, 'owner');";
-$prep_own = $pdo_write->prepare($sql_own);
+$prep_own = prepare_write($sql_own);
 $data_own = [
     'tag' => $course_tag,
     'uid' => $_SESSION['uid']

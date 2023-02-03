@@ -136,7 +136,7 @@ try {
 }
 $sql_item = "INSERT INTO db.items (tag, type, price)
              VALUES (:tag, 'video', :price);";
-$prep_item = $pdo_write->prepare($sql_item);
+$prep_item = prepare_write($sql_item);
 $data_item = [
     'tag' => $item_tag,
     'price' => $price
@@ -151,7 +151,7 @@ if (!$prep_item->execute($data_item)) {
 
 $sql_vid = "INSERT INTO db.videos (tag, name, description, subject, uploader, free)
             VALUES (:tag, :title, :description, :subject, :uid, :free)";
-$prep_vid = $pdo_write->prepare($sql_vid);
+$prep_vid = prepare_write($sql_vid);
 $data_vid = [
     'tag' => $item_tag,
     'title' => htmlspecialchars($title),
@@ -170,7 +170,7 @@ if (!$prep_vid->execute($data_vid)) {
 
 $sql_own = "INSERT INTO db.ownership (item_tag, user_id, origin)
             VALUES (:tag, :uid, 'owner');";
-$prep_own = $pdo_write->prepare($sql_own);
+$prep_own = prepare_write($sql_own);
 $data_own = [
     'tag' => $item_tag,
     'uid' => $_SESSION['uid']

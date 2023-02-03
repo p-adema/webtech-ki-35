@@ -12,7 +12,7 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'verify') {
     api_fail('Invalid referal link', ['submit' => "You don't seem to have come from a valid link"]);
 }
 try {
-    $pdo_write = new_pdo_write(err_fatal: false);
+    $pdo_write = new_pdo_write();
 } catch (PDOException $e) {
     api_fail('Internal server error', ['submit' => 'Internal server error']);
 }
@@ -20,7 +20,7 @@ try {
 $tag = $_SESSION['url_tag'];
 
 $sql = 'CALL resolve_account(:tag)';
-$prep = $pdo_write->prepare($sql);
+$prep = prepare_write($sql);
 
 if (!$prep->execute(['tag' => $tag])) {
     api_fail("Couldn't verify account", ['submit' => "Couldn't verify account"]);

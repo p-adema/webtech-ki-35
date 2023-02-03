@@ -20,10 +20,8 @@ if (empty($tag)) {
 }
 
 else {
-    $pdo_read = new_pdo_read();
-
     $sql = 'SELECT name FROM db.videos WHERE (tag = :video_tag)';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['tag' => $tag]);
 
     $check = $sth->fetch();

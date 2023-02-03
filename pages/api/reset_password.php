@@ -23,7 +23,7 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-rese
 }
 
 try {
-    $pdo_write = new_pdo_write(err_fatal: false);
+    $pdo_write = new_pdo_write();
 } catch (PDOException $e) {
     $errors['submit'][] = 'Internal server error (unable to connect to database)';
     api_fail('Internal server error', $errors);
@@ -32,7 +32,7 @@ try {
 
 $sql = "SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = 'password-reset');";
 $data = ['tag' => $tag];
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = prepare_write($sql);
 
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error, try again later';
@@ -64,7 +64,7 @@ $data = [
     'new_password' => password_hash($password, PASSWORD_DEFAULT),
     'user_id' => $user_id
 ];
-$sql_prep = $pdo_write->prepare($sql);
+$sql_prep = prepare_write($sql);
 $sql_prep->execute($data);
 
 

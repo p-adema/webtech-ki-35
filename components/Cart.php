@@ -5,8 +5,6 @@ require_once "pdo_read.php";
 
 class Cart
 {
-    private PDO $PDO;
-
     private string $sql_tag;
     private string $sql_price;
     private string $sql_video_long;
@@ -41,14 +39,6 @@ class Cart
                 'total' => 0
             ];
         }
-        try {
-            $this->PDO = new_pdo_read(err_fatal: false);
-        } catch (PDOException) {
-            api_fail('Internal cart error', ['submit' => 'Connecting cart failed']);
-        }
-        if (!isset($this->PDO)) {
-            api_fail('Internal cart error', ['submit' => 'Unknown cart error']);
-        }
 
         $this->sql_course_total = 'SELECT SUM(v.price) as price
 FROM course_videos cv
@@ -56,16 +46,16 @@ FROM course_videos cv
         INNER JOIN items c on cv.course_tag = c.tag
          WHERE c.id = :course_id
 ';
-        $this->p_course_total = $this->PDO->prepare($this->sql_course_total);
+        $this->p_course_total = prepare_readonly($this->sql_course_total);
 
         $this->sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
-        $this->p_tag = $this->PDO->prepare($this->sql_tag);
+        $this->p_tag = prepare_readonly($this->sql_tag);
 
         $this->sql_price = 'SELECT price, type FROM db.items WHERE (id = :id)';
-        $this->p_price = $this->PDO->prepare($this->sql_price);
+        $this->p_price = prepare_readonly($this->sql_price);
 
         $this->sql_type = 'SELECT type FROM items WHERE (id = :id)';
-        $this->p_type = $this->PDO->prepare($this->sql_type);
+        $this->p_type = prepare_readonly($this->sql_type);
 
         $this->sql_video_long = 'SELECT i.tag,
                                         u.name AS uploader,
@@ -79,7 +69,7 @@ FROM course_videos cv
                                   INNER JOIN videos v on i.tag = v.tag
                                   INNER JOIN users u on v.uploader = u.id
                                   WHERE i.id = :id';
-        $this->p_video_long = $this->PDO->prepare($this->sql_video_long);
+        $this->p_video_long = prepare_readonly($this->sql_video_long);
 
         $this->sql_course_long = 'SELECT i.tag,
                                         u.name AS uploader,
@@ -93,14 +83,14 @@ FROM course_videos cv
                                   INNER JOIN courses c on i.tag = c.tag
                                   INNER JOIN users u on c.creator = u.id
                                   WHERE i.id = :id';
-        $this->p_course_long = $this->PDO->prepare($this->sql_course_long);
+        $this->p_course_long = prepare_readonly($this->sql_course_long);
 
         $this->sql_course_videos = 'SELECT v.id 
                                     FROM course_videos AS c
                                     INNER JOIN items i ON i.id = :id
                                     INNER JOIN items v on c.video_tag = v.tag
                                     WHERE c.course_tag = i.tag';
-        $this->p_course_videos = $this->PDO->prepare($this->sql_course_videos);
+        $this->p_course_videos = prepare_readonly($this->sql_course_videos);
 
         $this->sql_owned_video_prices = '                SELECT SUM(v.price) as price
                  FROM course_videos cv 
@@ -108,12 +98,8 @@ FROM course_videos cv
                INNER JOIN ownership o on o.item_tag = v.tag
                  INNER JOIN items c on c.tag = cv.course_tag
                 WHERE o.user_id = :uid and c.id = :course_id';
-        $this->p_owned_item_prices = $this->PDO->prepare($this->sql_owned_video_prices);
+        $this->p_owned_item_prices = prepare_readonly($this->sql_owned_video_prices);
 
-        if ($this->p_price === false or $this->p_type === false or
-            $this->p_tag === false or $this->p_video_long === false) {
-            api_fail('Internal cart error', ['submit' => 'Loading cart failed']);
-        }
     }
 
 

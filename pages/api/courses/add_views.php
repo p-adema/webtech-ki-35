@@ -7,7 +7,7 @@ if ($_SESSION['auth']) {
     $user_id = $_SESSION['uid'];
     $video_tag = $_POST['video_tag'];
     try {
-        $pdo_write = new_pdo_write(err_fatal: false);
+        $pdo_write = new_pdo_write();
     } catch (PDOException $e) {
         $errors['submit'][] = 'Internal server error (unable to connect to database)';
         $valid = false;
@@ -15,8 +15,8 @@ if ($_SESSION['auth']) {
     if (isset($pdo_write)) {
         $sql = 'SELECT id FROM db.watches WHERE (user_id = :user_id and video_tag = :video_tag);';
         $data = ['user_id' => $user_id,
-                'video_tag' => $video_tag];
-        $sql_prep = $pdo_write->prepare($sql);
+            'video_tag' => $video_tag];
+        $sql_prep = prepare_write($sql);
 
         $sql_prep->execute($data);
         $result = $sql_prep->fetch();
@@ -25,7 +25,7 @@ if ($_SESSION['auth']) {
             $data = ['video_tag' => $video_tag,
                 'user_id' => $user_id,
                 'watch_amount' => 5];
-            $sql_prep = $pdo_write->prepare($sql);
+            $sql_prep = prepare_write($sql);
 
             $sql_prep->execute($data);
             $result = $sql_prep->fetch();

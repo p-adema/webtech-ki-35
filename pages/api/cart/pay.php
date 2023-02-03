@@ -20,18 +20,18 @@ $data = [
 ];
 
 $pdo_write = new_pdo_write();
-$p_cart = $pdo_write->prepare($sql_cart);
+$p_cart = prepare_write($sql_cart);
 
 if (!$p_cart->execute($data)) {
     api_fail('Internal error 1', ['submit' => 'Internal error']);
 }
 $sql_lid = 'SELECT LAST_INSERT_ID();';
-$p_lid = $pdo_write->prepare($sql_lid);
+$p_lid = prepare_write($sql_lid);
 $p_lid->execute();
 $cart_id = $p_lid->fetch()[0];
 
 $sql_item = "INSERT INTO purchase_items (purchase_id, item_id) VALUES (:cart, :item);";
-$p_item = $pdo_write->prepare($sql_item);
+$p_item = prepare_write($sql_item);
 
 $success = true;
 foreach ($cart->ids() as $item) {
@@ -45,7 +45,7 @@ if (!$success) {
 }
 
 $sql_transaction = 'INSERT INTO transactions_pending (amount, url_tag, user_id, purchase_id) VALUES (:total, :tag, :uid, :pid);';
-$p_transaction = $pdo_write->prepare($sql_transaction);
+$p_transaction = prepare_write($sql_transaction);
 
 $pending_tag = tag_create();
 $data_transaction = [

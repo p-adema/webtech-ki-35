@@ -41,13 +41,8 @@ if (filter_var($name, FILTER_VALIDATE_EMAIL)) {
 }
 
 require_once 'pdo_read.php';
-try {
-    $pdo_read = new_pdo_read(err_fatal: false);
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    api_fail('Internal server error (unable to connect to database)', $errors);
-}
-$sql_prep = $pdo_read->prepare($sql);
+
+$sql_prep = prepare_readonly($sql);
 
 if (!$sql_prep->execute($data)) {
     $errors['submit'][] = 'Internal server error';

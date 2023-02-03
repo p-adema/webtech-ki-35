@@ -96,8 +96,7 @@ $data = [
 ];
 
 try {
-    $pdo_read = new_pdo_read();
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute($data);
     $results = $prep->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {

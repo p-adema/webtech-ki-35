@@ -6,10 +6,9 @@ function render_courses(): void
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
 
     $sql = 'SELECT tag FROM db.items WHERE type = :course ORDER BY rating DESC';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['course' => 'course']);
 
     $courses = $sth->fetchAll(PDO::FETCH_ASSOC);
@@ -59,10 +58,9 @@ function get_course_info($course_tag): array
 {
     require_once 'pdo_read.php';
 
-    $pdo_read = new_pdo_read();
 
     $sql = 'SELECT name, description, subject, creator, creation_date, views FROM db.courses WHERE tag = :course_tag';
-    $sth = $pdo_read->prepare($sql);
+    $sth = prepare_readonly($sql);
     $sth->execute(['course_tag' => $course_tag]);
 
     return $sth->fetch();

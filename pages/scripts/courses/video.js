@@ -189,7 +189,7 @@ $(document).ready(function () {
     console.log($comment.parent())
 
     const user_data = {
-        comment: $comment.parent().attr('id'),
+        comment_tag: $comment.parent().attr('id'),
         action: action
     }
 

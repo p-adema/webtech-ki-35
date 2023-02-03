@@ -4,9 +4,8 @@ function last_billing_info(int $uid): array|false
     require_once "pdo_read.php";
     $sql = 'SELECT * FROM billing_information WHERE user_id = :uid ORDER BY id DESC;';
     $data = ['uid' => $uid];
-    $pdo_read = new_pdo_read();
 
-    $p_sql = $pdo_read->prepare($sql);
+    $p_sql = prepare_readonly($sql);
     $p_sql->execute($data);
     return $p_sql->fetch(PDO::FETCH_ASSOC);
 }
@@ -21,9 +20,8 @@ FROM purchases p
 WHERE p.url_tag = :url_tag';
 
     $data = ['url_tag' => $url_tag];
-    $pdo_read = new_pdo_read();
 
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute($data);
     $info = $prep->fetch();
     display_billing_info($info, $info['amount']);

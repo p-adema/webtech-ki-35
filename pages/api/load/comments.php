@@ -35,17 +35,16 @@ if (!$valid) {
     api_fail('Please fill in all fields', $errors);
 }
 
-$pdo_read = new_pdo_read();
 $response = [];
 
 if ($type === 'item') {
-    $id = item_id_from_tag($on, $pdo_read);
+    $id = item_id_from_tag($on);
 
     if ($id === false) {
         $errors['on'][] = 'Invalid item tag';
         api_fail('Invalid item tag', $errors);
     }
-    $comments = get_comments_item($id, $pdo_read);
+    $comments = get_comments_item($id);
     $rendered = [];
 
     foreach ($comments as $comment) {
@@ -57,7 +56,7 @@ if ($type === 'item') {
     api_succeed('Comments retrieved', $errors, $response);
 }
 
-$comments = get_replies_comment($on, $pdo_read);
+$comments = get_replies_comment($on);
 $rendered = [];
 
 foreach ($comments as $comment) {

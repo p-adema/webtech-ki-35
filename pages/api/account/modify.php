@@ -26,10 +26,10 @@ api_require_login();
 $user_id = $_SESSION['uid'];
 
 try {
-    $pdo_write = new_pdo_write(err_fatal: false);
+    $pdo_write = new_pdo_write();
 
-    $errors['name'] = check_name($name, $pdo_write, $user_id);
-    $errors['email'] = check_email($email, $pdo_write, $user_id);
+    $errors['name'] = check_name($name, $user_id);
+    $errors['email'] = check_email($email, $user_id);
     $errors['full_name'] = check_full_name($full_name);
 
     $valid &= check_acc_err($errors);
@@ -39,7 +39,7 @@ try {
 
 $sql_password = 'SELECT (password) FROM db.users WHERE (id = :id);';
 $data_id = ['id' => $user_id];
-$prep_password = $pdo_write->prepare($sql_password);
+$prep_password = prepare_write($sql_password);
 if (!$prep_password->execute($data_id)) {
     api_fail('Internal error');
 }
@@ -96,7 +96,7 @@ if (empty($current_password)) {
         'id' => htmlspecialchars($user_id),
     ];
 }
-$prep_update = $pdo_write->prepare($sql_update);
+$prep_update = prepare_write($sql_update);
 if (!$prep_update->execute($data_update)) {
     api_fail("Couldn't update data");
 }

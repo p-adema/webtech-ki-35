@@ -79,8 +79,7 @@ function api_login(string $username_or_email): bool|string
         $sql = 'SELECT (id) FROM db.users WHERE (name = :name);';
     }
     $data = ['name' => $username_or_email];
-    $pdo_read = new_pdo_read();
-    $sql_prep = $pdo_read->prepare($sql);
+    $sql_prep = prepare_readonly($sql);
     $sql_prep->execute($data);
     $uid = $sql_prep->fetch(PDO::FETCH_ASSOC);
 
@@ -114,9 +113,8 @@ function api_logout(): bool
 
 function user_type(int $uid): string
 {
-    $pdo_read = new_pdo_read();
     $sql = 'SELECT banned, admin FROM users WHERE id = :uid';
-    $prep = $pdo_read->prepare($sql);
+    $prep = prepare_readonly($sql);
     $prep->execute(['uid' => $uid]);
     $user = $prep->fetch();
 

@@ -61,7 +61,7 @@ $data = [
 
 require_once "pdo_write.php";
 $pdo_write = new_pdo_write();
-$p_sql = $pdo_write->prepare($sql);
+$p_sql = prepare_write($sql);
 
 if (!$p_sql->execute($data)) {
     api_fail("Data couldn't be added", ['submit' => 'Internal error']);
