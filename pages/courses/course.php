@@ -44,7 +44,9 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['restricted
 
             <div class="video-information">
                 <p id="description"><?php echo $course_info['description'] ?> </p>
-                <p id="total-videos"> This course contains <?php echo count($videos) ?> videos</p>
+                <p id="total-videos"> This course contains
+                    <?php $count = count($videos);
+                    echo $count, $count === 1 ? ' video' : 'videos'; ?> </p>
                 <p id="since">Creation date: <?php echo $course_creation_date[0] ?> </p>
                 <p id="views-and-time"> <?php echo number_format($course_info['views'], 0, ''), $course_info['views'] !== 1 ? ' total views' : ' total view' ?> </p>
 
@@ -93,47 +95,47 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['restricted
             <?php
             else:
                 ?>
-<div class="course-buying-box">
-                <div class="course-buying">
-                    <p id="price"> <?php
-                        if (course_price($course_tag) == 0) {
-                            echo 'This course is free';
-                        } else {
-                            $html = "The price of this course <br> is  " . number_format($cart->tag_price($tag), 2) . ' euro.';
-                            echo $html;
-                        } ?>
-                    </p>
+                <div class="course-buying-box">
+                    <div class="course-buying">
+                        <p id="price"> <?php
+                            if (course_price($course_tag) == 0) {
+                                echo 'This course is free';
+                            } else {
+                                $html = "The price of this course <br> is  " . number_format($cart->tag_price($tag), 2) . ' euro.';
+                                echo $html;
+                            } ?>
+                        </p>
+                    </div>
+                    <div class="add-to-cart-box">
+                        <?php if ($course_in_cart): ?>
+                            <form class="shop" id="cart" style="display: block;">
+                                <?php
+                                $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
+                                form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
+
+                                ?>
+                            </form>
+                        <?php else: ?>
+
+
+                            <form class="shop" id="add">
+                                <?php
+                                $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
+                                form_submit("$cart_add Add to cart", extra_cls: 'long-btn');
+                                ?>
+                            </form>
+                            <form class="shop" id="cart">
+                                <?php
+                                $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
+                                form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
+
+                                ?>
+                            </form>
+                        <?php endif; ?>
+                        <div class="course_tag" data-tag="<?php echo $_GET['tag'] ?>"></div>
+
+                    </div>
                 </div>
-                <div class="add-to-cart-box">
-                    <?php if ($course_in_cart): ?>
-                        <form class="shop" id="cart" style="display: block;">
-                            <?php
-                            $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
-                            form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
-
-                            ?>
-                        </form>
-                    <?php else: ?>
-
-
-                        <form class="shop" id="add">
-                            <?php
-                            $cart_add = '<span class="material-symbols-outlined">add_shopping_cart</span>';
-                            form_submit("$cart_add Add to cart", extra_cls: 'long-btn');
-                            ?>
-                        </form>
-                        <form class="shop" id="cart">
-                            <?php
-                            $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
-                            form_submit(text: "$cart_go Go to cart", extra_cls: 'long-btn form-submit-blue');
-
-                            ?>
-                        </form>
-                    <?php endif; ?>
-                    <div class="course_tag" data-tag="<?php echo $_GET['tag'] ?>"></div>
-
-                </div>
-</div>
 
             <?php
             endif;

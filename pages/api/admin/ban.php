@@ -29,6 +29,10 @@ if ($target_uid === false) {
     $errors['user'][] = 'Invalid username';
 }
 
+if (!$valid) {
+    api_fail('Please fill in all fields correctly', $errors);
+}
+
 if ($action === 'ban') {
     if (!admin_ban_user($target_uid)) {
         api_fail('Error banning user');

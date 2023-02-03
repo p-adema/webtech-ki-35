@@ -95,8 +95,14 @@ function html_header(string $title, string $description = '', bool $navbar = tru
  */
 function html_footer(): void
 {
-    echo '  </body>
-            </html>';
+    echo '
+<div class="cookie-wrapper">
+    <span class="cookies-header"> Cookies </span>
+    <p class="cookies-text"> EduGrove makes use of an essential session cookie to allow you to log in and purchase items. By continuing to use this site you consent to this. </p>
+    <span class="cookies-button"> Accept </span>
+</div>
+</body>
+</html>';
 }
 
 function auth_redirect(?string $if_auth = null, ?string $if_not_auth = null): void

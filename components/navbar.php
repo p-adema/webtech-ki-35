@@ -34,7 +34,7 @@ function navbar(): void
       <a href='/courses/'><div id='courses-button' ><span class='material-symbols-outlined'>school</span> Courses</div></a>
       </div>
       <div class='videos-button dropdown-videos'> 
-      <a><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
+      <a href='/search'><div id='videos-button'> <span class='material-symbols-outlined'>play_circle</span> Video's</div></a>  
       </div>
       $library
         <div class='navbar-stretch-2'></div>

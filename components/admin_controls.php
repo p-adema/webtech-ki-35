@@ -93,11 +93,11 @@ function admin_ban_user(int $target_uid, bool $ban = true): bool
 
     $pdo_write = new_pdo_write();
 
-    $sql = 'UPDATE users SET banned = TRUE WHERE id = :uid';
+    $sql = 'UPDATE users SET banned = :ban WHERE id = :uid';
     $prep = $pdo_write->prepare($sql);
     $data = [
         'uid' => $target_uid,
-        'ban' => $ban
+        'ban' => $ban ? 1 : 0
     ];
     return $prep->execute($data);
 }
@@ -117,17 +117,17 @@ function admin_restrict_item(int $item_id, bool $restrict = true): bool
     return $prep->execute($data);
 }
 
-function admin_hide_comment(int $item_id, bool $hide = true): bool
+function admin_hide_comment(int $comment_id, bool $hide = true): bool
 {
     require_once 'pdo_write.php';
 
     $pdo_write = new_pdo_write();
 
-    $sql = 'UPDATE items SET restricted = TRUE WHERE id = :uid';
+    $sql = 'UPDATE comments SET hidden = :hide WHERE id = :cid';
     $prep = $pdo_write->prepare($sql);
     $data = [
-        'uid' => $item_id,
-        'hide' => $hide
+        'cid' => $comment_id,
+        'hide' => $hide ? 1 : 0
     ];
     return $prep->execute($data);
 }

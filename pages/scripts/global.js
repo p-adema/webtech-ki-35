@@ -95,8 +95,15 @@ function redirect(link = '/show_cart') {
 $(document).ready(function () {
     let $dropdown_videos = $('.dropdown-videos');
     let $dropdown_videos_content = $('.dropdown-videos-content')
-    $dropdown_videos_content.stop().animate({opacity: 0, left: $dropdown_videos.offset().left, top: -$dropdown_videos_content.height() }, 40)
+    $dropdown_videos_content.stop().animate({
+        opacity: 0,
+        left: $dropdown_videos.offset().left,
+        top: -$dropdown_videos_content.height()
+    }, 40)
     $('.sidebar-active-cover').click(function (_) {
+        close_right_menu()
+    })
+    $('.sidebar-close').click(function (_) {
         close_right_menu()
     })
     let $dropdown = $('.dropdown');
@@ -137,6 +144,13 @@ $(document).ready(function () {
         $('.sidebar-right').animate({right: '-0'}, 400);
         $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
     })
+    if (localStorage.getItem('consent') === null) {
+        $('.cookie-wrapper').animate({opacity: 1}, 400).css('pointer-events', 'all')
+        $('.cookies-button').click(function (_) {
+            localStorage.setItem('consent', 'true')
+            $('.cookie-wrapper').animate({opacity: 0}, 400).css('pointer-events', 'none')
+        })
+    }
 }).on('keydown', function (event) {
     if (event.which === 191 && $(':focus').length === 0) {
         event.preventDefault()
@@ -153,22 +167,18 @@ function cart_item_delete(event) {
     };
 
     const handler_options = {
-        error_handler: remove_item_err,
-        success_handler: remove_item_success
+        error_handler: function (errors, _) {
+            console.log(errors)
+        },
+        success_handler: function (data, __) {
+            $(`a[data-tag=${data.tag}]`).fadeOut('fast', function () {
+                $(this).remove()
+
+            })
+        }
     };
 
     $.post('/api/cart/modify', user_data, form_default_response(handler_options));
-}
-
-function remove_item_err(errors, _) {
-    console.log(errors)
-}
-
-function remove_item_success(data, __) {
-    $(`a[tag=${data.tag}]`).fadeOut('fast', function () {
-        $(this).remove()
-
-    })
 }
 
 function navbar_search() {

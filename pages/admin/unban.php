@@ -8,7 +8,7 @@ require 'admin_controls.php'; ?>
     <div class="form-content">
         <h1>Unban a user</h1>
         <div class="form-outline">
-            <form action="/api/admin/unban" method="POST" data-action="unhide">
+            <form action="/api/admin/unban" method="POST" data-action="unban">
                 <?php
                 if ($_SESSION['admin']) {
                     form_input('user', 'Username to be unbanned');

@@ -178,11 +178,32 @@ $(document).ready(function () {
     window.location.href = '/auth/login';
 }).on('click', '.comment-admin-hide', function (_) {
     const $comment = $(this).parent().parent()
+    let action;
     if ($comment.toggleClass('hidden').hasClass('hidden')) {
         $(this).text('visibility_off');
+        action = 'hide';
     } else {
         $(this).text('visibility');
+        action = 'unhide';
     }
+    console.log($comment.parent())
+
+    const user_data = {
+        comment: $comment.parent().attr('id'),
+        action: action
+    }
+
+    const handler_options = {
+        success_handler: function (data, __) {
+            console.log(data);
+        },
+        error_handler: function (errors, __) {
+            console.log('Hiding comment failed');
+            console.log(errors);
+        }
+    }
+
+    $.post('/api/admin/hide', user_data, handler_options);
 })
 
 function load_replies(_) {

@@ -31,8 +31,8 @@ if (empty($title)) {
 if (empty($description)) {
     $errors['description'][] = 'Please provide a course description';
     $valid = false;
-} elseif (strlen(htmlspecialchars($description)) > 256) {
-    $errors['description'][] = 'Please provide a shorter course description (256 characters max)';
+} elseif (strlen(htmlspecialchars($description)) > 4096) {
+    $errors['description'][] = 'Please provide a shorter course description (4096 characters max)';
     $valid = false;
 }
 
@@ -124,6 +124,11 @@ foreach ($tags as $tag) {
 if (!$valid) {
     api_fail('Please provide corect video tags', $errors);
 }
+$preview_thumbnail = '/var/www/html/resources/thumbnails/' . $tags[0] . '.jpg';
+$course_thumbnail = '/var/www/html/resources/thumbnails/' . $course_tag . '.jpg';
+if (!copy($preview_thumbnail, $course_thumbnail)) {
+    api_fail("Couldn't add thumbnail");
+}
 
 $sql_item = "INSERT INTO db.items (tag, type, price)
              VALUES (:tag, 'course', :price);";
@@ -144,7 +149,7 @@ $prep_course = $pdo_write->prepare($sql_course);
 $data_course = [
     'tag' => $course_tag,
     'title' => htmlspecialchars($title),
-    'description' => htmlspecialchars($description),
+    'description' => str_replace(PHP_EOL, '<br>', htmlspecialchars($description)),
     'subject' => $subject,
     'uid' => $_SESSION['uid'],
     'free' => $free

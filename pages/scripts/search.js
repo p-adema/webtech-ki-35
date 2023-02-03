@@ -31,6 +31,12 @@ $(document).ready(function () {
         sort = $(this).addClass('active').attr('data-sort');
         search($('.search-input').val())
     })
+    $('.navbar-search-input').attr('placeholder', 'Search...')
+}).unbind('keydown').on('keydown', function (event) {
+    if (event.which === 191 && $(':focus').length === 0) {
+        event.preventDefault()
+        $('.search-input').focus()
+    }
 })
 
 function search(query) {
@@ -58,6 +64,7 @@ function search(query) {
         $.post('/api/load/query', query_data, form_default_response(handler_options));
     } else {
         $('#main-search-results').html('')
+        $('.result-empty').hide();
     }
 }
 

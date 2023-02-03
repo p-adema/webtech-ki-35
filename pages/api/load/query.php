@@ -38,8 +38,7 @@ if (!$valid) {
 }
 
 $sql = match ($sort) {
-    'views' => "
-SELECT COALESCE(v.tag, c.tag)   as tag,
+    'views' => "SELECT COALESCE(v.tag, c.tag)   as tag,
        COALESCE(v.name, c.name) as name,
        i.type,
        COALESCE(v.free, c.free) as free,
@@ -48,8 +47,9 @@ FROM items i
          LEFT JOIN videos v on i.tag = v.tag
          LEFT JOIN courses c on i.tag = c.tag
          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
-WHERE v.name LIKE :query
-   OR c.name LIKE :query
+WHERE (v.name LIKE :query
+    OR c.name LIKE :query)
+  AND NOT i.restricted
 ORDER BY COALESCE(v.views, c.views) DESC
 LIMIT 50",
 
@@ -65,8 +65,9 @@ FROM items i
          LEFT JOIN courses c on i.tag = c.tag
          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
          LEFT JOIN ratings r on i.id = r.item_id
-WHERE v.name LIKE :query
-   OR c.name LIKE :query
+WHERE (v.name LIKE :query
+    OR c.name LIKE :query)
+  AND NOT i.restricted
 GROUP BY COALESCE(v.tag, c.tag), COALESCE(v.name, c.name), i.type, COALESCE(v.free, c.free), o.id
 ORDER BY AVG(r.rating) DESC
 LIMIT 50",
@@ -81,8 +82,9 @@ FROM items i
          LEFT JOIN videos v on i.tag = v.tag
          LEFT JOIN courses c on i.tag = c.tag
          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
-WHERE v.name LIKE :query
-   OR c.name LIKE :query
+WHERE (v.name LIKE :query
+    OR c.name LIKE :query)
+  AND NOT i.restricted
 ORDER BY COALESCE(v.upload_date, c.creation_date) DESC
 LIMIT 50"
 };

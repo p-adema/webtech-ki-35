@@ -29,6 +29,10 @@ if ($target_id === false) {
     api_fail('Invalid item tag', $errors);
 }
 
+if (!$valid) {
+    api_fail('Please fill in all fields correctly', $errors);
+}
+
 if ($action === 'restrict') {
     if (!admin_restrict_item($target_id)) {
         api_fail('Error restricting item');

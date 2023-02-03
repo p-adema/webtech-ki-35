@@ -6,13 +6,13 @@ require_once 'admin_controls.php';
 api_require_admin();
 
 $errors = [
-    'comment' => [],
+    'comment_tag' => [],
     'action' => [],
     'submit' => []
 ];
 $valid = true;
 
-$target_name = $_POST['comment'] ?? '';
+$comment_tag = $_POST['comment_tag'] ?? '';
 $action = $_POST['action'] ?? '';
 
 if (empty($action)) {
@@ -23,21 +23,25 @@ if (empty($action)) {
     $valid = false;
 }
 
-$target_uid = comment_id_from_tag($target_name);
-if ($target_uid === false) {
+$target_cid = comment_id_from_tag($comment_tag);
+if ($target_cid === false) {
     $valid = false;
-    $errors['comment'][] = 'Invalid comment tag';
+    $errors['comment_tag'][] = 'Invalid comment tag';
+}
+
+if (!$valid) {
+    api_fail('Please fill in all fields correctly', $errors);
 }
 
 if ($action === 'hide') {
-    if (!admin_hide_comment($target_uid)) {
+    if (!admin_hide_comment($target_cid)) {
         api_fail('Error hiding comment');
     }
 
     api_succeed('Successfully hid comment!');
 }
 
-if (!admin_hide_comment($target_uid, false)) {
+if (!admin_hide_comment($target_cid, false)) {
     api_fail('Error hiding comment');
 }
 
