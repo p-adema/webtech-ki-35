@@ -2,15 +2,23 @@
 require_once "relative_time.php";
 require_once 'tag_actions.php';
 
-function item_id_from_tag(string $tag): int|false
+/**
+ * @param string $item_tag items.tag
+ * @return int|false items.id
+ */
+function item_id_from_tag(string $item_tag): int|false
 {
     $sql_tag = 'SELECT id FROM db.items WHERE (tag = :tag)';
     $p_tag = prepare_readonly($sql_tag);
-    $p_tag->execute(['tag' => $tag]);
+    $p_tag->execute(['tag' => $item_tag]);
     return $p_tag->fetch(PDO::FETCH_ASSOC)['id'];
 }
 
-function get_comments_item(int $id): array
+/**
+ * @param int $item_id items.id
+ * @return array c.tag, u.name, u.full_name, c.date, c.text, c.score, user_score, replies, c.hidden
+ */
+function get_comments_item(int $item_id): array
 {
     $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies, c.hidden
             FROM comments as c
@@ -22,7 +30,7 @@ function get_comments_item(int $id): array
             ORDER BY c.score DESC';
     ensure_session();
     $data = [
-        'item' => $id,
+        'item' => $item_id,
         'uid' => $_SESSION['uid'] ?? null
     ];
 
@@ -31,7 +39,11 @@ function get_comments_item(int $id): array
     return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_replies_comment(string $tag): array
+/**
+ * @param string $comment_tag comments.tag
+ * @return array c.tag, u.name, u.full_name, c.date, c.text, c.score, user_score, replies, c.hidden
+ */
+function get_replies_comment(string $comment_tag): array
 {
     $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies , c.hidden
             FROM comments as c
@@ -43,7 +55,7 @@ function get_replies_comment(string $tag): array
             ORDER BY c.score DESC';
     ensure_session();
     $data = [
-        'tag' => $tag,
+        'tag' => $comment_tag,
         'uid' => $_SESSION['uid'] ?? null
     ];
 
@@ -52,6 +64,12 @@ function get_replies_comment(string $tag): array
     return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Renders a comment for further use
+ * @param array $comment Comment information array
+ * @param bool $is_reply Whether the comment is a reply or not
+ * @return string Comment HTML
+ */
 function render_comment(array $comment, bool $is_reply = false): string
 {
     $rating_class_down = '';
@@ -66,7 +84,7 @@ function render_comment(array $comment, bool $is_reply = false): string
     $ago = relative_time($comment['date']);
     $class = $is_reply ? 'comment-top' : 'comment-reply';
     $replies = render_show_replies($comment['replies'], $comment['tag']);
-    $new_reply = render_comment_form($comment['tag'], true);
+    $new_reply = render_add_comment_form($comment['tag'], true);
     if ($_SESSION['admin']) {
         $text = $comment['text'];
         $admin_icon = $comment['hidden'] ? 'visibility_off' : 'visibility';
@@ -103,17 +121,28 @@ function render_comment(array $comment, bool $is_reply = false): string
     ";
 }
 
-function render_show_replies($count, $tag): string
+/**
+ * Renders a show replies button
+ * @param int $count How many replies there are
+ * @param string $tag The comment tag that replies should be loaded from
+ * @return string HTML of the button
+ */
+function render_show_replies(int $count, string $tag): string
 {
     $word = $count > 1 ? 'replies' : 'reply';
     return $count > 0 ? "
 <div class='toggle-replies-wrapper'>
-    <button class='show-replies' query='$tag' count='$count $word'> Show $count $word </button>
+    <button class='show-replies' data-query='$tag' count='$count $word'> Show $count $word </button>
 </div>
     " : '';
 }
 
-function change_comment_score($rating, $comment_id, $user_id): void
+/**
+ * @param int $score Comment score, either -1, 0 or 1
+ * @param int $comment_id ID of the comment to be scored
+ * @param int $user_id User that is scoring
+ */
+function change_comment_score(int $score, int $comment_id, int $user_id): void
 {
     require_once 'pdo_write.php';
     require_once 'pdo_read.php';
@@ -128,16 +157,23 @@ function change_comment_score($rating, $comment_id, $user_id): void
 
         $sql_new = 'INSERT INTO db.scores (user_id, comment_tag, score) VALUES (:user, :comment, :rating)';
         $sth_new = prepare_write($sql_new);
-        $sth_new->execute(['user' => $user_id, 'comment' => $comment_id, 'rating' => $rating]);
+        $sth_new->execute(['user' => $user_id, 'comment' => $comment_id, 'rating' => $score]);
     } else {
 
         $sql_update = 'UPDATE db.scores SET score = :new_rating WHERE (user_id = :user) AND (comment_tag = :comment)';
         $sth_update = prepare_write($sql_update);
-        $sth_update->execute(['new_rating' => $rating, 'user' => $user_id, 'comment' => $comment_id]);
+        $sth_update->execute(['new_rating' => $score, 'user' => $user_id, 'comment' => $comment_id]);
     }
 }
 
-function add_comment(string $comment_text, string $item_tag, $reply_tag = null): string|false
+/**
+ * Add a comment
+ * @param string $comment_text Body of the comment
+ * @param string $item_tag Item tag of the video the comment should be posted on
+ * @param string|null $reply_tag Optional: comment tag of the comment to be replied to
+ * @return string|false On success, the tag of the newly created comment. On error, false
+ */
+function add_comment(string $comment_text, string $item_tag, ?string $reply_tag = null): string|false
 {
     require_once 'pdo_write.php';
     require_once 'pdo_read.php';
@@ -175,7 +211,11 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
     return $comment_tag;
 }
 
-function get_comment_id($comment_tag): int
+/**
+ * @param string $comment_tag comments.tag
+ * @return int comments.id
+ */
+function comment_id_from_tag(string $comment_tag): int
 {
     require_once 'pdo_read.php';
 
@@ -187,7 +227,13 @@ function get_comment_id($comment_tag): int
     return $sth->fetch()['id'];
 }
 
-function get_comment_info($comment_id, int $replies): array
+/**
+ * Creates a full infomration array for a comment
+ * @param int $comment_id comments.id
+ * @param int $replies The number of replies (added to the array)
+ * @return array c.tag, u.name, u.full_name, c.date, c.text, c.score, c.hidden, replies
+ */
+function get_comment_info(int $comment_id, int $replies): array
 {
     require_once 'pdo_read.php';
 
@@ -205,7 +251,13 @@ function get_comment_info($comment_id, int $replies): array
     return $info;
 }
 
-function render_comment_form(string $tag, bool $reply): string
+/**
+ * Renders a form to add a new comment for further use
+ * @param string $comment_tag comments.tag
+ * @param bool $is_reply Whether this form represents a direct comment, or a reply
+ * @return string Form HTML
+ */
+function render_add_comment_form(string $comment_tag, bool $is_reply): string
 {
     require_once 'pdo_read.php';
 
@@ -221,24 +273,24 @@ function render_comment_form(string $tag, bool $reply): string
                 <span class='comment-username'> $name </span>
                 <span class='head-space'></span>
             </div>";
-        $wrapper_class = $reply ? '' : 'comment-new-top';
+        $wrapper_class = $is_reply ? '' : 'comment-new-top';
     } else {
         $head = "<span class='headless-label'> Add comment: </span>";
-        $wrapper_class = $reply ? '' : 'comment-new-top-headless';
+        $wrapper_class = $is_reply ? '' : 'comment-new-top-headless';
     }
-    $placeholder = $reply ? 'Write a reply...' : 'Write a comment...';
-    $reply = $reply ? 'yes' : 'no';
+    $placeholder = $is_reply ? 'Write a reply...' : 'Write a comment...';
+    $is_reply = $is_reply ? 'yes' : 'no';
     $auth = $_SESSION['auth'] ? 'yes' : 'no';
 
     return "
         <div class='comment-wrapper comment $wrapper_class'>
             $head
             <div class='form-wrapper'>
-                <form class='new-comment' data-tag='$tag' data-reply='$reply'>
-                    <div id='comment-$tag-group' class='form-group form-group-comment'>
-                        <label for='comment-$tag-text'></label>
+                <form class='new-comment' data-tag='$comment_tag' data-reply='$is_reply'>
+                    <div id='comment-$comment_tag-group' class='form-group form-group-comment'>
+                        <label for='comment-$comment_tag-text'></label>
                         <textarea
-                                id='comment-$tag-text'
+                                id='comment-$comment_tag-text'
                                 name='comment-text'
                                 placeholder='$placeholder'
                                 data-auth='$auth'></textarea>

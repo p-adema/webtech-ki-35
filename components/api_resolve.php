@@ -111,6 +111,13 @@ function api_logout(): bool
     return true;
 }
 
+/**
+ * Checks what type a user is
+ * @param int $uid User ID to be checked
+ * @return string   'invalid' on incorrect or banned ID,
+ *                  'standard' on correct, non-admin user,
+ *                  'admin' on administrator
+ */
 function user_type(int $uid): string
 {
     $sql = 'SELECT banned, admin FROM users WHERE id = :uid';
@@ -126,6 +133,9 @@ function user_type(int $uid): string
     return 'standard';
 }
 
+/**
+ *  Fails an API call if the caller is not authenticated
+ */
 function api_require_login(): void
 {
     ensure_session();

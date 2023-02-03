@@ -1,6 +1,11 @@
 <?php
 
-function get_course_info($tag): array|false
+/**
+ * Gets the full information array for a course
+ * @param string $course_tag courses.tag
+ * @return array|false name, description, subject, creator, creation_date, views, restricted
+ */
+function get_course_info(string $course_tag): array|false
 {
     require_once 'pdo_read.php';
 
@@ -11,36 +16,49 @@ function get_course_info($tag): array|false
             WHERE c.tag = :tag';
 
     $sth = prepare_readonly($sql);
-    $sth->execute(['tag' => $tag]);
+    $sth->execute(['tag' => $course_tag]);
 
     return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
-function course_creator($id): array
+/**
+ * @param int $user_id users.id
+ * @return array name, full_name
+ */
+function user_names_from_id(int $user_id): array
 {
     require_once 'pdo_read.php';
 
 
     $sql = 'SELECT name, full_name FROM db.users WHERE id = :id';
     $sth = prepare_readonly($sql);
-    $sth->execute(['id' => $id]);
+    $sth->execute(['id' => $user_id]);
 
     return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
-function get_videos($course): array
+/**
+ * Gets the item tags of all videos in a course
+ * @param string $course_tag courses.tag
+ * @return array of videos.tag
+ */
+function course_video_tags(string $course_tag): array
 {
     require_once 'pdo_read.php';
 
 
     $sql = 'SELECT video_tag FROM db.course_videos WHERE course_tag = :course';
     $sth = prepare_readonly($sql);
-    $sth->execute(['course' => $course]);
+    $sth->execute(['course' => $course_tag]);
 
     return $sth->fetchAll();
 }
 
-function get_video_names($videos): array
+/**
+ * @param array $video_tags Array of arrays with key 'video_tag' as videos.tag
+ * @return array Mapping video.tag => video.name
+ */
+function videos_get_names(array $video_tags): array
 {
     require_once 'pdo_read.php';
 
@@ -48,17 +66,21 @@ function get_video_names($videos): array
     $sql = 'SELECT name FROM db.videos WHERE tag = :video_tag';
     $sth = prepare_readonly($sql);
 
-    $array = array();
+    $video_tag_to_name = [];
 
-    foreach ($videos as $video) {
-        $sth->execute(['video_tag' => $video['video_tag']]);
-        $array[$video['video_tag']] = $sth->fetch()['name'];
+    foreach ($video_tags as $video_info) {
+        $sth->execute(['video_tag' => $video_info['video_tag']]);
+        $video_tag_to_name[$video_info['video_tag']] = $sth->fetch()['name'];
     }
 
-    return $array;
+    return $video_tag_to_name;
 }
 
-function course_price($course_tag): string
+/**
+ * @param string $course_tag courses.tag
+ * @return float Price of the course
+ */
+function course_price_from_tag(string $course_tag): float
 {
     require_once 'pdo_read.php';
 
@@ -70,7 +92,12 @@ function course_price($course_tag): string
     return $price['price'];
 }
 
-function user_owns_item($user_id, $course_tag): bool
+/**
+ * @param int $user_id users.id
+ * @param string $item_tag items.tag
+ * @return bool Item is free or user owns item
+ */
+function user_can_access_item(int $user_id, string $item_tag): bool
 {
     require_once 'pdo_read.php';
 
@@ -84,12 +111,15 @@ FROM items i
 WHERE i.tag = :course_tag
 ';
     $sth = prepare_readonly($sql);
-    $sth->execute(['course_tag' => $course_tag, 'user_id' => $user_id]);
+    $sth->execute(['course_tag' => $item_tag, 'user_id' => $user_id]);
     $owned = $sth->fetch();
     return $owned['free'] or $owned['owned'];
 }
 
-function display_course_videos($course_tag): void
+/** Display all videos of a course
+ * @param string $course_tag courses.tag
+ */
+function display_course_videos(string $course_tag): void
 {
     require_once "pdo_write.php";
 
@@ -126,7 +156,11 @@ function display_course_videos($course_tag): void
 
 }
 
-function get_item_id($item_tag): string
+/**
+ * @param string $item_tag items.tag
+ * @return int items.id
+ */
+function item_id_from_tag(string $item_tag): int
 {
     require_once 'pdo_read.php';
 
@@ -138,7 +172,11 @@ function get_item_id($item_tag): string
     return $result['id'];
 }
 
-function get_rating_info($item_id): array
+/**
+ * @param int $item_id items.id
+ * @return array [total ratings, average rating]
+ */
+function get_rating_info(int $item_id): array
 {
     require_once 'pdo_read.php';
 

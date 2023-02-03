@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Fail an API call if the caller is not an administrator
+ * @return void
+ */
 function api_require_admin(): void
 {
     ensure_session();
@@ -8,7 +12,11 @@ function api_require_admin(): void
     }
 }
 
-function user_id_from_name($uid): int|false
+/**
+ * @param int $uid users.id
+ * @return int|false users.name
+ */
+function user_id_from_name(int $uid): int|false
 {
     require_once 'pdo_read.php';
 
@@ -20,6 +28,10 @@ function user_id_from_name($uid): int|false
     return $user !== false ? $user['id'] : false;
 }
 
+/**
+ * @param string $item_tag items.tag
+ * @return int|false items.id
+ */
 function item_id_from_tag(string $item_tag): int|false
 {
     require_once 'pdo_read.php';
@@ -32,7 +44,11 @@ function item_id_from_tag(string $item_tag): int|false
     return $item !== false ? $item['id'] : false;
 }
 
-function comment_id_from_tag($comment_tag): int|false
+/**
+ * @param string $comment_tag comments.tag
+ * @return int|false comments.id
+ */
+function comment_id_from_tag(string $comment_tag): int|false
 {
     require_once 'pdo_read.php';
 
@@ -44,7 +60,15 @@ function comment_id_from_tag($comment_tag): int|false
     return $item !== false ? $item['id'] : false;
 }
 
-function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
+/**
+ * Gift a user an item
+ * @param int $admin_uid User ID of the administrator providing the gift
+ * @param int $reciever_uid User ID of the gift recipient
+ * @param int $item_id Item ID of the item to be gifted
+ * @param string $item_tag Item tag of the item to be gifted
+ * @return bool Success
+ */
+function admin_gift_item(int $admin_uid, int $reciever_uid, int $item_id, string $item_tag): bool
 {
     require_once 'pdo_write.php';
 
@@ -59,7 +83,14 @@ function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
     return $prep->execute($data);
 }
 
-function admin_ban_user(int $target_uid, bool $ban = true): bool
+/**
+ * Set the ban state of a user.
+ * A banned user can't log in, and will have their sessions deauthenticated
+ * @param int $target_uid User ID of the user to be banned
+ * @param bool $ban On true, bans the user. On false, unbans them
+ * @return bool Success of the state change. Will succeed even if no change was made
+ */
+function admin_set_user_banned(int $target_uid, bool $ban): bool
 {
     require_once 'pdo_write.php';
 
@@ -73,7 +104,14 @@ function admin_ban_user(int $target_uid, bool $ban = true): bool
     return $prep->execute($data);
 }
 
-function admin_restrict_item(int $item_id, bool $restrict = true): bool
+/**
+ * Set the restriction state of an item.
+ * A restricted item can't be viewed and won't show up in the global search
+ * @param int $item_id Item ID of the item to be restricted
+ * @param bool $restrict On true, restricts the item. On false, unrestricts it
+ * @return bool Success of the state change. Will succeed even if no change was made
+ */
+function admin_set_item_restricted(int $item_id, bool $restrict): bool
 {
     require_once 'pdo_write.php';
 
@@ -87,7 +125,14 @@ function admin_restrict_item(int $item_id, bool $restrict = true): bool
     return $prep->execute($data);
 }
 
-function admin_hide_comment(int $comment_id, bool $hide = true): bool
+/**
+ * Sets the hidden state of a comment
+ * A hidden comment can only be viewed by administrators. Replies are preserved
+ * @param int $comment_id Comment ID of the comment to be hidden
+ * @param bool $hide On true, hides the comment. On false, unhides it
+ * @return bool Success of the state change. Will succeed even if no change was made
+ */
+function admin_set_comment_hidden(int $comment_id, bool $hide): bool
 {
     require_once 'pdo_write.php';
 

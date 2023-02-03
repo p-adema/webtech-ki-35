@@ -175,7 +175,7 @@ $(document).ready(function () {
 
 function load_replies(_) {
     const $this = $(this);
-    const tag = $this.unbind('click').click(show_replies).attr('query')
+    const tag = $this.unbind('click').click(show_replies).attr('data-query')
 
     const replies_data = {
         type: 'replies',
@@ -198,7 +198,7 @@ function load_replies(_) {
 
 function hide_replies(_) {
     const $this = $(this);
-    const tag = $this.attr('query')
+    const tag = $this.attr('data-query')
     const $replies = $(`#replies-${tag}`)
     $replies.css('max-height', $replies.prop('scrollHeight')).stop();
     setTimeout(function () {
@@ -211,7 +211,7 @@ function hide_replies(_) {
 }
 
 function show_replies(_) {
-    const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('query')
+    const tag = $(this).text(`Hide ${$(this).attr('count')}`).unbind('click').click(hide_replies).attr('data-query')
     const $replies = $(`#replies-${tag}`)
     $replies.css('max-height', $replies.prop('scrollHeight')).stop();
     setTimeout(function () {

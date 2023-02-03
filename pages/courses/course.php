@@ -8,18 +8,18 @@ html_header(title: 'Course', styled: true, scripted: true);
 $course_tag = $_GET['tag'] ?? '';
 if ($_SESSION['auth']) {
     $user_id = $_SESSION['uid'];
-    $has_course = user_owns_item($user_id, $course_tag);
+    $has_course = user_can_access_item($user_id, $course_tag);
 } else {
     $has_course = false;
 }
 $course_info = get_course_info($course_tag);
 if (isset($_GET['tag']) and $course_info !== false and !$course_info['restricted']):
-    $course_id = get_item_id($course_tag);
+    $course_id = item_id_from_tag($course_tag);
     $cart = new Cart;
     $course_in_cart = in_array($course_id, $cart->ids());
-    $course_creator = course_creator($course_info['creator']);
-    $videos = get_videos($course_tag);
-    $video_names = get_video_names($videos);
+    $course_creator = user_names_from_id($course_info['creator']);
+    $videos = course_video_tags($course_tag);
+    $video_names = videos_get_names($videos);
     $rating = get_rating_info($course_id);
     $score = 0;
     $ratings = 0;
@@ -98,10 +98,10 @@ if (isset($_GET['tag']) and $course_info !== false and !$course_info['restricted
                 <div class="course-buying-box">
                     <div class="course-buying">
                         <p id="price"> <?php
-                            if (course_price($course_tag) == 0) {
+                            if (course_price_from_tag($course_tag) == 0) {
                                 echo 'This course is free';
                             } else {
-                                $html = "The price of this course <br> is  " . number_format($cart->tag_price($tag), 2) . ' euro.';
+                                $html = "The price of this course <br> is  " . number_format($cart->item_price_from_tag($tag), 2) . ' euro.';
                                 echo $html;
                             } ?>
                         </p>

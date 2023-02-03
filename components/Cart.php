@@ -103,38 +103,46 @@ FROM course_videos cv
     }
 
 
-
-    public function get_id(string $tag): int|false
+    /**
+     * @param string $tag items.tag
+     * @return int|false items.id
+     */
+    public function item_id_from_tag(string $tag): int|false
     {
         $this->p_tag->execute(['tag' => $tag]);
         return $this->p_tag->fetch(PDO::FETCH_ASSOC)['id'];
     }
 
-    public function course_videos(int $id): array
+    /**
+     * Fetches all course videos from a given course ID
+     * @param int $course_id courses.id
+     * @return array videos.id array
+     */
+    public function course_videos(int $course_id): array
     {
-        $this->p_course_videos->execute(['id' => $id]);
+        $this->p_course_videos->execute(['id' => $course_id]);
         $videos = $this->p_course_videos->fetchAll(PDO::FETCH_ASSOC);
         return $videos ?: [];
     }
 
     /**
      * Add an item to the session cart
-     * @param int $id db.items.id to add to cart
+     * @param int $item_id items.id
      * @return bool success of addition
      */
-    public function add_item(int $id): bool
+    public function add_item(int $item_id): bool
     {
-        if (!in_array($id, $_SESSION['cart']['ids'])) {
-            $price = $this->get_price($id);
+        if (!in_array($item_id, $_SESSION['cart']['ids'])) {
+            $price = $this->item_price_from_id($item_id);
 
             if ($price !== false) {
-                $_SESSION['cart']['ids'][] = $id;
+                $_SESSION['cart']['ids'][] = $item_id;
                 $_SESSION['cart']['count'] += 1;
 
                 $_SESSION['cart']['total'] += $price;
-                $_SESSION['cart']['prices'][$id] = $price;
+                $_SESSION['cart']['prices'][$item_id] = $price;
 
-                foreach ($this->course_videos($id) as $video_id) {
+                foreach ($this->course_videos($item_id) as $video_id) {
                     $this->remove_item($video_id['id']);
                 }
                 return true;
@@ -143,16 +151,20 @@ FROM course_videos cv
         return false;
     }
 
-    private function get_price($id): float|false
+    /**
+     * @param int $item_id items.id
+     * @return float|false Video price, or (discounted) course price
+     */
+    private function item_price_from_id(int $item_id): float|false
     {
-        $this->p_price->execute(['id' => $id]);
+        $this->p_price->execute(['id' => $item_id]);
         $item = $this->p_price->fetch(PDO::FETCH_ASSOC);
         if ($item['type'] === 'course'){
             if ($_SESSION['auth']) {
                 $user_id = $_SESSION['uid'];
-                $this->p_owned_item_prices->execute(['uid' => $user_id, 'course_id' => $id]);
+                $this->p_owned_item_prices->execute(['uid' => $user_id, 'course_id' => $item_id]);
                 $owned_total = $this->p_owned_item_prices->fetch()['price'];
-                $this->p_course_total->execute(['course_id' => $id]);
+                $this->p_course_total->execute(['course_id' => $item_id]);
                 $total_price = $this->p_course_total->fetch()['price'];
                 $course['price'] = $item['price'] * (1 - ($owned_total / $total_price));
                 $total = round($course['price'], 2);
@@ -165,22 +177,26 @@ FROM course_videos cv
         }
     }
 
-    public function tag_price($tag): float|false
+    /**
+     * @param string $tag items.tag
+     * @return float|false Video price, or (discounted) course price
+     */
+    public function item_price_from_tag(string $tag): float|false
     {
-        return $this->get_price($this->get_id($tag));
+        return $this->item_price_from_id($this->item_id_from_tag($tag));
  }
     /**
      * Remove an item from the session cart
-     * @param int $id db.items.id to remove from cart
+     * @param int $item_id items.id
      * @return bool success of removal
      */
-    public function remove_item(int $id): bool
+    public function remove_item(int $item_id): bool
     {
-        if (in_array($id, $_SESSION['cart']['ids'])) {
-            unset($_SESSION['cart']['ids'][array_search($id, $_SESSION['cart']['ids'])]);
+        if (in_array($item_id, $_SESSION['cart']['ids'])) {
+            unset($_SESSION['cart']['ids'][array_search($item_id, $_SESSION['cart']['ids'])]);
             $_SESSION['cart']['count'] -= 1;
-            $_SESSION['cart']['total'] -= $_SESSION['cart']['prices'][$id];
-            unset($_SESSION['cart']['prices'][$id]);
+            $_SESSION['cart']['total'] -= $_SESSION['cart']['prices'][$item_id];
+            unset($_SESSION['cart']['prices'][$item_id]);
             return true;
         }
         return false;
@@ -188,8 +204,8 @@ FROM course_videos cv
     }
 
     /**
-     * Get the db.items.id values of the items in the session cart
-     * @return array of db.items.id values
+     * Get the items.id values of the items in the session cart
+     * @return array of items.id values
      */
     public function ids(): array
     {
@@ -205,19 +221,27 @@ FROM course_videos cv
         return $_SESSION['cart']['total'];
     }
 
-    public function item_long(int $id)
+    /**
+     * Get the full information array of an item
+     * @param int $item_id items.id
+     * @return array Information about a video or course
+     */
+    public function item_long(int $item_id): array
     {
-        if ($this->get_type($id) === 'video') {
-            $video = $this->video_long($id);
+        if ($this->item_type_from_id($item_id) === 'video') {
+            $video = $this->video_long($item_id);
             $video['type'] = 'video';
             return $video;
         } else {
-            $course = $this->course_long($id);
+            $course = $this->course_long($item_id);
             $course['type'] = 'course';
             return $course;
         }
     }
 
+    /**
+     * @return array Full information arrays for every item in the cart
+     */
     public function items_long(): array
     {
         $items = [];
@@ -228,27 +252,58 @@ FROM course_videos cv
         return $items;
     }
 
-    private function get_type($id): string
+    /**
+     * @param int $item_id items.id
+     * @return string 'video' or 'course'
+     */
+    private function item_type_from_id(int $item_id): string
     {
-        $this->p_type->execute(['id' => $id]);
+        $this->p_type->execute(['id' => $item_id]);
         return $this->p_type->fetch(PDO::FETCH_ASSOC)['type'];
     }
 
-    public function video_long($id)
+    /**
+     * Gets the full information array of a video
+     * @param int $item_id items.id
+     * @return array   i.tag,
+                       u.name AS uploader,
+                       v.name,
+                       price,
+                       description,
+                       subject,
+                       upload_date,
+                       views
+     */
+    public function video_long(int $item_id): array
     {
-        $this->p_video_long->execute(['id' => $id]);
+        $this->p_video_long->execute(['id' => $item_id]);
         return $this->p_video_long->fetch(PDO::FETCH_ASSOC);
     }
 
-    public function course_long($id)
+    /**
+     * Gets the full information array of a course
+     * @param int $item_id items.id
+     * @return array  i.tag,
+                      u.name AS uploader,
+                      c.name,
+                      price,
+                      description,
+                      subject,
+                      creation_date,
+                      views
+     */
+    public function course_long(int $item_id): array
     {
-        $this->p_course_long->execute(['id' => $id]);
+        $this->p_course_long->execute(['id' => $item_id]);
 
         $course = $this->p_course_long->fetch(PDO::FETCH_ASSOC);
-        $course['price'] = $this->get_price($id);
+        $course['price'] = $this->item_price_from_id($item_id);
         return $course;
     }
 
+    /**
+     * Clear the cart
+     */
     public function clear(): void
     {
         $_SESSION['cart'] = [

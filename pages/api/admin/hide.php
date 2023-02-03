@@ -34,14 +34,14 @@ if (!$valid) {
 }
 
 if ($action === 'hide') {
-    if (!admin_hide_comment($target_cid)) {
+    if (!admin_set_comment_hidden($target_cid, true)) {
         api_fail('Error hiding comment');
     }
 
     api_succeed('Successfully hid comment!');
 }
 
-if (!admin_hide_comment($target_cid, false)) {
+if (!admin_set_comment_hidden($target_cid, false)) {
     api_fail('Error hiding comment');
 }
 

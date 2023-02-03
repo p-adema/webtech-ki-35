@@ -10,7 +10,7 @@ html_header(title: 'Video', styled: true, scripted: true);
 
 $tag = $_GET['tag'] ?? '';
 $video_info = get_video_data($tag);
-$video_id = get_item_id($tag);
+$video_id = item_id_from_tag($tag);
 $rating = get_rating_info($video_id);
 $ratings = 0;
 
@@ -25,7 +25,7 @@ if (count($rating) == 0) {
 
 if ($_SESSION['auth']) {
     $user_id = $_SESSION['uid'];
-    if (user_owns_item($user_id, $tag)) {
+    if (user_can_access_item($user_id, $tag)) {
         $has_video = '';
     } else {
         $has_video = 'not_have_video';
@@ -97,7 +97,7 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['restricted']
             </div>
             <div class="comments-wrapper">
                 <span class="comments-title"> Comments </span>
-                <?php echo render_comment_form($_GET['tag'], false); ?>
+                <?php echo render_add_comment_form($_GET['tag'], false); ?>
                 <div class="top"></div>
                 <div class="comments"></div>
                 <div class="bottom"></div>

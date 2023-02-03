@@ -34,7 +34,7 @@ if (!$valid) {
 else {
     $comment_tag = add_comment($comment, $item_tag);
     $response = [
-        'html' => render_comment(get_comment_info(get_comment_id($comment_tag), 0))
+        'html' => render_comment(get_comment_info(comment_id_from_tag($comment_tag), 0))
     ];
     api_succeed('Successfully added comment!', data: $response);
 }

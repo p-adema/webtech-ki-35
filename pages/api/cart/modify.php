@@ -39,7 +39,7 @@ if (!$valid) {
 require_once "Cart.php";
 $cart = new Cart;
 
-$id = $cart->get_id($tag);
+$id = $cart->item_id_from_tag($tag);
 
 if ($id === false) {
     $errors['item'][] = 'Invalid product';

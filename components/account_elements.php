@@ -2,6 +2,11 @@
 
 require_once 'relative_time.php';
 
+/**
+ * Load information about a user, relevant for the account modification page
+ * @param int $user_id users.id
+ * @return array name, email, full_name of the user
+ */
 function load_account_data(int $user_id): array
 {
     require_once "pdo_write.php";
@@ -13,7 +18,12 @@ function load_account_data(int $user_id): array
     return $sql_prep->fetch();
 }
 
-function get_purchase_info($uid): array
+/**
+ * Get all purchases by a user
+ * @param int $uid users.id
+ * @return array id, url_tag, amount, request_time, "purchase", items
+ */
+function get_purchase_info(int $uid): array
 {
     require_once 'pdo_read.php';
 
@@ -23,7 +33,8 @@ function get_purchase_info($uid): array
 
     $data = $sth->fetchAll(PDO::FETCH_ASSOC);
 
-    $sql_join = 'SELECT purchase_items.item_id
+    $sql_join = '
+SELECT purchase_items.item_id
 FROM db.purchase_items
          INNER JOIN db.purchases ON purchase_items.purchase_id = purchases.id
 WHERE purchase_id = :id';
@@ -43,13 +54,18 @@ WHERE purchase_id = :id';
         } else {
             $data[$count]['items'] = '';
         }
-        $count += 1;
+        $count++;
     }
 
     return $data;
 }
 
-function get_gift_info($uid): array
+/**
+ * Get all gifts to a user
+ * @param int $uid users.id
+ * @return array item_id, confirmation_time, "gift"
+ */
+function get_gift_info(int $uid): array
 {
     require_once 'pdo_read.php';
 
@@ -61,6 +77,9 @@ function get_gift_info($uid): array
     return $sth->fetchAll(PDO::FETCH_ASSOC);
 }
 
+/**
+ * Displays the main invoice list
+ */
 function display_invoices(): void
 {
     $items = get_purchase_info($_SESSION['uid']);

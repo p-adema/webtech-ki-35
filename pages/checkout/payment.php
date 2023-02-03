@@ -2,7 +2,7 @@
 require 'html_page.php';
 require "billing_info.php";
 auth_redirect(if_not_auth: '/checkout/auth');
-has_info_redirect('/checkout/billing');
+no_billing_info_redirect('/checkout/billing');
 html_header(title: 'Payment', styled: 'form.css', scripted: true);
 ?>
     <div class="form-content">

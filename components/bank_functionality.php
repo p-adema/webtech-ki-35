@@ -1,45 +1,65 @@
 <?php
 
-function get_balance($user_id): string
+/**
+ * Get the bank balance of a user
+ * @param int $user_id users.id
+ * @return float balances.balance
+ */
+function user_balance_from_id(int $user_id): float
 {
     require_once "pdo_read.php";
 
     $sql = 'SELECT (balance) FROM db.balances WHERE (user_id = :user)';
 
-    $sth = prepare_readonly($sql);
-    $sth->execute(['user' => $user_id]);
+    $prep = prepare_readonly($sql);
+    $prep->execute(['user' => $user_id]);
 
-    return $sth->fetch()['balance'];
+    return $prep->fetch()['balance'];
 }
 
-function enough_balance($user_id, $tag): bool
+/**
+ * Checks whether a user has sufficient balance for a transaction
+ * @param string $transaction_tag transactions_pending.url_tag
+ * @return bool Whether the user has sufficent balance
+ */
+function transaction_sufficient_balance(string $transaction_tag): bool
 {
     require_once "pdo_read.php";
-    $user_bal = get_balance($user_id);
 
+    $sql = 'SELECT amount, user_id FROM db.transactions_pending WHERE (url_tag = :url_tag)';
 
-    $sql = 'SELECT (amount) FROM db.transactions_pending WHERE (url_tag = :url_tag)';
+    $prep = prepare_readonly($sql);
+    $prep->execute(['url_tag' => $transaction_tag]);
 
-    $sth = prepare_readonly($sql);
-    $sth->execute(['url_tag' => $tag]);
-
-    $required = $sth->fetch()['amount'];
+    $results = $prep->fetch();
+    $required = $results['amount'];
+    $user_bal = user_balance_from_id($results['user_id']);
 
     return $user_bal > $required;
 }
 
-function get_pending_transaction($user_id): array
+/**
+ * Fetches all pending transactions for a user
+ * @param int $user_id users.id
+ * @return array amount, url_tag, request_time FROM transactions_pending
+ */
+function user_pending_transactions(int $user_id): array
 {
     require_once "pdo_read.php";
 
     $sql = 'SELECT amount, url_tag, request_time FROM db.transactions_pending WHERE (user_id = :user)';
-    $sth = prepare_readonly($sql);
-    $sth->execute(['user' => $user_id]);
+    $prep = prepare_readonly($sql);
+    $prep->execute(['user' => $user_id]);
 
-    return $sth->fetchAll(PDO::FETCH_ASSOC);
+    return $prep->fetchAll(PDO::FETCH_ASSOC);
 }
 
-function get_transaction_log($user_id): array
+/**
+ * Fetches the transaction log of a user
+ * @param int $user_id users.id
+ * @return array amount, request_time, payment_time FROM transaction_log
+ */
+function user_transaction_log(int $user_id): array
 {
     require_once "pdo_read.php";
 

@@ -18,7 +18,7 @@ function mail_acc_verify(string $link, string $to): bool
     </p> 
     <p>
         If that doesn't work, paste this link into your browser: <br>
-        https://webtech-ki35.webtech-uva.nl/$link
+        https://webtech-ki35.webtech-uva.nl$link
     </p>
 </body>
 </html>";
@@ -45,7 +45,7 @@ function mail_forgot_password(string $link, string $to): bool
     </p> 
     <p>
         If that doesn't work, paste this link into your browser: <br>
-        https://webtech-ki35.webtech-uva.nl/$link
+        https://webtech-ki35.webtech-uva.nl$link
     </p>
     <p>
         If this wan't you, you can safely ignore this email.

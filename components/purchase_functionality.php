@@ -39,7 +39,7 @@ function display_product_information($uid, $url_tag): void
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
                     $upload_date = relative_time($data_ex['upload_date']);
-                    $creator = course_creator($data_ex['uploader'])['name'];
+                    $creator = user_names_from_id($data_ex['uploader'])['name'];
                     $link = '/courses/video/' . $info['tag'];
                 }
                 else {
@@ -48,7 +48,7 @@ function display_product_information($uid, $url_tag): void
                     $sth->execute(['tag' => $info['tag']]);
                     $data_ex = $sth->fetch(PDO::FETCH_ASSOC);
                     $upload_date = relative_time($data_ex['creation_date']);
-                    $creator = course_creator($data_ex['creator'])['name'];
+                    $creator = user_names_from_id($data_ex['creator'])['name'];
                     $link = '/courses/course/' . $info['tag'];
                 }
 

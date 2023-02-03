@@ -34,14 +34,14 @@ if (!$valid) {
 }
 
 if ($action === 'restrict') {
-    if (!admin_restrict_item($target_id)) {
+    if (!admin_set_item_restricted($target_id, true)) {
         api_fail('Error restricting item');
     }
 
     api_succeed('Successfully restricted item!');
 }
 
-if (!admin_restrict_item($target_id, false)) {
+if (!admin_set_item_restricted($target_id, false)) {
     api_fail('Error unrestricting item');
 }
 

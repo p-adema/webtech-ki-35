@@ -23,7 +23,7 @@ if ($_SESSION['auth']) :
                 $user_id = $_SESSION['uid'];
                 echo "<span class='balance-text'>€</span>";
                 echo '<div class="balance-amount">';
-                echo get_balance($user_id);
+                echo number_format(user_balance_from_id($user_id), 2);
                 echo '</div>'
                 ?>
             </div>
@@ -33,7 +33,7 @@ if ($_SESSION['auth']) :
                 <span class="pending-header">Transactions waiting for confirmation</span>
                 <div class="pending_box">
                     <?php
-                    $all_current_transactions = get_pending_transaction($user_id);
+                    $all_current_transactions = user_pending_transactions($user_id);
                     foreach ($all_current_transactions as $pending_transaction) {
                         print_pending($pending_transaction);
                         echo "<br>";
@@ -45,7 +45,7 @@ if ($_SESSION['auth']) :
                 <span class="transaction-title"> Transaction log</span>
                 <div class="transaction-box">
                     <?php
-                    $past_transactions = get_transaction_log($user_id);
+                    $past_transactions = user_transaction_log($user_id);
                     foreach ($past_transactions as $transaction) {
                         print_transaction($transaction);
                     }

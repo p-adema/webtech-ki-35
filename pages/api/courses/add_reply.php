@@ -41,7 +41,7 @@ if (!$valid) {
         api_fail('Invalid item or comment tag');
     }
     $response = [
-        'html' => render_comment(get_comment_info(get_comment_id($comment_tag), 0), true)
+        'html' => render_comment(get_comment_info(comment_id_from_tag($comment_tag), 0), true)
     ];
     api_succeed('Successfully added comment!', data: $response);
 }

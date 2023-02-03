@@ -34,14 +34,14 @@ if (!$valid) {
 }
 
 if ($action === 'ban') {
-    if (!admin_ban_user($target_uid)) {
+    if (!admin_set_user_banned($target_uid, true)) {
         api_fail('Error banning user');
     }
 
     api_succeed('Successfully banned user!');
 }
 
-if (!admin_ban_user($target_uid, false)) {
+if (!admin_set_user_banned($target_uid, false)) {
     api_fail('Error unbanning user');
 }
 

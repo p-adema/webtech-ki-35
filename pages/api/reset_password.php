@@ -25,10 +25,10 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-rese
 
 
 $sql = "SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = 'password-reset');";
-$data = ['tag' => $tag];
+$data_tag = ['tag' => $tag];
 $sql_prep = prepare_write($sql);
 
-if (!$sql_prep->execute($data)) {
+if (!$sql_prep->execute($data_tag)) {
     $errors['submit'][] = 'Internal server error, try again later';
     $valid = false;
 }
@@ -54,12 +54,15 @@ if (!$valid) {
 }
 $sql = 'UPDATE db.users t SET t.password = :new_password WHERE t.id = :user_id;';
 
-$data = [
+$data_password = [
     'new_password' => password_hash($password, PASSWORD_DEFAULT),
     'user_id' => $user_id
 ];
 $sql_prep = prepare_write($sql);
-$sql_prep->execute($data);
+$sql_prep->execute($data_password);
 
+$sql_delete_old = 'DELETE FROM db.emails_pending WHERE db.emails_pending.url_tag = :tag';
+$prep_delete = prepare_write($sql_delete_old);
+$prep_delete->execute($data_tag);
 
 api_succeed('Password has been changed!', $errors);
