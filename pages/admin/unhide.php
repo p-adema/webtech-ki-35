@@ -1,17 +1,17 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Sudo as user', styled: 'form.css', scripted: true);
+html_header(title: 'Unhide comment', styled: 'form.css', scripted: 'admin/hide.js');
 
 require 'admin_controls.php'; ?>
 
     <div class="form-content">
-        <h1>Ban a user</h1>
+        <h1>Unhide a comment</h1>
         <div class="form-outline">
-            <form action="/api/admin/sudo" method="POST">
+            <form action="/api/admin/hide" method="POST" data-action="unhide">
                 <?php
                 if ($_SESSION['admin']) {
-                    form_input('user', 'User ID to be sudo as');
+                    form_input('comment_tag', 'Tag of comment to be unhidden');
                     form_error();
 
                     echo '<div class="form-btns">';

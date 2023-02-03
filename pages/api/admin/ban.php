@@ -31,16 +31,14 @@ if ($target_uid === false) {
 
 if ($action === 'ban') {
     if (!admin_ban_user($target_uid)) {
-        $errors['submit'][] = 'Error banning user';
-        api_fail('Error banning user', $errors);
+        api_fail('Error banning user');
     }
 
-    api_succeed('Successfully banned user!', $errors);
+    api_succeed('Successfully banned user!');
 }
 
-if (!admin_unban_user($target_uid)) {
-    $errors['submit'][] = 'Error unbanning user';
-    api_fail('Error unbanning user', $errors);
+if (!admin_ban_user($target_uid, false)) {
+    api_fail('Error unbanning user');
 }
 
-api_succeed('Successfully unbanned user!', $errors);
+api_succeed('Successfully unbanned user!');

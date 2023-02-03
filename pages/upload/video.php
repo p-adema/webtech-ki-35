@@ -18,7 +18,7 @@ html_header(title: 'Upload new video', styled: 'form.css', scripted: true);
                 form_error();
                 echo '<div class="form-btns form-btns-down">';
                 form_submit(text: 'Upload video', extra_cls: 'med-btn');
-                text_link('Go back', '/upload/');
+                display_text_link('Go back', '/upload/');
                 echo '</div>';
                 form_upload_progress();
                 ?>

@@ -63,7 +63,7 @@ class Users(dict):
 
 
 def sanitize(string: str) -> str:
-    return html.escape(''.join(char if ord(char) < 128 else '?' for char in string)).replace('\n', '<br />')
+    return html.escape(''.join(char if ord(char) < 128 else '?' for char in string)).replace('\n', '<br>')
 
 
 def get_info(course: str, video: str):
@@ -99,15 +99,15 @@ def parse_comments(course: str, video: str, users: Users):
 
 
 users_sql_h = """
-INSERT INTO db.users 
+INSERT INTO db.users
     (name, email, password, verified)
 VALUES\n"""
 
 user_sql = "    ('{name}', '{email}@gmail.com', 'NOLOGIN', 1),\n"
 
 comments_sql_h = """
-INSERT INTO comments 
-    (tag, commenter_id, item_id, text, date, reply_tag, score) 
+INSERT INTO comments
+    (tag, commenter_id, item_id, text, date, reply_tag, score)
 VALUES\n"""
 
 comment_sql = "    ('{tag}', {uid}, {vid}, '{text}', FROM_UNIXTIME({timestamp}), {reply_tag}, {likes}),\n"

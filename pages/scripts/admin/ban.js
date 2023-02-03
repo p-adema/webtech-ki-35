@@ -5,7 +5,7 @@ $(document).ready(function () {
 
         const user_data = {
             user: $("#user").val(),
-            action: 'ban'
+            action: $(this).attr('data-action')
         };
 
         const handler_options = {

@@ -6,7 +6,7 @@ function get_course_info($tag): array|false
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT name, description, subject, creator, creation_date, views, deleted 
+    $sql = 'SELECT name, description, subject, creator, creation_date, views, restricted 
             FROM db.courses c
                 INNER JOIN items i on c.tag = i.tag
             WHERE c.tag = :tag';
@@ -74,20 +74,23 @@ function course_price($course_tag): string {
     return $price['price'];
 }
 
-function has_course($course_tag, $user_id): bool {
+function user_owns_item($user_id, $course_tag): bool {
     require_once 'pdo_read.php';
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT id FROM db.ownership WHERE item_tag = :course_tag and user_id = :user_id';
+    $sql = '
+SELECT COALESCE(v.free, c.free) as free, o.id as owned
+FROM items i
+    LEFT JOIN videos v on i.tag = v.tag
+    LEFT JOIN db.courses c on i.tag = c.tag
+    LEFT JOIN ownership o on i.tag = o.item_tag AND user_id = :user_id
+WHERE i.tag = :course_tag
+';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['course_tag' => $course_tag, 'user_id' => $user_id]);
-    $id = $sth->fetch();
-    if (empty($id)) {
-        return false;
-    } else {
-        return true;
-    }
+    $owned = $sth->fetch();
+    return $owned['free'] or $owned['owned'];
 }
 
 function display_course_videos($course_tag): void
@@ -124,7 +127,7 @@ function display_course_videos($course_tag): void
             $video_tag = $all_videos[$x]['video_tag'];
                 echo "<a href='/courses/video/$video_tag'><div class='single-video-block'> 
     
-                        <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg'></div> 
+                        <div class='thumbnail'><img class='thumbnail-picture' src='/resources/thumbnails/$video_tag.jpg' alt='Video thumbnail'></div> 
                         <p class='thumbnail-text' >$video_name</p>
                        </div></a>";
             }

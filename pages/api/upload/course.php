@@ -182,5 +182,5 @@ if (!$prep_own->execute($data_own)) {
     api_fail("Couldn't grant course", $errors);
 }
 
-$message = "Course successfully created! <br /> You can find your course <br /> <a href='/courses/course/$course_tag'> at this link </a>";
+$message = "Course successfully created! <br> You can find your course <br> <a href='/courses/course/$course_tag'> at this link </a>";
 api_succeed($message, $errors);

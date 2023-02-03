@@ -9,10 +9,9 @@ api_require_login();
 $cart = new Cart;
 
 $sql_cart = "INSERT INTO db.purchases (url_tag, amount, user_id, info_id)
-             SELECT :tag, :total, :uid, id
+             SELECT :tag, :total, :uid, MAX(id)
              FROM billing_information
-             WHERE user_id = :uid
-             ORDER BY id DESC;";
+             WHERE user_id = :uid";
 
 $data = [
     'tag' => tag_create(),
@@ -60,8 +59,8 @@ if (!$p_transaction->execute($data_transaction)) {
     api_fail('Internal error 3', ['submit' => 'Internal error']);
 }
 $link = "/bank/verify/$pending_tag";
-$msg = "Payment successfully requested: please <br /> 
-<a href='$link'> confirm the transaction </a> <br /> 
+$msg = "Payment successfully requested: please <br> 
+<a href='$link'> confirm the transaction </a> <br> 
 with your bank.";
 
 $cart->clear();

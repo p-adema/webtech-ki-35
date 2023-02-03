@@ -6,16 +6,16 @@ function render_cart_item(array $item): string
 {
     $link = '/courses/' . ($item['type'] === 'video' ? 'video/' : 'course/') . $item['tag'];
     return "
-<a class='cart-item-anchor' href='$link' tag='{$item['tag']}'>
+<a class='cart-item-anchor' href='$link' data-tag='{$item['tag']}'>
     <div class='cart-item-wrapper'> 
         <span class='cart-item-name'> {$item['name']} </span> 
         <span class='cart-item-price'> €{$item['price']} </span> 
-        <span class='cart-item-delete material-symbols-outlined' tag='{$item['tag']}'> cancel </span>
+        <span class='cart-item-delete material-symbols-outlined' data-tag='{$item['tag']}'> cancel </span>
     </div> 
 </a>";
 }
 
-function render_cart(): string
+function render_cart_items(): string
 {
     $cart = new Cart;
     $items = $cart->items_long();
@@ -26,7 +26,7 @@ function render_cart(): string
     return join(PHP_EOL, $items_rendered);
 }
 
-function sidebar_right(): string
+function render_sidebar_cart(): string
 {
     $items_empty = "
 <span class='cart-items-empty'>
@@ -34,7 +34,7 @@ function sidebar_right(): string
     Browse videos and courses to find new items!
 </span>
 ";
-    $items_html = render_cart();
+    $items_html = render_cart_items();
     $cart_go = '<span class="material-symbols-outlined">shopping_cart_checkout</span>';
     return "
 <div class='sidebar-right sidebar-block sidebar_animate_right'>
@@ -42,7 +42,7 @@ function sidebar_right(): string
     $items_html
     $items_empty
     <div class='checkout-sidebar'>
-        <button onclick='go_to_checkout()' class='checkout-button' type='button'>$cart_go Continue to cart</button> 
+        <a href='/checkout/review' class='checkout-button' type='button'>$cart_go Continue to cart</a> 
     </div>
 </div>";
 }

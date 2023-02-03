@@ -1,4 +1,4 @@
-html {
+body {
     background-color: #c3e0c0;
 }
 
@@ -14,7 +14,7 @@ html {
     text-align: center;
     font-size: 60px;
     font-weight: bold;
-    border-bottom: solid black 5px
+    border-bottom: solid black 5px;
 }
 
 .history-outline {
@@ -37,7 +37,7 @@ html {
     text-align: start;
     font-size: 40px;
     font-weight: bold;
-    border-bottom: solid black 3px
+    border-bottom: solid black 3px;
 }
 
 .box-outline-items {
@@ -75,7 +75,7 @@ html {
     text-align: end;
     font-size: 40px;
     font-weight: bold;
-    border-bottom: solid black 3px
+    border-bottom: solid black 3px;
 }
 
 .box-outline-gifts {
@@ -89,7 +89,7 @@ button.not-button:hover {
 }
 
 button:hover {
-    cursor: grab;
+    cursor: pointer;
 }
 
 .item {
@@ -151,16 +151,65 @@ button:hover {
 }
 
 .purchase-information {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.purchase-wrapper {
     padding: 8px;
-    margin-top: 2vw;
     display: flex;
     flex-flow: column;
     align-items: baseline;
     font-size: 20px;
     border-radius: 15px;
-    border: solid black 3px;
-    box-shadow: 0 5px 15px hsl(0, 0%, 0.2%);
-    background-color: #b1cbb0;
+    border: solid black 1px;
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%);
+    background-color: #a5d5ca;
+    transition: background-color 200ms ease-in-out;
+}
+
+.purchase-wrapper:hover {
+    background-color: #b7dad1;
+}
+
+.item-name {
+    align-self: center;
+    color: #151617;
+}
+
+.item-subject {
+    color: whitesmoke;
+    font-size: medium;
+}
+
+.invoice-back {
+    background-color: #80a8f1;
+    border-radius: 20px;
+    font-size: large;
+    padding: 5px 10px 5px 10px;
+    transition: background-color 200ms ease-in-out;
+    color: whitesmoke;
+}
+
+.invoice-back:hover {
+    background-color: #95b3ec;
+}
+
+.purchase-meta {
+    display: flex;
+    align-self: end;
+    color: #606060;
+    font-size: small;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex-gap {
+    min-width: 20px;
+    flex: auto;
 }
 
 .video-name {

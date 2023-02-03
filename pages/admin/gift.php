@@ -16,7 +16,7 @@ require 'admin_controls.php'; ?>
                     form_error();
 
                     echo '<div class="form-btns">';
-                    text_link('Go back', '/admin/');
+                    display_text_link('Go back', '/admin/');
                     form_submit();
                     echo '</div>';
                 } else {

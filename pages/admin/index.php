@@ -14,11 +14,20 @@ html_header(title: 'Administration', styled: 'form.css', scripted: 'ajax');
                     echo '<p> Select an action: </p>';
 
                     echo '<div class="form-btns form-btns-down form-btns-spaced">';
-                    text_link('Sudo as a user', '/admin/sudo');
-                    text_link('Unban a user', '/admin/unban');
-                    text_link('Ban a user', '/admin/ban');
-                    text_link('Delete an item', '/admin/delete');
-                    text_link('Gift an item', '/admin/gift');
+                    display_text_link('Sudo as a user', '/admin/sudo');
+                    display_link_pair(
+                        'Ban a user', '/admin/ban',
+                        'Unban a user', '/admin/unban'
+                    );
+                    display_link_pair(
+                        'Hide a comment', '/admin/hide',
+                        'Unhide a comment', '/admin/unhide'
+                    );
+                    display_link_pair(
+                        'Restrict an item', '/admin/restrict',
+                        'Unrestrict an item', '/admin/unrestrict'
+                    );
+                    display_text_link('Gift an item', '/admin/gift');
                     echo '</div>';
 
                 } else {

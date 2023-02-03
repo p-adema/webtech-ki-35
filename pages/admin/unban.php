@@ -1,21 +1,21 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Ban user', styled: 'form.css', scripted: true);
+html_header(title: 'Ban user', styled: 'form.css', scripted: 'admin/ban.js');
 
 require 'admin_controls.php'; ?>
 
     <div class="form-content">
         <h1>Unban a user</h1>
         <div class="form-outline">
-            <form action="/api/admin/unban" method="POST">
+            <form action="/api/admin/unban" method="POST" data-action="unhide">
                 <?php
                 if ($_SESSION['admin']) {
                     form_input('user', 'Username to be unbanned');
                     form_error();
 
                     echo '<div class="form-btns">';
-                    text_link('Go back', '/admin/');
+                    display_text_link('Go back', '/admin/');
                     form_submit();
                     echo '</div>';
                 } else {

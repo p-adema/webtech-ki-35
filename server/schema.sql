@@ -30,12 +30,12 @@ CREATE TABLE `billing_information`
 
 CREATE TABLE `items`
 (
-    `id`      BIGINT UNSIGNED             NOT NULL AUTO_INCREMENT,
-    `tag`     CHAR(64) UNIQUE             NOT NULL,
-    `type`    ENUM ('video', 'course')    NOT NULL,
-    `price`   DECIMAL(5, 2) DEFAULT 0     NOT NULL,
-    `rating`  DECIMAL(3, 2) DEFAULT 0     NOT NULL,
-    `deleted` BOOLEAN       DEFAULT FALSE NOT NULL,
+    `id`         BIGINT UNSIGNED             NOT NULL AUTO_INCREMENT,
+    `tag`        CHAR(64) UNIQUE             NOT NULL,
+    `type`       ENUM ('video', 'course')    NOT NULL,
+    `price`      DECIMAL(5, 2) DEFAULT 0     NOT NULL,
+    `rating`     DECIMAL(3, 2) DEFAULT 0     NOT NULL,
+    `restricted` BOOLEAN       DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`)
 );
 
@@ -95,6 +95,7 @@ CREATE TABLE `comments`
     `date`         DATETIME DEFAULT NOW() NOT NULL,
     `reply_tag`    CHAR(64)               NULL,
     `score`        BIGINT   DEFAULT 0     NOT NULL,
+    `hidden`       BOOLEAN  DEFAULT FALSE NOT NULL,
     PRIMARY KEY (`id`),
     FOREIGN KEY (`commenter_id`) REFERENCES `users` (`id`),
     FOREIGN KEY (`item_id`) REFERENCES `items` (`id`),
@@ -195,6 +196,7 @@ CREATE TABLE `ownership`
     `purchase_id` BIGINT UNSIGNED                    NULL,
     `gift_id`     BIGINT UNSIGNED                    NULL,
     PRIMARY KEY (`id`),
+    UNIQUE (`item_tag`, `user_id`),
     FOREIGN KEY (`item_tag`) REFERENCES db.items (`tag`),
     FOREIGN KEY (`user_id`) REFERENCES db.users (`id`),
     FOREIGN KEY (`purchase_id`) REFERENCES db.purchases (`id`),

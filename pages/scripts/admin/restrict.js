@@ -4,8 +4,8 @@ $(document).ready(function () {
         $('button.form-submit').addClass('pressed').removeClass('error')
 
         const user_data = {
-            user: $("#user").val(),
-            action: 'unban'
+            item_tag: $("#item_tag").val(),
+            action: $(this).attr('data-action')
         };
 
         const handler_options = {
@@ -15,6 +15,6 @@ $(document).ready(function () {
             }
         }
 
-        $.post('/api/admin/ban', user_data, form_default_response(handler_options));
+        $.post('/api/admin/restrict', user_data, form_default_response(handler_options));
     });
 });

@@ -12,12 +12,12 @@ function mail_acc_verify(string $link, string $to): bool
 <body>
     <h1> Verify your account </h1>
     <p> 
-        Welcome to EduGrove! <br />
+        Welcome to EduGrove! <br>
         To continue, please click on 
-        <a href = 'https://webtech-ki35.webtech-uva.nl$link'>this link</a> <br />
+        <a href = 'https://webtech-ki35.webtech-uva.nl$link'>this link</a> <br>
     </p> 
     <p>
-        If that doesn't work, paste this link into your browser: <br />
+        If that doesn't work, paste this link into your browser: <br>
         https://webtech-ki35.webtech-uva.nl/$link
     </p>
 </body>
@@ -39,12 +39,12 @@ function mail_forgot_password(string $link, string $to): bool
 <body>
     <h1> Change your password </h1>
     <p> 
-        You have requested a password reset for your account <br />
+        You have requested a password reset for your account <br>
         To continue, please click on 
-        <a href = 'https://webtech-ki35.webtech-uva.nl$link'>this link</a> <br />
+        <a href = 'https://webtech-ki35.webtech-uva.nl$link'>this link</a> <br>
     </p> 
     <p>
-        If that doesn't work, paste this link into your browser: <br />
+        If that doesn't work, paste this link into your browser: <br>
         https://webtech-ki35.webtech-uva.nl/$link
     </p>
     <p>

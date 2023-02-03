@@ -19,7 +19,7 @@ function new_pdo_write(bool $err_fatal = true): PDO
         if (!$err_fatal) {
             throw $e;
         }
-        echo "<br/>" . "SQL connection error (read/write): " . $e->getMessage() . "<br/>";
+        echo "<br>" . "SQL connection error (read/write): " . $e->getMessage() . "<br>";
         die();
     }
 

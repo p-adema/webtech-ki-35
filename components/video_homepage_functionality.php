@@ -15,7 +15,7 @@ function render_genre_videos($videos): void
             <div class='genre-video-outline'>
                 <a href='/courses/video?tag={$video['tag']}'>
                     <img class='best-video' src='/resources/thumbnails/{$video['tag']}.jpg'
-                        alt='Your browser does not support this image type.'>
+                        alt='Video thumbnail'>
                 </a>
             </div>
             <div class='genre-video-info'>

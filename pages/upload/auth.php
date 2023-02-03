@@ -10,7 +10,7 @@ html_header(title: 'Create an account', authentication: true, styled: 'form.css'
                 <p> Please register or log in to upload videos </p>
                 <?php
                 echo '<div class="form-btns">';
-                text_link('Login', '/auth/login');
+                display_text_link('Login', '/auth/login');
                 form_submit(text: 'Register');
                 echo '</div>';
                 ?>

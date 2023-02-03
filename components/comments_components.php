@@ -12,7 +12,7 @@ function item_id_from_tag(string $tag, PDO $PDO): int|false
 
 function get_comments_item(int $id, PDO $PDO): array
 {
-    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies 
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies, c.hidden
             FROM comments as c
                 INNER JOIN users u on c.commenter_id = u.id
                 LEFT JOIN scores s on c.tag = s.comment_tag and s.user_id = :uid
@@ -33,7 +33,7 @@ function get_comments_item(int $id, PDO $PDO): array
 
 function get_replies_comment(string $tag, PDO $PDO): array
 {
-    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies 
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, COALESCE(s.score, 0) as user_score, COUNT(r.id) as replies , c.hidden
             FROM comments as c
                 INNER JOIN users u on c.commenter_id = u.id
                 LEFT JOIN scores s on c.tag = s.comment_tag and s.user_id = :uid
@@ -67,16 +67,27 @@ function render_comment(array $comment, bool $is_reply = false): string
     $class = $is_reply ? 'comment-top' : 'comment-reply';
     $replies = render_show_replies($comment['replies'], $comment['tag']);
     $new_reply = render_comment_form($comment['tag'], true);
+    if ($_SESSION['admin']) {
+        $text = $comment['text'];
+        $admin_icon = $comment['hidden'] ? 'visibility_off' : 'visibility';
+        $admin_class = $comment['hidden'] ? 'hidden' : '';
+        $admin_hide = "<span class='comment-admin-hide material-symbols-outlined' data-tag='{$comment['tag']}'>$admin_icon</span>";
+    } else {
+        $admin_class = '';
+        $text = $comment['hidden'] ? "<span class='comment-text-hidden'> This comment has been hidden by an administrator </span>" : $comment['text'];
+        $admin_hide = '';
+    }
     return "
 <div class='comment-wrapper' id='{$comment['tag']}'>
-    <div class='comment $class'>
+    <div class='comment $class $admin_class'>
         <div class='head'>
             <span class='comment-username'> {$comment['name']} </span>
             <span class='head-space'></span>
             <span class='comment-date'> $ago </span>
+            $admin_hide
         </div>
         <div class='comment-text-wrapper'>
-            <span class='comment-text'> {$comment['text']} </span>
+            <span class='comment-text'> $text </span>
         </div>
         <div class='comment-reactions-wrapper' data-tag='{$comment['tag']}'>
             <div class='comment-reactions-gap-s'></div><span class='comment-reactions-up material-symbols-outlined $rating_class_up'>thumb_up</span><div class='comment-reactions-gap-s'></div><span class='comment-reactions-down material-symbols-outlined $rating_class_down'>thumb_down</span><div class='comment-reactions-gap-l'></div><div class='comment-reactions-reply-box'><span class='comment-reactions-reply material-symbols-outlined'>reply</span></div>
@@ -176,7 +187,7 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
         'tag' => $comment_tag,
         'uid' => $uid,
         'video_id' => $item_id,
-        'comment' => str_replace(PHP_EOL, '<br />', htmlspecialchars($comment_text)),
+        'comment' => str_replace(PHP_EOL, '<br>', htmlspecialchars($comment_text)),
         'reply' => $reply_tag
     ];
 
@@ -206,7 +217,7 @@ function get_comment_info($comment_id, int $replies): array
 
     $pdo_read = new_pdo_read();
 
-    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score FROM comments as c
+    $sql = 'SELECT c.tag, u.name, u.full_name, c.date, c.text, c.score, c.hidden FROM comments as c
             INNER JOIN users u on c.commenter_id = u.id
             WHERE c.id = :comment';
     $sth = $pdo_read->prepare($sql);

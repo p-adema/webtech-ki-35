@@ -183,5 +183,5 @@ if (!$prep_own->execute($data_own)) {
     api_fail("Couldn't grant video", $errors);
 }
 
-$message = "Video successfully added! <br /> You can find your video <br /> <a href='/courses/video/$item_tag'> at this link </a>";
+$message = "Video successfully added! <br> You can find your video <br> <a href='/courses/video/$item_tag'> at this link </a>";
 api_succeed($message, $errors);

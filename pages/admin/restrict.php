@@ -1,21 +1,21 @@
 <?php
 require 'html_page.php';
 auth_redirect(if_not_auth: '/auth/login');
-html_header(title: 'Delete item', styled: 'form.css', scripted: true);
+html_header(title: 'Restrict item', styled: 'form.css', scripted: true);
 
 require 'admin_controls.php'; ?>
 
     <div class="form-content">
-        <h1>Delete an item</h1>
+        <h1>Restrict an item</h1>
         <div class="form-outline">
-            <form action="/api/admin/delete" method="POST">
+            <form action="/api/admin/restrict" method="POST" data-action="restrict">
                 <?php
                 if ($_SESSION['admin']) {
-                    form_input('item_tag', 'Tag of item to be deleted');
+                    form_input('item_tag', 'Tag of item to be restricted');
                     form_error();
 
                     echo '<div class="form-btns">';
-                    text_link('Go back', '/admin/');
+                    display_text_link('Go back', '/admin/');
                     form_submit();
                     echo '</div>';
                 } else {

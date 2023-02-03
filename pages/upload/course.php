@@ -18,7 +18,7 @@ html_header(title: 'Create new course', styled: 'form.css', scripted: true);
 
                 form_error();
                 echo '<div class="form-btns">';
-                text_link('Go back', '/upload/');
+                display_text_link('Go back', '/upload/');
                 form_submit(text: 'Create course', extra_cls: 'med-btn');
                 echo '</div>';
                 ?>

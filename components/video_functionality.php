@@ -8,7 +8,7 @@ function get_video_data($video_tag): array|false
 
     $new_pdo_read = new_pdo_read();
 
-    $sql = 'SELECT name, description, subject, uploader, upload_date, views, deleted, r.rating
+    $sql = 'SELECT name, description, subject, uploader, upload_date, views, restricted, r.rating
             FROM db.videos v 
                 INNER JOIN items i on v.tag = i.tag
                 LEFT JOIN ratings r on i.id = r.item_id and r.rater_id = :uid

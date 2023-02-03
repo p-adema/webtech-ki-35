@@ -11,7 +11,25 @@ function last_billing_info(int $uid): array|false
     return $p_sql->fetch(PDO::FETCH_ASSOC);
 }
 
-function render_billing_info($info, $total): void
+function display_purchase_billing_info(string $url_tag): void
+{
+    require_once "pdo_read.php";
+    $sql = '
+SELECT p.amount, b.legal_name, b.country, b.city, b.zipcode, b.street_number
+FROM purchases p
+         INNER JOIN billing_information b on b.id = p.info_id
+WHERE p.url_tag = :url_tag';
+
+    $data = ['url_tag' => $url_tag];
+    $pdo_read = new_pdo_read();
+
+    $prep = $pdo_read->prepare($sql);
+    $prep->execute($data);
+    $info = $prep->fetch();
+    display_billing_info($info, $info['amount']);
+}
+
+function display_billing_info($info, $total): void
 {
     echo "
 <div class='billing-wrapper'>

@@ -19,5 +19,3 @@ echo -n '0.0.0.0' > hostname
 random_token 64 > web-read
 
 random_token 64 > web-write
-
-random_token 64 > web-deploy

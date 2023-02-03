@@ -37,7 +37,7 @@ function html_header(string $title, string $description = '', bool $navbar = tru
             if ($scripted === true) {
                 $script = PAGE . '.js';
             } else {
-                $script = $scripted;
+                $script = '/' . $scripted;
             }
             $script_tags = "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js'></script>
                             <script src='/scripts/global.js$postfix'></script>
@@ -52,22 +52,22 @@ function html_header(string $title, string $description = '', bool $navbar = tru
         } else {
             $style = '/' . $styled;
         }
-        $style_tag = "<link rel='stylesheet' href='/styles$style$postfix' type='text/css'/>";
+        $style_tag = "<link rel='stylesheet' href='/styles$style$postfix' type='text/css'>";
     } else {
         $style_tag = '';
     }
     $html = "<!DOCTYPE html>
             <html lang='en'>
             <head>
-                <meta charset='utf - 8'>
+                <meta charset='utf-8'>
                 <meta name='description' content=$description/>
                 <title>$title</title>
                 $script_tags
-                <link rel='preconnect' href='https://fonts.googleapis.com' />
-                <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin />
-                <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap' rel='stylesheet' />
-                <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400..600,0..1,0' />
-                <link rel='stylesheet' href='/styles/global.css$postfix' type='text/css'/>
+                <link rel='preconnect' href='https://fonts.googleapis.com' >
+                <link rel='preconnect' href='https://fonts.gstatic.com' crossorigin >
+                <link href='https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap' rel='stylesheet' >
+                <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400..600,0..1,0' >
+                <link rel='stylesheet' href='/styles/global.css$postfix' type='text/css'>
                 $style_tag
                 $extra
             </head>

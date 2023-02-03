@@ -38,48 +38,58 @@ if (!$valid) {
 }
 
 $sql = match ($sort) {
-    'views' => 'SELECT COALESCE(v.tag, c.tag) as tag, COALESCE(v.name, c.name) as name,
-                       i.type, COALESCE(v.free, c.free) as free, o.id as owned
-                FROM items i
-                    LEFT JOIN videos v on i.tag = v.tag
-                    LEFT JOIN courses c on i.tag = c.tag
-                    LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
-                WHERE MATCH(v.name) AGAINST(:query) OR MATCH(c.name) AGAINST(:query)
-                ORDER BY COALESCE(v.views, c.views) DESC',
+    'views' => "
+SELECT COALESCE(v.tag, c.tag)   as tag,
+       COALESCE(v.name, c.name) as name,
+       i.type,
+       COALESCE(v.free, c.free) as free,
+       o.id                     as owned
+FROM items i
+         LEFT JOIN videos v on i.tag = v.tag
+         LEFT JOIN courses c on i.tag = c.tag
+         LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+WHERE v.name LIKE :query
+   OR c.name LIKE :query
+ORDER BY COALESCE(v.views, c.views) DESC
+LIMIT 50",
 
-    'rating' => 'SELECT COALESCE(v.tag, c.tag)   as tag,
-                        COALESCE(v.name, c.name) as name,
-                        i.type,
-                        COALESCE(v.free, c.free) as free,
-                        o.id                     as owned,
-                        AVG(r.rating)
-                 FROM items i
-                          LEFT JOIN videos v on i.tag = v.tag
-                          LEFT JOIN courses c on i.tag = c.tag
-                          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
-                          LEFT JOIN ratings r on i.id = r.item_id
-                 WHERE MATCH(v.name) AGAINST(:query)
-                    OR MATCH(c.name) AGAINST(:query)
-                 GROUP BY COALESCE(v.tag, c.tag), COALESCE(v.name, c.name), i.type, COALESCE(v.free, c.free), o.id
-                 ORDER BY AVG(r.rating) DESC',
+    'rating' => "
+SELECT COALESCE(v.tag, c.tag)   as tag,
+       COALESCE(v.name, c.name) as name,
+       i.type,
+       COALESCE(v.free, c.free) as free,
+       o.id                     as owned,
+       AVG(r.rating)
+FROM items i
+         LEFT JOIN videos v on i.tag = v.tag
+         LEFT JOIN courses c on i.tag = c.tag
+         LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+         LEFT JOIN ratings r on i.id = r.item_id
+WHERE v.name LIKE :query
+   OR c.name LIKE :query
+GROUP BY COALESCE(v.tag, c.tag), COALESCE(v.name, c.name), i.type, COALESCE(v.free, c.free), o.id
+ORDER BY AVG(r.rating) DESC
+LIMIT 50",
 
-    'recent' => 'SELECT COALESCE(v.tag, c.tag)   as tag,
-                        COALESCE(v.name, c.name) as name,
-                        i.type,
-                        COALESCE(v.free, c.free) as free,
-                        o.id                     as owned
-                 FROM items i
-                          LEFT JOIN videos v on i.tag = v.tag
-                          LEFT JOIN courses c on i.tag = c.tag
-                          LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
-                 WHERE MATCH(v.name) AGAINST(:query)
-                    OR MATCH(c.name) AGAINST(:query)
-                 ORDER BY COALESCE(v.upload_date, c.creation_date) DESC'
+    'recent' => "
+SELECT COALESCE(v.tag, c.tag)   as tag,
+       COALESCE(v.name, c.name) as name,
+       i.type,
+       COALESCE(v.free, c.free) as free,
+       o.id                     as owned
+FROM items i
+         LEFT JOIN videos v on i.tag = v.tag
+         LEFT JOIN courses c on i.tag = c.tag
+         LEFT JOIN ownership o on i.tag = o.item_tag and o.user_id = :uid
+WHERE v.name LIKE :query
+   OR c.name LIKE :query
+ORDER BY COALESCE(v.upload_date, c.creation_date) DESC
+LIMIT 50"
 };
 
 ensure_session();
 $data = [
-    'query' => htmlspecialchars($query),
+    'query' => '%' . htmlspecialchars($query) . '%',
     'uid' => $_SESSION['uid'] ?? 0
 ];
 
@@ -91,11 +101,22 @@ try {
 } catch (PDOException $e) {
     api_fail("Couldn't perform search", ['submit' => "Couldn't perform search"]);
 }
+
 require_once "searchbar.php";
 $results_rendered = [];
+$any_owned = false;
+$any_available = false;
+$any = !empty($results);
 foreach ($results as $result) {
+    $any_available |= $result['owned'] | $result['free'];
+    $any_owned |= $result['owned'];
     $results_rendered[] = render_search_result($result, htmlspecialchars($origin));
 }
 
-$response = ['html' => join(PHP_EOL, $results_rendered)];
+$response = [
+    'html' => join(PHP_EOL, $results_rendered),
+    'any_owned' => $any_owned,
+    'any_available' => $any_available,
+    'any' => $any
+];
 api_succeed('Search results retrieved', data: $response);

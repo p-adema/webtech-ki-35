@@ -12,10 +12,10 @@ html_header(title: 'Payment', styled: 'form.css', scripted: true);
                 <?php
                 form_error();
                 $cart = new Cart();
-                render_billing_info(last_billing_info($_SESSION['uid']), $cart->total());
+                display_billing_info(last_billing_info($_SESSION['uid']), $cart->total());
 
                 echo '<div class="form-btns">';
-                text_link('Change billing information', '/checkout/billing');
+                display_text_link('Change billing information', '/checkout/billing');
                 form_submit(text: 'Confirm');
                 echo '</div>';
                 ?>

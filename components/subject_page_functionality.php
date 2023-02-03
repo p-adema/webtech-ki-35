@@ -29,7 +29,7 @@ function render_best_videos_subject_page($subject): void
                 <a href='/courses/course/{$course['tag']}'>
                     <img class='thumbnail'
                     src='/resources/thumbnails/{$course['tag']}.jpg'
-                    alt='Your browser does not support this image type.'>
+                    alt='Course thumbnail'>
                 </a>
                 <div class='best-video-info'>
                     <span class='best-video-name'>{$course_info['name']}</span>
@@ -69,7 +69,7 @@ function render_best_videos_subject_page($subject): void
             <a href='/courses/video/{$popular_video['tag']}'>
                 <img class='thumbnail'
                 src='/resources/thumbnails/{$popular_video['tag']}.jpg'
-                alt='Your browser does not support this image type.'>
+                alt='Video thumbnail'>
             </a>
             <div class='best-video-info'>
                 <span class='best-video-name'>{$popular_video_data['name']}</span>
@@ -94,7 +94,7 @@ function render_best_videos_subject_page($subject): void
             <a href='/courses/video/{$video['tag']}'>
                 <img class='thumbnail'
                 src='/resources/thumbnails/{$video['tag']}.jpg'
-                alt='Your browser does not support this image type.'>
+                alt='Video thumbnail'>
             </a>
             <div class='normal-video-info'>
                 <span class='normal-video-name'>{$video_data['name']}</span>

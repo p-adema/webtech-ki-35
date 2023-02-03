@@ -8,14 +8,14 @@ require 'admin_controls.php'; ?>
     <div class="form-content">
         <h1>Ban a user</h1>
         <div class="form-outline">
-            <form action="/api/admin/ban" method="POST">
+            <form action="/api/admin/ban" method="POST" data-action="ban">
                 <?php
                 if ($_SESSION['admin']) {
                     form_input('user', 'Username to be banned');
                     form_error();
 
                     echo '<div class="form-btns">';
-                    text_link('Go back', '/admin/');
+                    display_text_link('Go back', '/admin/');
                     form_submit();
                     echo '</div>';
                 } else {

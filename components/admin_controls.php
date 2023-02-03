@@ -10,20 +10,14 @@ function is_admin($uid): bool
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['uid' => $uid]);
 
-    $yes_or_no = $sth->fetch()['admin'];
-
-    if ($yes_or_no === 1) {
-        return true;
-    } else {
-        return false;
-    }
+    return $sth->fetch()['admin'];
 }
 
 function api_require_admin(): void
 {
     ensure_session();
     if (!$_SESSION['admin']) {
-        api_fail('Insufficient privileges', ['submit' => ['Insufficient privileges']]);
+        api_fail('Insufficient privileges');
     }
 }
 
@@ -40,7 +34,7 @@ function user_id_from_name($uid): int|false
     return $user !== false ? $user['id'] : false;
 }
 
-function item_id_from_tag($item_tag): int|false
+function item_id_from_tag(string $item_tag): int|false
 {
     require_once 'pdo_read.php';
 
@@ -48,6 +42,19 @@ function item_id_from_tag($item_tag): int|false
     $sql = 'SELECT id FROM db.items WHERE tag = :item_tag';
     $sth = $pdo_read->prepare($sql);
     $sth->execute(['item_tag' => $item_tag]);
+
+    $item = $sth->fetch();
+    return $item !== false ? $item['id'] : false;
+}
+
+function comment_id_from_tag($comment_tag): int|false
+{
+    require_once 'pdo_read.php';
+
+    $pdo_read = new_pdo_read();
+    $sql = 'SELECT id FROM db.comments WHERE tag = :comment_tag';
+    $sth = $pdo_read->prepare($sql);
+    $sth->execute(['comment_tag' => $comment_tag]);
 
     $item = $sth->fetch();
     return $item !== false ? $item['id'] : false;
@@ -69,17 +76,6 @@ function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
     return $prep->execute($data);
 }
 
-function admin_remove_comment($comment_tag): void
-{
-    require_once 'pdo_write.php';
-
-    $pdo_write = new_pdo_write();
-
-    $sql = 'DELETE FROM db.comments WHERE tag = :comment';
-    $sth = $pdo_write->prepare($sql);
-    $sth->execute(['comment' => $comment_tag]);
-}
-
 function remove_video($video_tag): void
 {
     require_once 'pdo_write.php';
@@ -91,7 +87,7 @@ function remove_video($video_tag): void
     $sth->execute(['video_tag' => $video_tag]);
 }
 
-function admin_ban_user(int $target_uid): bool
+function admin_ban_user(int $target_uid, bool $ban = true): bool
 {
     require_once 'pdo_write.php';
 
@@ -99,27 +95,39 @@ function admin_ban_user(int $target_uid): bool
 
     $sql = 'UPDATE users SET banned = TRUE WHERE id = :uid';
     $prep = $pdo_write->prepare($sql);
-    return $prep->execute(['uid' => $target_uid]);
+    $data = [
+        'uid' => $target_uid,
+        'ban' => $ban
+    ];
+    return $prep->execute($data);
 }
 
-function admin_unban_user(int $target_uid): bool
+function admin_restrict_item(int $item_id, bool $restrict = true): bool
 {
     require_once 'pdo_write.php';
 
     $pdo_write = new_pdo_write();
 
-    $sql = 'UPDATE users SET banned = FALSE WHERE id = :uid';
+    $sql = 'UPDATE items SET restricted = :restrict WHERE id = :iid';
     $prep = $pdo_write->prepare($sql);
-    return $prep->execute(['uid' => $target_uid]);
+    $data = [
+        'iid' => $item_id,
+        'restrict' => $restrict ? 1 : 0
+    ];
+    return $prep->execute($data);
 }
 
-function admin_delete_item(int $item_id): bool
+function admin_hide_comment(int $item_id, bool $hide = true): bool
 {
     require_once 'pdo_write.php';
 
     $pdo_write = new_pdo_write();
 
-    $sql = 'UPDATE items SET deleted = TRUE WHERE id = :uid';
+    $sql = 'UPDATE items SET restricted = TRUE WHERE id = :uid';
     $prep = $pdo_write->prepare($sql);
-    return $prep->execute(['uid' => $item_id]);
+    $data = [
+        'uid' => $item_id,
+        'hide' => $hide
+    ];
+    return $prep->execute($data);
 }

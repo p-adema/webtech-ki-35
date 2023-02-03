@@ -188,7 +188,7 @@ a:link {
 }
 
 .pay-button:hover {
-    cursor: grab;
+    cursor: pointer;
 }
 
 @media screen and (max-aspect-ratio: 1/1) {

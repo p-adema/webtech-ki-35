@@ -10,7 +10,7 @@ html_header(title: 'Page not found', styled: 'form.css');
                 <p> This page doesn't exist </p>
                 <?php
                 echo '<div class="form-btns">';
-                text_link('Go back home', '/');
+                display_text_link('Go back home', '/');
                 echo '</div>';
                 ?>
             </form>

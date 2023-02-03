@@ -330,14 +330,27 @@ div.form-btns > div {
     margin: 10px;
 }
 
-.link-box {
+.link-box-pair {
+    display: flex;
+}
+
+.link-box-pair > a {
+    flex: auto;
+}
+
+.link-box-pair > a:nth-child(1) {
+    text-align: start;
+}
+
+.link-box-pair > a:nth-child(3) {
+    text-align: end;
 }
 
 div#forgot-password-box {
     margin-top: 20px;
 }
 
-div#submit-group {
+div.submit-group {
     margin: 0;
     flex: 1;
 }
@@ -585,7 +598,7 @@ button.med-btn {
         max-width: 80vw;
     }
 
-    div#submit-group {
+    div.submit-group {
         margin-top: 0;
     }
 

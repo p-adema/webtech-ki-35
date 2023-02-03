@@ -19,8 +19,8 @@ function form_input(string $id, string $label, string $placeholder = '', string 
         name='$id'
         placeholder='$placeholder'
         $input_attrs
-    />
-    <span id='$id-error' class='form-error'> No error </span>
+    >
+    <span class='form-error $id-error'> No error </span>
 </div>
     ";
     echo $html;
@@ -40,8 +40,8 @@ function form_upload(string $id, string $label_text, string $button_text, string
         id='file-$id'
         name='file-$id'
         accept='$types'
-    />
-    <span id='file-$id-error' class='form-error'> No error </span>
+    >
+    <span class='form-error file-$id-error'> No error </span>
 </div>
     ";
     echo $html;
@@ -55,7 +55,7 @@ function form_input_paragraph(string $id, string $label): void
         <textarea
             id='$id'
             name='$id'></textarea>
-    <span id='$id-error' class='form-error'> No error </span>
+    <span class='form-error $id-error'> No error </span>
 </div>
     ";
     echo $html;
@@ -69,7 +69,7 @@ function form_input_paragraph(string $id, string $label): void
 function form_submit(string $text = 'Submit', string $extra_cls = ''): void
 {
     $html = "
-<div id='submit-group' class='form-group submit-with-$extra_cls'>
+<div class='form-group submit-group submit-with-$extra_cls'>
     <button type='submit' class='form-submit $extra_cls'> $text </button>
 </div>
     ";
@@ -91,7 +91,7 @@ function form_dropdown(string $id, string $label, string $placeholder, array $op
         <option value=''> $placeholder </option>
         $options_html
     </select>
-    <span id='$id-error' class='form-error'> No error </span>
+    <span class='form-error $id-error'> No error </span>
 </div>
     ";
     echo $html;
@@ -134,7 +134,7 @@ function form_sortable(string $id, string $label, array $items, bool $extendable
 <div class='sortable-extra-wrapper sortable-query-wrapper' id='sortable-$id-query-wrapper'> 
     <label class='sortable-query-button' for='sortable-$id-query'>
         <span class='sortable-icon sortable-query-icon material-symbols-outlined'> search </span>
-        <input class='sortable-query' type='text' id='sortable-$id-query' placeholder='Search...' data-result-target='query-results-$id'/>
+        <input class='sortable-query' type='text' id='sortable-$id-query' placeholder='Search...' data-result-target='query-results-$id'>
     </label>
 </div>
 <div class='sortable-query-results' id='query-results-$id'> </div>";
@@ -146,7 +146,7 @@ function form_sortable(string $id, string $label, array $items, bool $extendable
         $sortables_html
     </div>
     $extendor_html
-    <span id='$id-error' class='form-error'> No error </span>
+    <span class='form-error $id-error'> No error </span>
 </div>
     ";
     echo $html;
@@ -159,7 +159,7 @@ function form_sortable(string $id, string $label, array $items, bool $extendable
  */
 function form_error(string $err_id = 'submit'): void
 {
-    echo "<div class='form-group'><span id = '$err_id-error' class='form-error'> No error </span></div>";
+    echo "<div class='form-group'><span class='form-error $err_id-error'> No error </span></div>";
 }
 
 function form_upload_progress(): void
@@ -188,7 +188,7 @@ function form_price(): void
           <label for='free'> Free </label>
         </div>
     </fieldset>
-    <span id='type-error' class='form-error'> No error </span>
+    <span class='form-error type-error'> No error </span>
 </div>
 <div id='price-group' class='form-group'>
     <label for='price'> Price </label>
@@ -196,8 +196,8 @@ function form_price(): void
         type='text'
         id='price'
         name='price'
-    />
-    <span id='price-error' class='form-error'> No error </span>
+    >
+    <span class='form-error price-error'> No error </span>
 </div>
 ";
 }

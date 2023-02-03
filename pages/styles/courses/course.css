@@ -189,7 +189,7 @@ button.form-submit.form-submit-blue:hover {
     max-width: 100%;
     border-style: solid;
     border-width: 2px;
-    border-color: #b1b0bf
+    border-color: #b1b0bf;
 }
 
 
@@ -242,7 +242,7 @@ a {
 }
 
 .star-1:after {
-    content: "★☆☆☆☆"
+    content: "★☆☆☆☆";
 }
 
 .star-2:after {
@@ -254,7 +254,7 @@ a {
 }
 
 .star-4:after {
-    content: "★★★★☆"
+    content: "★★★★☆";
 }
 
 .star-5:after {
@@ -262,7 +262,7 @@ a {
 }
 
 .perm-star-1:after {
-    content: "★☆☆☆☆"
+    content: "★☆☆☆☆";
 }
 
 .perm-star-2:after {
@@ -274,7 +274,7 @@ a {
 }
 
 .perm-star-4:after {
-    content: "★★★★☆"
+    content: "★★★★☆";
 }
 
 .perm-star-5:after {

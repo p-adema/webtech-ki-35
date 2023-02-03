@@ -10,7 +10,7 @@ html_header(title: 'Log out', authentication: true, styled: 'form.css', scripted
                 <?php
                 form_submit(text: 'Confirm log out', extra_cls: 'long-btn');
                 form_error();
-                text_link('Go back to home', '/');
+                display_text_link('Go back to home', '/');
                 ?>
             </form>
         </div>

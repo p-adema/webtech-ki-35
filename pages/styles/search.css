@@ -25,10 +25,6 @@
     cursor: pointer;
 }
 
-.material-symbols-outlined {
-    user-select: none;
-}
-
 .search-input {
     flex: auto;
     height: 100%;
@@ -142,6 +138,11 @@ a:link {
 
 .control-button.active {
     box-shadow: 0 -1px 3px hsl(0, 0%, 0.2%);
+    color: whitesmoke;
+}
+
+.control-button:hover {
+    color: #efefef;
 }
 
 .filter-all {
@@ -192,10 +193,76 @@ span.filter-owned:hover {
     background-color: #4f5054;
 }
 
+span.sort-views:hover {
+    background-color: #95959d;
+}
+
+.sort-views.active {
+    background-color: #737479;
+}
+
 .sort-rating {
     background-color: #564a67;
 }
 
+span.sort-rating:hover {
+    background-color: #8a7aa1;
+}
+
+.sort-rating.active {
+    background-color: #6f6183;
+}
+
 .sort-recent {
     background-color: #654545;
+}
+
+span.sort-recent:hover {
+    background-color: #a27575;
+}
+
+.sort-recent.active {
+    background-color: #815b5b;
+}
+
+.result-empty {
+    display: none;
+    border-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    flex-flow: column;
+    font-size: medium;
+    margin-top: 20px;
+    padding: 10px 15px 10px 15px;
+    color: #202123;
+    transition: all 200ms ease-in-out;
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%);
+}
+
+#owned-empty {
+    background-color: #629654;
+}
+
+#owned-empty:hover {
+    background-color: #7db275;
+    color: whitesmoke;
+}
+
+#available-empty {
+    background-color: #549496;
+}
+
+#available-empty.active:hover {
+    background-color: #8ab6c9;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+#all-empty {
+    background-color: #968354;
+}
+
+#all-empty:hover {
+    background-color: #b29875;
+    color: whitesmoke;
 }

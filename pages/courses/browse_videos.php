@@ -1,6 +1,6 @@
 <?php
 require 'html_page.php';
-require 'video_sidebar.php';
+require 'course_playlist.php';
 require_once 'rating_functionality.php';
 require_once 'video_functionality.php';
 require_once 'video_homepage_functionality.php';

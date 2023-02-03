@@ -23,7 +23,7 @@ html_header(title: 'Verify transaction', navbar: false, styled: true, scripted: 
         <h1 class='Header'>Verify payment</h1>
         <div class="form-outline">
             <span class="amount">€<?php echo $user_info['amount'] ?></span>
-            <form method="post" tag="<?php echo $tag ?>">
+            <form method="post" data-tag="<?php echo $tag ?>">
                 <div class="form-group">
                     <button type="submit" <?php
                     if (!enough_balance($user_id, $tag)) {

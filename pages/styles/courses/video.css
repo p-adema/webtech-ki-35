@@ -191,21 +191,24 @@ div.comment-wrapper {
 }
 
 div.comment {
+    transition: background-color 200ms ease-in-out;
     background: #bbd0e5;
     padding: 6px 14px 6px 14px;
     border-radius: 20px;
     display: flex;
     flex-flow: column;
     align-items: center;
-    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%)
+    box-shadow: 0 1px 3px hsl(0, 0%, 0.2%);
 }
 
 .comment > .head {
     display: flex;
     flex-flow: row;
-    width: 300px;
+    min-width: 300px;
+    width: calc(100% - 40px);
     align-self: start;
     margin-left: 20px;
+    margin-right: 20px;
 }
 
 span.comment-username {
@@ -225,6 +228,20 @@ span.comment-date {
     /*flex: 1;*/
     color: darkslategray;
     text-align: center;
+}
+
+.comment-admin-hide {
+    transition: color 200ms ease-in-out;
+    margin-left: 30px;
+    color: #313157;
+}
+
+.comment.hidden .comment-admin-hide {
+    color: #6e4444;
+}
+
+.comment.hidden {
+    background-color: #e77070;
 }
 
 div.comment-text-wrapper {
@@ -266,7 +283,7 @@ div.comment-replies-wrapper {
 }
 
 .star-1:after {
-    content: "★☆☆☆☆"
+    content: "★☆☆☆☆";
 }
 
 .star-2:after {
@@ -278,7 +295,7 @@ div.comment-replies-wrapper {
 }
 
 .star-4:after {
-    content: "★★★★☆"
+    content: "★★★★☆";
 }
 
 .star-5:after {
@@ -286,7 +303,7 @@ div.comment-replies-wrapper {
 }
 
 .perm-star-1:after {
-    content: "★☆☆☆☆"
+    content: "★☆☆☆☆";
 }
 
 .perm-star-2:after {
@@ -298,7 +315,7 @@ div.comment-replies-wrapper {
 }
 
 .perm-star-4:after {
-    content: "★★★★☆"
+    content: "★★★★☆";
 }
 
 .perm-star-5:after {
@@ -338,7 +355,7 @@ div.comment-reactions-gap-s {
 }
 
 
-.video-sidebar {
+.course-playlist {
     z-index: 1;
     max-width: 400px;
     background-color: #e1e0ef;
@@ -481,7 +498,7 @@ textarea {
     background: #6db4c0;
 }
 
-#submit-group {
+.submit-group {
     max-width: fit-content;
     align-self: center;
 }
@@ -517,7 +534,7 @@ textarea {
 }
 
 .comment-reactions-reply:hover {
-    cursor: grab;
+    cursor: pointer;
 }
 
 @media screen and (max-aspect-ratio: 1/1) {

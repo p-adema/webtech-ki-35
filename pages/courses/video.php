@@ -1,7 +1,7 @@
 <?php
 require 'html_page.php';
 require 'video_functionality.php';
-require 'video_sidebar.php';
+require 'course_playlist.php';
 require 'comments_components.php';
 require_once 'course_components.php';
 html_header(title: 'Video', styled: true, scripted: true);
@@ -23,17 +23,17 @@ if (count($rating) == 0) {
     $video_has_ratings = true;
 }
 
-if ($_SESSION['auth']){
+if ($_SESSION['auth']) {
     $user_id = $_SESSION['uid'];
-    if (has_course($tag, $user_id)){
+    if (user_owns_item($user_id, $tag)) {
         $has_video = '';
-    } else{
+    } else {
         $has_video = 'not_have_video';
     }
 } else {
     $has_video = 'not_have_video';
 }
-if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
+if (isset($_GET['tag']) and $video_info !== false and !$video_info['restricted']):
     $stars = $video_info['rating'] ? ('perm-star-' . $video_info['rating']) : 'stars-empty';
     ?>
 
@@ -70,22 +70,23 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                                 </div>
                             <?php } ?>
                             <?php if ($video_has_ratings) { ?>
-                            <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
-                                <p style="margin: 0"> ★<?php echo " $score <br>". number_format( $ratings, 0, '', ','), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
-                            <div id="log"></div>
+                                <span class="video-name"><?php echo $video_info['name'] ?></span>
+                                <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0;">
+                                    ★<?php echo " $score <br>" . number_format($ratings, 0, ''), $ratings !== 1 ? ' ratings' : ' rating' ?></p>
+                                <div id="log"></div>
 
-                            <?php }else {?>
-                            <span class="video-name"><?php echo $video_info['name'] ?></span>
-                            <div class="stars <?php echo "$stars $has_video" ?>"></div>
-                                <p style="margin: 0"> This video doesn't have ratings</p>
-                             <div id="log"></div>
+                            <?php } else { ?>
+                                <span class="video-name"><?php echo $video_info['name'] ?></span>
+                                <div class="stars <?php echo "$stars $has_video" ?>"></div>
+                                <p style="margin: 0;"> This video doesn't have ratings</p>
+                                <div id="log"></div>
                             <?php } ?>
                         </div>
                     </div>
                     <div class="description">
                         <button class="collapsible">
-                            <span class="view-count"><?php echo number_format( $video_info['views'], 0, '', ',') ?> views</span>
+                            <span class="view-count"><?php echo number_format($video_info['views'], 0, '') ?> views</span>
                             <span class="upload-date">Posted <?php echo relative_time($video_info['upload_date']) ?> </span>
                         </button>
                         <div class="content">
@@ -98,27 +99,27 @@ if (isset($_GET['tag']) and $video_info !== false and !$video_info['deleted']):
                 <span class="comments-title"> Comments </span>
                 <?php echo render_comment_form($_GET['tag'], false); ?>
                 <div class="top"></div>
-                <div class="comments" tag="<?php echo $_GET['tag'] ?>"></div>
+                <div class="comments"></div>
                 <div class="bottom"></div>
             </div>
         </div>
         <?php
-        $success = video_sidebar($tag);
-        echo "<span id='sidebar-load-success' tag='$success' style='display: none'></span>" ?>
+        $scroll = display_course_playlist($tag);
+        echo "<span id='sidebar-load-success' data-scroll='$scroll' style='display: none'></span>" ?>
     </div>
 
 <?php else: ?>
 
-    <link rel='stylesheet' href='/styles/form.css' type='text/css'/>
+    <link rel='stylesheet' href='/styles/form.css' type='text/css'>
 
     <div class="form-content">
         <h1> Invalid link </h1>
         <div class="form-outline">
             <form>
-                <p> The video at this link is missing or deleted </p>
+                <p> The video at this link is missing or restricted </p>
                 <?php
                 echo '<div class="form-btns">';
-                text_link('Go back home', '/');
+                display_text_link('Go back home', '/');
                 echo '</div>';
                 ?>
             </form>

@@ -3,7 +3,7 @@
 function tag_create(int $length = 64): string
 {
     $permitted_characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $perm_char_count = 62; # strlen($permitted_characters);
+    $perm_char_count = 62;
     $new_tag = '';
     for ($i = 0; $i < $length; $i++) {
         $new_tag .= $permitted_characters[rand(0, $perm_char_count - 1)];

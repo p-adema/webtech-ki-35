@@ -6,12 +6,12 @@ function review_item(array $item): void
     $icon = $item['type'] === 'video' ? 'movie' : 'library_books';
     $price = number_format($item['price'], 2);
     echo "
-<a class='review-item-anchor' href='$link' tag='{$item['tag']}'>
+<a class='review-item-anchor' href='$link' data-tag='{$item['tag']}'>
     <div class='review-item-wrapper'>
         <span class='review-item-icon material-symbols-outlined'> $icon </span>
         <span class='review-item-name'> {$item['name']} </span>
         <span class='review-item-price'> €$price </span>
-        <span class='cart-item-delete material-symbols-outlined' tag='{$item['tag']}'> cancel </span>
+        <span class='cart-item-delete material-symbols-outlined' data-tag='{$item['tag']}'> cancel </span>
     </div>
 </a>
 ";

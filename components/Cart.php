@@ -43,7 +43,7 @@ class Cart
         }
         try {
             $this->PDO = new_pdo_read(err_fatal: false);
-        } catch (PDOException $e) {
+        } catch (PDOException) {
             api_fail('Internal cart error', ['submit' => 'Connecting cart failed']);
         }
         if (!isset($this->PDO)) {
@@ -141,7 +141,7 @@ FROM course_videos cv
         if (!in_array($id, $_SESSION['cart']['ids'])) {
             $price = $this->get_price($id);
 
-            if ($price) {
+            if ($price !== false) {
                 $_SESSION['cart']['ids'][] = $id;
                 $_SESSION['cart']['count'] += 1;
 

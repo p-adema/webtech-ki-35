@@ -1,0 +1,80 @@
+.content-wrapper {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-wrapper {
+    margin-top: 20px;
+    background-color: #537250;
+    color: whitesmoke;
+    border-radius: 30px;
+    padding: 5px 20px 5px 20px;
+}
+
+.videos-wrapper {
+    display: grid;
+    width: 90vw;
+    grid-template-columns: auto auto auto;
+}
+
+.video-wrapper {
+    display: flex;
+    flex: auto;
+    justify-content: center;
+}
+
+.video-outline {
+    padding: 8px;
+    border: solid 8px #334433FF;
+    border-radius: 12px;
+    margin: 8px;
+    display: flex;
+    flex-flow: column;
+}
+
+.video-info {
+    padding: 8px;
+    border-bottom: solid black 4px;
+    margin-bottom: 20px;
+    max-width: 26vw;
+}
+
+.video-creator {
+    color: #606060;
+}
+
+.thumbnail {
+    max-width: 500px;
+    max-height: 282px;
+}
+
+.search-wrapper {
+    flex: auto;
+    border-radius: 60px;
+    display: flex;
+    margin: 50px;
+    height: 64px;
+    justify-content: center;
+    align-self: center;
+}
+
+.search-icon {
+    background: #343;
+    color: whitesmoke;
+    border-radius: 20px 0 0 20px;
+    height: 100%;
+    font-size: 64px;
+    cursor: pointer;
+}
+
+.search-input {
+    flex: auto;
+    height: 100%;
+    border: none;
+    background: #e2f7bf;
+    font-size: 50px;
+    padding: 0 0 0 20px;
+    border-radius: 0 60px 60px 0;
+}

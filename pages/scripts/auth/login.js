@@ -11,7 +11,7 @@ $(document).ready(function () {
 
         const handler_options = {
             redirect: {
-                link: $(this).attr('tag'),
+                link: $(this).attr('data-tag'),
                 delay: 3000
             }
         }

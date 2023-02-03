@@ -24,11 +24,11 @@ function form_default_response(options) {
 function form_default_errors(errors, options) {
     for (let form_elem in errors) {
         if (errors[form_elem].length !== 0) {
-            $(`${options.form} div#${form_elem}-group`).addClass("has-error")
-            $(`${options.form} span#${form_elem}-error`).css('visibility', 'visible').html(errors[form_elem].join('<br/>'));
+            $(`${options.form} div.${form_elem}-group`).addClass("has-error")
+            $(`${options.form} span.${form_elem}-error`).css('visibility', 'visible').html(errors[form_elem].join('<br>'));
         } else {
-            $(`${options.form} div#${form_elem}-group`).removeClass("has-error")
-            $(`${options.form} span#${form_elem}-error`).css('visibility', 'hidden').html('No error');
+            $(`${options.form} div.${form_elem}-group`).removeClass("has-error")
+            $(`${options.form} span.${form_elem}-error`).css('visibility', 'hidden').html('No error');
         }
     }
 }
@@ -41,7 +41,7 @@ function form_default_success(data, options) {
         $(options.form).html(
             '<div class="form-success clickable"> ' +
             '       <span>' + data.message + "</span> " +
-            "       <span> <br /> You will be redirected shortly <br /> (or: click here) </span>" +
+            "       <span> <br> You will be redirected shortly <br> (or: click here) </span>" +
             "     </div>"
         )
 
@@ -82,24 +82,6 @@ $.upload = function (target, user_data, success_handler) {
     })
 }
 
-function openRightMenu() {
-    $('.sidebar_right').animate({right: '-0'}, 400);
-}
-
-function closeRightMenu() {
-    $('.sidebar_right').animate({right: '-300px'}, 400);
-}
-
-
-function open_right_menu() {
-    $('.sidebar-right').animate({right: '-0'}, 400);
-    $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
-}
-
-function go_to_checkout() {
-    $(location).attr('href', '/checkout/review')
-}
-
 function close_right_menu() {
     $('.sidebar-right').animate({right: '-300px'}, 400);
     $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0}, 400)
@@ -108,14 +90,6 @@ function close_right_menu() {
 
 function redirect(link = '/show_cart') {
     $(location).attr('href', link)
-}
-
-function symbol_default_enter(_) {
-    $(this).css('font-variation-settings', "'wght' 600")
-}
-
-function symbol_default_leave(_) {
-    $(this).css('font-variation-settings', "'wght' 400")
 }
 
 $(document).ready(function () {
@@ -141,7 +115,7 @@ $(document).ready(function () {
     })
     $dropdown_videos.mouseenter(function (_) {
         $dropdown_videos_content.stop().animate({left: $dropdown_videos.offset().left}, 4)
-        $('.dropdown-videos-content').show().animate({opacity: 1, top: 60}, 400)
+        $('.dropdown-videos-content').css('display', 'flex').animate({opacity: 1, top: 60}, 400)
         $dropdown_videos.css('background-color', '#676')
     })
     $dropdown_videos.mouseleave(function (_) {
@@ -155,7 +129,13 @@ $(document).ready(function () {
     $('.navbar-search-input').keydown(function (event) {
         if (event.which === 13) {
             navbar_search()
+        } else if (event.which === 27) {
+            $(this).blur()
         }
+    })
+    $('#mandje').click(function () {
+        $('.sidebar-right').animate({right: '-0'}, 400);
+        $('.sidebar-active-cover').toggleClass('hidden').animate({opacity: 0.5}, 400)
     })
 }).on('keydown', function (event) {
     if (event.which === 191 && $(':focus').length === 0) {
@@ -169,7 +149,7 @@ function cart_item_delete(event) {
 
     const user_data = {
         type: 'remove',
-        item: $(this).attr('tag')
+        item: $(this).attr('data-tag')
     };
 
     const handler_options = {
@@ -192,5 +172,5 @@ function remove_item_success(data, __) {
 }
 
 function navbar_search() {
-    window.location.href = "/search/" + $('#navbar-search').val()
+    window.location.href = "/search/" + encodeURIComponent($('#navbar-search').val())
 }

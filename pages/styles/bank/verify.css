@@ -182,9 +182,7 @@ body {
     background-color: #ff6428;
 }
 
-a:link {
-    text-decoration: none;
-}
+
 
 div.form-group {
     display: flex;
@@ -349,7 +347,7 @@ div#forgot-password-box {
     margin-top: 20px;
 }
 
-div#submit-group {
+div.submit-group {
     margin: 0;
     flex: 1;
 }
@@ -542,7 +540,7 @@ button.med-btn {
         max-width: 80vw;
     }
 
-    div#submit-group {
+    div.submit-group {
         margin-top: 0;
     }
 

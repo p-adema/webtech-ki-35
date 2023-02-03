@@ -25,5 +25,5 @@ function relative_time(string $since): string
     $difference = round($difference);
 
     $period = $units[$unit] . ($difference > 1 ? 's' : '');
-    return "{$difference} {$period} {$tense} ";
+    return "$difference $period $tense ";
 }

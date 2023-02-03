@@ -17,7 +17,7 @@ html_header(title: 'Payment', styled: 'form.css', scripted: true);
                 form_error();
 
                 echo '<div class="form-btns">';
-                text_link('Back', '/checkout/review');
+                display_text_link('Back', '/checkout/review');
                 form_submit(text: 'Confirm');
                 echo '</div>';
                 ?>

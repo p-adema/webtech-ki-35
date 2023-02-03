@@ -9,12 +9,12 @@ $(document).ready(function () {
 
         const user_data = {
             type: $('button.form-submit[clicked=true]').val(),
-            tag: $(this).attr('tag')
+            tag: $(this).attr('data-tag')
         }
 
         const handler_options = {
             redirect: {
-                link: '/bank/',
+                link: '/courses/library',
                 delay: 3000
             }
         }

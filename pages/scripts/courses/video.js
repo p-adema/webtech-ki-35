@@ -3,8 +3,8 @@ $(document).ready(function () {
     setTimeout(add_view, 5000);
 
 
-    const video_tag = $('.comments').attr('tag')
-    if ($('#sidebar-load-success').attr('tag') === '1') {
+    const video_tag = $('#video').attr('data-tag')
+    if ($('#sidebar-load-success').attr('data-scroll') === '1') {
         $('.big-video-block').scrollTop($('#current-video-playing').offset().top - $('#video_scroll_0').offset().top);
     }
     $('div.description').click(function (_) {
@@ -176,6 +176,13 @@ $(document).ready(function () {
 
 }).on('focus', 'textarea[data-auth="no"]', function (_) {
     window.location.href = '/auth/login';
+}).on('click', '.comment-admin-hide', function (_) {
+    const $comment = $(this).parent().parent()
+    if ($comment.toggleClass('hidden').hasClass('hidden')) {
+        $(this).text('visibility_off');
+    } else {
+        $(this).text('visibility');
+    }
 })
 
 function load_replies(_) {
@@ -227,6 +234,6 @@ function show_replies(_) {
 }
 
 function add_view() {
-    const video_tag = $('.comments').attr('tag');
+    const video_tag = $('#video').attr('data-tag');
     $.post("/api/courses/add_views", {video_tag})
 }

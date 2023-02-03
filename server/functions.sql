@@ -1,5 +1,5 @@
 -- Update the score of a comment on a new rating
-CREATE DEFINER = 'triggers' TRIGGER comments_new_score
+CREATE DEFINER = functions TRIGGER comments_new_score
     AFTER INSERT
     ON scores
     FOR EACH ROW
@@ -8,7 +8,7 @@ CREATE DEFINER = 'triggers' TRIGGER comments_new_score
     WHERE comments.tag = NEW.comment_tag;
 
 -- Update the score of a comment on a changed rating
-CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
+CREATE DEFINER = functions TRIGGER comments_changed_score
     AFTER UPDATE
     ON scores
     FOR EACH ROW
@@ -16,31 +16,47 @@ CREATE DEFINER = 'triggers' TRIGGER comments_changed_score
     SET score = score + NEW.score - OLD.score
     WHERE comments.tag = NEW.comment_tag;
 
-CREATE DEFINER = 'triggers' TRIGGER videos_new_watch
+-- Update the views of a video
+CREATE DEFINER = functions TRIGGER videos_new_watch
     AFTER INSERT
     ON watches
     FOR EACH ROW
-    UPDATE db.videos v SET v.views = v.views + 1 WHERE v.tag = NEW.video_tag;
+    UPDATE db.videos v
+    SET v.views = v.views + 1
+    WHERE v.tag = NEW.video_tag;
 
-CREATE DEFINER = 'triggers' TRIGGER courses_new_watch
+-- Update the views of a course
+CREATE DEFINER = functions TRIGGER courses_new_watch
     AFTER INSERT
     ON watches
     FOR EACH ROW
     UPDATE courses c
         INNER JOIN course_videos cv on c.tag = cv.course_tag
-        SET c.views = c.views + 1
-        WHERE cv.video_tag = NEW.video_tag;
+    SET c.views = c.views + 1
+    WHERE cv.video_tag = NEW.video_tag;
 
-
-
-
-
+# CREATE DEFINER = functions TRIGGER new_rating_update_item
+#     AFTER INSERT
+#     ON ratings
+#     FOR EACH ROW
+#     UPDATE items i
+#         INNER JOIN ratings r on i.id = r.item_id
+#     SET i.rating = AVG(r.rating);
+#
+CREATE DEFINER = functions TRIGGER changed_rating_update_item
+    AFTER UPDATE
+    ON ratings
+    FOR EACH ROW
+    UPDATE items i
+        INNER JOIN ratings r on i.id = r.item_id
+    SET i.rating = AVG(r.rating)
+    WHERE i.id = NEW.item_id;
 
 DELIMITER $$
 
 -- Resolve ownership of a course and its videos
 CREATE
-    DEFINER = 'triggers' PROCEDURE course_ownership_add(
+    DEFINER = functions PROCEDURE course_ownership_add(
     IN user_id BIGINT UNSIGNED,
     IN course_tag CHAR(64),
     IN origin ENUM ('purchase', 'gift', 'owner'),
@@ -51,10 +67,13 @@ BEGIN
     INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
     SELECT video_tag, user_id, origin, purchase_id, gift_id
     FROM course_videos cv
-    WHERE cv.course_tag = course_tag;
+    WHERE cv.course_tag = course_tag
+    ON DUPLICATE KEY UPDATE origin=origin;
 
     INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `purchase_id`, `gift_id`)
-    VALUES (course_tag, user_id, origin, purchase_id, gift_id);
+    VALUES (course_tag, user_id, origin, purchase_id, gift_id)
+    ON DUPLICATE KEY UPDATE origin=origin;
+
 END $$
 
 -- Resolve a standard purchase
@@ -98,7 +117,8 @@ BEGIN
     FROM purchase_items AS P
              INNER JOIN items i on P.item_id = i.id
     WHERE purchase_id = @purchase_id
-      AND type = 'video';
+      AND type = 'video'
+    ON DUPLICATE KEY UPDATE origin=origin;
 
     OPEN cursor_courses;
     own_course:
@@ -120,7 +140,7 @@ END $$
 
 -- Resolve an admin gift
 CREATE
-    DEFINER = 'triggers' PROCEDURE resolve_gift(
+    DEFINER = functions PROCEDURE resolve_gift(
     IN admin_uid BIGINT UNSIGNED,
     IN receiving_uid BIGINT UNSIGNED,
     IN itm_id BIGINT UNSIGNED,
@@ -134,14 +154,15 @@ BEGIN
 
     CASE (SELECT type FROM items WHERE id = itm_id)
         WHEN 'video' THEN INSERT INTO ownership (`item_tag`, `user_id`, `origin`, `gift_id`)
-                          VALUES (itm_tag, receiving_uid, 'gift', @gift_id);
+                          VALUES (itm_tag, receiving_uid, 'gift', @gift_id)
+                          ON DUPLICATE KEY UPDATE origin=origin;
         WHEN 'course' THEN CALL course_ownership_add(receiving_uid, itm_tag, 'gift', null, @gift_id);
         END CASE;
 END $$
 
 -- Resolve account verification, given an email tag
 CREATE
-    DEFINER = 'triggers' PROCEDURE resolve_account(
+    DEFINER = functions PROCEDURE resolve_account(
     IN verification_tag CHAR(64)
 )
 BEGIN

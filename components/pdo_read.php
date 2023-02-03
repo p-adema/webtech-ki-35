@@ -19,7 +19,7 @@ function new_pdo_read(bool $err_fatal = true): PDO
         if (!$err_fatal) {
             throw $e;
         }
-        echo "<br/>" . "SQL connection error (readonly): " . $e->getMessage() . "<br/>";
+        echo "<br>" . "SQL connection error (readonly): " . $e->getMessage() . "<br>";
         die();
     }
 

@@ -15,10 +15,16 @@ $(document).ready(function () {
         }
         history.replaceState(null, '', '/search/' + val)
         last_query = val;
+    }).keydown(function (event) {
+        if (event.which === 27) {
+            $(this).blur()
+        }
     })
     $('#filter-buttons > span').click(function (_) {
         $('#filter-buttons > span').removeClass('active');
         $('.search-results').removeClass().addClass($(this).addClass('active').attr('data-class'));
+        filter = $(this).attr('data-filter')
+        check_empty()
     })
     $('#sort-buttons > span').click(function (_) {
         $('#sort-buttons > span').removeClass('active');
@@ -38,6 +44,10 @@ function search(query) {
         const handler_options = {
             success_handler: function (data, _) {
                 $target.html(data.html);
+                any_owned = data.any_owned;
+                any_available = data.any_available;
+                any = data.any;
+                check_empty()
             },
             error_handler: function (errors, _) {
                 console.log(errors);
@@ -51,4 +61,26 @@ function search(query) {
     }
 }
 
+function check_empty() {
+    $('.result-empty').hide();
+    if (filter === 'owned' && !any_owned) {
+        $('#owned-empty').css('display', 'flex')
+    } else if (filter === 'available' && !any_available) {
+        $('#available-empty').css('display', 'flex')
+        if (any) {
+            $('#available-empty-slot').text('You can view paid videos on this topic though!').parent().addClass('active').click(function (_) {
+                $('.filter-all').click()
+            })
+        } else {
+            $('#available-empty-slot').text('').parent().removeClass('active').unbind('click')
+        }
+    } else if (filter === 'all' && !any) {
+        $('#all-empty').css('display', 'flex')
+    }
+}
+
 let sort = 'views';
+let filter = 'all';
+let any_owned = true;
+let any_available = true;
+let any = true;

@@ -64,8 +64,8 @@ $sql_prep->execute($data);
 
 $link = '/auth/verify/' . $url_tag;
 if (mail_acc_verify($link, $email)) { #TODO PRODUCTION: remove link
-    api_succeed("An E-mail to activate your account has been sent to $email <br />  <a href='$link'>dev</a>", $errors);
+    api_succeed("An E-mail to activate your account has been sent to $email <br>  <a href='$link'>dev</a>", $errors);
 } else {
-    $errors['submit'][] = "Verification email couldn't be sent  <br />  <a href='$link'>dev</a>";
+    $errors['submit'][] = "Verification email couldn't be sent  <br>  <a href='$link'>dev</a>";
     api_fail("The email to verify your account couldn't be sent", $errors);
 }

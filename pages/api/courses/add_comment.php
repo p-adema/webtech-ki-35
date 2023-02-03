@@ -28,7 +28,7 @@ if (empty($item_tag)) {
 }
 
 if (!$valid) {
-    api_fail('Please use a correct and working link.', $errors);
+    api_fail('Please use valid parameters', $errors);
 }
 
 else {

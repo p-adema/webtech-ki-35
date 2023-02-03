@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    const course_tag = $('.course_tag').attr('tag')
+    const course_tag = $('.course_tag').attr('data-tag')
     const stars = $(".stars");
 
     stars.mousemove(function (event) {

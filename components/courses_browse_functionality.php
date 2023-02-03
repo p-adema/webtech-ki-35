@@ -24,7 +24,7 @@ function render_courses(): void
         </div>
             <div class='course'>
                 <a href='/courses/course/{$best_course['tag']}'>
-                    <img class='thumbnail' src='/resources/thumbnails/{$best_course['tag']}.jpg'>
+                    <img class='thumbnail' src='/resources/thumbnails/{$best_course['tag']}.jpg' alt='Course thumbnail'>
                 </a>
                 <div class='best-course-info'>
                 <span class='best-course-name'>{$best_course_info['name']}</span>
@@ -42,7 +42,7 @@ function render_courses(): void
         echo "
                 <div class='course'>
                     <a href='/courses/course/{$course['tag']}'>
-                        <img class='thumbnail' src='/resources/thumbnails/{$course['tag']}.jpg'>
+                        <img class='thumbnail' src='/resources/thumbnails/{$course['tag']}.jpg' alt='Course thumbnail'>
                     </a>
                     <div class='course-info'>
                         <span class='course-name'>{$course_info['name']}</span>

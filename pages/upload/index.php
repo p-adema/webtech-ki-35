@@ -10,7 +10,7 @@ html_header(title: 'Upload content', styled: 'form.css', scripted: true);
                 <p> Upload a video or create a course </p>
                 <?php
                 echo '<div class="form-btns form-btns-down">';
-                text_link('Create course', '/upload/course');
+                display_text_link('Create course', '/upload/course');
                 form_submit(text: 'Upload video', extra_cls: 'med-btn');
                 echo '</div>';
                 ?>
