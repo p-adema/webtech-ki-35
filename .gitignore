@@ -14,6 +14,7 @@
 !.gitignore
 !README.md
 !docker-compose.yml
+!Report.pdf
 /server/cert.txt
 *.DS_Store
 **cache__
