@@ -49,5 +49,5 @@ function render_owned_videos(array $videos): string
 
 function display_no_videos(): void
 {
-    echo "<p> You have no videos </p>";
+    echo "<span class='no-videos'> You have no videos </span>";
 }

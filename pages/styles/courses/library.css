@@ -19,6 +19,17 @@
     grid-template-columns: auto auto auto;
 }
 
+.no-videos {
+    background-color: #7fbe8a;
+    border-radius: 20px;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    margin-left: 40vw;
+}
+
 .video-wrapper {
     display: flex;
     flex: auto;
