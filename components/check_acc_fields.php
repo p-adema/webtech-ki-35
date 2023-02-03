@@ -121,7 +121,7 @@ function check_full_name(string $full_name): array
     return $errors;
 }
 
-function check_acc_fields(PDO $PDO, string $name, string $email, string $password, string $re_pwd, string $full_name): array
+function check_acc_fields(string $name, string $email, string $password, string $re_pwd, string $full_name): array
 {
     $errors = [];
 

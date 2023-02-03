@@ -19,7 +19,6 @@ $data = [
     'uid' => $_SESSION['uid']
 ];
 
-$pdo_write = new_pdo_write();
 $p_cart = prepare_write($sql_cart);
 
 if (!$p_cart->execute($data)) {

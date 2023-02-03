@@ -25,25 +25,6 @@ function get_video_data($video_tag): array|false
     return $sth->fetch(PDO::FETCH_ASSOC);
 }
 
-function check_video_tag($tag): bool
-{
-    $valid = false;
-    require "pdo_write.php";
-    try {
-        $pdo_write = new_pdo_write();
-    } catch (PDOException) {
-        return false;
-    }
-
-
-    $sql = 'SELECT (user_id) FROM db.videos WHERE (tag = :tag)';
-
-    $sql_prep = prepare_write($sql);
-    $sql_prep->execute(['tag' => $tag]);
-
-    return !empty($sql_prep->fetch());
-}
-
 function owns_video($user, $video_id): bool
 {
     require_once 'pdo_read.php';
@@ -74,8 +55,6 @@ function update_rating($rating, $uid, $tag): bool
     require_once 'pdo_write.php';
 
     $message = " ";
-
-    $pdo_write = new_pdo_write();
 
     $sql_get_id = 'SELECT id FROM db.items WHERE (tag = :name)';
     $sth_get_id = prepare_readonly($sql_get_id);

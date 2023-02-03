@@ -22,12 +22,6 @@ if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'password-rese
     $tag = $_SESSION['url_tag'];
 }
 
-try {
-    $pdo_write = new_pdo_write();
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    api_fail('Internal server error', $errors);
-}
 
 
 $sql = "SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = 'password-reset');";

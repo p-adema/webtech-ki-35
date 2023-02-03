@@ -16,12 +16,6 @@ function email_tag_check(string $tag, string $type): bool
 {
     $valid = false;
     require_once "pdo_write.php";
-    try {
-        $pdo_write = new_pdo_write();
-    } catch (PDOException) {
-        return false;
-    }
-
 
     $sql = 'SELECT (user_id) FROM db.emails_pending WHERE (url_tag = :tag) AND (type = :type);';
     $data = [

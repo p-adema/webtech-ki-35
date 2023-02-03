@@ -4,12 +4,6 @@ function check_tag($tag): bool
 {
     $valid = false;
     require "pdo_write.php";
-    try {
-        $pdo_write = new_pdo_write();
-    } catch (PDOException) {
-        return false;
-    }
-
 
     $sql = 'SELECT (user_id) FROM db.transactions_pending WHERE (url_tag = :tag)';
 

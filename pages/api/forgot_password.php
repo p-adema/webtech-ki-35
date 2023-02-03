@@ -27,12 +27,7 @@ if (empty($email)) {
 }
 
 require "pdo_write.php";
-try {
-    $pdo_write = new_pdo_write();
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error (unable to connect to database)';
-    api_fail('Internal error', $errors);
-}
+
 
 if (!$valid) {
     api_fail('Please properly fill in all fields', $errors);

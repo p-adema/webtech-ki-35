@@ -64,7 +64,7 @@ function ensure_session(): void
 /**
  * Set session cookies to be logged in for this request
  * @param string $username_or_email Name/email of user to be logged in as
- * @return bool Success of login
+ * @return bool|string Success of login, or error string
  */
 function api_login(string $username_or_email): bool|string
 {

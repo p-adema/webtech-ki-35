@@ -11,11 +11,6 @@ ensure_session();
 if (!isset($_SESSION['url_tag']) or $_SESSION['url_tag_type'] !== 'verify') {
     api_fail('Invalid referal link', ['submit' => "You don't seem to have come from a valid link"]);
 }
-try {
-    $pdo_write = new_pdo_write();
-} catch (PDOException $e) {
-    api_fail('Internal server error', ['submit' => 'Internal server error']);
-}
 
 $tag = $_SESSION['url_tag'];
 

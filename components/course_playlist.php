@@ -3,7 +3,6 @@
 function render_playlist_items($course_tag, $video_number): string
 {
     require_once "pdo_write.php";
-    $pdo_write = new_pdo_write();
     $sql = 'SELECT  video_tag, `order` FROM db.course_videos WHERE course_tag = :course_tag;';
     $data = ['course_tag' => htmlspecialchars($course_tag)];
 
@@ -53,11 +52,7 @@ function render_playlist_items($course_tag, $video_number): string
 function display_course_playlist(string $video_tag): bool
 {
     require_once "pdo_write.php";
-    try {
-        $pdo_write = new_pdo_write();
-    } catch (PDOException) {
-        return false;
-    }
+
     $sql_video = 'SELECT course_tag, `order`  FROM db.course_videos WHERE video_tag = :video_tag;';
     $data_video = ['video_tag' => $video_tag];
 

@@ -20,8 +20,7 @@ $re_pwd = $_POST['re_pwd'] ?? '';
 $full_name = $_POST['full_name'] ?? '';
 
 try {
-    $pdo_write = new_pdo_write();
-    $errors = check_acc_fields($pdo_write, $name, $email, $password, $re_pwd, $full_name);
+    $errors = check_acc_fields($name, $email, $password, $re_pwd, $full_name);
     $errors['submit'] = [];
     $valid = check_acc_err($errors);
 } catch (PDOException $e) {

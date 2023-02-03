@@ -11,8 +11,7 @@ function new_pdo_write(): PDO
     $user = 'web-write';
     $password = file_get_contents($tokens . 'web-write');
 
-    $PDO = new PDO($dsn, $user, $password);
-    return $PDO;
+    return new PDO($dsn, $user, $password);
 
 }
 global $connection_write;

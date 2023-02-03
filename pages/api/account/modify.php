@@ -26,8 +26,6 @@ api_require_login();
 $user_id = $_SESSION['uid'];
 
 try {
-    $pdo_write = new_pdo_write();
-
     $errors['name'] = check_name($name, $user_id);
     $errors['email'] = check_email($email, $user_id);
     $errors['full_name'] = check_full_name($full_name);

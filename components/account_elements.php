@@ -31,6 +31,10 @@ WHERE purchase_id = :id';
 
     $count = 0;
 
+    if ($data === false) {
+        return [];
+    }
+
     foreach ($data as $element) {
         $sth_join->execute(['id' => $element['id']]);
         $items = $sth_join->fetchAll(PDO::FETCH_ASSOC);
@@ -55,52 +59,6 @@ function get_gift_info($uid): array
     $sth->execute(['uid' => $uid]);
 
     return $sth->fetchAll(PDO::FETCH_ASSOC);
-}
-
-function get_purchase_name($purchase_id): string
-{
-    require_once 'pdo_read.php';
-
-
-    $sql_type = 'SELECT items.type FROM items INNER JOIN purchase_items ON items.id = purchase_items.item_id WHERE purchase_items.id = :id';
-    $sth_type = prepare_readonly($sql_type);
-    $sth_type->execute(['id' => $purchase_id]);
-
-    $type = ($sth_type->fetch()['type']);
-
-    if ($type === 'video') {
-        $sql = 'SELECT name FROM db.videos WHERE id = :id';
-
-    } else {
-        $sql = 'SELECT name FROM db.courses WHERE id = :id';
-
-    }
-
-    $sth = prepare_readonly($sql);
-    $sth->execute(['id' => $purchase_id]);
-    return $sth->fetch()['name'];
-
-}
-
-function get_gift_name($gift_id): string
-{
-    require_once 'pdo_read.php';
-
-    $sql_tag = 'SELECT tag, type FROM db.items WHERE id = :gift_id';
-    $sth_tag = prepare_readonly($sql_tag);
-    $sth_tag->execute(['gift_id' => $gift_id]);
-    $data = $sth_tag->fetch(PDO::FETCH_ASSOC);
-
-    if ($data['type'] === 'video') {
-        $sql = 'SELECT name FROM db.videos WHERE tag = :tag';
-    } else {
-        $sql = 'SELECT name FROM db.courses WHERE tag = :tag';
-    }
-
-    $sth = prepare_readonly($sql);
-    $sth->execute(['tag' => $data['tag']]);
-
-    return $sth->fetch()['name'];
 }
 
 function display_invoices(): void

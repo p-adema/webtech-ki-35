@@ -1,17 +1,5 @@
 <?php
 
-function is_admin($uid): bool
-{
-    require_once 'pdo_read.php';
-
-
-    $sql = 'SELECT admin FROM db.users WHERE id = :uid';
-    $sth = prepare_readonly($sql);
-    $sth->execute(['uid' => $uid]);
-
-    return $sth->fetch()['admin'];
-}
-
 function api_require_admin(): void
 {
     ensure_session();
@@ -69,16 +57,6 @@ function admin_gift_item($admin_uid, $reciever_uid, $item_id, $item_tag): bool
         'item_tag' => $item_tag,
     ];
     return $prep->execute($data);
-}
-
-function remove_video($video_tag): void
-{
-    require_once 'pdo_write.php';
-
-
-    $sql = 'DELETE FROM db.videos WHERE tag = :video_tag';
-    $sth = prepare_write($sql);
-    $sth->execute(['video_tag' => $video_tag]);
 }
 
 function admin_ban_user(int $target_uid, bool $ban = true): bool

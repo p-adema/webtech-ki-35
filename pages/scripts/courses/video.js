@@ -28,7 +28,13 @@ $(document).ready(function () {
             };
 
             const handler_options = {
-                success_handler: form_custom_success
+                success_handler: function (data, __) {
+                    $('form#add').hide();
+                    $('form#cart').show();
+                    $('.cart-item-anchor').remove();
+                    $('.sidebar-close').after(data.html);
+                    $('.cart-item-delete').click(cart_item_delete);
+                }
             }
 
             $.post('/api/cart/modify', user_data, form_default_response(handler_options));
@@ -40,46 +46,7 @@ $(document).ready(function () {
 
         }
     })
-    const stars = $(".stars");
-
-    stars.mousemove(function (event) {
-            let x_move = event.pageX - event.currentTarget.offsetLeft;
-            let tot_length = $(this).width();
-
-            let star_count = Math.ceil(((x_move / tot_length) * 5))
-
-            stars.removeClass(['star-1', 'star-2', 'star-3', 'star-4', 'star-5']).addClass([`star-${star_count}`]);
-        }
-    )
-
-    stars.mouseleave(function (_) {
-        stars.removeClass(['star-5', 'star-4', 'star-3', 'star-2', 'star-1'])
-    });
-
-    stars.click(function (event) {
-        let x_cord = event.pageX - event.currentTarget.offsetLeft;
-        let tot_length = $(this).width();
-
-        let star_count = Math.ceil(((x_cord / tot_length) * 5))
-
-        stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
-
-        const user_data = {
-            star: star_count,
-            tag: $('#video').attr('data-tag')
-        };
-
-        $.post('/api/courses/rate_item', user_data);
-    })
-
-    function form_custom_success(data, __) {
-        $('form#add').hide();
-        $('form#cart').show();
-        $('.cart-item-anchor').remove();
-        $('.sidebar-close').after(data.html);
-        $('.cart-item-delete').click(cart_item_delete);
-
-    }
+    bind_stars()
 
     const video_data = {
         type: 'item',

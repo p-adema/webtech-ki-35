@@ -60,7 +60,6 @@ $data = [
 ];
 
 require_once "pdo_write.php";
-$pdo_write = new_pdo_write();
 $p_sql = prepare_write($sql);
 
 if (!$p_sql->execute($data)) {

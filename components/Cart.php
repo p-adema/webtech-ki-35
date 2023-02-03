@@ -197,34 +197,6 @@ FROM course_videos cv
     }
 
     /**
-     * Get the db.items.(id, price) values of the items in the session cart
-     * @return array of 'id' and 'price' values for cart items
-     */
-    public function items_short(): array
-    {
-        $items = [];
-        foreach ($_SESSION['cart']['ids'] as $id) {
-            $items[] = ['id' => $id, 'price' => $_SESSION['cart']['prices'][$id]];
-        }
-
-        return $items;
-    }
-
-    public function item_short(int $id): array
-    {
-        return ['id' => $id, 'price' => $_SESSION['cart']['prices'][$id]];
-    }
-
-    /**
-     * Get the amount of items in the cart
-     * @return int amount of items in cart
-     */
-    public function count(): int
-    {
-        return $_SESSION['cart']['count'];
-    }
-
-    /**
      * Get the total price of the cart
      * @return float total price of cart
      */

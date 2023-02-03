@@ -9,7 +9,6 @@ $errors = [
     'tags' => [],
     'submit' => []
 ];
-/** @noinspection DuplicatedCode */
 $valid = true;
 
 $title = $_POST['title'] ?? '';
@@ -90,12 +89,6 @@ require_once "tag_actions.php";
 
 $course_tag = tag_create();
 
-try {
-    $pdo_write = new_pdo_write();
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error';
-    api_fail("Couldn't connect to database", $errors);
-}
 
 $sql_valid_vid = "SELECT id FROM videos v WHERE tag = :tag AND uploader = :uid";
 $prep_valid_vid = prepare_write($sql_valid_vid);

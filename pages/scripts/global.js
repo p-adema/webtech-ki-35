@@ -184,3 +184,37 @@ function cart_item_delete(event) {
 function navbar_search() {
     window.location.href = "/search/" + encodeURIComponent($('#navbar-search').val())
 }
+
+function bind_stars() {
+    const stars = $(".stars");
+
+    stars.mousemove(function (event) {
+            let x_move = event.pageX - event.currentTarget.offsetLeft;
+            let tot_length = $(this).width();
+
+            let star_count = Math.ceil(((x_move / tot_length) * 5))
+
+            stars.removeClass(['star-1', 'star-2', 'star-3', 'star-4', 'star-5']).addClass([`star-${star_count}`]);
+        }
+    )
+
+    stars.mouseleave(function (_) {
+        stars.removeClass(['star-5', 'star-4', 'star-3', 'star-2', 'star-1'])
+    });
+
+    stars.click(function (event) {
+        let x_cord = event.pageX - event.currentTarget.offsetLeft;
+        let tot_length = $(this).width();
+
+        let star_count = Math.ceil(((x_cord / tot_length) * 5))
+
+        stars.removeClass().addClass(['stars', `perm-star-${star_count}`])
+
+        const user_data = {
+            star: star_count,
+            tag: $('#video').attr('data-tag')
+        };
+
+        $.post('/api/courses/rate_item', user_data);
+    })
+}

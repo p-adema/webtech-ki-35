@@ -107,13 +107,3 @@ function deny_payment($tag): void
     $sth = prepare_write($sql);
     $sth->execute(['url_tag' => $tag]);
 }
-
-function add_balance($user_id, $input): void
-{
-    require_once "pdo_write.php";
-    $current_balance = get_balance($user_id);
-
-    $sql = 'UPDATE db.balances SET balance = :new_bal WHERE (user_id = :person)';
-    $sth = prepare_write($sql);
-    $sth->execute(['person' => $user_id, 'new_bal' => $current_balance.$input]);
-}

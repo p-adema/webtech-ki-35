@@ -17,39 +17,6 @@ function purchase_tag_exists($tag): bool
     return !empty($sth->fetch()['id']);
 }
 
-function info_by_tag($item_tag): string
-{
-    require_once 'pdo_read.php';
-
-    $sql = 'SELECT amount FROM db.purchases WHERE url_tag = :tag';
-    $sth = prepare_readonly($sql);
-    $sth->execute(['tag' => $item_tag]);
-
-    return $sth->fetch()['amount'];
-}
-
-function item_tag_from_purchase_url($url): string
-{
-    require_once 'pdo_read.php';
-
-    $sql = '
-SELECT pi.item_id
-FROM db.purchase_items pi
-         INNER JOIN db.purchases p ON pi.purchase_id = p.id
-WHERE p.url_tag = :tag';
-
-    $prep = prepare_readonly($sql);
-    $prep->execute(['tag' => $url]);
-
-    $item_id = $prep->fetch()['item_id'];
-
-    $sql_item = 'SELECT tag FROM items WHERE id = :id';
-    $sth_item = prepare_readonly($sql_item);
-    $sth_item->execute(['id' => $item_id]);
-
-    return $sth_item->fetch()['tag'];
-}
-
 function display_product_information($uid, $url_tag): void
 {
     require_once 'pdo_read.php';

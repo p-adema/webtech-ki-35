@@ -1,6 +1,7 @@
 <?php
 require "html_page.php";
 require_once "tag_actions.php";
+require_once "pdo_write.php";
 
 $errors = [
     'title' => [],
@@ -15,8 +16,8 @@ $errors = [
 $valid = true;
 
 $title = $_POST['title'] ?? '';
-$description = $_POST['description'] ?? '';
 $subject = $_POST['subject'] ?? '';
+$description = $_POST['description'] ?? '';
 $free_raw = $_POST['free'] ?? '';
 $price = $_POST['price'] ?? '';
 
@@ -124,16 +125,7 @@ if (!$valid) {
     api_fail('Internal file error', $errors);
 }
 
-require_once "pdo_write.php";
 
-try {
-    $pdo_write = new_pdo_write();
-} catch (PDOException $e) {
-    $errors['submit'][] = 'Internal server error';
-    unlink($video_target);
-    unlink($thumbnail_target);
-    api_fail("Couldn't connect to database", $errors);
-}
 $sql_item = "INSERT INTO db.items (tag, type, price)
              VALUES (:tag, 'video', :price);";
 $prep_item = prepare_write($sql_item);

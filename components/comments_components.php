@@ -113,30 +113,10 @@ function render_show_replies($count, $tag): string
     " : '';
 }
 
-function render_hide_replies(): string
-{
-    return "
-<div class='toggle-replies-wrapper'>
-    <button class='show-replies'> Hide replies </button>
-</div>
-    ";
-}
-
-function render_show_more(): string
-{
-    return "
-<div class='show-more-wrapper'>
-    <button class='show-more'> Show replies </button>
-</div>
-    ";
-}
-
 function change_comment_score($rating, $comment_id, $user_id): void
 {
     require_once 'pdo_write.php';
     require_once 'pdo_read.php';
-
-    $pdo_write = new_pdo_write();
 
     $sql_read = 'SELECT score FROM db.scores WHERE user_id = :user AND comment_tag = :comment';
     $sth_read = prepare_readonly($sql_read);
@@ -164,8 +144,6 @@ function add_comment(string $comment_text, string $item_tag, $reply_tag = null):
 
     $uid = $_SESSION['uid'];
     $comment_tag = tag_create();
-    $pdo_write = new_pdo_write();
-
 
     $sql_id = 'SELECT id FROM db.items WHERE (tag = :tag)';
     $prep_id = prepare_write($sql_id);

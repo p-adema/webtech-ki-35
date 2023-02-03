@@ -5,7 +5,6 @@ function calculate_rating($item_id): void
     require_once 'pdo_read.php';
     require_once 'pdo_write.php';
 
-    $pdo_write = new_pdo_write();
 
     $sql_read = 'SELECT rating FROM db.ratings WHERE item_id = :item_id';
     $sth_read = prepare_readonly($sql_read);
